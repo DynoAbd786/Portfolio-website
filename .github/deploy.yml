@@ -1,0 +1,46 @@
+# Name of the workflow
+name: Deploy Blazor WASM to GitHub Pages
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push events but only for the main branch
+  push:
+    branches: [ main ]
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-and-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Setup the .NET SDK version
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x # Use the .NET version your project targets
+
+      # 3. Publishes the Blazor project to the release folder
+      - name: Publish .NET Project
+        run: dotnet publish YourProjectName.csproj -c Release -p:BaseHref=/Portfolio-website/ -o release --nologo
+        # IMPORTANT: 
+        # - Replace "YourProjectName.csproj" with the actual name of your project file.
+        # - The "BaseHref" property is CRUCIAL. It tells your app to look for files at /Portfolio-website/ instead of the root.
+
+      # 4. Upload the published artifact
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./release/wwwroot
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
