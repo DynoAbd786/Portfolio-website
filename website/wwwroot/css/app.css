@@ -1,0 +1,204 @@
+/* Remove focus outline from header name link */
+header a:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* General Body Styles */
+body {
+    background-color: #111827; /* bg-gray-900 */
+    font-family: 'Source Code Pro', monospace;
+}
+
+/* Blazor's error UI styling */
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+/* Custom NavLink styles */
+.nav-link {
+    position: relative;
+    padding-bottom: 0.5rem;
+    color: #d1d5db; /* text-gray-300 */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffffff; /* text-white */
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #22d3ee; /* cyan-400 */
+    transition: width 0.3s ease;
+}
+
+.nav-link.active::after,
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hero Section */
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 2rem;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 1000px;
+}
+
+.hero-text {
+    text-align: center;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px #22d3ee, 0 0 20px #22d3ee;
+}
+
+.hero-text .subtitle {
+    font-size: 1.5rem;
+    color: #9ca3af; /* text-gray-400 */
+    margin-bottom: 1.5rem;
+}
+
+.social-links a {
+    color: #9ca3af;
+    font-size: 1.75rem;
+    margin: 0 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #22d3ee; /* cyan-400 */
+    transform: scale(1.2);
+}
+
+/* Terminal Window Styling */
+.terminal-window {
+    width: 100%;
+    max-width: 600px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #333;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
+
+.terminal-title {
+    color: #ccc;
+    margin: 0 auto;
+    font-size: 0.9rem;
+}
+
+.terminal-body {
+    padding: 16px;
+    font-family: 'Roboto Mono', monospace;
+    color: #00ff00;
+    min-height: 50px;
+}
+
+.prompt {
+    color: #00ff00;
+    margin-right: 8px;
+}
+
+/* Typing Animation */
+.typing-animation::after {
+    content: '|';
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.typing-animation {
+    white-space: pre;
+    animation: typing 4s steps(40, end), blink .75s step-end infinite;
+    overflow: hidden;
+    border-right: .15em solid #00ff00; /* The typwriter cursor */
+    animation: none; /* We will control this with JS */
+}
+
+/* Project Card 3D Tilt Effect */
+.project-card-container {
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+}
+
+.project-card {
+    transform: translateZ(20px);
+}
+
+/* Loading Spinner */
+.loader {
+    border: 5px solid #374151; /* border-gray-700 */
+    border-top: 5px solid #22d3ee; /* border-cyan-400 */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
