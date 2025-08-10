@@ -33,9 +33,7 @@ jobs:
 
       # 3. Publishes the Blazor project to the release folder
       - name: Publish .NET Project
-        run: dotnet publish website/website.csproj -c Release -p:BaseHref=/Portfolio-website/ -o release --nologo
-        # IMPORTANT: 
-        # - The "BaseHref" property is CRUCIAL. It tells your app to look for files at /Portfolio-website/ instead of the root.
+        run: dotnet publish website/website.csproj -c Release -o release --nologo
 
       # 4. Upload the published artifact
       - name: Upload GitHub Pages artifact
