@@ -5,7 +5,7 @@ namespace website.Pages
 {
     public partial class Index : ComponentBase
     {
-        private readonly string commandText = "dotnet publish -c Release -o ./portfolio";
+        private readonly string commandText = "dotnet build --portfolio";
         private string displayedText = "";
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
