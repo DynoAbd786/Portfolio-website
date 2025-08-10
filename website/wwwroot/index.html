@@ -3,12 +3,24 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Blazor Portfolio</title>
-    <base href="/Portfolio-website/" />
+    <base href="/" />
     <link rel="stylesheet" href="css/app.css" />
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS - Using CDN for development only -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['"Source Code Pro"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Google Fonts -->
@@ -35,13 +47,30 @@
     <script src="js/vanilla-tilt.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            VanillaTilt.init(document.querySelectorAll(".project-card-container"), {
-                max: 15,
-                speed: 400,
-                glare: true,
-                "max-glare": 0.5
-            });
+            if (typeof VanillaTilt !== 'undefined') {
+                VanillaTilt.init(document.querySelectorAll(".project-card-container"), {
+                    max: 15,
+                    speed: 400,
+                    glare: true,
+                    "max-glare": 0.5
+                });
+            }
         });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
     </script>
 </body>
 </html>

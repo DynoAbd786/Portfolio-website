@@ -1026,3 +1026,4 @@
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/refint/website.dll
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.pdb
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/ref/website.dll
+/home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.sourcelink.json
