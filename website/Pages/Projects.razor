@@ -5,24 +5,63 @@
 
 <PageTitle>Projects</PageTitle>
 
-<div class="container mx-auto px-4 py-12">
-    <h1 class="text-5xl font-extrabold text-center mb-4 text-white">My Portfolio</h1>
-    <p class="text-xl text-center text-gray-400 mb-12">A selection of projects that showcase my skills.</p>
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="text-5xl font-bold text-center mb-6 text-white">My Portfolio</h2>
+        <p class="text-xl text-center text-gray-400 mb-12">Showcasing innovation through AI-assisted development and research</p>
+        
+        @if (projectList == null)
+        {
+            <div class="text-center">
+                <div class="loader mx-auto mb-4"></div>
+                <p class="text-gray-400"><em>Loading projects...</em></p>
+            </div>
+        }
+        else
+        {
+            <!-- Personal Projects Section -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-rocket text-white text-xl"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-3xl font-bold text-cyan-400 mb-1">Personal Projects</h3>
+                        <p class="text-gray-400">Independent research and development initiatives</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    @foreach (var project in projectList)
+                    {
+                        <ProjectCard Project="project" />
+                    }
+                </div>
+            </div>
 
-    @if (projectList == null)
-    {
-        <p class="text-center text-gray-400"><em>Loading projects...</em></p>
-    }
-    else
-    {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            @foreach (var project in projectList)
-            {
-                <ProjectCard Project="project" />
-            }
-        </div>
-    }
-</div>
+            <!-- Work Experience Projects Section (Placeholder) -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-briefcase text-white text-xl"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-3xl font-bold text-green-400 mb-1">Professional Experience</h3>
+                        <p class="text-gray-400">Projects from internships and professional work</p>
+                    </div>
+                </div>
+                
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
+                        <div class="text-6xl text-gray-600 mb-4">🔨</div>
+                        <h4 class="text-xl font-bold text-gray-300 mb-3">Coming Soon</h4>
+                        <p class="text-gray-500">Professional projects from internships and work experience will be featured here</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
 
 @code {
     private List<Project>? projectList;

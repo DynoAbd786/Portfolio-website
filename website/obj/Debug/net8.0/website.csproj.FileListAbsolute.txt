@@ -615,6 +615,7 @@
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.AssemblyInfo.cs
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.csproj.CoreCompileInputs.cache
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.MvcApplicationPartsAssemblyInfo.cache
+/home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.sourcelink.json
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/webcil/Microsoft.AspNetCore.Authorization.wasm
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/webcil/Microsoft.AspNetCore.Components.wasm
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/webcil/Microsoft.AspNetCore.Components.Forms.wasm
@@ -1026,4 +1027,3 @@
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/refint/website.dll
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.pdb
 /home/abdua786/code/personal/website/website/obj/Debug/net8.0/ref/website.dll
-/home/abdua786/code/personal/website/website/obj/Debug/net8.0/website.sourcelink.json

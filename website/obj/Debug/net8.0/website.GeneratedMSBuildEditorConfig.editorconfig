@@ -30,12 +30,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWJvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/abdua786/code/personal/website/website/Pages/AIResearchProject.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQUlSZXNlYXJjaFByb2plY3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/abdua786/code/personal/website/website/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/abdua786/code/personal/website/website/Pages/Projects.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUHJvamVjdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/abdua786/code/personal/website/website/Pages/TaskFlowProject.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvVGFza0Zsb3dQcm9qZWN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/abdua786/code/personal/website/website/Shared/MainLayout.razor]

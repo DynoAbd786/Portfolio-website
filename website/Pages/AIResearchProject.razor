@@ -1,0 +1,252 @@
+@page "/projects/ai-research"
+@using website.Data
+
+<PageTitle>Personal Portfolio & C# Learning Journey</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Portfolio Journey</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Personal Projects
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">Portfolio & Learning Journey</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Exploring C# & .NET Development</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                A hands-on exploration of C# and .NET development, built with Claude Code assistance to accelerate learning while creating a professional portfolio showcase
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">C# Learning</span>
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">.NET 8</span>
+                <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Blazor</span>
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Claude Code</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">👨‍💻</div>
+            <p class="text-white/75 text-lg">C# Development Learning Journey</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                
+                <!-- Learning Objective -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Learning Objective</h2>
+                    </div>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        This portfolio website serves as my practical introduction to C# and .NET development. Built from the ground up to understand Blazor WebAssembly fundamentals, component architecture, and modern .NET patterns, it represents both a learning exercise and a professional showcase. The project demonstrates hands-on experience with C# language features, .NET 8 capabilities, and web development best practices while creating a platform to display my coding journey to potential employers and collaborators.
+                    </p>
+                </div>
+
+                <!-- Technology Deep Dive -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-code text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">C# & .NET Technologies Explored</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6">Hands-on learning with enterprise-grade Microsoft technologies:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-purple-500 rounded-full w-3 h-3 mr-3"></div>
+                                <h3 class="text-xl font-bold text-purple-400">Blazor WebAssembly</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">Client-side C# web development with WebAssembly for high-performance SPAs without JavaScript frameworks.</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-blue-500 rounded-full w-3 h-3 mr-3"></div>
+                                <h3 class="text-xl font-bold text-blue-400">.NET 8</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">Latest .NET platform with improved performance, new language features, and modern development patterns.</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-500 rounded-full w-3 h-3 mr-3"></div>
+                                <h3 class="text-xl font-bold text-green-400">Component Architecture</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">Razor components, parameter binding, lifecycle methods, and reusable UI patterns.</p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-cyan-500 rounded-full w-3 h-3 mr-3"></div>
+                                <h3 class="text-xl font-bold text-cyan-400">Dependency Injection</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">Built-in DI container, service registration, and modern .NET architectural patterns.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Areas -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-book-open text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-400">Key Learning Areas</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6">Practical C# and web development concepts mastered through this project:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">C# Language Features:</strong>
+                                <span class="text-gray-400"> Records, nullable types, async/await, LINQ</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">Web Development:</strong>
+                                <span class="text-gray-400"> SPA architecture, responsive design, CSS frameworks</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">Project Structure:</strong>
+                                <span class="text-gray-400"> .NET project organization, namespaces, file structure</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">Development Tools:</strong>
+                                <span class="text-gray-400"> .NET CLI, hot reload, debugging, deployment</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">Modern Patterns:</strong>
+                                <span class="text-gray-400"> Service patterns, data binding, event handling</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                            <div>
+                                <strong class="text-white">AI-Assisted Development:</strong>
+                                <span class="text-gray-400"> Learning with Claude Code guidance and mentorship</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Purpose & Professional Impact Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Portfolio Purpose -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-briefcase text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-blue-400">Portfolio Purpose</h2>
+                        </div>
+                        <p class="text-gray-300 mb-4">This site serves multiple audiences:</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300"><strong>Recruiters & Employers:</strong> Professional project showcase</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300"><strong>Fellow Developers:</strong> Learning journey documentation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300"><strong>General Visitors:</strong> Technical skills demonstration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300"><strong>Personal Growth:</strong> Progress tracking and reflection</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Professional Value -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-star text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Professional Value</h2>
+                        </div>
+                        <p class="text-gray-300 mb-4">Skills and qualities demonstrated:</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Rapid learning and technology adoption</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Modern development workflow proficiency</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">AI-augmented productivity mindset</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Full-stack web development capability</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Self-directed learning and documentation</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Technical Implementation -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                            <i class="fas fa-cogs text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-300">Technical Implementation</h2>
+                    </div>
+                    <p class="text-gray-400 mb-6">Built with modern Microsoft technologies and development practices</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Blazor WebAssembly</span>
+                        <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">.NET 8</span>
+                        <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">C#</span>
+                        <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Tailwind CSS</span>
+                        <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Responsive Design</span>
+                        <span class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm">Font Awesome</span>
+                        <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Vanilla Tilt.js</span>
+                        <span class="bg-gray-800 text-white px-4 py-2 rounded-full text-sm">GitHub Deployment</span>
+                        <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Claude Code AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>

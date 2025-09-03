@@ -12,35 +12,19 @@ namespace website.Data
             {
                 new Project
                 {
-                    Title = "E-Commerce Platform",
-                    Description = "A full-featured e-commerce site built with ASP.NET Core, EF Core, and Blazor for the admin dashboard. Includes payment gateway integration.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=E-Commerce",
-                    ProjectUrl = "#",
-                    Tags = new[] { "ASP.NET Core", "Blazor", "EF Core", "Stripe" }
+                    Title = "TaskFlow - Distributed Task Processing System",
+                    Description = "Enterprise-grade distributed task processing framework with 34 Python modules spanning 10,000+ lines. Features Redis priority queues, PostgreSQL persistence, FastAPI REST APIs, WebSocket real-time updates, and Prometheus monitoring. Includes async/sync task execution, auto-scaling workers, circuit breakers, and comprehensive CLI with 20+ admin commands. Built to systematically compare agentic AI capabilities, revealing Claude Code Pro's superior architectural reasoning over Gemini CLI.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TaskFlow",
+                    ProjectUrl = "/projects/taskflow",
+                    Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" }
                 },
                 new Project
                 {
-                    Title = "Real-Time Chat Application",
-                    Description = "A chat app using SignalR for real-time communication. Features user authentication, private messaging, and group chats.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Chat+App",
-                    ProjectUrl = "#",
-                    Tags = new[] { "SignalR", ".NET", "Blazor", "Real-Time" }
-                },
-                new Project
-                {
-                    Title = "Cloud-Native API",
-                    Description = "A serverless REST API built with Azure Functions and Cosmos DB. Designed for high scalability and low latency.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Serverless+API",
-                    ProjectUrl = "#",
-                    Tags = new[] { "Azure Functions", "Cosmos DB", "Serverless", "C#" }
-                },
-                new Project
-                {
-                    Title = "Cross-Platform Mobile App",
-                    Description = "A mobile application for iOS and Android built with .NET MAUI, sharing over 95% of the codebase.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=.NET+MAUI+App",
-                    ProjectUrl = "#",
-                    Tags = new[] { ".NET MAUI", "XAML", "C#", "Mobile" }
+                    Title = "Personal Portfolio & C# Learning Journey",
+                    Description = "Blazor WebAssembly portfolio built with .NET 8 and C# to master modern web development fundamentals. Features client-side rendering, responsive Tailwind CSS design, component architecture, dependency injection, and Font Awesome icons. Includes dynamic project showcase, mobile navigation, and 3D tilt effects via Vanilla Tilt.js. Developed entirely with Claude Code assistance to demonstrate AI-accelerated learning and document the C# development journey for employers and fellow developers.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
+                    ProjectUrl = "/projects/ai-research",
+                    Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" }
                 }
             };
 

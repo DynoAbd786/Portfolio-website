@@ -5,7 +5,13 @@
       "Bash(git init:*)",
       "Bash(git remote add:*)",
       "Bash(git branch:*)",
-      "Bash(dotnet run:*)"
+      "Bash(dotnet run:*)",
+      "Bash(curl:*)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet build)",
+      "WebFetch(domain:dynoabd786.github.io)",
+      "Bash(git add:*)",
+      "Bash(git push:*)"
     ],
     "deny": []
   }
