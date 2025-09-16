@@ -19,7 +19,9 @@
       "Bash(docker logs:*)",
       "Bash(docker exec:*)",
       "Bash(docker stop:*)",
-      "Bash(docker rm:*)"
+      "Bash(docker rm:*)",
+      "Bash(xxd:*)",
+      "Bash(sha256sum:*)"
     ],
     "deny": []
   }

@@ -1,4 +1,5 @@
 using website.api.Services;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,8 +37,16 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowBlazorWasm");
 
-// Enable static files and default files for Blazor WebAssembly
-app.UseStaticFiles();
+// Configure static files with proper MIME types for Blazor WebAssembly
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".dat"] = "application/octet-stream";
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".blat"] = "application/octet-stream";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
 app.UseDefaultFiles();
 
 app.UseAuthorization();
