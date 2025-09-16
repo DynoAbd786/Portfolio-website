@@ -11,7 +11,15 @@
       "Bash(dotnet build)",
       "WebFetch(domain:dynoabd786.github.io)",
       "Bash(git add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(dotnet new:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker exec:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker rm:*)"
     ],
     "deny": []
   }

@@ -1,0 +1,37 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CLAUDE.md
+
+# Development files
+.vscode/
+.vs/
+
+# Build outputs
+**/bin/
+**/obj/
+**/out/
+
+# Temporary files
+**/.tmp/
+**/tmp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if any)
+node_modules/
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# IDE files
+*.swp
+*.swo
+*~

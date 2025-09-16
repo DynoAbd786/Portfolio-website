@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # API Backend Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    networks:
+      - portfolio-network
+
+  # Development service for API only (for separate frontend development)
+  api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "7233:7233"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:7233;http://+:7232
+    volumes:
+      - ./website.api:/app
+      - ./website.api/bin:/app/bin
+      - ./website.api/obj:/app/obj
+    networks:
+      - portfolio-network
+    profiles:
+      - dev
+
+networks:
+  portfolio-network:
+    driver: bridge

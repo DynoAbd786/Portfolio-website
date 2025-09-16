@@ -1,14 +1,34 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace website.Data
 {
     public class ProjectService
     {
-        public Task<List<Project>> GetProjectsAsync()
+        private readonly HttpClient _httpClient;
+
+        public ProjectService(HttpClient httpClient)
         {
-            
-            var projects = new List<Project>
+            _httpClient = httpClient;
+        }
+
+        public async Task<List<Project>> GetProjectsAsync()
+        {
+            try
+            {
+                var projects = await _httpClient.GetFromJsonAsync<List<Project>>("api/projects");
+                return projects ?? new List<Project>();
+            }
+            catch (Exception ex)
+            {
+                // Fallback to hardcoded data if API is not available
+                Console.WriteLine($"API call failed: {ex.Message}. Using fallback data.");
+                return GetFallbackProjects();
+            }
+        }
+
+        private static List<Project> GetFallbackProjects()
+        {
+            return new List<Project>
             {
                 new Project
                 {
@@ -36,11 +56,17 @@ namespace website.Data
                     ProjectUrl = "/projects/medical-simulation",
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
                     Category = ProjectCategory.Professional
+                },
+                new Project
+                {
+                    Title = "pNanoLocz: Python AFM Analysis Platform Development",
+                    Description = "Initial development phase of converting the acclaimed NanoLocz MATLAB application into a modern Python-based AFM (Atomic Force Microscopy) analysis platform. Designed modular PyQt6-based architecture with extensible file reading system supporting 8+ AFM formats (.spm, .asd, .jpk, .ibw, .ARIS, .nhf, .gwy, .tiff). Implemented core data management, GUI foundation with responsive layout, and video player infrastructure for AFM data visualization. Established scalable framework for complete migration of research-grade scientific application used by AFM researchers worldwide.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=pNanoLocz",
+                    ProjectUrl = "/projects/pnanolocz",
+                    Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
+                    Category = ProjectCategory.Professional
                 }
             };
-
-
-            return Task.FromResult(projects);
         }
     }
 }

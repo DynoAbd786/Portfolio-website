@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: portfolio-website
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /api/projects
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+    buildFilter:
+      paths:
+        - website/**
+        - website.api/**
+        - Dockerfile
+        - render.yaml

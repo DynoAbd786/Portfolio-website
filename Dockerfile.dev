@@ -1,0 +1,17 @@
+# Development Dockerfile for API only
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+WORKDIR /app
+
+# Copy project files
+COPY website.api/*.csproj ./
+RUN dotnet restore
+
+# Copy source code
+COPY website.api/ ./
+
+# Expose ports
+EXPOSE 7233
+EXPOSE 7232
+
+# Start in watch mode for development
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "https://+:7233;http://+:7232"]

@@ -1,6 +1,6 @@
 # Personal Portfolio Website
 
-A modern, responsive portfolio website built with Blazor WebAssembly and .NET 8 to showcase projects and document my C# learning journey.
+A modern, full-stack portfolio website built with Blazor WebAssembly frontend and ASP.NET Core Web API backend, containerized for cloud deployment.
 
 ## 🚀 Live Demo
 
@@ -10,11 +10,13 @@ Visit the live portfolio at: [https://dynoabd786.github.io](https://dynoabd786.g
 
 This portfolio serves multiple purposes:
 - **Professional Showcase**: Display projects for recruiters and employers
-- **Learning Documentation**: Track my C# and .NET development journey
-- **AI-Assisted Development Study**: Demonstrate modern development workflows using Claude Code
+- **Full-Stack Learning**: Document C# development journey across frontend and backend
+- **Cloud-Native Architecture**: Demonstrate modern containerized deployment practices
+- **AI-Assisted Development**: Showcase development workflows using Claude Code
 
 ## 🛠️ Tech Stack
 
+### Frontend
 - **Framework**: Blazor WebAssembly
 - **Runtime**: .NET 8
 - **Language**: C# with nullable types enabled
@@ -22,180 +24,271 @@ This portfolio serves multiple purposes:
 - **Icons**: Font Awesome 6.4.0
 - **Fonts**: Google Fonts (Roboto Mono, Source Code Pro)
 - **Animations**: Vanilla Tilt.js for 3D card effects
-- **Development Assistant**: Claude Code AI
 
-## 🏗️ Project Structure
+### Backend
+- **Framework**: ASP.NET Core Web API
+- **Runtime**: .NET 8
+- **Architecture**: RESTful API with CORS support
+- **Features**: Static file serving, SPA fallback routing
+
+### DevOps & Deployment
+- **Containerization**: Docker multi-stage builds
+- **Cloud Platform**: Render deployment ready
+- **Development**: Docker Compose for local development
+- **CI/CD**: GitHub Actions for GitHub Pages (frontend-only)
+
+## 🏗️ Project Architecture
 
 ```
-website/
-├── Data/                          # Data models and services
-│   ├── Project.cs                # Project model definition
-│   └── ProjectService.cs         # Project data service
-├── Pages/                         # Razor pages
-│   ├── Index.razor               # Homepage
-│   ├── Projects.razor            # Projects listing
-│   ├── About.razor               # About page
-│   ├── TaskFlowProject.razor     # TaskFlow project details
-│   └── AIResearchProject.razor   # Portfolio project details
-├── Shared/                        # Shared components
-│   ├── MainLayout.razor          # Main layout wrapper
-│   └── ProjectCard.razor         # Reusable project card component
-├── wwwroot/                       # Static assets
-│   ├── css/app.css               # Custom styles
-│   ├── js/vanilla-tilt.min.js    # 3D tilt library
-│   └── index.html                # App entry point
-├── App.razor                      # App component with routing
-├── Program.cs                     # Application entry point
-└── website.csproj                # Project configuration
+├── website/                     # Blazor WebAssembly Frontend
+│   ├── Data/
+│   │   ├── Project.cs          # Project model
+│   │   └── ProjectService.cs   # API client service
+│   ├── Pages/                  # Razor pages and components
+│   ├── Shared/                 # Shared components
+│   └── wwwroot/                # Static assets
+├── website.api/                # ASP.NET Core Web API Backend
+│   ├── Controllers/
+│   │   └── ProjectsController.cs  # Projects API endpoints
+│   ├── Models/
+│   │   └── Project.cs          # Project data model
+│   ├── Services/
+│   │   └── ProjectService.cs   # Business logic layer
+│   └── Program.cs              # API configuration
+├── Dockerfile                  # Production container build
+├── Dockerfile.dev             # Development container
+├── docker-compose.yml         # Local development orchestration
+├── render.yaml                # Render deployment config
+└── .dockerignore              # Container build optimization
 ```
 
 ## 🎯 Key Features
 
-### Modern UI/UX
+### Modern Architecture
+- **Full-Stack .NET**: Frontend and backend both in C#
+- **Containerized Deployment**: Production-ready Docker containers
+- **API-First Design**: RESTful backend with JSON responses
+- **SPA Experience**: Client-side routing with API integration
+
+### Backend API Endpoints
+- `GET /api/projects` - Retrieve all projects
+- `GET /api/projects/by-url?url={projectUrl}` - Get project by URL
+- `GET /api/projects/categories/{category}` - Filter by category
+- Health check endpoint for deployment monitoring
+
+### Frontend Features
 - **Dark Theme**: Professional dark color scheme with cyan accents
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 - **3D Effects**: Interactive tilt animations on project cards
-- **Smooth Animations**: Hover effects and transitions throughout
-
-### Technical Architecture
-- **Client-Side Rendering**: Full WebAssembly deployment for optimal performance
-- **Component-Based**: Modular Razor component architecture
-- **Service Pattern**: Dependency injection with scoped services
-- **Type Safety**: C# nullable reference types enabled
-
-### Content Management
-- **Dynamic Projects**: Service-based project data with rich descriptions
-- **Categorized Sections**: Personal projects vs professional experience
-- **Detailed Project Pages**: Comprehensive project breakdowns
-- **SEO Friendly**: Proper page titles and meta descriptions
+- **API Integration**: Dynamic data loading with fallback support
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - .NET 8 SDK
+- Docker (optional, for containerized development)
 - Modern web browser
 
-### Development Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/DynoAbd786/website.git
-   cd website
-   ```
-
-2. **Navigate to project directory**
-   ```bash
-   cd website
-   ```
-
-3. **Restore dependencies**
-   ```bash
-   dotnet restore
-   ```
-
-4. **Run the development server**
-   ```bash
-   dotnet run
-   ```
-
-5. **Open in browser**
-   - HTTP: http://localhost:5195
-   - HTTPS: https://localhost:7112
-
-### Development Commands
+### Option 1: Docker Development (Recommended)
 
 ```bash
-# Watch mode (auto-reload on changes)
-dotnet watch
+# Clone the repository
+git clone https://github.com/DynoAbd786/website.git
+cd website
 
-# Build for production
-dotnet build -c Release
+# Run with Docker Compose
+docker-compose up --build
 
-# Publish for deployment
-dotnet publish -c Release
+# Access at: http://localhost:8080
 ```
+
+### Option 2: Local Development Servers
+
+**Terminal 1 - Start Backend API:**
+```bash
+cd website.api
+dotnet run --urls "https://localhost:7233;http://localhost:7232"
+```
+
+**Terminal 2 - Start Frontend:**
+```bash
+cd website
+dotnet run
+```
+
+- Frontend: http://localhost:5195 or https://localhost:7112
+- API: https://localhost:7233 (with Swagger documentation)
+
+### Option 3: Production Container
+
+```bash
+# Build and run production container
+docker build -t portfolio-app .
+docker run -p 8080:10000 portfolio-app
+
+# Access at: http://localhost:8080
+```
+
+## 🐳 Docker Commands
+
+### Development
+```bash
+# Run development environment
+docker-compose up --build
+
+# Run API only in development mode
+docker-compose --profile dev up api-dev
+
+# Stop all services
+docker-compose down
+```
+
+### Production
+```bash
+# Build production image
+docker build -t portfolio-app .
+
+# Run production container
+docker run -d -p 8080:10000 --name portfolio portfolio-app
+
+# View logs
+docker logs portfolio
+
+# Stop and remove
+docker stop portfolio && docker rm portfolio
+```
+
+## ☁️ Cloud Deployment
+
+### Render Deployment
+This project is configured for one-click deployment to Render:
+
+1. Connect your GitHub repository to Render
+2. The `render.yaml` file automatically configures:
+   - Docker-based deployment
+   - Health checks on `/api/projects`
+   - Environment variables for production
+   - Port 10000 configuration
+
+### GitHub Pages (Frontend Only)
+The existing GitHub Actions workflow deploys the frontend to GitHub Pages:
+- Automatic deployment on main branch pushes
+- Blazor WebAssembly static files only
+- Custom domain configuration
 
 ## 📚 Learning Journey
 
-This project represents my exploration of:
+This project demonstrates mastery of:
 
-### C# & .NET Concepts
-- **Modern C# Features**: Records, nullable types, pattern matching
+### Full-Stack .NET Development
 - **Blazor WebAssembly**: Client-side C# web development
-- **Component Lifecycle**: Razor component patterns and lifecycle methods
-- **Dependency Injection**: Built-in DI container usage
-- **Async Programming**: Task-based asynchronous patterns
+- **ASP.NET Core Web API**: RESTful backend development
+- **Dependency Injection**: Both frontend and backend DI patterns
+- **Async Programming**: Task-based asynchronous patterns throughout
 
-### Web Development
-- **SPA Architecture**: Single-page application patterns
-- **Responsive Design**: Mobile-first CSS frameworks
-- **Performance Optimization**: Client-side rendering strategies
-- **Modern Tooling**: .NET CLI, hot reload, debugging
+### Cloud-Native Architecture
+- **Containerization**: Multi-stage Docker builds
+- **Microservices Patterns**: API-first design
+- **Configuration Management**: Environment-based settings
+- **Health Monitoring**: Application health endpoints
 
-### AI-Assisted Development
-- **Claude Code Integration**: Leveraging AI for learning acceleration
-- **Prompt Engineering**: Effective AI collaboration techniques
-- **Modern Workflows**: AI-augmented development practices
+### Modern DevOps Practices
+- **Infrastructure as Code**: Docker and Render configurations
+- **Container Orchestration**: Docker Compose for development
+- **Cloud Deployment**: Production-ready container deployment
+- **Monitoring**: Application health and logging
 
-## 🎨 Design Philosophy
-
-### Visual Design
-- **Dark Theme**: Reduces eye strain, professional appearance
-- **Minimalist Layout**: Clean, focused content presentation
-- **Consistent Typography**: Carefully selected font pairings
-- **Strategic Color Use**: Cyan accents for key interactive elements
-
-### User Experience
-- **Fast Loading**: Client-side rendering with optimized assets
-- **Mobile Responsive**: Touch-friendly design for all devices
-- **Intuitive Navigation**: Clear information architecture
-- **Accessibility**: Semantic HTML and ARIA labels
+### API Design Principles
+- **RESTful Endpoints**: Standard HTTP methods and status codes
+- **CORS Configuration**: Cross-origin resource sharing
+- **Error Handling**: Proper exception management
+- **Documentation**: Swagger/OpenAPI integration
 
 ## 🔧 Configuration
 
-### Launch Profiles
-The application supports multiple launch profiles:
-- **HTTP Profile**: Development server on port 5195
-- **HTTPS Profile**: Secure development server on port 7112
-- **IIS Express**: Integration with Visual Studio
-
 ### Environment Variables
-- Development settings in `Properties/launchSettings.json`
-- Production configuration via deployment environment
+- `ASPNETCORE_ENVIRONMENT`: Development/Production
+- `ASPNETCORE_URLS`: Server binding URLs
+- Development/Production settings in `appsettings.json`
 
-## 📦 Deployment
+### CORS Configuration
+- Development: Allows localhost origins
+- Production: Configured for same-origin requests
+- Supports credentials and all HTTP methods
 
-### GitHub Pages Deployment
-The site is automatically deployed to GitHub Pages using GitHub Actions:
-
-1. **Build Process**: .NET publish creates optimized WebAssembly output
-2. **Asset Optimization**: CSS/JS minification and compression
-3. **Custom Domain**: Configured for `dynoabd786.github.io`
-4. **Automatic Updates**: Deployments trigger on main branch pushes
-
-### Manual Deployment
-```bash
-# Build for production
-dotnet publish -c Release -o dist
-
-# Deploy dist/wwwroot contents to web server
-```
+### Static File Serving
+- API serves both backend endpoints and frontend assets
+- Fallback routing for SPA client-side navigation
+- Production-optimized static file caching
 
 ## 🤝 AI Development Partnership
 
-This project showcases modern AI-assisted development:
+This project showcases advanced AI-assisted development:
 
 ### Claude Code Integration
-- **Architecture Guidance**: System design and best practices
-- **Code Generation**: Component scaffolding and boilerplate
-- **Learning Acceleration**: Real-time explanations and mentorship
-- **Quality Assurance**: Code review and optimization suggestions
+- **Full-Stack Architecture**: End-to-end system design guidance
+- **Containerization**: Docker configuration and best practices
+- **API Development**: RESTful endpoint design and implementation
+- **Cloud Deployment**: Production deployment configuration
 
-### Development Workflow
-1. **Concept Discussion**: Project planning with AI assistance
-2. **Iterative Development**: Feature implementation with AI guidance
-3. **Code Review**: AI-powered quality checks and improvements
-4. **Documentation**: AI-assisted README and code documentation
+### Modern Development Workflow
+1. **System Architecture**: AI-assisted architectural decisions
+2. **Backend Development**: API design and implementation guidance
+3. **Frontend Integration**: Client-server communication patterns
+4. **DevOps Setup**: Container and deployment configuration
+5. **Testing & Validation**: End-to-end testing strategies
+
+## 📄 API Documentation
+
+### Projects Endpoints
+
+#### Get All Projects
+```http
+GET /api/projects
+```
+Returns array of all projects with full details.
+
+#### Get Project by URL
+```http
+GET /api/projects/by-url?url=/projects/taskflow
+```
+Returns specific project matching the URL path.
+
+#### Get Projects by Category
+```http
+GET /api/projects/categories/Professional
+```
+Returns filtered projects by category (Personal, Professional, Academic).
+
+### Response Format
+```json
+{
+  "title": "Project Title",
+  "description": "Detailed description...",
+  "imageUrl": "https://...",
+  "projectUrl": "/projects/...",
+  "tags": ["Tag1", "Tag2"],
+  "category": "Professional"
+}
+```
+
+## 📦 Deployment Options
+
+### 1. Render (Recommended)
+- Automatic Docker deployment
+- Environment variable management
+- Health monitoring
+- Custom domain support
+
+### 2. Any Container Platform
+- Docker Hub registry
+- Kubernetes deployment
+- Cloud Run, ECS, or similar
+
+### 3. Traditional Hosting
+- IIS deployment
+- Linux/Nginx reverse proxy
+- Static file serving configuration
 
 ## 📄 License
 
@@ -211,4 +304,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-*Built with 💙 using Blazor WebAssembly and Claude Code assistance*
+*Built with 💙 using Blazor WebAssembly, ASP.NET Core, Docker, and Claude Code assistance*
