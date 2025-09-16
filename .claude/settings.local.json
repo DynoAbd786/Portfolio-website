@@ -21,7 +21,8 @@
       "Bash(docker stop:*)",
       "Bash(docker rm:*)",
       "Bash(xxd:*)",
-      "Bash(sha256sum:*)"
+      "Bash(sha256sum:*)",
+      "Bash(dotnet add package:*)"
     ],
     "deny": []
   }

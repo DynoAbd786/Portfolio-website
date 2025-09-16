@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 
 // Register custom services
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Configure CORS for Blazor WebAssembly
 builder.Services.AddCors(options =>

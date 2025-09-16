@@ -1,5 +1,7 @@
 @using Microsoft.AspNetCore.Components.Web
+@using System.Net.Http.Json
 @inject IJSRuntime JSRuntime
+@inject HttpClient Http
 
 <section id="contact" class="py-20 bg-gray-900">
     <div class="container mx-auto px-4">
@@ -177,26 +179,29 @@
 
         try
         {
-            // Create mailto link with form data
-            var subject = Uri.EscapeDataString($"[Portfolio Contact] {contactForm.Subject}");
-            var body = Uri.EscapeDataString($"Name: {contactForm.Name}%0D%0AEmail: {contactForm.Email}%0D%0ACompany: {contactForm.Company ?? "Not specified"}%0D%0ARole: {contactForm.Role ?? "Not specified"}%0D%0ASubject: {contactForm.Subject}%0D%0A%0D%0AMessage:%0D%0A{contactForm.Message}%0D%0A%0D%0A---%0D%0ASent from portfolio contact form");
+            // Send email via API
+            var response = await Http.PostAsJsonAsync("api/contact", contactForm);
 
-            var mailtoLink = $"mailto:Abdua786@outlook.com?subject={subject}&body={body}";
+            if (response.IsSuccessStatusCode)
+            {
+                submitMessage = "Thank you! Your message has been sent successfully. I'll get back to you soon.";
+                submitSuccess = true;
 
-            // Open email client
-            await JSRuntime.InvokeVoidAsync("open", mailtoLink, "_blank");
-
-            submitMessage = "Email client opened! Please send the email to complete your message.";
-            submitSuccess = true;
-
-            // Reset form after successful submission
-            await Task.Delay(3000);
-            contactForm = new();
-            submitMessage = "";
+                // Reset form after successful submission
+                await Task.Delay(3000);
+                contactForm = new();
+                submitMessage = "";
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
+                submitSuccess = false;
+            }
         }
         catch (Exception ex)
         {
-            submitMessage = "There was an error opening your email client. Please try emailing Abdua786@outlook.com directly.";
+            submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
             submitSuccess = false;
         }
         finally
