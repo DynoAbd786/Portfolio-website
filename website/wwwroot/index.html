@@ -10,9 +10,36 @@
     <!-- Tailwind CSS - Local production build -->
     <link rel="stylesheet" href="css/tailwind.min.css" />
     <style>
-        /* Custom Tailwind-like classes for dark mode and custom fonts */
+        /* Custom Tailwind configuration for portfolio */
+        :root {
+            --tw-text-opacity: 1;
+        }
+
         .dark { color-scheme: dark; }
         .font-mono { font-family: "Source Code Pro", monospace; }
+
+        /* Ensure all elements use dark theme by default */
+        body {
+            background-color: #111827;
+            color: #f9fafb;
+        }
+
+        /* Custom color utilities matching your design */
+        .text-cyan-400 { color: #22d3ee; }
+        .text-gray-300 { color: #d1d5db; }
+        .text-gray-400 { color: #9ca3af; }
+        .bg-gray-800 { background-color: #1f2937; }
+        .bg-gray-900 { background-color: #111827; }
+        .border-gray-700 { border-color: #374151; }
+        .border-cyan-500 { border-color: #06b6d4; }
+        .hover\:border-cyan-500\/50:hover { border-color: rgba(6, 182, 212, 0.5); }
+        .bg-cyan-500 { background-color: #06b6d4; }
+        .hover\:bg-cyan-400:hover { background-color: #22d3ee; }
+
+        /* Gradient utilities */
+        .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+        .from-cyan-500 { --tw-gradient-from: #06b6d4; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(6, 182, 212, 0)); }
+        .to-blue-500 { --tw-gradient-to: #3b82f6; }
     </style>
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
