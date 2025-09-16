@@ -7,20 +7,13 @@
     <title>Blazor Portfolio</title>
     <base href="/" />
     <link rel="stylesheet" href="css/app.css" />
-    <!-- Tailwind CSS - Using CDN for development only -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'mono': ['"Source Code Pro"', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS - Local production build -->
+    <link rel="stylesheet" href="css/tailwind.min.css" />
+    <style>
+        /* Custom Tailwind-like classes for dark mode and custom fonts */
+        .dark { color-scheme: dark; }
+        .font-mono { font-family: "Source Code Pro", monospace; }
+    </style>
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Google Fonts -->
