@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 // Register custom services
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IMcpService, McpService>();
 
 // Configure CORS for Blazor WebAssembly
 builder.Services.AddCors(options =>
@@ -28,6 +29,14 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
+    });
+
+    // CORS policy for MCP clients
+    options.AddPolicy("AllowMcpClients", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
@@ -43,7 +52,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowBlazorWasm");
+
+// Apply MCP CORS policy globally since this is a dedicated MCP server
+app.UseCors("AllowMcpClients");
 
 // Configure static files with proper MIME types for Blazor WebAssembly
 var provider = new FileExtensionContentTypeProvider();
