@@ -1,5 +1,4 @@
-using MailKit.Net.Smtp;
-using MimeKit;
+using PostmarkDotNet;
 using website.api.Models;
 
 namespace website.api.Services;
@@ -24,25 +23,39 @@ public class EmailService : IEmailService
     {
         try
         {
-            var message = new MimeMessage();
+            // Log the contact form submission
+            _logger.LogInformation("=== NEW CONTACT FORM SUBMISSION ===");
+            _logger.LogInformation("Name: {Name}", contactRequest.Name);
+            _logger.LogInformation("Email: {Email}", contactRequest.Email);
+            _logger.LogInformation("Company: {Company}", contactRequest.Company ?? "Not specified");
+            _logger.LogInformation("Role: {Role}", contactRequest.Role ?? "Not specified");
+            _logger.LogInformation("Subject: {Subject}", contactRequest.Subject);
+            _logger.LogInformation("Message: {Message}", contactRequest.Message);
+            _logger.LogInformation("======================================");
 
-            // From address - using the sender's email but setting reply-to
-            message.From.Add(new MailboxAddress($"{contactRequest.Name} (Portfolio Contact)",
-                _configuration["SmtpSettings:FromEmail"]));
+            // Create Postmark client
+            var client = new PostmarkClient(_configuration["POSTMARK_API_TOKEN"]);
 
-            // To address
-            message.To.Add(new MailboxAddress("Muhammad Kashif-Khan",
-                _configuration["ContactEmail"]));
-
-            // Reply-To address (so replies go to the actual sender)
-            message.ReplyTo.Add(new MailboxAddress(contactRequest.Name, contactRequest.Email));
-
-            // Subject
-            message.Subject = $"[Portfolio Contact] {contactRequest.Subject}";
-
-            // Body
-            var bodyBuilder = new BodyBuilder();
-            bodyBuilder.TextBody = $@"
+            // Create email message
+            var message = new PostmarkMessage()
+            {
+                To = _configuration["ContactEmail"],
+                From = _configuration["Postmark:FromEmail"],
+                TrackOpens = true,
+                Subject = $"[Portfolio Contact] {contactRequest.Subject}",
+                HtmlBody = $@"
+                    <h2>New contact form submission from your portfolio website:</h2>
+                    <p><strong>Name:</strong> {contactRequest.Name}</p>
+                    <p><strong>Email:</strong> <a href=""mailto:{contactRequest.Email}"">{contactRequest.Email}</a></p>
+                    <p><strong>Company:</strong> {contactRequest.Company ?? "Not specified"}</p>
+                    <p><strong>Role:</strong> {contactRequest.Role ?? "Not specified"}</p>
+                    <p><strong>Subject:</strong> {contactRequest.Subject}</p>
+                    <p><strong>Message:</strong></p>
+                    <p>{contactRequest.Message.Replace("\n", "<br>")}</p>
+                    <hr>
+                    <p><em>This email was sent from your portfolio contact form.</em></p>
+                ",
+                TextBody = $@"
 New contact form submission from your portfolio website:
 
 Name: {contactRequest.Name}
@@ -56,30 +69,26 @@ Message:
 
 ---
 This email was sent from your portfolio contact form.
-Reply directly to this email to respond to {contactRequest.Name}.
-";
-
-            message.Body = bodyBuilder.ToMessageBody();
+",
+                ReplyTo = contactRequest.Email,
+                Tag = "contact-form"
+            };
 
             // Send the email
-            using var client = new SmtpClient();
+            var response = await client.SendMessageAsync(message);
 
-            await client.ConnectAsync(
-                _configuration["SmtpSettings:Host"],
-                int.Parse(_configuration["SmtpSettings:Port"]),
-                bool.Parse(_configuration["SmtpSettings:UseSsl"])
-            );
-
-            await client.AuthenticateAsync(
-                _configuration["SmtpSettings:Username"],
-                _configuration["SmtpSettings:Password"]
-            );
-
-            await client.SendAsync(message);
-            await client.DisconnectAsync(true);
-
-            _logger.LogInformation("Contact email sent successfully from {Email}", contactRequest.Email);
-            return true;
+            if (response.Status == PostmarkStatus.Success)
+            {
+                _logger.LogInformation("Contact email sent successfully via Postmark from {Email}. Message ID: {MessageId}",
+                    contactRequest.Email, response.Message);
+                return true;
+            }
+            else
+            {
+                _logger.LogError("Failed to send email via Postmark. Status: {Status}, Message: {Message}",
+                    response.Status, response.Message);
+                return false;
+            }
         }
         catch (Exception ex)
         {

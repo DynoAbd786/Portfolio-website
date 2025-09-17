@@ -4,3 +4,17 @@ GET {{website.api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{website.api_HostAddress}}/api/contact
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "company": "Test Company",
+  "role": "Developer",
+  "subject": "Test Email via Postmark",
+  "message": "This is a test message to verify Postmark integration is working correctly."
+}
+
+###

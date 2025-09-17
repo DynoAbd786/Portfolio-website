@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5154",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTMARK_API_TOKEN": "787f71dc-150e-4be2-8c50-ed8a3baa696e"
       }
     },
     "https": {
@@ -26,7 +27,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7248;http://localhost:5154",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTMARK_API_TOKEN": "787f71dc-150e-4be2-8c50-ed8a3baa696e"
       }
     },
     "IIS Express": {
@@ -34,7 +36,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTMARK_API_TOKEN": "787f71dc-150e-4be2-8c50-ed8a3baa696e"
       }
     }
   }
