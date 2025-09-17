@@ -22,7 +22,9 @@
       "Bash(docker rm:*)",
       "Bash(xxd:*)",
       "Bash(sha256sum:*)",
-      "Bash(dotnet add package:*)"
+      "Bash(dotnet add package:*)",
+      "Bash(git commit:*)",
+      "Read(//home/abdua786/code/personal/**)"
     ],
     "deny": []
   }

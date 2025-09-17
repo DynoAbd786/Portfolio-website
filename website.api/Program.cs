@@ -1,5 +1,12 @@
 using website.api.Services;
 using Microsoft.AspNetCore.StaticFiles;
+using DotNetEnv;
+
+// Load .env file for local development
+if (File.Exists(".env"))
+{
+    Env.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
