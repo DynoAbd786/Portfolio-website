@@ -42,10 +42,10 @@ namespace website.Data
                 new Project
                 {
                     Title = "Personal Portfolio & C# Learning Journey",
-                    Description = "Blazor WebAssembly portfolio built with .NET 8 and C# to master modern web development fundamentals. Features client-side rendering, responsive Tailwind CSS design, component architecture, dependency injection, and Font Awesome icons. Includes dynamic project showcase, mobile navigation, and 3D tilt effects via Vanilla Tilt.js. Developed entirely with Claude Code assistance to demonstrate AI-accelerated learning and document the C# development journey for employers and fellow developers.",
+                    Description = "Comprehensive C# and .NET portfolio showcasing modern development with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features advanced C# language concepts, async/await patterns, dependency injection, component architecture, and professional email integration via Postmark. Demonstrates mastery of .NET 8 features, proper error handling, environment-based configuration, and production deployment. Built with Claude Code assistance to accelerate C# learning while creating a full-stack web application that highlights professional software development capabilities.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
                     ProjectUrl = "/projects/ai-research",
-                    Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
+                    Tags = new[] { "C#", ".NET 8", "Blazor WebAssembly", "ASP.NET Core", "Web API", "Postmark", "Claude Code" },
                     Category = ProjectCategory.Personal
                 },
                 new Project

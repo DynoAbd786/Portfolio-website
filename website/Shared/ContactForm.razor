@@ -54,15 +54,6 @@
                             </div>
                         </div>
 
-                        <div class="flex items-center">
-                            <div class="bg-cyan-500 rounded-full p-3 mr-4">
-                                <i class="fas fa-globe text-white text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-semibold">Portfolio</h4>
-                                <a href="https://dynoabd786.github.io" class="text-cyan-400 hover:text-cyan-300 transition-colors">dynoabd786.github.io</a>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="mt-8 p-6 bg-gray-700 rounded-lg border border-cyan-500/25">
@@ -186,9 +177,11 @@
             {
                 submitMessage = "Thank you! Your message has been sent successfully. I'll get back to you soon.";
                 submitSuccess = true;
+                isSubmitting = false;
+                StateHasChanged();
 
                 // Reset form after successful submission
-                await Task.Delay(3000);
+                await Task.Delay(20000);
                 contactForm = new();
                 submitMessage = "";
             }
@@ -197,12 +190,14 @@
                 var errorContent = await response.Content.ReadAsStringAsync();
                 submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
                 submitSuccess = false;
+                StateHasChanged();
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
             submitSuccess = false;
+            StateHasChanged();
         }
         finally
         {

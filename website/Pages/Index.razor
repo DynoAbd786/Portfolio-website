@@ -189,29 +189,6 @@
         }
         else
         {
-            <!-- Personal Projects Section -->
-            @if (projects.Any(p => p.Category == ProjectCategory.Personal))
-            {
-                <div class="mb-20">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-rocket text-white text-xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-cyan-400 mb-1">Personal Projects</h3>
-                            <p class="text-gray-400">Independent research and development initiatives</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projects.Where(p => p.Category == ProjectCategory.Personal))
-                        {
-                            <ProjectCard Project="project" />
-                        }
-                    </div>
-                </div>
-            }
-
             <!-- Professional Experience Projects Section -->
             @if (projects.Any(p => p.Category == ProjectCategory.Professional))
             {
@@ -276,6 +253,29 @@
                             <h4 class="text-xl font-bold text-gray-300 mb-3">Coming Soon</h4>
                             <p class="text-gray-500">Academic projects from university coursework and research will be featured here</p>
                         </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Personal Projects Section -->
+            @if (projects.Any(p => p.Category == ProjectCategory.Personal))
+            {
+                <div class="mb-20">
+                    <div class="flex items-center justify-center mb-8">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-rocket text-white text-xl"></i>
+                        </div>
+                        <div class="text-center">
+                            <h3 class="text-3xl font-bold text-cyan-400 mb-1">Personal Projects</h3>
+                            <p class="text-gray-400">Independent research and development initiatives</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                        @foreach (var project in projects.Where(p => p.Category == ProjectCategory.Personal))
+                        {
+                            <ProjectCard Project="project" />
+                        }
                     </div>
                 </div>
             }
