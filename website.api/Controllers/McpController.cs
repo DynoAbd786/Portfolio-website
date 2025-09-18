@@ -17,13 +17,6 @@ public class McpController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("test")]
-    public IActionResult TestPost()
-    {
-        _logger.LogInformation("=== TEST POST ENDPOINT HIT ===");
-        return Ok(new { message = "POST endpoint works", timestamp = DateTime.UtcNow });
-    }
-
     [HttpPost]
     public async Task<IActionResult> HandleMcpRequest()
     {
