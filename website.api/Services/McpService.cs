@@ -409,7 +409,7 @@ public class McpService : IMcpService
         };
     }
 
-    private static McpResponse CreateErrorResponse(string? id, int code, string message)
+    private static McpResponse CreateErrorResponse(object? id, int code, string message)
     {
         return new McpResponse
         {
