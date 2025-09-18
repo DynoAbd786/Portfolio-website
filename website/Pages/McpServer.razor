@@ -1,0 +1,258 @@
+@page "/mcp"
+
+<PageTitle>AI Integration - MCP Server</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                AI Integration
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">MCP Server Available</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Connect AI Agents to My Portfolio</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                I've built a Model Context Protocol (MCP) server that allows AI agents to access my portfolio data and contact me directly. Perfect for recruiters, developers, and AI enthusiasts!
+            </p>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🤖</div>
+            <p class="text-white/75 text-lg">AI-Powered Portfolio Integration</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- What is MCP Section -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-purple-400">What is MCP?</h2>
+                </div>
+                <p class="text-gray-300 text-lg leading-relaxed mb-4">
+                    Model Context Protocol (MCP) is a standard that allows AI agents to securely access external data and tools.
+                    My MCP server exposes my portfolio information and contact capabilities, enabling AI assistants to:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-start">
+                        <div class="bg-purple-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                        <span class="text-gray-300">Answer questions about my projects and experience</span>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-purple-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                        <span class="text-gray-300">Submit contact form messages on your behalf</span>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-purple-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                        <span class="text-gray-300">Search projects by technology or category</span>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-purple-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
+                        <span class="text-gray-300">Provide up-to-date professional information</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Server Details -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Connection Info -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-link text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-cyan-400">Server Connection</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-white font-semibold">Server URL:</label>
+                            <div class="bg-gray-800 rounded-lg p-3 mt-2 font-mono text-cyan-400 border border-gray-600">
+                                https://mcp.mkkai.dev
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-white font-semibold">Protocol:</label>
+                            <p class="text-gray-300 mt-1">HTTP Transport (JSON-RPC 2.0)</p>
+                        </div>
+                        <div>
+                            <label class="text-white font-semibold">Authentication:</label>
+                            <p class="text-gray-300 mt-1">None required (public portfolio data)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capabilities -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-cogs text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-400">Available Capabilities</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-white font-semibold mb-2">📁 Resources</h4>
+                            <ul class="space-y-1 text-gray-300 text-sm">
+                                <li>• Professional profile and bio</li>
+                                <li>• Contact information</li>
+                                <li>• Complete project portfolio</li>
+                                <li>• Individual project details</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-2">🛠️ Tools</h4>
+                            <ul class="space-y-1 text-gray-300 text-sm">
+                                <li>• Submit contact form messages</li>
+                                <li>• Search projects by category/technology</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup Instructions -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-wrench text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-yellow-400">Setup Instructions</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Claude Desktop -->
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">For Claude Desktop Users</h3>
+                        <div class="space-y-3">
+                            <p class="text-gray-300">1. <strong>Download Claude Desktop</strong> from Anthropic (if you haven't already)</p>
+                            <p class="text-gray-300">2. <strong>Find your config file:</strong></p>
+                            <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
+                                <strong>Mac:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json<br>
+                                <strong>Windows:</strong> %APPDATA%/Claude/claude_desktop_config.json
+                            </div>
+                            <p class="text-gray-300">3. <strong>Add this configuration:</strong></p>
+                            <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-600">
+                                <pre class="text-sm text-gray-300"><code>{
+  "mcpServers": {
+    "muhammad-portfolio": {
+      "transport": "http",
+      "url": "https://mcp.mkkai.dev",
+      "description": "Muhammad's Portfolio MCP Server"
+    }
+  }
+}</code></pre>
+                            </div>
+                            <p class="text-gray-300">4. <strong>Restart Claude Desktop</strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Other Clients -->
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">For Other MCP Clients</h3>
+                        <p class="text-gray-300 mb-3">Use the HTTP transport with these settings:</p>
+                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                            <div class="space-y-2 text-sm text-gray-300">
+                                <div><strong>URL:</strong> https://mcp.mkkai.dev</div>
+                                <div><strong>Protocol:</strong> HTTP</div>
+                                <div><strong>Format:</strong> JSON-RPC 2.0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Interactions -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-comments text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-blue-400">Example Interactions</h2>
+                </div>
+                <p class="text-gray-300 mb-6">Once connected, you can have natural conversations with AI about my portfolio:</p>
+
+                <div class="space-y-6">
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">U</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">User</p>
+                                <p class="text-gray-300">"What programming languages does Muhammad work with?"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-purple-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">AI</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">AI Assistant</p>
+                                <p class="text-gray-300">"Muhammad works with Python, C, Java, SQL, and Bash. He also has experience with frameworks like PyQt6, and tools like Docker and Git."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">U</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">User</p>
+                                <p class="text-gray-300">"Send him a message about a Python developer position at my company"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-purple-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">AI</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">AI Assistant</p>
+                                <p class="text-gray-300">"I'll send that inquiry to Muhammad through his contact form. Please provide your details and I'll submit the message for you."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">U</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">User</p>
+                                <p class="text-gray-300">"What are his machine learning projects?"</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-purple-500 rounded-full w-8 h-8 flex items-center justify-center text-white text-sm font-bold">AI</div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">AI Assistant</p>
+                                <p class="text-gray-300">"Muhammad has worked on medical simulation platforms and AI research projects. His TaskFlow project also involves distributed systems that could be applied to ML workflows."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
+                <h3 class="text-3xl font-bold text-cyan-400 mb-4">Ready to Connect?</h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                    Set up the MCP server connection in your AI client and start having intelligent conversations about my portfolio.
+                    Perfect for recruiters, hiring managers, and fellow developers who want quick access to my professional information.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-lg">
+                        <i class="fas fa-link mr-2"></i>https://mcp.mkkai.dev
+                    </div>
+                    <a href="/" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                        <i class="fas fa-folder-open mr-2"></i>View Projects
+                    </a>
+                    <a href="/#contact" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                        <i class="fas fa-envelope mr-2"></i>Contact Directly
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
