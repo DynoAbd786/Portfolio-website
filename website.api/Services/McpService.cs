@@ -24,9 +24,15 @@ public class McpService : IMcpService
 
     public async Task<McpResponse> HandleRequestAsync(McpRequest request)
     {
+        _logger.LogInformation("=== MCP SERVICE REQUEST ===");
+        _logger.LogInformation("Method: {Method} | ID: {Id} | JsonRpc: {JsonRpc}",
+            request.Method, request.Id, request.JsonRpc);
+        _logger.LogInformation("Params: {Params}",
+            request.Params != null ? JsonSerializer.Serialize(request.Params) : "null");
+
         try
         {
-            return request.Method switch
+            var response = request.Method switch
             {
                 "initialize" => HandleInitialize(request),
                 "notifications/initialized" => new McpResponse { Id = request.Id, Result = new { } },
@@ -36,6 +42,17 @@ public class McpService : IMcpService
                 "tools/call" => await HandleToolCall(request),
                 _ => CreateErrorResponse(request.Id, -32601, "Method not found")
             };
+
+            _logger.LogInformation("MCP Service returning response for method {Method} with ID {ResponseId}",
+                request.Method, response.Id);
+
+            if (response.Error != null)
+            {
+                _logger.LogWarning("Response contains error: Code={ErrorCode}, Message={ErrorMessage}",
+                    response.Error.Code, response.Error.Message);
+            }
+
+            return response;
         }
         catch (Exception ex)
         {
@@ -231,6 +248,10 @@ public class McpService : IMcpService
 
     private McpResponse HandleToolsList(McpRequest request)
     {
+        _logger.LogInformation("=== TOOLS/LIST REQUEST START ===");
+        _logger.LogInformation("Request ID: {RequestId}", request.Id);
+        _logger.LogInformation("Request Method: {Method}", request.Method);
+
         var tools = new List<McpTool>
         {
             new McpTool
@@ -269,22 +290,48 @@ public class McpService : IMcpService
             }
         };
 
-        return new McpResponse
+        _logger.LogInformation("Created {ToolCount} tools:", tools.Count);
+        foreach (var tool in tools)
+        {
+            _logger.LogInformation("- Tool: {ToolName} | Description: {Description}", tool.Name, tool.Description);
+        }
+
+        var response = new McpResponse
         {
             Id = request.Id,
             Result = new { tools }
         };
+
+        _logger.LogInformation("Tools list response created with ID: {ResponseId}", response.Id);
+        _logger.LogInformation("Response Result Type: {ResultType}", response.Result?.GetType().Name);
+        _logger.LogInformation("Serialized tools response: {SerializedResponse}",
+            JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
+        _logger.LogInformation("=== TOOLS/LIST REQUEST COMPLETE ===");
+
+        return response;
     }
 
     private async Task<McpResponse> HandleToolCall(McpRequest request)
     {
+        _logger.LogInformation("=== TOOLS/CALL REQUEST START ===");
+        _logger.LogInformation("Request ID: {RequestId}", request.Id);
+        _logger.LogInformation("Request Method: {Method}", request.Method);
+        _logger.LogInformation("Request Params: {Params}", JsonSerializer.Serialize(request.Params));
+
         var paramsJson = JsonSerializer.Serialize(request.Params);
         var toolCall = JsonSerializer.Deserialize<McpToolCall>(paramsJson);
 
+        _logger.LogInformation("Parsed tool call - Name: {ToolName}", toolCall?.Name);
+        _logger.LogInformation("Tool arguments: {Arguments}",
+            toolCall?.Arguments != null ? JsonSerializer.Serialize(toolCall.Arguments) : "null");
+
         if (toolCall?.Name == null)
         {
+            _logger.LogWarning("Tool call missing name - returning error");
             return CreateErrorResponse(request.Id, -32602, "Missing tool name");
         }
+
+        _logger.LogInformation("Executing tool: {ToolName}", toolCall.Name);
 
         var result = toolCall.Name switch
         {
@@ -300,11 +347,19 @@ public class McpService : IMcpService
             }
         };
 
-        return new McpResponse
+        _logger.LogInformation("Tool execution result - IsError: {IsError}, ContentCount: {ContentCount}",
+            result.IsError, result.Content?.Count ?? 0);
+
+        var response = new McpResponse
         {
             Id = request.Id,
             Result = result
         };
+
+        _logger.LogInformation("Tools call response created with ID: {ResponseId}", response.Id);
+        _logger.LogInformation("=== TOOLS/CALL REQUEST COMPLETE ===");
+
+        return response;
     }
 
     private async Task<McpToolResult> HandleSubmitContact(Dictionary<string, object>? arguments)
