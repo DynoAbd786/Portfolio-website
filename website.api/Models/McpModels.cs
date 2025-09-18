@@ -8,7 +8,7 @@ public class McpRequest
     public string JsonRpc { get; set; } = "2.0";
 
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public object? Id { get; set; }
 
     [JsonPropertyName("method")]
     public string Method { get; set; } = "";
@@ -23,7 +23,7 @@ public class McpResponse
     public string JsonRpc { get; set; } = "2.0";
 
     [JsonPropertyName("id")]
-    public string? Id { get; set; }
+    public object? Id { get; set; }
 
     [JsonPropertyName("result")]
     public object? Result { get; set; }
