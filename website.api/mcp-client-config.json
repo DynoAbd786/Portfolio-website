@@ -1,13 +1,9 @@
 {
   "mcpServers": {
     "muhammad-portfolio": {
-      "transport": "http",
-      "url": "https://mcp.mkkai.dev",
-      "description": "Muhammad Kashif-Khan's Portfolio MCP Server",
-      "capabilities": {
-        "resources": true,
-        "tools": true
-      }
+      "command": "dotnet",
+      "args": ["run", "--project", "C:\\Users\\Abdua\\Programs\\Personal\\Portfolio-website\\McpServer\\McpServer.csproj"],
+      "description": "Muhammad Kashif-Khan's Portfolio MCP Server"
     }
   }
 }
