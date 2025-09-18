@@ -67,14 +67,18 @@
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="text-white font-semibold">Server URL:</label>
+                            <label class="text-white font-semibold">Transport Type:</label>
                             <div class="bg-gray-800 rounded-lg p-3 mt-2 font-mono text-cyan-400 border border-gray-600">
-                                https://mcp.mkkai.dev
+                                Stdio (Standard Input/Output)
                             </div>
                         </div>
                         <div>
+                            <label class="text-white font-semibold">Runtime:</label>
+                            <p class="text-gray-300 mt-1">.NET Console Application</p>
+                        </div>
+                        <div>
                             <label class="text-white font-semibold">Protocol:</label>
-                            <p class="text-gray-300 mt-1">HTTP Transport (JSON-RPC 2.0)</p>
+                            <p class="text-gray-300 mt-1">MCP Protocol (JSON-RPC 2.0)</p>
                         </div>
                         <div>
                             <label class="text-white font-semibold">Authentication:</label>
@@ -127,36 +131,42 @@
                         <h3 class="text-xl font-bold text-white mb-3">For Claude Desktop Users</h3>
                         <div class="space-y-3">
                             <p class="text-gray-300">1. <strong>Download Claude Desktop</strong> from Anthropic (if you haven't already)</p>
-                            <p class="text-gray-300">2. <strong>Find your config file:</strong></p>
+                            <p class="text-gray-300">2. <strong>Install .NET 8 Runtime</strong> (required for the C# MCP server)</p>
+                            <p class="text-gray-300">3. <strong>Clone or download the MCP server:</strong></p>
+                            <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
+                                git clone https://github.com/DynoAbd786/Portfolio-website.git
+                            </div>
+                            <p class="text-gray-300">4. <strong>Find your config file:</strong></p>
                             <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
                                 <strong>Mac:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json<br>
                                 <strong>Windows:</strong> %APPDATA%/Claude/claude_desktop_config.json
                             </div>
-                            <p class="text-gray-300">3. <strong>Add this configuration:</strong></p>
+                            <p class="text-gray-300">5. <strong>Add this configuration (update the path):</strong></p>
                             <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-600">
                                 <pre class="text-sm text-gray-300"><code>{
   "mcpServers": {
     "muhammad-portfolio": {
-      "transport": "http",
-      "url": "https://mcp.mkkai.dev",
+      "command": "dotnet",
+      "args": ["run", "--project", "/path/to/Portfolio-website/McpServer/McpServer.csproj"],
       "description": "Muhammad's Portfolio MCP Server"
     }
   }
 }</code></pre>
                             </div>
-                            <p class="text-gray-300">4. <strong>Restart Claude Desktop</strong></p>
+                            <p class="text-gray-300">6. <strong>Restart Claude Desktop</strong></p>
                         </div>
                     </div>
 
                     <!-- Other Clients -->
                     <div>
                         <h3 class="text-xl font-bold text-white mb-3">For Other MCP Clients</h3>
-                        <p class="text-gray-300 mb-3">Use the HTTP transport with these settings:</p>
+                        <p class="text-gray-300 mb-3">Use the stdio transport with these settings:</p>
                         <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
                             <div class="space-y-2 text-sm text-gray-300">
-                                <div><strong>URL:</strong> https://mcp.mkkai.dev</div>
-                                <div><strong>Protocol:</strong> HTTP</div>
-                                <div><strong>Format:</strong> JSON-RPC 2.0</div>
+                                <div><strong>Command:</strong> dotnet</div>
+                                <div><strong>Args:</strong> ["run", "--project", "/path/to/McpServer/McpServer.csproj"]</div>
+                                <div><strong>Transport:</strong> stdio</div>
+                                <div><strong>Protocol:</strong> MCP (JSON-RPC 2.0)</div>
                             </div>
                         </div>
                     </div>
@@ -241,9 +251,9 @@
                     Perfect for recruiters, hiring managers, and fellow developers who want quick access to my professional information.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <div class="bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-lg">
-                        <i class="fas fa-link mr-2"></i>https://mcp.mkkai.dev
-                    </div>
+                    <a href="https://github.com/DynoAbd786/Portfolio-website" target="_blank" class="bg-cyan-500 text-gray-900 hover:bg-cyan-400 font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                        <i class="fab fa-github mr-2"></i>Get MCP Server
+                    </a>
                     <a href="/" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
                         <i class="fas fa-folder-open mr-2"></i>View Projects
                     </a>
