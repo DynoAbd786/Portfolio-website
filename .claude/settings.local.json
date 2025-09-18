@@ -28,7 +28,8 @@
       "Bash(npm install)",
       "WebFetch(domain:spec.modelcontextprotocol.io)",
       "WebSearch",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(npx @modelcontextprotocol/inspector:*)"
     ],
     "deny": []
   }
