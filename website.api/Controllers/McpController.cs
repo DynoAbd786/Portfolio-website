@@ -5,7 +5,7 @@ using website.api.Services;
 namespace website.api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/mcp")]
 public class McpController : ControllerBase
 {
     private readonly IMcpService _mcpService;
@@ -70,6 +70,40 @@ public class McpController : ControllerBase
             _logger.LogInformation("Returning error response with ID: {Id}", errorResponse.Id);
             return Ok(errorResponse);
         }
+    }
+
+    [HttpGet("")]
+    public IActionResult GetMcpRoot()
+    {
+        _logger.LogInformation("=== MCP ROOT GET REQUEST ===");
+        _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
+        _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
+        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
+
+        _logger.LogInformation("Redirecting GET /api/mcp to server info");
+
+        var serverInfo = new McpServerInfo
+        {
+            Name = "muhammad-portfolio-mcp",
+            Version = "1.0.0",
+            Capabilities = new McpCapabilities
+            {
+                Resources = true,
+                Tools = true,
+                Prompts = false
+            }
+        };
+
+        return Ok(new
+        {
+            message = "Muhammad Portfolio MCP Server",
+            serverInfo,
+            endpoints = new
+            {
+                info = "/api/mcp/info",
+                mcp = "/api/mcp (POST for MCP requests)"
+            }
+        });
     }
 
     [HttpGet("info")]
