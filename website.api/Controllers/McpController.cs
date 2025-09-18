@@ -101,37 +101,32 @@ public class McpController : ControllerBase
     }
 
     [HttpGet("")]
-    public IActionResult GetMcpRoot()
+    public async Task<IActionResult> GetMcpRoot()
     {
-        _logger.LogInformation("=== MCP ROOT GET REQUEST ===");
+        _logger.LogInformation("=== MCP ROOT GET REQUEST - INITIALIZING ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
         _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
 
-        _logger.LogInformation("Redirecting GET /api/mcp to server info");
+        _logger.LogInformation("Creating default initialize request for GET");
 
-        var serverInfo = new McpServerInfo
+        // Create a default "initialize" request and process it through the MCP service
+        var initRequest = new McpRequest
         {
-            Name = "muhammad-portfolio-mcp",
-            Version = "1.0.0",
-            Capabilities = new McpCapabilities
-            {
-                Resources = true,
-                Tools = true,
-                Prompts = false
-            }
+            Id = "http-get-init",
+            Method = "initialize",
+            JsonRpc = "2.0"
         };
 
-        return Ok(new
-        {
-            message = "Muhammad Portfolio MCP Server",
-            serverInfo,
-            endpoints = new
-            {
-                info = "/api/mcp/info",
-                mcp = "/api/mcp (POST for MCP requests)"
-            }
-        });
+        _logger.LogInformation("Processing initialize request through MCP service");
+
+        // Use the existing McpService to handle the initialize request
+        var response = await _mcpService.HandleRequestAsync(initRequest);
+
+        _logger.LogInformation("Returning MCP initialize response for GET request");
+
+        // Return the full McpResponse directly - this is what Claude expects
+        return Ok(response);
     }
 
     [HttpGet("info")]
