@@ -147,6 +147,27 @@ public class McpController : ControllerBase
         return Ok(serverInfo);
     }
 
+    [HttpGet("debug/tools")]
+    public async Task<IActionResult> GetToolsDebug()
+    {
+        _logger.LogInformation("=== DEBUG TOOLS REQUEST ===");
+
+        // Create a mock tools/list request to test our response
+        var mockRequest = new McpRequest
+        {
+            Id = "debug-tools",
+            Method = "tools/list",
+            JsonRpc = "2.0"
+        };
+
+        var response = await _mcpService.HandleRequestAsync(mockRequest);
+
+        _logger.LogInformation("Debug tools response: {Response}",
+            JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
+
+        return Ok(response);
+    }
+
     [HttpOptions("")]
     public IActionResult HandlePreflight()
     {

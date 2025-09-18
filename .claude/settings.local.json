@@ -25,7 +25,10 @@
       "Bash(dotnet add package:*)",
       "Bash(git commit:*)",
       "Read(//home/abdua786/code/personal/**)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "WebFetch(domain:spec.modelcontextprotocol.io)",
+      "WebSearch",
+      "WebFetch(domain:github.com)"
     ],
     "deny": []
   }
