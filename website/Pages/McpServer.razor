@@ -12,7 +12,7 @@
             <h1 class="text-6xl font-bold text-white mb-4">MCP Server Available</h1>
             <h2 class="text-2xl text-gray-400 mb-6">Connect AI Agents to My Portfolio</h2>
             <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                I've built a Model Context Protocol (MCP) server that allows AI agents to access my portfolio data and contact me directly. Perfect for recruiters, developers, and AI enthusiasts!
+                I've built a Model Context Protocol (MCP) server with dual transport support - HTTP for web integrations and stdio for Claude Desktop. Get AI-powered access to my portfolio data and contact capabilities!
             </p>
         </div>
 
@@ -55,30 +55,30 @@
                 </div>
             </div>
 
-            <!-- Server Details -->
+            <!-- Transport Options -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <!-- Connection Info -->
+                <!-- HTTP Transport -->
                 <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
                     <div class="flex items-center mb-6">
                         <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-link text-white text-xl"></i>
+                            <i class="fas fa-globe text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-cyan-400">Server Connection</h3>
+                        <h3 class="text-2xl font-bold text-cyan-400">HTTP Transport</h3>
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <label class="text-white font-semibold">Transport Type:</label>
+                            <label class="text-white font-semibold">Server URL:</label>
                             <div class="bg-gray-800 rounded-lg p-3 mt-2 font-mono text-cyan-400 border border-gray-600">
-                                Stdio (Standard Input/Output)
+                                https://mcp.mkkai.dev
                             </div>
                         </div>
                         <div>
-                            <label class="text-white font-semibold">Runtime:</label>
-                            <p class="text-gray-300 mt-1">.NET Console Application</p>
+                            <label class="text-white font-semibold">Protocol:</label>
+                            <p class="text-gray-300 mt-1">HTTP Transport (JSON-RPC 2.0)</p>
                         </div>
                         <div>
-                            <label class="text-white font-semibold">Protocol:</label>
-                            <p class="text-gray-300 mt-1">MCP Protocol (JSON-RPC 2.0)</p>
+                            <label class="text-white font-semibold">Best for:</label>
+                            <p class="text-gray-300 mt-1">Web integrations, remote access</p>
                         </div>
                         <div>
                             <label class="text-white font-semibold">Authentication:</label>
@@ -87,31 +87,62 @@
                     </div>
                 </div>
 
-                <!-- Capabilities -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                <!-- Stdio Transport -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
                     <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-cogs text-white text-xl"></i>
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-terminal text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-green-400">Available Capabilities</h3>
+                        <h3 class="text-2xl font-bold text-purple-400">Stdio Transport</h3>
                     </div>
                     <div class="space-y-4">
                         <div>
-                            <h4 class="text-white font-semibold mb-2">📁 Resources</h4>
-                            <ul class="space-y-1 text-gray-300 text-sm">
-                                <li>• Professional profile and bio</li>
-                                <li>• Contact information</li>
-                                <li>• Complete project portfolio</li>
-                                <li>• Individual project details</li>
-                            </ul>
+                            <label class="text-white font-semibold">Command:</label>
+                            <div class="bg-gray-800 rounded-lg p-3 mt-2 font-mono text-purple-400 border border-gray-600 text-sm">
+                                dotnet run --project McpServer/
+                            </div>
                         </div>
                         <div>
-                            <h4 class="text-white font-semibold mb-2">🛠️ Tools</h4>
-                            <ul class="space-y-1 text-gray-300 text-sm">
-                                <li>• Submit contact form messages</li>
-                                <li>• Search projects by category/technology</li>
-                            </ul>
+                            <label class="text-white font-semibold">Protocol:</label>
+                            <p class="text-gray-300 mt-1">Stdio (JSON-RPC 2.0)</p>
                         </div>
+                        <div>
+                            <label class="text-white font-semibold">Best for:</label>
+                            <p class="text-gray-300 mt-1">Claude Desktop, local clients</p>
+                        </div>
+                        <div>
+                            <label class="text-white font-semibold">Requirements:</label>
+                            <p class="text-gray-300 mt-1">.NET 8+ Runtime</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Capabilities -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-green-400">Available Capabilities</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">📁 Resources</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Professional profile and bio</li>
+                            <li>• Contact information</li>
+                            <li>• Complete project portfolio</li>
+                            <li>• Individual project details</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">🛠️ Tools</h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Submit contact form messages</li>
+                            <li>• Search projects by category/technology</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -125,25 +156,58 @@
                     <h2 class="text-3xl font-bold text-yellow-400">Setup Instructions</h2>
                 </div>
 
-                <div class="space-y-6">
-                    <!-- Claude Desktop -->
+                <div class="space-y-8">
+                    <!-- HTTP Setup -->
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-3">For Claude Desktop Users</h3>
-                        <div class="space-y-3">
-                            <p class="text-gray-300">1. <strong>Download Claude Desktop</strong> from Anthropic (if you haven't already)</p>
-                            <p class="text-gray-300">2. <strong>Install .NET 8 Runtime</strong> (required for the C# MCP server)</p>
-                            <p class="text-gray-300">3. <strong>Clone or download the MCP server:</strong></p>
-                            <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
-                                git clone https://github.com/DynoAbd786/Portfolio-website.git
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">🌐 HTTP Transport Setup</h3>
+                        <div class="space-y-4">
+                            <p class="text-gray-300"><strong>For web integrations and remote access:</strong></p>
+                            <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                                <div class="space-y-3">
+                                    <div>
+                                        <strong class="text-white">Direct URL:</strong>
+                                        <div class="bg-gray-900 rounded-lg p-3 mt-2 font-mono text-cyan-400 border border-gray-700">
+                                            https://mcp.mkkai.dev
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <strong class="text-white">Claude Desktop Config:</strong>
+                                        <div class="bg-gray-900 rounded-lg p-3 mt-2 overflow-x-auto border border-gray-700">
+                                            <pre class="text-sm text-gray-300"><code>{
+  "mcpServers": {
+    "muhammad-portfolio": {
+      "transport": "http",
+      "url": "https://mcp.mkkai.dev",
+      "description": "Muhammad's Portfolio MCP Server"
+    }
+  }
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-gray-300">4. <strong>Find your config file:</strong></p>
-                            <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
-                                <strong>Mac:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json<br>
-                                <strong>Windows:</strong> %APPDATA%/Claude/claude_desktop_config.json
-                            </div>
-                            <p class="text-gray-300">5. <strong>Add this configuration (update the path):</strong></p>
-                            <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-600">
-                                <pre class="text-sm text-gray-300"><code>{
+                        </div>
+                    </div>
+
+                    <!-- Stdio Setup -->
+                    <div>
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">🖥️ Stdio Transport Setup</h3>
+                        <div class="space-y-4">
+                            <p class="text-gray-300"><strong>For Claude Desktop and local clients:</strong></p>
+                            <div class="space-y-3">
+                                <p class="text-gray-300">1. <strong>Install .NET 8 Runtime</strong> (required for the C# MCP server)</p>
+                                <p class="text-gray-300">2. <strong>Clone the repository:</strong></p>
+                                <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
+                                    git clone https://github.com/DynoAbd786/Portfolio-website.git
+                                </div>
+                                <p class="text-gray-300">3. <strong>Find your Claude Desktop config file:</strong></p>
+                                <div class="bg-gray-800 rounded-lg p-3 text-sm font-mono text-gray-300 border border-gray-600 ml-4">
+                                    <strong>Mac:</strong> ~/Library/Application Support/Claude/claude_desktop_config.json<br>
+                                    <strong>Windows:</strong> %APPDATA%/Claude/claude_desktop_config.json
+                                </div>
+                                <p class="text-gray-300">4. <strong>Add this configuration:</strong></p>
+                                <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto border border-gray-600 ml-4">
+                                    <pre class="text-sm text-gray-300"><code>{
   "mcpServers": {
     "muhammad-portfolio": {
       "command": "dotnet",
@@ -152,21 +216,8 @@
     }
   }
 }</code></pre>
-                            </div>
-                            <p class="text-gray-300">6. <strong>Restart Claude Desktop</strong></p>
-                        </div>
-                    </div>
-
-                    <!-- Other Clients -->
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-3">For Other MCP Clients</h3>
-                        <p class="text-gray-300 mb-3">Use the stdio transport with these settings:</p>
-                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
-                            <div class="space-y-2 text-sm text-gray-300">
-                                <div><strong>Command:</strong> dotnet</div>
-                                <div><strong>Args:</strong> ["run", "--project", "/path/to/McpServer/McpServer.csproj"]</div>
-                                <div><strong>Transport:</strong> stdio</div>
-                                <div><strong>Protocol:</strong> MCP (JSON-RPC 2.0)</div>
+                                </div>
+                                <p class="text-gray-300">5. <strong>Restart Claude Desktop</strong></p>
                             </div>
                         </div>
                     </div>
@@ -251,8 +302,11 @@
                     Perfect for recruiters, hiring managers, and fellow developers who want quick access to my professional information.
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="https://github.com/DynoAbd786/Portfolio-website" target="_blank" class="bg-cyan-500 text-gray-900 hover:bg-cyan-400 font-bold py-3 px-6 rounded-lg transition-all duration-300">
-                        <i class="fab fa-github mr-2"></i>Get MCP Server
+                    <div class="bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-lg">
+                        <i class="fas fa-globe mr-2"></i>https://mcp.mkkai.dev
+                    </div>
+                    <a href="https://github.com/DynoAbd786/Portfolio-website" target="_blank" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                        <i class="fab fa-github mr-2"></i>Get Source Code
                     </a>
                     <a href="/" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
                         <i class="fas fa-folder-open mr-2"></i>View Projects

@@ -46,15 +46,18 @@ public class McpService : IMcpService
 
     private McpResponse HandleInitialize(McpRequest request)
     {
-        var serverInfo = new McpServerInfo
+        var serverInfo = new
         {
-            Name = "muhammad-portfolio-mcp",
-            Version = "1.0.0",
-            Capabilities = new McpCapabilities
+            protocolVersion = "2024-11-05",
+            capabilities = new
             {
-                Resources = true,
-                Tools = true,
-                Prompts = false
+                resources = new { },
+                tools = new { }
+            },
+            serverInfo = new
+            {
+                name = "muhammad-portfolio-mcp",
+                version = "1.0.0"
             }
         };
 
@@ -68,28 +71,25 @@ public class McpService : IMcpService
     private async Task<McpResponse> HandleResourcesList(McpRequest request)
     {
         var projects = await _projectService.GetProjectsAsync();
-        var resources = new List<McpResource>
+        var resources = new List<object>
         {
-            new McpResource
-            {
-                Uri = "portfolio://profile",
-                Name = "Professional Profile",
-                Description = "Muhammad Kashif-Khan's professional information and bio",
-                MimeType = "application/json"
+            new {
+                uri = "portfolio://profile",
+                name = "Professional Profile",
+                description = "Muhammad Kashif-Khan's professional information and bio",
+                mimeType = "application/json"
             },
-            new McpResource
-            {
-                Uri = "portfolio://contact",
-                Name = "Contact Information",
-                Description = "Contact details and professional links",
-                MimeType = "application/json"
+            new {
+                uri = "portfolio://contact",
+                name = "Contact Information",
+                description = "Contact details and professional links",
+                mimeType = "application/json"
             },
-            new McpResource
-            {
-                Uri = "portfolio://projects/all",
-                Name = "All Projects",
-                Description = "Complete portfolio of projects across all categories",
-                MimeType = "application/json"
+            new {
+                uri = "portfolio://projects/all",
+                name = "All Projects",
+                description = "Complete portfolio of projects across all categories",
+                mimeType = "application/json"
             }
         };
 
@@ -97,13 +97,12 @@ public class McpService : IMcpService
         foreach (var project in projects)
         {
             var projectId = project.Title.ToLower().Replace(" ", "-").Replace("&", "and");
-            resources.Add(new McpResource
-            {
-                Uri = $"portfolio://projects/{projectId}",
-                Name = project.Title,
-                Description = project.Description.Length > 100 ?
+            resources.Add(new {
+                uri = $"portfolio://projects/{projectId}",
+                name = project.Title,
+                description = project.Description.Length > 100 ?
                     project.Description.Substring(0, 100) + "..." : project.Description,
-                MimeType = "application/json"
+                mimeType = "application/json"
             });
         }
 

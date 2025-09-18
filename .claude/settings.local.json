@@ -24,7 +24,8 @@
       "Bash(sha256sum:*)",
       "Bash(dotnet add package:*)",
       "Bash(git commit:*)",
-      "Read(//home/abdua786/code/personal/**)"
+      "Read(//home/abdua786/code/personal/**)",
+      "Bash(npm install)"
     ],
     "deny": []
   }
