@@ -17,38 +17,67 @@ public class McpController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("")]
-    public async Task<IActionResult> HandleMcpRequest([FromBody] McpRequest request)
+    [HttpPost("test")]
+    public IActionResult TestPost()
     {
-        _logger.LogInformation("=== MCP REQUEST START ===");
+        _logger.LogInformation("=== TEST POST ENDPOINT HIT ===");
+        return Ok(new { message = "POST endpoint works", timestamp = DateTime.UtcNow });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> HandleMcpRequest()
+    {
+        _logger.LogInformation("=== MCP REQUEST START (NO MODEL BINDING) ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
         _logger.LogInformation("Content-Type: {ContentType}", HttpContext.Request.ContentType);
         _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
-        _logger.LogInformation("Request Headers: {@Headers}", HttpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()));
 
         try
         {
+            // Read raw body
+            HttpContext.Request.EnableBuffering();
+            using var reader = new StreamReader(HttpContext.Request.Body);
+            var body = await reader.ReadToEndAsync();
+            HttpContext.Request.Body.Position = 0;
+
+            _logger.LogInformation("Raw request body: {Body}", body);
+
+            if (string.IsNullOrEmpty(body))
+            {
+                _logger.LogWarning("Request body is empty");
+                return BadRequest("Request body is required");
+            }
+
+            // Try to parse JSON
+            McpRequest? request = null;
+            try
+            {
+                request = System.Text.Json.JsonSerializer.Deserialize<McpRequest>(body, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+                _logger.LogInformation("Successfully parsed request: {@Request}", request);
+            }
+            catch (Exception parseEx)
+            {
+                _logger.LogError(parseEx, "Failed to parse JSON: {Message}", parseEx.Message);
+                return BadRequest($"Invalid JSON: {parseEx.Message}");
+            }
+
             if (request == null)
             {
-                _logger.LogWarning("Request body is null");
-                return BadRequest("Request body is required");
+                _logger.LogWarning("Parsed request is null");
+                return BadRequest("Invalid request format");
             }
 
             _logger.LogInformation("MCP Request Details: ID={Id}, Method={Method}, JsonRpc={JsonRpc}",
                 request.Id, request.Method, request.JsonRpc);
 
-            if (request.Params != null)
-            {
-                _logger.LogInformation("Request Params: {@Params}", request.Params);
-            }
-
             _logger.LogInformation("Calling MCP service...");
             var response = await _mcpService.HandleRequestAsync(request);
 
             _logger.LogInformation("MCP service returned response for ID: {Id}", response.Id);
-            _logger.LogInformation("Response has error: {HasError}", response.Error != null);
-
             _logger.LogInformation("=== MCP REQUEST SUCCESS ===");
             return Ok(response);
         }
@@ -59,7 +88,7 @@ public class McpController : ControllerBase
 
             var errorResponse = new McpResponse
             {
-                Id = request?.Id,
+                Id = null,
                 Error = new McpError
                 {
                     Code = -32603,
@@ -67,7 +96,6 @@ public class McpController : ControllerBase
                 }
             };
 
-            _logger.LogInformation("Returning error response with ID: {Id}", errorResponse.Id);
             return Ok(errorResponse);
         }
     }
