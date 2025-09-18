@@ -115,6 +115,11 @@ public class McpService : IMcpService
 
     private async Task<McpResponse> HandleResourceRead(McpRequest request)
     {
+        if (request.Params == null)
+        {
+            return CreateErrorResponse(request.Id, -32602, "Missing parameters");
+        }
+
         var paramsJson = JsonSerializer.Serialize(request.Params);
         var readParams = JsonSerializer.Deserialize<Dictionary<string, object>>(paramsJson);
 

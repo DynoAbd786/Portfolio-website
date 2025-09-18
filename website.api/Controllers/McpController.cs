@@ -30,9 +30,9 @@ public class McpController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error handling MCP request");
-            return StatusCode(500, new McpResponse
+            return Ok(new McpResponse
             {
-                Id = request.Id,
+                Id = request?.Id,
                 Error = new McpError
                 {
                     Code = -32603,
