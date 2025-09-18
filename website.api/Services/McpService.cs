@@ -63,9 +63,13 @@ public class McpService : IMcpService
 
     private McpResponse HandleInitialize(McpRequest request)
     {
+        _logger.LogInformation("=== INITIALIZE REQUEST START ===");
+        _logger.LogInformation("Client protocol version: {ClientProtocol}",
+            request.Params?.ToString()?.Contains("2025-06-18") == true ? "2025-06-18" : "unknown");
+
         var serverInfo = new
         {
-            protocolVersion = "2024-11-05",
+            protocolVersion = "2025-06-18",
             capabilities = new
             {
                 resources = new
@@ -85,11 +89,21 @@ public class McpService : IMcpService
             }
         };
 
-        return new McpResponse
+        var response = new McpResponse
         {
             Id = request.Id,
             Result = serverInfo
         };
+
+        // Log the exact initialize response being sent
+        var jsonResponse = JsonSerializer.Serialize(response,
+            new JsonSerializerOptions { WriteIndented = true });
+
+        _logger.LogInformation("--- INITIALIZE RESPONSE JSON ---");
+        _logger.LogInformation(jsonResponse);
+        _logger.LogInformation("--------------------------------");
+
+        return response;
     }
 
     private async Task<McpResponse> HandleResourcesList(McpRequest request)
