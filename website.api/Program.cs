@@ -69,9 +69,16 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseDefaultFiles();
 
 app.UseAuthorization();
+
+// Map API controllers BEFORE fallback routing
 app.MapControllers();
 
-// Fallback routing for SPA (serve index.html for client-side routing)
-app.MapFallbackToFile("index.html");
+// Fallback routing for SPA - only for non-API routes
+app.MapWhen(context => !context.Request.Path.StartsWithSegments("/api"),
+    appBuilder => appBuilder.Run(async context =>
+    {
+        context.Response.ContentType = "text/html";
+        await context.Response.SendFileAsync("wwwroot/index.html");
+    }));
 
 app.Run();

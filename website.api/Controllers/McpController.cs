@@ -5,7 +5,7 @@ using website.api.Services;
 namespace website.api.Controllers;
 
 [ApiController]
-[Route("api/mcp")]
+[Route("api/[controller]")]
 public class McpController : ControllerBase
 {
     private readonly IMcpService _mcpService;
