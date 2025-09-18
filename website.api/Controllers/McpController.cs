@@ -21,6 +21,10 @@ public class McpController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> HandleMcpRequest()
     {
+        // Add cache-busting headers for MCP clients
+        Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+        Response.Headers.Add("Pragma", "no-cache");
+        Response.Headers.Add("Expires", "0");
         _logger.LogInformation("=== MCP REQUEST START (NO MODEL BINDING) ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
