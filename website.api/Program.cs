@@ -51,7 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Skip HTTPS redirection - Render handles SSL termination at proxy level
+// app.UseHttpsRedirection();
 
 // Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
