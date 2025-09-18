@@ -35,7 +35,7 @@ public class McpService : IMcpService
             var response = request.Method switch
             {
                 "initialize" => HandleInitialize(request),
-                "notifications/initialized" => new McpResponse { Id = request.Id, Result = new { } },
+                "notifications/initialized" => await HandleInitializedNotification(request),
                 "resources/list" => await HandleResourcesList(request),
                 "resources/read" => await HandleResourceRead(request),
                 "tools/list" => HandleToolsList(request),
@@ -228,6 +228,15 @@ public class McpService : IMcpService
                 Text = "Resource not found"
             }
         };
+    }
+
+    private async Task<McpResponse> HandleInitializedNotification(McpRequest request)
+    {
+        _logger.LogInformation("=== INITIALIZED NOTIFICATION ===");
+        _logger.LogInformation("Client has completed initialization handshake");
+
+        // Return empty response for notification (no result expected)
+        return new McpResponse { Id = request.Id, Result = new { } };
     }
 
     private async Task<McpResourceContent> GetAllProjectsContent(string uri)
