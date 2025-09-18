@@ -302,10 +302,16 @@ public class McpService : IMcpService
             Result = new { tools }
         };
 
+        // Add this logging to see the exact output
+        var jsonResponse = JsonSerializer.Serialize(response,
+            new JsonSerializerOptions { WriteIndented = true });
+
+        _logger.LogInformation("--- FINAL 'tools/list' JSON RESPONSE ---");
+        _logger.LogInformation(jsonResponse);
+        _logger.LogInformation("------------------------------------");
+
         _logger.LogInformation("Tools list response created with ID: {ResponseId}", response.Id);
         _logger.LogInformation("Response Result Type: {ResultType}", response.Result?.GetType().Name);
-        _logger.LogInformation("Serialized tools response: {SerializedResponse}",
-            JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
         _logger.LogInformation("=== TOOLS/LIST REQUEST COMPLETE ===");
 
         return response;
