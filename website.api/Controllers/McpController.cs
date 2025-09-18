@@ -5,7 +5,7 @@ using website.api.Services;
 namespace website.api.Controllers;
 
 [ApiController]
-[Route("/")]
+[Route("mcp")]
 public class McpController : ControllerBase
 {
     private readonly IMcpService _mcpService;
@@ -17,7 +17,7 @@ public class McpController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost]
+    [HttpPost("")]
     public async Task<IActionResult> HandleMcpRequest([FromBody] McpRequest request)
     {
         try
@@ -58,7 +58,7 @@ public class McpController : ControllerBase
         });
     }
 
-    [HttpOptions]
+    [HttpOptions("")]
     public IActionResult HandlePreflight()
     {
         return Ok();
