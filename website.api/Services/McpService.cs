@@ -68,8 +68,15 @@ public class McpService : IMcpService
             protocolVersion = "2024-11-05",
             capabilities = new
             {
-                resources = new { },
-                tools = new { }
+                resources = new
+                {
+                    subscribe = false,
+                    listChanged = false
+                },
+                tools = new
+                {
+                    listChanged = false
+                }
             },
             serverInfo = new
             {
