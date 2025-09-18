@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using website.api.Models;
 using website.api.Services;
 
@@ -46,7 +47,7 @@ public class McpController : ControllerBase
             McpRequest? request = null;
             try
             {
-                request = System.Text.Json.JsonSerializer.Deserialize<McpRequest>(body, new JsonSerializerOptions
+                request = JsonSerializer.Deserialize<McpRequest>(body, new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
