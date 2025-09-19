@@ -1,0 +1,193 @@
+@page "/ai-integration"
+
+<PageTitle>AI Integration</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <span class="text-white">AI Integration</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                AI Integration
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">Model Context Protocol</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">AI Agent Integration & Future-Ready Architecture</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Custom MCP server implementation enabling AI agents to interact with portfolio data and functionality through standardized protocols
+            </p>
+        </div>
+
+        <!-- Development Status Alert -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <div class="bg-amber-900/50 rounded-lg p-8 border border-amber-700">
+                <div class="flex items-start">
+                    <div class="bg-amber-500 rounded-full p-3 mr-4 flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-amber-400 mb-4">🚧 Development Status</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-green-500 rounded-full w-3 h-3 mt-2 mr-3 flex-shrink-0"></div>
+                                <p class="text-amber-100">
+                                    <strong>✅ MCP Inspector Compatible:</strong> Successfully tested and fully compliant with the official MCP Inspector tool
+                                </p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-amber-500 rounded-full w-3 h-3 mt-2 mr-3 flex-shrink-0"></div>
+                                <p class="text-amber-100">
+                                    <strong>⏳ Claude Desktop Integration:</strong> Waiting for stable MCP connector support - currently in beta
+                                </p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-amber-500 rounded-full w-3 h-3 mt-2 mr-3 flex-shrink-0"></div>
+                                <p class="text-amber-100">
+                                    <strong>🔄 Platform Rollout:</strong> Waiting for LLM platforms to roll out stable MCP connectors out of beta phase
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-amber-800/30 rounded-lg border border-amber-600/50">
+                            <p class="text-amber-200 text-sm">
+                                <strong>Technical Status:</strong> The MCP server implementation is complete and protocol-compliant.
+                                Integration issues are platform-specific, not implementation-related.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- MCP Overview -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-robot text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-cyan-400">What is MCP?</h2>
+                </div>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    Model Context Protocol (MCP) is an emerging standard for enabling AI agents to interact with external systems, data, and functionality.
+                    Our implementation provides a JSON-RPC 2.0 compliant server that exposes portfolio data, project search capabilities, and contact functionality
+                    to AI assistants through standardized tool interfaces.
+                </p>
+            </div>
+
+            <!-- Technical Implementation -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-check-circle text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-green-400">Working Features</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">•</span>
+                            <span class="text-gray-300">JSON-RPC 2.0 protocol compliance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">•</span>
+                            <span class="text-gray-300">Project search by category/technology/keyword</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">•</span>
+                            <span class="text-gray-300">Contact form submission via email service</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">•</span>
+                            <span class="text-gray-300">Resource endpoints for profile & project data</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">•</span>
+                            <span class="text-gray-300">Full MCP Inspector compatibility</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-amber-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-clock text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-amber-400">Platform Integration Status</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">✅</span>
+                            <span class="text-gray-300"><strong>MCP Inspector:</strong> Fully functional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-amber-400 mr-3 mt-1">⏳</span>
+                            <span class="text-gray-300"><strong>Claude Desktop:</strong> Awaiting stable support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-amber-400 mr-3 mt-1">⏳</span>
+                            <span class="text-gray-300"><strong>Other AI Platforms:</strong> Beta phase</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 mt-1">🔮</span>
+                            <span class="text-gray-300"><strong>Future:</strong> Universal AI agent compatibility</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Technical Details -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                        <i class="fas fa-cogs text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-purple-400">Technical Architecture</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-xl font-bold text-white mb-3">Server Implementation</h4>
+                        <ul class="text-gray-300 space-y-2">
+                            <li>• ASP.NET Core Web API backend</li>
+                            <li>• JSON-RPC 2.0 message handling</li>
+                            <li>• RESTful HTTP transport layer</li>
+                            <li>• Comprehensive request/response logging</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-white mb-3">Available Tools</h4>
+                        <ul class="text-gray-300 space-y-2">
+                            <li>• <code class="bg-gray-700 px-2 py-1 rounded">search_projects</code></li>
+                            <li>• <code class="bg-gray-700 px-2 py-1 rounded">submit_contact</code></li>
+                            <li>• Resource endpoints for data access</li>
+                            <li>• Schema-compliant tool definitions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Vision -->
+            <div class="bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 rounded-lg p-8 border border-gray-700 text-center">
+                <div class="text-6xl mb-4">🚀</div>
+                <h3 class="text-3xl font-bold text-white mb-4">Future AI Integration</h3>
+                <p class="text-gray-300 text-lg max-w-3xl mx-auto">
+                    Once MCP support stabilizes across AI platforms, this portfolio will offer seamless integration with AI assistants,
+                    enabling dynamic project exploration, automated contact handling, and intelligent portfolio navigation through natural language interactions.
+                </p>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</section>
