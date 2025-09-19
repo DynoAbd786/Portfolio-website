@@ -44,7 +44,7 @@ namespace website.Data
                     Title = "Personal Portfolio & C# Learning Journey",
                     Description = "Comprehensive C# and .NET portfolio showcasing modern development with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features advanced C# language concepts, async/await patterns, dependency injection, component architecture, and professional email integration via Postmark. Includes custom Model Context Protocol (MCP) server implementation enabling AI agents to interact with portfolio data using JSON-RPC 2.0 protocol - successfully tested with MCP Inspector but Claude Desktop integration still under development. Built with Claude Code assistance to demonstrate both full-stack web development and cutting-edge AI integration capabilities.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
-                    ProjectUrl = "/projects/ai-research",
+                    ProjectUrl = "/projects/portfolio",
                     Tags = new[] { "C#", ".NET 8", "Blazor WebAssembly", "ASP.NET Core", "Web API", "MCP", "JSON-RPC", "AI Integration", "Postmark", "Claude Code" },
                     Category = ProjectCategory.Personal
                 },
