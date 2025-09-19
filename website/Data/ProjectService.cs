@@ -59,6 +59,15 @@ namespace website.Data
                 },
                 new Project
                 {
+                    Title = "Model Context Protocol (MCP) Server Implementation",
+                    Description = "Custom MCP server implementation enabling AI agents to interact with portfolio data and contact functionality. Built with ASP.NET Core Web API using JSON-RPC 2.0 protocol compliance. Features tools for project search by category/technology/keyword and contact form submission via Postmark email service. Includes comprehensive resource endpoints for profile data, contact information, and project details. Successfully tested with MCP Inspector but Claude Desktop integration still under development. Demonstrates understanding of modern AI protocol standards and tool integration patterns.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=MCP+Server",
+                    ProjectUrl = "/projects/mcp-server",
+                    Tags = new[] { "MCP", "JSON-RPC", "ASP.NET Core", "AI Integration", "Protocol Development", "Claude Code", "Under Development" },
+                    Category = ProjectCategory.Personal
+                },
+                new Project
+                {
                     Title = "pNanoLocz: Python AFM Analysis Platform Development",
                     Description = "Initial development phase of converting the acclaimed NanoLocz MATLAB application into a modern Python-based AFM (Atomic Force Microscopy) analysis platform. Designed modular PyQt6-based architecture with extensible file reading system supporting 8+ AFM formats (.spm, .asd, .jpk, .ibw, .ARIS, .nhf, .gwy, .tiff). Implemented core data management, GUI foundation with responsive layout, and video player infrastructure for AFM data visualization. Established scalable framework for complete migration of research-grade scientific application used by AFM researchers worldwide.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=pNanoLocz",
