@@ -172,6 +172,143 @@
                 </div>
             </div>
 
+            <!-- Integration Instructions -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-code text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-cyan-400">Integration Instructions</h3>
+                </div>
+                <p class="text-gray-300 mb-6">For developers who want to integrate with the MCP server:</p>
+
+                <div class="space-y-8">
+                    <!-- MCP Inspector Testing -->
+                    <div>
+                        <h4 class="text-xl font-bold text-green-400 mb-4">🧪 Test with MCP Inspector</h4>
+                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                            <p class="text-gray-300 mb-3">Use the official MCP Inspector to test the server:</p>
+                            <div class="bg-gray-900 rounded-lg p-3 font-mono text-sm border border-gray-700">
+                                <div class="text-green-400 mb-2"># Install and run MCP Inspector</div>
+                                <div class="text-cyan-400">npx @modelcontextprotocol/inspector --transport http --server-url https://mkkai.dev/api/mcp</div>
+                            </div>
+                            <p class="text-gray-400 text-sm mt-3">This will open a web interface to test all available tools and resources.</p>
+                        </div>
+                    </div>
+
+                    <!-- Claude Desktop Setup -->
+                    <div>
+                        <h4 class="text-xl font-bold text-purple-400 mb-4">🖥️ Claude Desktop Configuration</h4>
+                        <div class="bg-amber-900/30 rounded-lg p-4 border border-amber-600/50 mb-4">
+                            <div class="flex items-start">
+                                <div class="bg-amber-500 rounded-full w-3 h-3 mt-2 mr-3 flex-shrink-0"></div>
+                                <p class="text-amber-200 text-sm">
+                                    <strong>Note:</strong> Currently experiencing compatibility issues. MCP connectors are in beta phase.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                            <p class="text-gray-300 mb-3">Add to Claude Desktop settings (Settings → Connectors):</p>
+                            <div class="bg-gray-900 rounded-lg p-3 overflow-x-auto border border-gray-700">
+                                <pre class="text-sm text-purple-400"><code>{
+  "mcpServers": {
+    "muhammad-portfolio": {
+      "transport": "http",
+      "url": "https://mkkai.dev/api/mcp",
+      "description": "Muhammad's Portfolio MCP Server"
+    }
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Direct API Testing -->
+                    <div>
+                        <h4 class="text-xl font-bold text-blue-400 mb-4">🔧 Direct API Testing</h4>
+                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                            <p class="text-gray-300 mb-3">Test the JSON-RPC endpoints directly with curl:</p>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-white font-semibold mb-2">Initialize connection:</p>
+                                    <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs border border-gray-700 overflow-x-auto">
+                                        <div class="text-blue-400">curl -X POST https://mkkai.dev/api/mcp \</div>
+                                        <div class="text-blue-400 ml-2">-H "Content-Type: application/json" \</div>
+                                        <div class="text-blue-400 ml-2">-d '{</div>
+                                        <div class="text-cyan-400 ml-4">"jsonrpc": "2.0",</div>
+                                        <div class="text-cyan-400 ml-4">"id": 1,</div>
+                                        <div class="text-cyan-400 ml-4">"method": "initialize",</div>
+                                        <div class="text-cyan-400 ml-4">"params": {</div>
+                                        <div class="text-green-400 ml-6">"protocolVersion": "2025-06-18",</div>
+                                        <div class="text-green-400 ml-6">"capabilities": {},</div>
+                                        <div class="text-green-400 ml-6">"clientInfo": {"name": "test", "version": "1.0"}</div>
+                                        <div class="text-cyan-400 ml-4">}</div>
+                                        <div class="text-blue-400 ml-2">}'</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="text-white font-semibold mb-2">List available tools:</p>
+                                    <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs border border-gray-700 overflow-x-auto">
+                                        <div class="text-blue-400">curl -X POST https://mkkai.dev/api/mcp \</div>
+                                        <div class="text-blue-400 ml-2">-H "Content-Type: application/json" \</div>
+                                        <div class="text-blue-400 ml-2">-d '{</div>
+                                        <div class="text-cyan-400 ml-4">"jsonrpc": "2.0",</div>
+                                        <div class="text-cyan-400 ml-4">"id": 2,</div>
+                                        <div class="text-cyan-400 ml-4">"method": "tools/list",</div>
+                                        <div class="text-cyan-400 ml-4">"params": {}</div>
+                                        <div class="text-blue-400 ml-2">}'</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <p class="text-white font-semibold mb-2">Search projects:</p>
+                                    <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs border border-gray-700 overflow-x-auto">
+                                        <div class="text-blue-400">curl -X POST https://mkkai.dev/api/mcp \</div>
+                                        <div class="text-blue-400 ml-2">-H "Content-Type: application/json" \</div>
+                                        <div class="text-blue-400 ml-2">-d '{</div>
+                                        <div class="text-cyan-400 ml-4">"jsonrpc": "2.0",</div>
+                                        <div class="text-cyan-400 ml-4">"id": 3,</div>
+                                        <div class="text-cyan-400 ml-4">"method": "tools/call",</div>
+                                        <div class="text-cyan-400 ml-4">"params": {</div>
+                                        <div class="text-green-400 ml-6">"name": "search_projects",</div>
+                                        <div class="text-green-400 ml-6">"arguments": {"technology": "Python"}</div>
+                                        <div class="text-cyan-400 ml-4">}</div>
+                                        <div class="text-blue-400 ml-2">}'</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Available Tools & Resources -->
+                    <div>
+                        <h4 class="text-xl font-bold text-yellow-400 mb-4">📋 Available Tools & Resources</h4>
+                        <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <p class="text-white font-semibold mb-3">🛠️ Tools:</p>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-cyan-400">search_projects</code> - Search by category/technology/keyword</li>
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-cyan-400">submit_contact</code> - Send contact form messages</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="text-white font-semibold mb-3">📁 Resources:</p>
+                                    <ul class="space-y-2 text-gray-300 text-sm">
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-purple-400">portfolio://profile</code> - Professional info</li>
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-purple-400">portfolio://contact</code> - Contact details</li>
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-purple-400">portfolio://projects/all</code> - All projects</li>
+                                        <li>• <code class="bg-gray-700 px-2 py-1 rounded text-purple-400">portfolio://projects/{id}</code> - Individual projects</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Future Vision -->
             <div class="bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 rounded-lg p-8 border border-gray-700 text-center">
                 <div class="text-6xl mb-4">🚀</div>
