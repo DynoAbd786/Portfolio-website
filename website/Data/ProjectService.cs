@@ -42,10 +42,10 @@ namespace website.Data
                 new Project
                 {
                     Title = "Personal Portfolio & C# Learning Journey",
-                    Description = "Comprehensive C# and .NET portfolio showcasing modern development with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features advanced C# language concepts, async/await patterns, dependency injection, component architecture, and professional email integration via Postmark. Demonstrates mastery of .NET 8 features, proper error handling, environment-based configuration, and production deployment. Built with Claude Code assistance to accelerate C# learning while creating a full-stack web application that highlights professional software development capabilities.",
+                    Description = "Comprehensive C# and .NET portfolio showcasing modern development with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features advanced C# language concepts, async/await patterns, dependency injection, component architecture, and professional email integration via Postmark. Includes custom Model Context Protocol (MCP) server implementation enabling AI agents to interact with portfolio data using JSON-RPC 2.0 protocol - successfully tested with MCP Inspector but Claude Desktop integration still under development. Built with Claude Code assistance to demonstrate both full-stack web development and cutting-edge AI integration capabilities.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
                     ProjectUrl = "/projects/ai-research",
-                    Tags = new[] { "C#", ".NET 8", "Blazor WebAssembly", "ASP.NET Core", "Web API", "Postmark", "Claude Code" },
+                    Tags = new[] { "C#", ".NET 8", "Blazor WebAssembly", "ASP.NET Core", "Web API", "MCP", "JSON-RPC", "AI Integration", "Postmark", "Claude Code" },
                     Category = ProjectCategory.Personal
                 },
                 new Project
@@ -56,15 +56,6 @@ namespace website.Data
                     ProjectUrl = "/projects/medical-simulation",
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
                     Category = ProjectCategory.Professional
-                },
-                new Project
-                {
-                    Title = "Model Context Protocol (MCP) Server Implementation",
-                    Description = "Custom MCP server implementation enabling AI agents to interact with portfolio data and contact functionality. Built with ASP.NET Core Web API using JSON-RPC 2.0 protocol compliance. Features tools for project search by category/technology/keyword and contact form submission via Postmark email service. Includes comprehensive resource endpoints for profile data, contact information, and project details. Successfully tested with MCP Inspector but Claude Desktop integration still under development. Demonstrates understanding of modern AI protocol standards and tool integration patterns.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=MCP+Server",
-                    ProjectUrl = "/projects/mcp-server",
-                    Tags = new[] { "MCP", "JSON-RPC", "ASP.NET Core", "AI Integration", "Protocol Development", "Claude Code", "Under Development" },
-                    Category = ProjectCategory.Personal
                 },
                 new Project
                 {
