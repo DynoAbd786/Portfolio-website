@@ -1,0 +1,521 @@
+@page "/projects/business-plan"
+@using website.Data
+
+<PageTitle>Project Synapse - AI Healthcare Documentation System</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Business Plan</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Project - Year 2
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">Project Synapse</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">AI Healthcare Documentation System</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Comprehensive business plan for revolutionizing NHS healthcare documentation through advanced AI technology, targeting 1.8 million healthcare professionals with £2 billion government digitalization support
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Business Planning</span>
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Healthcare Technology</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">AI Documentation</span>
+                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">NHS Integration</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Market Research</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🏥</div>
+            <p class="text-gray-400 text-lg">1.8M Healthcare Workers • £2B Government Investment • NHS Crisis Solution</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+
+                <!-- Business Context & Problem Analysis -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-hospital text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-400">NHS Crisis & Market Opportunity</h2>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-6 border border-green-500/25 mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-500 rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-red-400">Critical Healthcare Challenge</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            The COVID-19 pandemic exposed critical flaws in NHS operations, particularly the overwhelming burden of non-clinical
+                            administrative tasks consuming valuable doctor time. Healthcare professionals spend excessive hours on paperwork,
+                            documentation, and bureaucratic processes instead of patient care, leading to burnout, strikes, and compromised healthcare delivery.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Market Scale</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• <strong>1.8 million</strong> healthcare professionals in UK</li>
+                                <li>• <strong>200+</strong> health service providers nationwide</li>
+                                <li>• <strong>1.6 billion</strong> patient data transactions monthly</li>
+                                <li>• <strong>£2 billion</strong> government digitalization investment</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Current Problems</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Excessive time spent on documentation</li>
+                                <li>• Outdated pen-and-paper record systems</li>
+                                <li>• Junior doctor strikes due to workload</li>
+                                <li>• Reduced patient care time and quality</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Solution & Value Proposition -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-lightbulb text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Project Synapse Solution</h2>
+                    </div>
+
+                    <!-- Core Solution -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25 mb-8">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">"Advanced AI Interfacing System for Healthcare Documentation"</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm mb-4">
+                            <div class="text-green-400 mb-2">// Revolutionary healthcare documentation solution</div>
+                            <div class="text-gray-300">
+                                <span class="text-cyan-400">Core Function:</span> Listen to patient-doctor interactions<br/>
+                                <span class="text-cyan-400">AI Processing:</span> Automatic documentation generation<br/>
+                                <span class="text-cyan-400">NHS Integration:</span> Seamless electronic patient records<br/>
+                                <span class="text-cyan-400">Smart Features:</span> Referrals, tests, follow-ups automation<br/>
+                                <span class="text-cyan-400">Value Proposition:</span> More patient care, less paperwork
+                            </div>
+                        </div>
+                        <p class="text-gray-300 text-sm">
+                            <strong>Mission:</strong> Revitalize healthcare by prioritizing patient care over bureaucracy through AI-powered automation.
+                        </p>
+                    </div>
+
+                    <!-- Feature Matrix -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center">
+                                <i class="fas fa-microphone mr-3"></i>Smart Listening
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Speech-to-Text AI:</strong> Advanced voice recognition
+                                </div>
+                                <div>
+                                    <strong class="text-white">Pattern Recognition:</strong> Medical terminology understanding
+                                </div>
+                                <div>
+                                    <strong class="text-white">Real-time Processing:</strong> Live interaction capture
+                                </div>
+                                <div>
+                                    <strong class="text-white">Privacy Protection:</strong> Secure local processing
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                                <i class="fas fa-file-medical mr-3"></i>Auto Documentation
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">NHS Compliance:</strong> Automated compliant reports
+                                </div>
+                                <div>
+                                    <strong class="text-white">Patient History:</strong> Comprehensive briefing profiles
+                                </div>
+                                <div>
+                                    <strong class="text-white">Test Management:</strong> Automatic test ordering
+                                </div>
+                                <div>
+                                    <strong class="text-white">Referral System:</strong> Streamlined specialist referrals
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                                <i class="fas fa-network-wired mr-3"></i>System Integration
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">NHS Systems:</strong> Seamless existing infrastructure
+                                </div>
+                                <div>
+                                    <strong class="text-white">EPR Integration:</strong> Electronic patient records
+                                </div>
+                                <div>
+                                    <strong class="text-white">API Connectivity:</strong> Free NHS Digital APIs
+                                </div>
+                                <div>
+                                    <strong class="text-white">Multi-Platform:</strong> Works across all NHS trusts
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Research & Feasibility Analysis -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">Market Research & Business Intelligence</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Target Market Analysis</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Primary Market:</strong> NHS doctors and healthcare professionals</div>
+                                <div><strong>Market Size:</strong> 1.8 million healthcare workers</div>
+                                <div><strong>Geographic Scope:</strong> UK public and private healthcare</div>
+                                <div><strong>Revenue Model:</strong> Per-transaction fees (1.6B monthly transactions)</div>
+                                <div>
+                                    <strong>Market Segments:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Junior doctors (high documentation burden)</li>
+                                        <li>• Senior consultants (efficiency focus)</li>
+                                        <li>• NHS trusts (cost reduction)</li>
+                                        <li>• Private healthcare providers</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Industry Research Sources</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>IBISWorld:</strong> Electronic patient records industry analysis</div>
+                                <div><strong>NHS Digital:</strong> Transaction volumes and system data</div>
+                                <div><strong>Government Reports:</strong> £2B digitalization investment plans</div>
+                                <div><strong>Healthcare Studies:</strong> Documentation time burden research</div>
+                                <div>
+                                    <strong>Key Findings:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• 56% market share for integrated EPR systems</li>
+                                        <li>• Limited innovation in documentation tools</li>
+                                        <li>• Government priority on digitalization</li>
+                                        <li>• Urgent need for efficiency solutions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Competitive Landscape -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Competitive Analysis & Market Gap</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-white mb-3">Current Solutions (Limited)</h4>
+                                <ul class="text-gray-400 text-sm space-y-1">
+                                    <li>• <strong>DAX (US):</strong> GPT-based patient report drafts</li>
+                                    <li>• <strong>Abridge (US):</strong> Not available in UK market</li>
+                                    <li>• <strong>NHS Systems:</strong> Outdated interfaces, minimal AI</li>
+                                    <li>• <strong>Traditional Tools:</strong> Time-consuming speech-to-text</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-3">Market Opportunity</h4>
+                                <ul class="text-gray-400 text-sm space-y-1">
+                                    <li>• <strong>UK Market Gap:</strong> No comprehensive AI solution</li>
+                                    <li>• <strong>Integration Advantage:</strong> NHS system compatibility</li>
+                                    <li>• <strong>Government Support:</strong> £2B digitalization fund</li>
+                                    <li>• <strong>Urgent Need:</strong> Post-COVID NHS pressure</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blue Ocean Strategy & Competitive Analysis -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-chess text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-indigo-400">Blue Ocean Strategy Analysis</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Create (New Value)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>NHS System Integration:</strong> Seamless existing infrastructure compatibility</li>
+                                <li><strong>Full Documentation Automation:</strong> Complete workflow coverage</li>
+                                <li><strong>Intelligent Referral System:</strong> Automated specialist connections</li>
+                                <li><strong>Patient Briefing Packages:</strong> Comprehensive history summaries</li>
+                                <li><strong>Assistive Secretarial Functions:</strong> Beyond basic transcription</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Raise (Above Industry)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>System Reliability:</strong> Iterative design and robust testing</li>
+                                <li><strong>Integration Capability:</strong> Nationwide NHS deployment</li>
+                                <li><strong>AI Sophistication:</strong> Advanced pattern recognition</li>
+                                <li><strong>User Simplicity:</strong> Intuitive interface design</li>
+                                <li><strong>Data Security:</strong> Enhanced privacy protection</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Reduce (Industry Norms)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Training Requirements:</strong> AI-guided onboarding</li>
+                                <li><strong>System Complexity:</strong> Simplified user experience</li>
+                                <li><strong>Implementation Cost:</strong> Competitive pricing model</li>
+                                <li><strong>Technical Errors:</strong> Agile development practices</li>
+                                <li><strong>Manual Intervention:</strong> Automated workflows</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4">Eliminate (Industry Standards)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Paper Documentation:</strong> Fully digital workflow</li>
+                                <li><strong>Manual Transcription:</strong> AI-powered automation</li>
+                                <li><strong>Outdated Interfaces:</strong> Modern UI/UX design</li>
+                                <li><strong>System Fragmentation:</strong> Unified platform approach</li>
+                                <li><strong>Time-Consuming Processes:</strong> Streamlined operations</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entrepreneur Profile & Implementation Strategy -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-user-tie text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-orange-400">Entrepreneur Profile & Implementation</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Founder Qualifications</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Education:</strong> Computer Science with AI (Integrated Masters)</div>
+                                <div><strong>Technical Skills:</strong> AI systems, data science, project management</div>
+                                <div><strong>Domain Knowledge:</strong> Healthcare technology, patient records, disease studies</div>
+                                <div><strong>Development Experience:</strong> Agile methods, large-scale engineering</div>
+                                <div>
+                                    <strong>Personal Motivation:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Witnessed NHS struggles during COVID-19</li>
+                                        <li>• Passion for healthcare technology innovation</li>
+                                        <li>• Commitment to improving patient care</li>
+                                        <li>• Vision of AI-powered medical assistance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Technical Implementation</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Core Technology:</strong> ChatGPT-4 API integration</div>
+                                <div><strong>Speech Processing:</strong> Google Cloud Speech-to-Text</div>
+                                <div><strong>NHS Integration:</strong> Free NHS Digital APIs</div>
+                                <div><strong>Architecture:</strong> Cloud-based with local processing</div>
+                                <div>
+                                    <strong>Implementation Plan:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Beta testing with pilot NHS trusts</li>
+                                        <li>• Iterative development with user feedback</li>
+                                        <li>• Gradual nationwide deployment</li>
+                                        <li>• Continuous AI model improvement</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Model & Financial Viability -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Business Model & Financial Viability</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Revenue Model</h4>
+                                <p class="text-gray-400 text-sm">Per-transaction fees on 1.6B monthly NHS transactions</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Government Support</h4>
+                                <p class="text-gray-400 text-sm">£2B digitalization investment creates funding opportunities</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Scalability</h4>
+                                <p class="text-gray-400 text-sm">Nationwide deployment potential across all NHS trusts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Plan Downloads & Academic Achievement -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-download text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-yellow-400">Complete Business Plan & Academic Excellence</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Professional Business Documentation</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>2,500-Word Report:</strong> Comprehensive feasibility analysis</li>
+                                    <li><strong>Market Research:</strong> IBISWorld data and NHS statistics</li>
+                                    <li><strong>Blue Ocean Canvas:</strong> Visual competitive analysis</li>
+                                    <li><strong>Financial Projections:</strong> Revenue model and cost analysis</li>
+                                    <li><strong>Implementation Plan:</strong> Technical and business roadmap</li>
+                                    <li><strong>Risk Assessment:</strong> Market and operational risk evaluation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Academic Achievement</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>LUBS1890 Excellence:</strong> Starting Your Own Business coursework</li>
+                                    <li><strong>Real-World Impact:</strong> Addresses critical NHS challenges</li>
+                                    <li><strong>Market Innovation:</strong> First-to-market UK healthcare AI solution</li>
+                                    <li><strong>Government Alignment:</strong> Supports £2B digitalization strategy</li>
+                                    <li><strong>Technical Feasibility:</strong> Leverages cutting-edge AI technology</li>
+                                    <li><strong>Social Impact:</strong> Potential to transform UK healthcare</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Section -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 text-center">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Download Complete Business Plan</h3>
+                        <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                            Access the full business plan and assignment brief for the LUBS1890 Starting Your Own Business coursework.
+                            This comprehensive documentation demonstrates professional business planning methodology and market analysis.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <a href="/docs/project-synapse-business-plan.pdf"
+                               download="Project-Synapse-Business-Plan.pdf"
+                               class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                                <i class="fas fa-file-pdf mr-3 text-xl"></i>
+                                <div class="text-left">
+                                    <div class="text-lg">Business Plan (PDF)</div>
+                                    <div class="text-sm text-purple-200">Complete Project Synapse Report</div>
+                                </div>
+                            </a>
+                            <a href="/docs/business-assignment-brief.pdf"
+                               download="Business-Assignment-Brief.pdf"
+                               class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                                <i class="fas fa-file-alt mr-3 text-xl"></i>
+                                <div class="text-left">
+                                    <div class="text-lg">Assignment Brief (PDF)</div>
+                                    <div class="text-sm text-gray-200">LUBS1890 Requirements</div>
+                                </div>
+                            </a>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-4">
+                            Professional business planning documentation with market research and financial analysis
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Key Insights & Technologies Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Key Insights -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-lightbulb text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Professional business planning for real-world healthcare challenges</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Comprehensive market research using industry-standard sources</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Advanced AI technology application in healthcare domain</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Blue Ocean Strategy methodology for competitive analysis</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Social impact entrepreneurship addressing national healthcare crisis</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                                <i class="fas fa-code text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Business Planning</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">Healthcare Technology</span>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">AI Documentation</span>
+                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">NHS Integration</span>
+                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Market Research</span>
+                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Blue Ocean Strategy</span>
+                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Speech-to-Text</span>
+                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Entrepreneurship</span>
+                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">IBISWorld Research</span>
+                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Financial Analysis</span>
+                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">ChatGPT-4 API</span>
+                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm">EPR Systems</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>

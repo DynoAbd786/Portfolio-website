@@ -29,7 +29,17 @@
       "WebFetch(domain:spec.modelcontextprotocol.io)",
       "WebSearch",
       "WebFetch(domain:github.com)",
-      "Bash(npx @modelcontextprotocol/inspector:*)"
+      "Bash(npx @modelcontextprotocol/inspector:*)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Leeds Uni/Year 1/Chemical engineering/Nanotechnology/Coursework 1 - Report/**)",
+      "Bash(powershell:*)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 1/Programming Project/**)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 2/OS-xv6/**)",
+      "Bash(gh repo edit:*)",
+      "Bash(gh repo view:*)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 2/Numerical computation/**)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 2/**)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Leeds Uni/Year 2/Computer Science/Software Engineering Principles/Coursework/**)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Leeds Uni/Year 2/Business/Starting Your Own Business/Coursework/**)"
     ],
     "deny": []
   }

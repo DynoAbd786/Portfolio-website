@@ -1,0 +1,480 @@
+@page "/projects/c-programming"
+@using website.Data
+
+<PageTitle>Custom Image Format & Compression System - C Programming</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">C Programming</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Project - Year 1
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">C Programming</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Custom Image Format & Compression System</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Sophisticated systems programming project implementing custom image file formats with advanced compression algorithms and bit-level manipulation
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">C Programming</span>
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Image Processing</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Compression</span>
+                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Bit Manipulation</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Systems Programming</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">💾</div>
+            <p class="text-gray-400 text-lg">16 Executable Programs • 3 Custom File Formats • Advanced Compression Algorithms</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+
+                <!-- Project Overview & Scope -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-project-diagram text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">Project Overview</h2>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-500/25 mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-500 rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-purple-400">Two-Part Coursework System</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            A comprehensive C programming project implementing custom image file formats with sophisticated compression algorithms.
+                            Built as the foundation coursework for systems programming, demonstrating advanced low-level programming concepts
+                            typically found in computer graphics and systems programming courses.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Coursework 1 - Foundation (50%)</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• 10 executable programs</li>
+                                <li>• 3 custom file formats (EBF, EBU, EBC)</li>
+                                <li>• Echo, Compare, Convert utilities</li>
+                                <li>• Modular architecture with memory management</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Coursework 2 - Advanced (50%)</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• 6 additional compression programs</li>
+                                <li>• Block-based lossy compression (9x reduction)</li>
+                                <li>• Random block algorithms with seeded generation</li>
+                                <li>• 3x3 pixel processing and averaging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom File Formats Deep Dive -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-file-code text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Custom File Format Architecture</h2>
+                    </div>
+
+                    <!-- File Format Specifications -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                                <i class="fas fa-layer-group mr-3"></i>EBF Format
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Purpose:</strong> Base image format
+                                </div>
+                                <div>
+                                    <strong class="text-white">Pixel Range:</strong> 0-31 (black to white)
+                                </div>
+                                <div>
+                                    <strong class="text-white">Structure:</strong>
+                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                        <li>• Magic number identifier</li>
+                                        <li>• Width and height metadata</li>
+                                        <li>• Raw pixel data array</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                                <i class="fas fa-compress mr-3"></i>EBU Format
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Purpose:</strong> Binary compression
+                                </div>
+                                <div>
+                                    <strong class="text-white">Compression:</strong> ~50% size reduction
+                                </div>
+                                <div>
+                                    <strong class="text-white">Method:</strong>
+                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                        <li>• Remove first byte of each pixel</li>
+                                        <li>• Convert to binary representation</li>
+                                        <li>• Preserve metadata structure</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                                <i class="fas fa-compress-alt mr-3"></i>EBC Format
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Purpose:</strong> Advanced compression
+                                </div>
+                                <div>
+                                    <strong class="text-white">Compression:</strong> 5/8 ratio (62.5%)
+                                </div>
+                                <div>
+                                    <strong class="text-white">Method:</strong>
+                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                        <li>• 5-bit pixel packing</li>
+                                        <li>• Bit-level manipulation</li>
+                                        <li>• Eliminate unused bits</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Implementation Example -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4">EBC Compression Algorithm Example</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400 mb-2">// Pixel values: 30, 30, 30</div>
+                            <div class="text-gray-300 mb-4">
+                                <span class="text-cyan-400">EBU format:</span> 00011110 00011110 00011110<br/>
+                                <span class="text-cyan-400">EBC format:</span> 11110|111 10|11110|0<br/>
+                                <span class="text-yellow-400">// 5-bit packing: first pixel (11110) + part of second (111)</span>
+                            </div>
+                            <div class="text-green-400 mb-2">// Core compression function</div>
+                            <div class="text-gray-300">
+                                <span class="text-blue-400">BYTE</span> *<span class="text-green-400">convertEbu2Ebc</span>(<span class="text-blue-400">BYTE</span> *uncompressed, <span class="text-blue-400">BYTE</span> *compressed, <span class="text-blue-400">int</span> numBytes)<br/>
+                                {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">BYTE</span> storageByte = <span class="text-cyan-400">0</span>;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">int</span> bitPosition = <span class="text-cyan-400">0</span>;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">// Pack 5 bits per pixel using bitwise operations</span><br/>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Algorithms & Techniques -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-cogs text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-400">Advanced Compression Algorithms</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Block-Based Lossy Compression</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Programs:</strong> ebcBlock, ebcUnblock</div>
+                                <div><strong>Method:</strong> 3x3 pixel block averaging</div>
+                                <div><strong>Compression:</strong> 9x size reduction</div>
+                                <div>
+                                    <strong>Process:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Divide image into 3x3 pixel blocks</li>
+                                        <li>• Calculate average pixel value per block</li>
+                                        <li>• Store single value representing entire block</li>
+                                        <li>• Reconstruct by expanding averages</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4">Random Block Algorithms</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Programs:</strong> ebcR32, ebcR128, ebcU32, ebcU128</div>
+                                <div><strong>Method:</strong> Seeded randomization processing</div>
+                                <div><strong>Block Counts:</strong> 32 or 128 random selections</div>
+                                <div>
+                                    <strong>Algorithm:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Select random 3x3 blocks (seeded)</li>
+                                        <li>• Map blocks to image positions</li>
+                                        <li>• Process based on similarity matching</li>
+                                        <li>• Reverse process for decompression</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Structure Example -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Data Structure Design</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400 mb-2">// Custom data structures for each format</div>
+                            <div class="text-gray-300">
+                                <span class="text-blue-400">typedef struct</span> {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">unsigned char</span> magicNumber[<span class="text-cyan-400">2</span>];<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">int</span> width, height;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">long</span> numBytes;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">unsigned int</span> **imageData;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">unsigned int</span> *dataBlock;<br/>
+                                } <span class="text-yellow-400">ebfData</span>;<br/><br/>
+
+                                <span class="text-blue-400">typedef</span> <span class="text-yellow-400">uint8_t</span> <span class="text-green-400">BYTE</span>; <span class="text-purple-400">// Better readability</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Systems Programming Excellence -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-microchip text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-indigo-400">Systems Programming Excellence</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Memory Management</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Dynamic Allocation:</strong> Proper malloc/free patterns</li>
+                                <li><strong>Memory Safety:</strong> Defensive programming practices</li>
+                                <li><strong>Leak Prevention:</strong> Comprehensive cleanup functions</li>
+                                <li><strong>Error Handling:</strong> Robust allocation failure detection</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Modular Architecture</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>20+ C Files:</strong> Proper separation of concerns</li>
+                                <li><strong>Header Files:</strong> Clean interface definitions</li>
+                                <li><strong>Reusability:</strong> Function libraries for common operations</li>
+                                <li><strong>Maintainability:</strong> Clear code organization</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Professional Practices</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Git Workflow:</strong> Version control integration</li>
+                                <li><strong>Testing Framework:</strong> Comprehensive bash test scripts</li>
+                                <li><strong>Build System:</strong> Custom makefile with dependencies</li>
+                                <li><strong>Code Quality:</strong> Strict compiler flags (-Wall -Werror)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Build System -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Professional Build System</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400 mb-2"># Makefile configuration</div>
+                            <div class="text-gray-300">
+                                <span class="text-yellow-400">CC</span> = gcc<br/>
+                                <span class="text-yellow-400">CFLAGS</span> = -std=c99 -Wall -Werror -g -Wextra -lm<br/>
+                                <span class="text-yellow-400">EXE</span> = ebfEcho ebfComp ebf2ebu ebuEcho ... <span class="text-purple-400"># 16 executables</span><br/>
+                                <br/>
+                                <span class="text-blue-400">all:</span> ${EXE}<br/>
+                                <span class="text-blue-400">clean:</span> rm -rf *.o ${EXE}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Achievements & Complexity -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-trophy text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-yellow-400">Technical Achievements</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Complexity Indicators</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>16 Executable Programs:</strong> Comprehensive system implementation</li>
+                                    <li><strong>3 Custom File Formats:</strong> Complete specification and processing</li>
+                                    <li><strong>Advanced Bit Manipulation:</strong> 5-bit packing in 8-bit bytes</li>
+                                    <li><strong>Multi-Algorithm Compression:</strong> Lossless and lossy techniques</li>
+                                    <li><strong>Mathematical Precision:</strong> Exact compression ratios achieved</li>
+                                    <li><strong>Enterprise Practices:</strong> Professional development workflow</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Skills Demonstrated</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>Low-Level Programming:</strong> Direct memory and bit manipulation</li>
+                                    <li><strong>Algorithm Design:</strong> Efficient compression implementations</li>
+                                    <li><strong>Systems Architecture:</strong> Modular, scalable code design</li>
+                                    <li><strong>Quality Assurance:</strong> Comprehensive testing and validation</li>
+                                    <li><strong>Documentation:</strong> Clear code comments and structure</li>
+                                    <li><strong>Problem Solving:</strong> Complex mathematical implementations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Context -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 mt-6">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Academic Excellence</h3>
+                        <p class="text-gray-300 text-sm mb-3">
+                            This project demonstrates exceptional programming maturity for a Year 1 computer science student,
+                            showcasing skills typically expected in advanced systems programming courses:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Foundation Excellence</h4>
+                                <p class="text-gray-400 text-sm">Solid understanding of C fundamentals, memory management, and data structures.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Advanced Concepts</h4>
+                                <p class="text-gray-400 text-sm">Implementation of complex algorithms typically taught in upper-level courses.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Professional Standards</h4>
+                                <p class="text-gray-400 text-sm">Industry-level practices including testing, documentation, and code quality.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Repository Links -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fab fa-github text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Source Code</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                        Explore the complete implementation with detailed documentation, comprehensive test suites, and professional development practices.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://github.com/DynoAbd786-Uni/Coursework-1-DynoAbd786-Uni"
+                           target="_blank"
+                           class="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border border-gray-600 hover:border-cyan-500/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                            <i class="fab fa-github mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="text-lg">Coursework 1</div>
+                                <div class="text-sm text-gray-400">Foundation System (10 programs)</div>
+                            </div>
+                        </a>
+                        <a href="https://github.com/DynoAbd786-Uni/Coursework-2-DynoAbd786-Uni"
+                           target="_blank"
+                           class="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border border-gray-600 hover:border-cyan-500/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                            <i class="fab fa-github mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="text-lg">Coursework 2</div>
+                                <div class="text-sm text-gray-400">Advanced Compression (6 programs)</div>
+                            </div>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-4">
+                        Features complete source code, makefile, test scripts, and sample images with results
+                    </p>
+                </div>
+
+                <!-- Key Insights & Technologies Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Key Insights -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-lightbulb text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Advanced systems programming concepts in Year 1</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Multiple compression algorithms implementation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Professional development practices from early stage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Custom file format design and implementation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Mathematical precision in algorithm development</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                                <i class="fas fa-code text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">C Programming</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">GCC Compiler</span>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Makefile</span>
+                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">Bit Manipulation</span>
+                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Memory Management</span>
+                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Data Structures</span>
+                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Image Processing</span>
+                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Compression Algorithms</span>
+                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">Git Version Control</span>
+                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Bash Scripting</span>
+                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">Testing Frameworks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>

@@ -49,6 +49,33 @@ namespace website.api.Services
                     ProjectUrl = "/projects/pnanolocz",
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
                     Category = ProjectCategory.Professional
+                },
+                new Project
+                {
+                    Title = "Numerical Methods for Predator-Prey Systems",
+                    Description = "Advanced numerical computation coursework implementing and analyzing differential equation solvers for predator-prey models (Lotka-Volterra equations). Built custom Euler method and compared performance against SSPRK3 and Runge-Kutta methods across multiple time steps. Features comprehensive error analysis with absolute error calculations, Euclidean norm computations, and stability assessment. Includes CPU core isolation for accurate performance benchmarking, mathematical convergence analysis, and professional scientific computing practices. Demonstrates exceptional understanding of numerical methods theory and implementation complexity for undergraduate-level coursework.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Numerical+Methods",
+                    ProjectUrl = "/projects/numerical-computation",
+                    Tags = new[] { "Python", "NumPy", "Matplotlib", "Numerical Analysis", "Differential Equations", "Scientific Computing", "Performance Analysis", "Mathematical Modeling" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
+                    Title = "AI-Powered Mental Health App Design",
+                    Description = "Comprehensive software engineering design brief for a £100,000 mental health app targeting university students globally. Features advanced ChatGPT-4 Turbo API integration, multi-stakeholder analysis, and sophisticated system architecture. Includes university system integration, crisis intervention protocols, and comprehensive privacy controls. Demonstrates professional software engineering methodology with agile development planning, ethical considerations, and legal compliance (GDPR, Data Protection Act). Designed for global scalability across universities with local encryption, cultural personalization, and healthcare service integration (BetterHelp, NHS).",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Mental+Health+App",
+                    ProjectUrl = "/projects/software-engineering",
+                    Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
+                    Title = "Project Synapse - AI Healthcare Documentation System",
+                    Description = "Comprehensive business plan for an AI-powered healthcare documentation system targeting NHS doctors and healthcare professionals. Features advanced speech-to-text technology, automated patient record generation, and seamless NHS system integration. Addresses critical NHS administrative burden affecting 1.8 million healthcare workers with £2 billion government digitalization support. Includes detailed market feasibility analysis, industry research using IBISWorld data, Blue Ocean Strategy competitive analysis, and financial viability assessment. Demonstrates professional business planning methodology with stakeholder analysis, target market segmentation, and scalable implementation strategy.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Synapse",
+                    ProjectUrl = "/projects/business-plan",
+                    Tags = new[] { "Business Planning", "Healthcare Technology", "AI Documentation", "NHS Integration", "Market Research", "Blue Ocean Strategy", "Entrepreneurship", "Speech-to-Text" },
+                    Category = ProjectCategory.Academic
                 }
             };
 
