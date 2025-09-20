@@ -65,6 +65,33 @@ namespace website.Data
                     ProjectUrl = "/projects/pnanolocz",
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
                     Category = ProjectCategory.Professional
+                },
+                new Project
+                {
+                    Title = "Quantum Dot Investment Report: Photonic Quantum Computing",
+                    Description = "Comprehensive nanotechnology business case for venture capital investment in quantum dot manufacturing for photonic quantum computing applications. Researched and analyzed quantum dot technology (2-10nm semiconductor nanocrystals), molecular beam epitaxy manufacturing processes, and the revolutionary potential of light-based quantum computation. Proposed three-phase business strategy targeting the emerging photonic quantum computing market, identifying quantum dots as critical components with superior advantages over traditional electron-based systems: speed-of-light processing, lower energy requirements, enhanced scalability, and elimination of cryogenic cooling needs.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Quantum+Dots",
+                    ProjectUrl = "/projects/quantum-dots",
+                    Tags = new[] { "Nanotechnology", "Quantum Computing", "Business Strategy", "Photonics", "Semiconductor Physics", "Investment Analysis", "Technical Writing" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
+                    Title = "Custom Image Format & Compression System",
+                    Description = "Sophisticated C programming project implementing custom image file formats (EBF, EBU, EBC) with advanced lossless compression algorithms. Built 16 executable programs across two courseworks, featuring bit-level manipulation for 5/8 compression ratio, block-based lossy compression achieving 9x size reduction, and complex 3x3 pixel processing with seeded randomization. Demonstrates advanced systems programming concepts including memory management, modular architecture, comprehensive error handling, and professional development practices with Git workflow integration and rigorous testing frameworks.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=C+Programming",
+                    ProjectUrl = "/projects/c-programming",
+                    Tags = new[] { "C Programming", "Image Processing", "Compression Algorithms", "Bit Manipulation", "Systems Programming", "Memory Management", "File Formats", "Academic Project" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
+                    Title = "xv6 Operating System Development & Custom Shell",
+                    Description = "Advanced operating systems coursework implementing a complete Unix-style shell and extending the xv6 educational operating system. Built sophisticated command-line interface with multi-element pipelines, I/O redirection, and sequential command execution across 582 lines of C code. Created custom system calls, implemented process communication with pipes, and developed memory management optimizations. Features include recursive pipeline handling, dynamic tokenization, comprehensive error handling, and kernel-level programming for RISC-V architecture. Demonstrates enterprise-level systems programming skills typically found in OS development and embedded systems.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=xv6+OS",
+                    ProjectUrl = "/projects/xv6-operating-system",
+                    Tags = new[] { "C Programming", "Operating Systems", "xv6", "Unix Shell", "RISC-V", "System Calls", "Process Management", "Memory Management", "Kernel Development", "Academic Project" },
+                    Category = ProjectCategory.Academic
                 }
             };
         }

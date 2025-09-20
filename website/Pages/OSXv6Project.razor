@@ -1,0 +1,470 @@
+@page "/projects/xv6-operating-system"
+@using website.Data
+
+<PageTitle>xv6 Operating System Development & Custom Shell</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">xv6 Operating System</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Project - Year 2
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">xv6 Operating System</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Unix Shell Development & Kernel Programming</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Advanced operating systems coursework implementing a complete Unix-style shell and extending the xv6 educational operating system with custom system calls and kernel modifications
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">C Programming</span>
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Operating Systems</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Unix Shell</span>
+                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">RISC-V</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Kernel Development</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🖥️</div>
+            <p class="text-gray-400 text-lg">Complete Operating System • Custom Shell Implementation • 582 Lines of C Code</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+
+                <!-- Project Overview & Architecture -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-microchip text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">Project Architecture</h2>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-500/25 mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-500 rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-purple-400">COMP2211 Operating Systems Coursework</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            Comprehensive 11-week laboratory series working with xv6, MIT's educational reimplementation of Unix Version 6.
+                            Built for RISC-V architecture and running on QEMU emulation, this project demonstrates advanced systems programming
+                            concepts through hands-on kernel development and shell implementation.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Technical Foundation</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• xv6 operating system (MIT)</li>
+                                <li>• RISC-V architecture & QEMU emulation</li>
+                                <li>• Containerized development environment</li>
+                                <li>• Advanced C systems programming</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Core Components</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Custom shell implementation (582 lines)</li>
+                                <li>• System call development</li>
+                                <li>• Memory management optimization</li>
+                                <li>• Process communication mechanisms</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Shell Implementation -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-terminal text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Advanced Shell Implementation</h2>
+                    </div>
+
+                    <!-- Shell Features -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                                <i class="fas fa-code-branch mr-3"></i>Pipeline Processing
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Multi-element:</strong> Complex command chains
+                                </div>
+                                <div>
+                                    <strong class="text-white">Recursive:</strong> Inverse recursion algorithm
+                                </div>
+                                <div>
+                                    <strong class="text-white">Example:</strong>
+                                    <code class="block bg-gray-900 p-2 mt-1 rounded text-green-400">ls | grep test | cat</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                                <i class="fas fa-exchange-alt mr-3"></i>I/O Redirection
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Input:</strong> File to stdin (`<`)
+                                </div>
+                                <div>
+                                    <strong class="text-white">Output:</strong> Stdout to file (`>`)
+                                </div>
+                                <div>
+                                    <strong class="text-white">Example:</strong>
+                                    <code class="block bg-gray-900 p-2 mt-1 rounded text-green-400">echo "hello" > file.txt</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                                <i class="fas fa-list mr-3"></i>Sequential Commands
+                            </h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div>
+                                    <strong class="text-white">Operator:</strong> Semicolon (`;`) separator
+                                </div>
+                                <div>
+                                    <strong class="text-white">Execution:</strong> Sequential processing
+                                </div>
+                                <div>
+                                    <strong class="text-white">Example:</strong>
+                                    <code class="block bg-gray-900 p-2 mt-1 rounded text-green-400">ls; echo "done"</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Architecture Example -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Shell Architecture & Parsing</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400 mb-2">// Command execution pipeline architecture</div>
+                            <div class="text-gray-300 mb-4">
+                                <span class="text-cyan-400">typedef struct</span> {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">char</span> *argv[MAXARG];<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">char</span> *endBuffer;<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">int</span> endOfLine;<br/>
+                                } <span class="text-yellow-400">execCommand</span>;<br/><br/>
+
+                                <span class="text-purple-400">// Multi-stage parsing: Tokenize → Parse → Walk → Execute</span><br/>
+                                <span class="text-green-400">parseCommand</span>() → <span class="text-blue-400">tokenize</span>() → <span class="text-red-400">parseLine</span>() → <span class="text-yellow-400">walkCommand</span>()
+                            </div>
+                            <div class="text-green-400 mb-2">// Pipeline processing with recursive fork/exec</div>
+                            <div class="text-gray-300">
+                                <span class="text-blue-400">void</span> <span class="text-green-400">runPipelines</span>(<span class="text-blue-400">execCommand</span> *commands[], <span class="text-blue-400">int</span> numPipes)<br/>
+                                {<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">// Recursive pipeline handling with proper file descriptor management</span><br/>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Calls & Kernel Development -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-cogs text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-400">System Calls & Kernel Programming</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Custom System Calls</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>Implementation:</strong> Added new system calls to xv6 kernel</div>
+                                <div><strong>Files Modified:</strong> syscall.h, syscall.c, sysproc.c, usys.pl, user.h</div>
+                                <div><strong>Example:</strong> getyear() returning Unix v6 release year (1975)</div>
+                                <div>
+                                    <strong>Process:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Kernel space function implementation</li>
+                                        <li>• User space interface definition</li>
+                                        <li>• System call number assignment</li>
+                                        <li>• Complete user program integration</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4">User Programs Developed</h3>
+                            <div class="space-y-3 text-gray-300 text-sm">
+                                <div><strong>sleep:</strong> Process suspension for specified ticks</div>
+                                <div><strong>ping-pong:</strong> Inter-process communication via pipes</div>
+                                <div><strong>find:</strong> Recursive directory tree search utility</div>
+                                <div><strong>xargs:</strong> Command execution with piped arguments</div>
+                                <div>
+                                    <strong>Features:</strong>
+                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                        <li>• Process forking and synchronization</li>
+                                        <li>• File descriptor manipulation</li>
+                                        <li>• Dynamic memory allocation</li>
+                                        <li>• Error handling and validation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory Management -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Advanced Memory Management</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold text-white mb-3">malloc/free Implementation</h4>
+                                <ul class="text-gray-400 text-sm space-y-1">
+                                    <li>• <strong>Debugging:</strong> Fixed memory allocation bugs in xv6</li>
+                                    <li>• <strong>Optimization:</strong> 16-byte memory alignment</li>
+                                    <li>• <strong>Efficiency:</strong> sbrk() optimization for physical memory</li>
+                                    <li>• <strong>Return Policy:</strong> Memory return to OS for last blocks</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-3">Data Structures</h4>
+                                <ul class="text-gray-400 text-sm space-y-1">
+                                    <li>• <strong>Linked Lists:</strong> Dynamic node manipulation in C</li>
+                                    <li>• <strong>Operations:</strong> Insert, delete, traverse, search</li>
+                                    <li>• <strong>Memory Safety:</strong> Proper malloc/free patterns</li>
+                                    <li>• <strong>Error Handling:</strong> Comprehensive validation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Implementation Details -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-wrench text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-indigo-400">Technical Excellence</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Process Management</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Fork/Exec/Wait:</strong> Proper process lifecycle management</li>
+                                <li><strong>Process Communication:</strong> Pipes and file descriptors</li>
+                                <li><strong>Synchronization:</strong> Parent-child process coordination</li>
+                                <li><strong>Error Handling:</strong> Robust process failure detection</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Code Architecture</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Modular Design:</strong> Clear separation of concerns</li>
+                                <li><strong>Function Libraries:</strong> Reusable utility functions</li>
+                                <li><strong>Memory Management:</strong> Dynamic allocation patterns</li>
+                                <li><strong>Error Propagation:</strong> Comprehensive error handling</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Development Practices</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Testing Framework:</strong> Comprehensive stress testing</li>
+                                <li><strong>Build System:</strong> Professional Makefile integration</li>
+                                <li><strong>Documentation:</strong> Extensive code comments</li>
+                                <li><strong>Version Control:</strong> Git workflow integration</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Build Environment -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Development Environment</h3>
+                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400 mb-2"># xv6 Development Workflow</div>
+                            <div class="text-gray-300">
+                                <span class="text-yellow-400">Platform:</span> Linux with Singularity containerization<br/>
+                                <span class="text-yellow-400">Toolchain:</span> RISC-V GCC cross-compiler<br/>
+                                <span class="text-yellow-400">Emulation:</span> QEMU RISC-V system emulation<br/>
+                                <span class="text-yellow-400">Build:</span> make && make qemu<br/>
+                                <br/>
+                                <span class="text-blue-400">$ singularity shell xv6-tools_buildx-latest.sif</span><br/>
+                                <span class="text-blue-400">$ make qemu</span> <span class="text-purple-400"># Boot xv6 with custom shell</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Achievement & Learning Outcomes -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-trophy text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-yellow-400">Academic Achievement</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Complexity Indicators</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>582 Lines of Shell Code:</strong> Complex command parsing and execution</li>
+                                    <li><strong>Multiple System Calls:</strong> Kernel-level programming integration</li>
+                                    <li><strong>Advanced Process Control:</strong> Multi-element pipeline implementation</li>
+                                    <li><strong>Memory Management:</strong> Dynamic allocation with optimization</li>
+                                    <li><strong>Comprehensive Testing:</strong> 17+ stress test validation</li>
+                                    <li><strong>Professional Architecture:</strong> Enterprise-level code structure</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4">Skills Demonstrated</h3>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li><strong>Systems Programming:</strong> Low-level C programming expertise</li>
+                                    <li><strong>Operating System Concepts:</strong> Process, memory, file system management</li>
+                                    <li><strong>Algorithm Design:</strong> Recursive pipeline and parsing algorithms</li>
+                                    <li><strong>Software Architecture:</strong> Modular, maintainable code design</li>
+                                    <li><strong>Debugging Skills:</strong> Complex systems-level problem solving</li>
+                                    <li><strong>Performance Optimization:</strong> Memory and process efficiency</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Context -->
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 mt-6">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">COMP2211 Excellence</h3>
+                        <p class="text-gray-300 text-sm mb-3">
+                            This operating systems coursework demonstrates exceptional technical depth for undergraduate computer science,
+                            implementing concepts typically found in graduate-level systems programming:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Kernel Development</h4>
+                                <p class="text-gray-400 text-sm">Direct modification of operating system kernel with custom system calls.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Enterprise Architecture</h4>
+                                <p class="text-gray-400 text-sm">Professional-grade shell implementation with advanced features.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Systems Expertise</h4>
+                                <p class="text-gray-400 text-sm">Comprehensive understanding of OS internals and process management.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GitHub Repository Links -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fab fa-github text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Source Code & Documentation</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                        Explore the complete xv6 operating system implementation with custom shell, system calls, and comprehensive documentation.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                        <a href="https://github.com/DynoAbd786-Uni/OS-xv6-Operating-System"
+                           target="_blank"
+                           class="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border border-gray-600 hover:border-cyan-500/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                            <i class="fab fa-github mr-3 text-xl"></i>
+                            <div class="text-left">
+                                <div class="text-lg">xv6 Operating System</div>
+                                <div class="text-sm text-gray-400">Complete Implementation with Custom Shell & System Calls</div>
+                            </div>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-4">
+                        Features complete source code, enhanced documentation, lab manual, and implementation guide
+                    </p>
+                </div>
+
+                <!-- Key Insights & Technologies Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Key Insights -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-lightbulb text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Deep understanding of operating system internals</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Advanced process management and IPC implementation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Professional shell development with enterprise features</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Kernel-level programming and system call development</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Memory management optimization and debugging skills</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                                <i class="fas fa-code text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">C Programming</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">xv6 Operating System</span>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">RISC-V Architecture</span>
+                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">Unix Shell</span>
+                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">System Calls</span>
+                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Process Management</span>
+                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Memory Management</span>
+                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">QEMU Emulation</span>
+                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">Kernel Development</span>
+                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">File Descriptors</span>
+                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">Inter-Process Communication</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>
