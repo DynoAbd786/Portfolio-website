@@ -44,11 +44,24 @@
       "Read(//home/abdua786/code/uni/3/dissertation/dissertation/**)",
       "Read(//home/abdua786/code/uni/3/parallel/cw/**)",
       "Read(///**)",
-      "Read(//home/abdua786/Downloads/Data Mining/**)",
       "Bash(tree:*)",
       "Read(//home/abdua786/code/uni/**)",
       "Bash(rm:*)",
-      "Bash(git pull:*)"
+      "Bash(claude mcp add:*)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 3/Distributed Systems/**)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 3/Machine Learning/**)",
+      "Read(//c/Users/Abdua/Documents/programs/year3/graphics/**)",
+      "WebFetch(domain:xiao-wang007.github.io)",
+      "Read(//c/Users/Abdua/Programs/Personal/University-portfolio-work/Year 3/Intelligent Systems and Robotics/**)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Leeds Uni/Year 3/Computer Science/Intelligent Systems and Robotics/Coursework/3631CW/3631CW/**)",
+      "Bash(git rm:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(findstr:*)",
+      "Bash(dotnet publish:*)",
+      "Bash(git pull:*)",
+      "Bash(git restore:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)"
     ],
     "deny": []
   }

@@ -4,63 +4,157 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website built with Blazor WebAssembly (.NET 8). The project showcases projects and provides an about page, running entirely in the browser as a client-side single-page application.
+Full-stack personal portfolio website with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features comprehensive project showcase with academic coursework, professional work, and personal projects, including PDF document downloads and email contact functionality.
 
-## Architecture
+## Architecture Overview
 
-The application follows a standard Blazor WebAssembly structure:
+### Two-Project Solution Structure
+- **`website/`** - Blazor WebAssembly client (frontend)
+- **`website.api/`** - ASP.NET Core Web API server (backend)
+- **Solution file**: `website.sln` manages both projects
 
-- **Entry Point**: `website/Program.cs` - Sets up the WebAssembly host, registers services (HttpClient and ProjectService)
-- **Routing**: `website/App.razor` - Handles client-side routing with MainLayout as the default layout
-- **Data Layer**: 
-  - `website/Data/Project.cs` - Model for project information (Title, Description, ImageUrl, ProjectUrl, Tags)
-  - `website/Data/ProjectService.cs` - Service that provides hardcoded project data asynchronously
-- **Pages**: Located in `website/Pages/`
-  - `Index.razor` & `Index.razor.cs` - Homepage with code-behind pattern
-  - `Projects.razor` - Project showcase page
-  - `About.razor` - About page
-- **Components**: 
-  - `website/Shared/MainLayout.razor` - Main layout wrapper
-  - `website/Shared/ProjectCard.razor` - Reusable component for displaying project information
-- **Static Assets**: `website/wwwroot/` contains CSS, JavaScript (vanilla-tilt.min.js), and images
+### Client-Server Communication
+- **Development**: Client (`localhost:5195`) calls API (`localhost:5154`)
+- **Production**: API serves both endpoints and static files from single container
+- **API Base URL**: Configured in `website/Program.cs` with environment-specific logic
 
 ## Development Commands
 
-Since this is a .NET project, use standard .NET CLI commands:
-
+### Both Projects (Full-Stack Development)
 ```bash
-# Navigate to the project directory
-cd website
-
-# Restore dependencies
-dotnet restore
-
-# Build the application
-dotnet build
-
-# Run in development mode (starts dev server)
+# Terminal 1 - Start API server
+cd website.api
 dotnet run
 
-# Watch mode for development (auto-reload on changes)
-dotnet watch
+# Terminal 2 - Start Blazor client
+cd website
+dotnet run
 
-# Publish for deployment
-dotnet publish -c Release
+# Client: http://localhost:5195
+# API: http://localhost:5154 (with Swagger at /swagger)
 ```
 
-## Development Server
+### Individual Projects
+```bash
+# Build both projects
+dotnet build
 
-The application runs on:
-- HTTP: http://localhost:5195
-- HTTPS: https://localhost:7112
+# Restore dependencies for solution
+dotnet restore
 
-Launch settings are configured in `website/Properties/launchSettings.json` with profiles for HTTP, HTTPS, and IIS Express.
+# Run specific project
+cd website && dotnet run
+cd website.api && dotnet run
 
-## Key Patterns
+# Watch mode for development
+cd website && dotnet watch
+cd website.api && dotnet watch
+```
 
-- **Service Registration**: Services are registered in Program.cs using `builder.Services.AddScoped()`
-- **Async Data**: ProjectService uses async patterns with `Task<List<Project>>`
-- **Component Structure**: Uses both Razor components (.razor) and code-behind files (.razor.cs)
-- **Styling**: Bootstrap CSS framework is included for responsive design
-- **Client-Side Rendering**: Fully client-side application with no server-side rendering
-- add a cavieat somewhere in here saying something along the lines of i had a long term illness during this so it not complete. do it in the best way you can :(. add the gh repo to this too
+### Docker Commands
+```bash
+# Development with Docker Compose
+docker-compose up --build
+
+# Production container
+docker build -t portfolio-app .
+docker run -p 8080:10000 portfolio-app
+```
+
+## Backend API Architecture
+
+### Controllers & Endpoints
+- **`ProjectsController`**: `/api/projects` - CRUD operations for project data
+- **`ContactController`**: `/api/contact` - Email functionality via Postmark
+- **`McpController`**: `/api/mcp` - Model Context Protocol server for AI agents
+
+### Services (Dependency Injection)
+- **`IProjectService`**: Business logic for project data management
+- **`IEmailService`**: Email sending via Postmark (configured in appsettings)
+- **`IMcpService`**: JSON-RPC 2.0 protocol implementation for AI integration
+
+### Key API Features
+- **CORS Configuration**: Allows Blazor client origins in development
+- **Static File Serving**: API serves frontend assets in production
+- **SPA Fallback Routing**: Non-API routes serve `index.html` for client-side routing
+- **Environment Variables**: Uses DotNetEnv for development configuration
+
+## Frontend Architecture
+
+### Core Structure
+- **Entry Point**: `website/Program.cs` - Configures HttpClient with API base address
+- **Service Registration**: `ProjectService` for API communication
+- **Routing**: `App.razor` with MainLayout for consistent page structure
+
+### Pages & Components
+- **Project Pages**: Individual pages for each project (Academic, Professional, Personal)
+- **Shared Components**: `ProjectCard.razor` for consistent project display
+- **Layout**: `MainLayout.razor` with responsive navigation and styling
+
+### Project Data Flow
+1. Client `ProjectService` calls API via HttpClient
+2. API `ProjectsController` uses `IProjectService` for business logic
+3. Projects categorized by `ProjectCategory` enum (Personal, Professional, Academic)
+4. Frontend displays projects in category-grouped sections
+
+## Document Management System
+
+### PDF Generation & Storage
+- **PowerShell Scripts**: Convert Word documents to PDF for academic projects
+- **Storage Location**: `website/wwwroot/docs/` for downloadable documents
+- **Naming Convention**: Descriptive names (e.g., `medical-ai-research-proposal.pdf`)
+
+### Academic Project Structure
+Each academic project follows standardized format:
+- **Typography**: Consistent heading sizes (`text-6xl`, `text-2xl`, `text-xl`)
+- **Layout**: Breadcrumbs, header section, hero visual, content sections, downloads
+- **Styling**: Tailwind CSS with dark theme and colored accents
+
+## Critical Configuration
+
+### API Port Configuration
+- **Client expects API on**: `http://localhost:5154/` (set in `website/Program.cs`)
+- **API runs on**: `http://localhost:5154` (set in `website.api/Properties/launchSettings.json`)
+- **Production**: Same-origin requests when API serves static files
+
+### Service Registration Patterns
+```csharp
+// API (website.api/Program.cs)
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+// Client (website/Program.cs)
+builder.Services.AddScoped<website.Data.ProjectService>();
+```
+
+### Project Data Management
+- **Single Source of Truth**: Project data defined in `website.api/Services/ProjectService.cs`
+- **Client Service**: Makes HTTP calls to API, no fallback data
+- **Error Handling**: Returns empty list if API unavailable
+
+## Common Development Tasks
+
+### Adding New Academic Projects
+1. Add project data to `website.api/Services/ProjectService.cs`
+2. Create individual project page in `website/Pages/`
+3. Convert academic documents to PDF using PowerShell scripts
+4. Follow established typography and layout patterns
+
+### Testing API Endpoints
+```bash
+# Start API and test endpoints
+cd website.api && dotnet run
+curl http://localhost:5154/api/projects
+curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
+```
+
+### Project Categories
+- **Personal**: Independent development projects (TaskFlow, Portfolio)
+- **Professional**: Internship and work-related projects (Medical Simulation, pNanoLocz)
+- **Academic**: University coursework (Software Engineering, Business Plan, AI Projects)
+
+## Important Note
+
+*This project was completed during a period of long-term illness, which impacted development timeline and some features may remain incomplete. The core functionality and technical implementation remain solid despite these challenging circumstances.*
+
+GitHub Repository: [Portfolio-website](https://github.com/DynoAbd786/Portfolio-website)
