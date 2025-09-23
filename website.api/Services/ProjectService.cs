@@ -52,6 +52,15 @@ namespace website.api.Services
                 },
                 new Project
                 {
+                    Title = "AI-Powered Medical Record Management System",
+                    Description = "Comprehensive Data Mining research project developing a patient-centric AI system for enhanced electronic health record integration within the NHS. Features GPT-4 Turbo API integration, advanced speech-to-text recognition, SpaCy-based pseudonymisation for GDPR compliance, and automated clinical documentation generation. Implements CRISP-DM methodology with comprehensive pilot study using rheumatoid arthritis case scenarios. Addresses critical NHS administrative burden affecting healthcare professionals who spend one-third of working hours on documentation. Includes detailed 6-month implementation timeline, stakeholder analysis, and comprehensive evaluation framework for seamless NHS workflow integration.",
+                    ImageUrl = "https://placehold.co/600x400/8B0000/ffffff?text=NHS+AI+System",
+                    ProjectUrl = "/projects/data-mining",
+                    Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
                     Title = "Numerical Methods for Predator-Prey Systems",
                     Description = "Advanced numerical computation coursework implementing and analyzing differential equation solvers for predator-prey models (Lotka-Volterra equations). Built custom Euler method and compared performance against SSPRK3 and Runge-Kutta methods across multiple time steps. Features comprehensive error analysis with absolute error calculations, Euclidean norm computations, and stability assessment. Includes CPU core isolation for accurate performance benchmarking, mathematical convergence analysis, and professional scientific computing practices. Demonstrates exceptional understanding of numerical methods theory and implementation complexity for undergraduate-level coursework.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Numerical+Methods",
@@ -75,6 +84,15 @@ namespace website.api.Services
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Synapse",
                     ProjectUrl = "/projects/business-plan",
                     Tags = new[] { "Business Planning", "Healthcare Technology", "AI Documentation", "NHS Integration", "Market Research", "Blue Ocean Strategy", "Entrepreneurship", "Speech-to-Text" },
+                    Category = ProjectCategory.Academic
+                },
+                new Project
+                {
+                    Title = "Advanced CFD Blood Flow Simulation using XLB",
+                    Description = "GPU-accelerated Lattice Boltzmann Method (LBM) framework for simulating pulsatile blood flow in arterial geometries with aneurysms. Extended XLB framework with custom boundary conditions, non-Newtonian Carreau-Yasuda rheology model, and wall shear stress computation for clinical risk assessment. Achieved 2,340+ MLUPS performance on RTX 3060 Mobile with time-dependent cardiac cycle profiles and physiological accuracy. Developed custom collision operators, 64-point pulsatile inlet conditions, and comprehensive visualization workflows using ParaView and Jupyter notebooks. Establishes foundation for transitioning LBM simulations from research to clinical aneurysm rupture risk assessment, addressing critical need for faster CFD analysis compared to traditional finite element methods.",
+                    ImageUrl = "https://placehold.co/600x400/8B0000/ffffff?text=XLB+CFD+Simulation",
+                    ProjectUrl = "/vascular-blood-flow",
+                    Tags = new[] { "Python", "XLB Framework", "CUDA", "CFD", "Lattice Boltzmann Method", "GPU Computing", "Medical Simulation", "Blood Flow", "Aneurysm Risk Assessment", "ParaView", "Docker" },
                     Category = ProjectCategory.Academic
                 }
             };

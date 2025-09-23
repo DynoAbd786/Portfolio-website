@@ -1,0 +1,358 @@
+@page "/projects/parallel-computing"
+@using website.Data
+
+<PageTitle>Advanced Parallel Computing: OpenMP, MPI & OpenCL - Muhammad Kashif-Khan</PageTitle>
+
+<div class="bg-gray-900 text-gray-200 min-h-screen">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-indigo-900 py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mb-6">
+                    <i class="fas fa-microchip text-3xl text-white"></i>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    Advanced Parallel Computing
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                    OpenMP, MPI & OpenCL: Mastering the Complete Parallel Programming Ecosystem
+                </p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">OpenMP</span>
+                    <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">MPI</span>
+                    <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm font-semibold">OpenCL</span>
+                    <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold">C Programming</span>
+                    <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm font-semibold">GPU Computing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6">Project Overview</h2>
+                        <p class="text-lg text-gray-300 mb-6">
+                            This comprehensive parallel computing specialization demonstrates mastery across three fundamental paradigms of high-performance computing through the COMP3221 Parallel Computation module at the University of Leeds.
+                        </p>
+                        <p class="text-lg text-gray-300 mb-6">
+                            Each coursework builds upon previous concepts, creating a complete understanding of parallel programming from shared memory systems to distributed clusters and GPU acceleration.
+                        </p>
+                        <div class="bg-yellow-900/30 border border-yellow-500/50 rounded-lg p-4">
+                            <p class="text-yellow-200 text-sm">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <strong>Academic Context:</strong> Due to a long-term illness during this period, the implementations represent focused effort on core parallel computing concepts rather than extensive feature development.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Technical Achievements</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Implemented parallel Game of Life with OpenMP directives</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Achieved 3.09x speedup in distributed MPI applications</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Developed GPU-accelerated heat equation solvers</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">Mastered data dependencies and race condition handling</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Courseworks -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center text-white mb-16">Three Parallel Computing Paradigms</h2>
+
+                <!-- Coursework 1: OpenMP -->
+                <div class="mb-16">
+                    <div class="bg-gray-900 rounded-lg p-8 border border-purple-500/30">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-memory text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-purple-400">Coursework 1: OpenMP Programming</h3>
+                                <p class="text-gray-400">Shared Memory Parallelization</p>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">Conway's Game of Life Implementation</h4>
+                                <p class="text-gray-300 mb-4">
+                                    Parallelized the classic cellular automaton using OpenMP directives, implementing four key parallel functions with proper handling of data dependencies and race conditions.
+                                </p>
+                                <ul class="space-y-2 text-sm text-gray-400">
+                                    <li><i class="fas fa-code text-purple-400 mr-2"></i>283 lines of optimized C code</li>
+                                    <li><i class="fas fa-cog text-purple-400 mr-2"></i>4 parallel functions implemented</li>
+                                    <li><i class="fas fa-sync text-purple-400 mr-2"></i>Red-black pattern for modified rules</li>
+                                    <li><i class="fas fa-shield-alt text-purple-400 mr-2"></i>Thread-safe random generation</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">Technical Implementation</h4>
+                                <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm">
+                                    <div class="text-purple-400 mb-2">Key Functions Parallelized:</div>
+                                    <div class="text-gray-300 space-y-1">
+                                        <div>• numCells() - Cell counting with reduction</div>
+                                        <div>• initialiseGrid() - Parallel initialization</div>
+                                        <div>• iterateWithOriginalRules() - Moore neighborhood</div>
+                                        <div>• iterateWithModifiedRules() - von Neumann + red-black</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coursework 2: MPI -->
+                <div class="mb-16">
+                    <div class="bg-gray-900 rounded-lg p-8 border border-blue-500/30">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-network-wired text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-blue-400">Coursework 2: MPI Programming</h3>
+                                <p class="text-gray-400">Distributed Message Passing</p>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">Scalable Distributed Computing</h4>
+                                <p class="text-gray-300 mb-4">
+                                    Developed MPI applications with comprehensive performance analysis across multiple machines, demonstrating understanding of distributed computing challenges and optimization strategies.
+                                </p>
+                                <ul class="space-y-2 text-sm text-gray-400">
+                                    <li><i class="fas fa-code text-blue-400 mr-2"></i>199 lines of MPI C implementation</li>
+                                    <li><i class="fas fa-server text-blue-400 mr-2"></i>Multi-machine cluster deployment</li>
+                                    <li><i class="fas fa-chart-line text-blue-400 mr-2"></i>Rigorous performance benchmarking</li>
+                                    <li><i class="fas fa-balance-scale text-blue-400 mr-2"></i>Scalability analysis up to 32 processes</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">Performance Results</h4>
+                                <div class="bg-gray-800 rounded-lg p-4">
+                                    <div class="text-blue-400 mb-3 font-semibold">Speedup Analysis:</div>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>1 process:</span>
+                                            <span class="text-green-400">1.00x (baseline)</span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>2 processes:</span>
+                                            <span class="text-green-400">1.42x speedup</span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>4 processes:</span>
+                                            <span class="text-green-400">1.74x speedup</span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>8 processes:</span>
+                                            <span class="text-green-400">3.09x speedup</span>
+                                        </div>
+                                        <div class="text-xs text-gray-400 mt-2">
+                                            Performance degradation at 16+ processes due to network overhead and oversubscription
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coursework 3: OpenCL -->
+                <div class="mb-16">
+                    <div class="bg-gray-900 rounded-lg p-8 border border-indigo-500/30">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-microchip text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-indigo-400">Coursework 3: OpenCL Programming</h3>
+                                <p class="text-gray-400">GPU Acceleration & Heterogeneous Computing</p>
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">GPU-Accelerated Heat Equation Solver</h4>
+                                <p class="text-gray-300 mb-4">
+                                    Implemented OpenCL kernels for solving the heat equation on 2D grids, demonstrating mastery of GPU programming concepts including memory management and kernel optimization.
+                                </p>
+                                <ul class="space-y-2 text-sm text-gray-400">
+                                    <li><i class="fas fa-code text-indigo-400 mr-2"></i>184 lines of C + OpenCL kernels</li>
+                                    <li><i class="fas fa-cube text-indigo-400 mr-2"></i>2D grid-based numerical computation</li>
+                                    <li><i class="fas fa-memory text-indigo-400 mr-2"></i>Optimized GPU memory transfers</li>
+                                    <li><i class="fas fa-rocket text-indigo-400 mr-2"></i>Massively parallel kernel execution</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold text-white mb-4">OpenCL Architecture</h4>
+                                <div class="bg-gray-800 rounded-lg p-4 font-mono text-sm">
+                                    <div class="text-indigo-400 mb-2">Implementation Features:</div>
+                                    <div class="text-gray-300 space-y-1">
+                                        <div>• Host-device memory management</div>
+                                        <div>• 2D work-group optimization</div>
+                                        <div>• Boundary condition handling</div>
+                                        <div>• Grid-based heat diffusion</div>
+                                        <div>• Cross-platform GPU support</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Deep Dive -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center text-white mb-16">Technical Insights & Learning Outcomes</h2>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <div class="text-center mb-4">
+                            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-cogs text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-green-400">Parallelization Patterns</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Data parallelism with OpenMP</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Task decomposition strategies</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Red-black checkerboard patterns</li>
+                            <li><i class="fas fa-arrow-right text-green-400 mr-2"></i>Reduction operations</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <div class="text-center mb-4">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-yellow-400">Synchronization & Dependencies</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>Race condition prevention</li>
+                            <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>Critical sections & barriers</li>
+                            <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>Message passing synchronization</li>
+                            <li><i class="fas fa-arrow-right text-yellow-400 mr-2"></i>GPU memory coherence</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                        <div class="text-center mb-4">
+                            <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-chart-line text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-red-400">Performance Optimization</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><i class="fas fa-arrow-right text-red-400 mr-2"></i>Load balancing strategies</li>
+                            <li><i class="fas fa-arrow-right text-red-400 mr-2"></i>Communication overhead analysis</li>
+                            <li><i class="fas fa-arrow-right text-red-400 mr-2"></i>Memory access optimization</li>
+                            <li><i class="fas fa-arrow-right text-red-400 mr-2"></i>Scalability benchmarking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Repository and Links -->
+    <section class="py-16 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">Implementation Details</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Each coursework demonstrates progressive mastery of parallel computing concepts, from basic shared memory programming to advanced GPU acceleration techniques.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Code Statistics</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">OpenMP Implementation:</span>
+                                <span class="text-white font-semibold">283 lines</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">MPI Implementation:</span>
+                                <span class="text-white font-semibold">199 lines</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">OpenCL Implementation:</span>
+                                <span class="text-white font-semibold">184 lines</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-600 pt-2">
+                                <span class="text-gray-400">Total Implementation:</span>
+                                <span class="text-cyan-400 font-bold">666 lines</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Technologies Mastered</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="text-center">
+                                <div class="bg-purple-600/20 rounded-lg p-3 mb-2">
+                                    <i class="fas fa-memory text-purple-400 text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-300">OpenMP</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-blue-600/20 rounded-lg p-3 mb-2">
+                                    <i class="fas fa-network-wired text-blue-400 text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-300">MPI</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-indigo-600/20 rounded-lg p-3 mb-2">
+                                    <i class="fas fa-microchip text-indigo-400 text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-300">OpenCL</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-green-600/20 rounded-lg p-3 mb-2">
+                                    <i class="fas fa-code text-green-400 text-xl"></i>
+                                </div>
+                                <span class="text-sm text-gray-300">C Programming</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Portfolio
+                    </a>
+                    <a href="#contact" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                        <i class="fas fa-envelope mr-2"></i>Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

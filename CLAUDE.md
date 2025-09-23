@@ -63,3 +63,4 @@ Launch settings are configured in `website/Properties/launchSettings.json` with 
 - **Component Structure**: Uses both Razor components (.razor) and code-behind files (.razor.cs)
 - **Styling**: Bootstrap CSS framework is included for responsive design
 - **Client-Side Rendering**: Fully client-side application with no server-side rendering
+- add a cavieat somewhere in here saying something along the lines of i had a long term illness during this so it not complete. do it in the best way you can :(. add the gh repo to this too

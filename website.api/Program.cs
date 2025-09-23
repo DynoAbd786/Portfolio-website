@@ -57,17 +57,7 @@ if (app.Environment.IsDevelopment())
 // Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
 
-// Configure static files with proper MIME types for Blazor WebAssembly
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".dat"] = "application/octet-stream";
-provider.Mappings[".wasm"] = "application/wasm";
-provider.Mappings[".blat"] = "application/octet-stream";
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    ContentTypeProvider = provider
-});
-app.UseDefaultFiles();
+// API project doesn't serve static files - Blazor WebAssembly handles its own hosting
 
 app.UseAuthorization();
 
@@ -94,12 +84,6 @@ app.Use(async (context, next) =>
 // Map API controllers BEFORE fallback routing
 app.MapControllers();
 
-// Fallback routing for SPA - only for non-API routes
-app.MapWhen(context => !context.Request.Path.StartsWithSegments("/api"),
-    appBuilder => appBuilder.Run(async context =>
-    {
-        context.Response.ContentType = "text/html";
-        await context.Response.SendFileAsync("wwwroot/index.html");
-    }));
+// API project doesn't handle SPA routing - Blazor WebAssembly handles client-side routing
 
 app.Run();
