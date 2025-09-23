@@ -88,16 +88,6 @@ namespace website.Data
                 // === ACADEMIC PROJECTS ===
                 new Project
                 {
-                    Title = "AI-Powered Medical Record Management System",
-                    Description = "Comprehensive Data Mining research project developing a patient-centric AI system for enhanced electronic health record integration within the NHS. Features GPT-4 Turbo API integration, advanced speech-to-text recognition, SpaCy-based pseudonymisation for GDPR compliance, and automated clinical documentation generation. Implements CRISP-DM methodology with comprehensive pilot study using rheumatoid arthritis case scenarios. Addresses critical NHS administrative burden affecting healthcare professionals who spend one-third of working hours on documentation. Includes detailed 6-month implementation timeline, stakeholder analysis, and comprehensive evaluation framework for seamless NHS workflow integration.",
-                    ImageUrl = "https://placehold.co/600x400/8B0000/ffffff?text=NHS+AI+System",
-                    ProjectUrl = "/projects/data-mining",
-                    Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
-                    Category = ProjectCategory.Academic,
-                    IsFeatured = true
-                },
-                new Project
-                {
                     Title = "Advanced Parallel Computing: OpenMP, MPI & OpenCL",
                     Description = "Comprehensive parallel computing specialization spanning three major paradigms: shared memory (OpenMP), distributed systems (MPI), and GPU acceleration (OpenCL). Implemented Conway's Game of Life with OpenMP parallelization, developed scalable MPI applications with multi-machine performance analysis achieving 3.09x speedup, and created GPU-accelerated heat equation solvers using OpenCL kernels. Demonstrates mastery of data dependencies, red-black patterns, message passing, and heterogeneous computing across the complete parallel programming ecosystem. Includes rigorous performance benchmarking and optimization techniques for high-performance computing applications.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Parallel+Computing",

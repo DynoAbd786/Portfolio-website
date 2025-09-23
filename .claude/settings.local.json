@@ -46,7 +46,9 @@
       "Read(///**)",
       "Read(//home/abdua786/Downloads/Data Mining/**)",
       "Bash(tree:*)",
-      "Read(//home/abdua786/code/uni/**)"
+      "Read(//home/abdua786/code/uni/**)",
+      "Bash(rm:*)",
+      "Bash(git pull:*)"
     ],
     "deny": []
   }
