@@ -22,14 +22,14 @@ public class McpController : ControllerBase
     public async Task<IActionResult> HandleMcpRequest()
     {
         // Add cache-busting headers for MCP clients
-        Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
-        Response.Headers.Add("Pragma", "no-cache");
-        Response.Headers.Add("Expires", "0");
+        Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+        Response.Headers["Pragma"] = "no-cache";
+        Response.Headers["Expires"] = "0";
         _logger.LogInformation("=== MCP REQUEST START (NO MODEL BINDING) ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
         _logger.LogInformation("Content-Type: {ContentType}", HttpContext.Request.ContentType);
-        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
+        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
 
         try
         {
@@ -104,7 +104,7 @@ public class McpController : ControllerBase
         _logger.LogInformation("=== MCP ROOT GET REQUEST - INITIALIZING ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
+        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
 
         _logger.LogInformation("Creating default initialize request for GET");
 
@@ -133,7 +133,7 @@ public class McpController : ControllerBase
         _logger.LogInformation("=== MCP INFO REQUEST ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent);
+        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
 
         var serverInfo = new McpServerInfo
         {
@@ -178,11 +178,11 @@ public class McpController : ControllerBase
         _logger.LogInformation("=== MCP OPTIONS REQUEST (CORS Preflight) ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("Origin: {Origin}", HttpContext.Request.Headers.Origin);
+        _logger.LogInformation("Origin: {Origin}", HttpContext.Request.Headers.Origin.ToString());
         _logger.LogInformation("Access-Control-Request-Method: {RequestMethod}",
-            HttpContext.Request.Headers["Access-Control-Request-Method"]);
+            HttpContext.Request.Headers["Access-Control-Request-Method"].ToString());
         _logger.LogInformation("Access-Control-Request-Headers: {RequestHeaders}",
-            HttpContext.Request.Headers["Access-Control-Request-Headers"]);
+            HttpContext.Request.Headers["Access-Control-Request-Headers"].ToString());
 
         _logger.LogInformation("Returning OK for preflight request");
         return Ok();

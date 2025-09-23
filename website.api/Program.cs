@@ -62,24 +62,24 @@ app.UseCors("AllowMcpClients");
 app.UseAuthorization();
 
 // Add request logging middleware for API paths
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path.StartsWithSegments("/api"))
-    {
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogInformation("=== API REQUEST RECEIVED ===");
-        logger.LogInformation("Method: {Method}", context.Request.Method);
-        logger.LogInformation("Path: {Path}", context.Request.Path);
-        logger.LogInformation("QueryString: {QueryString}", context.Request.QueryString);
-        logger.LogInformation("ContentType: {ContentType}", context.Request.ContentType);
-        logger.LogInformation("ContentLength: {ContentLength}", context.Request.ContentLength);
-        logger.LogInformation("UserAgent: {UserAgent}", context.Request.Headers.UserAgent);
-        logger.LogInformation("Host: {Host}", context.Request.Headers.Host);
-        logger.LogInformation("=== FORWARDING TO CONTROLLER ===");
-    }
+// app.Use(async (context, next) =>
+// {
+//     if (context.Request.Path.StartsWithSegments("/api"))
+//     {
+//         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+//         logger.LogInformation("=== API REQUEST RECEIVED ===");
+//         logger.LogInformation("Method: {Method}", context.Request.Method);
+//         logger.LogInformation("Path: {Path}", context.Request.Path);
+//         logger.LogInformation("QueryString: {QueryString}", context.Request.QueryString);
+//         logger.LogInformation("ContentType: {ContentType}", context.Request.ContentType);
+//         logger.LogInformation("ContentLength: {ContentLength}", context.Request.ContentLength);
+//         logger.LogInformation("UserAgent: {UserAgent}", context.Request.Headers.UserAgent.ToString());
+//         logger.LogInformation("Host: {Host}", context.Request.Headers.Host.ToString());
+//         logger.LogInformation("=== FORWARDING TO CONTROLLER ===");
+//     }
 
-    await next();
-});
+//     await next();
+// });
 
 // Map API controllers BEFORE fallback routing
 app.MapControllers();

@@ -15,8 +15,6 @@ namespace website.api.Models
         public string ProjectUrl { get; set; } = "";
         public string[] Tags { get; set; } = System.Array.Empty<string>();
         public ProjectCategory Category { get; set; } = ProjectCategory.Personal;
-
-        // Keep for backward compatibility
-        public bool IsPersonalProject => Category == ProjectCategory.Personal;
+        public bool IsFeatured { get; set; } = false;
     }
 }

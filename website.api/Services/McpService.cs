@@ -124,6 +124,24 @@ public class McpService : IMcpService
                 mimeType = "application/json"
             },
             new {
+                uri = "portfolio://about",
+                name = "About Page",
+                description = "Detailed background, education, and personal journey",
+                mimeType = "application/json"
+            },
+            new {
+                uri = "portfolio://ethos",
+                name = "Professional Ethos",
+                description = "Philosophy on technology, responsibility, and human-AI collaboration",
+                mimeType = "application/json"
+            },
+            new {
+                uri = "portfolio://ai-integration",
+                name = "AI Integration Approach",
+                description = "Methodology and philosophy for AI integration in development",
+                mimeType = "application/json"
+            },
+            new {
                 uri = "portfolio://projects/all",
                 name = "All Projects",
                 description = "Complete portfolio of projects across all categories",
@@ -219,6 +237,71 @@ public class McpService : IMcpService
                     responseTime = "24-48 hours"
                 }, new JsonSerializerOptions { WriteIndented = true })
             },
+            "portfolio://about" => new McpResourceContent
+            {
+                Uri = uri,
+                MimeType = "application/json",
+                Text = JsonSerializer.Serialize(new
+                {
+                    background = "Computer Science student at University of Leeds with strong focus on AI, medical technology, and multidisciplinary problem-solving",
+                    education = "BSc Computer Science, University of Leeds (2022-2025)",
+                    specializations = new[] { "AI & Machine Learning", "Medical Technology", "Scientific Computing", "Distributed Systems", "Graphics Programming" },
+                    technicalStrengths = new[] { "Python", "C/C++", "C#", "CUDA", "OpenMP", "MPI", "OpenCL", "GPT-4 API", "ROS2", "OpenGL" },
+                    domains = new[] { "Healthcare AI", "Medical Imaging", "Robotics", "CFD Simulation", "Computer Vision", "High Performance Computing" },
+                    philosophy = "Passionate about leveraging AI responsibly to solve real-world problems, particularly in healthcare and scientific domains",
+                    academicFocus = "Strong academic performance with emphasis on practical applications and ethical technology development",
+                    note = "Portfolio developed during a period of long-term illness, demonstrating resilience and commitment to learning"
+                }, new JsonSerializerOptions { WriteIndented = true })
+            },
+            "portfolio://ethos" => new McpResourceContent
+            {
+                Uri = uri,
+                MimeType = "application/json",
+                Text = JsonSerializer.Serialize(new
+                {
+                    title = "Professional Ethos & Philosophy",
+                    coreValues = new[] { "Responsible AI Development", "Human-Centered Technology", "Ethical Innovation", "Transparency", "Continuous Learning" },
+                    aiPhilosophy = "AI should augment human capabilities rather than replace human judgment, with transparency and ethical considerations at the forefront",
+                    responsibilityPrinciples = new[] {
+                        "Privacy-first design with GDPR compliance",
+                        "Transparent AI systems with explainable outputs",
+                        "Inclusive technology that serves diverse populations",
+                        "Environmental consciousness in computing practices"
+                    },
+                    collaborationApproach = "Believe in multidisciplinary teams where AI expertise combines with domain knowledge for meaningful impact",
+                    innovationMindset = "Focus on solving real problems rather than pursuing technology for its own sake",
+                    learningCommitment = "Committed to lifelong learning and staying current with emerging technologies while maintaining ethical standards"
+                }, new JsonSerializerOptions { WriteIndented = true })
+            },
+            "portfolio://ai-integration" => new McpResourceContent
+            {
+                Uri = uri,
+                MimeType = "application/json",
+                Text = JsonSerializer.Serialize(new
+                {
+                    title = "AI Integration Methodology",
+                    approach = "Strategic integration of AI tools to enhance development productivity while maintaining code quality and understanding",
+                    experience = new[] {
+                        "Extensive use of Claude Code Pro for complex architectural decisions",
+                        "GPT-4 API integration for healthcare applications",
+                        "AI-assisted development for rapid prototyping and learning",
+                        "Comparative analysis of different AI coding assistants"
+                    },
+                    principles = new[] {
+                        "AI as a collaborative partner, not a replacement for understanding",
+                        "Always verify and understand AI-generated code",
+                        "Use AI to accelerate learning of new technologies and frameworks",
+                        "Maintain human oversight for critical design decisions"
+                    },
+                    practicalApplications = new[] {
+                        "Blazor WebAssembly portfolio development with Claude Code assistance",
+                        "FastAPI backend development with AI-guided architecture",
+                        "Complex distributed systems design with AI consultation",
+                        "Medical AI system development with ethical AI integration"
+                    },
+                    futureVision = "See AI as transformative for development efficiency while emphasizing the irreplaceable value of human creativity, ethics, and domain expertise"
+                }, new JsonSerializerOptions { WriteIndented = true })
+            },
             "portfolio://projects/all" => await GetAllProjectsContent(uri),
             _ when uri.StartsWith("portfolio://projects/") => await GetProjectContent(uri),
             _ => new McpResourceContent
@@ -230,13 +313,13 @@ public class McpService : IMcpService
         };
     }
 
-    private async Task<McpResponse> HandleInitializedNotification(McpRequest request)
+    private Task<McpResponse> HandleInitializedNotification(McpRequest request)
     {
         _logger.LogInformation("=== INITIALIZED NOTIFICATION ===");
         _logger.LogInformation("Client has completed initialization handshake");
 
         // Return empty response for notification (no result expected)
-        return new McpResponse { Id = request.Id, Result = new { } };
+        return Task.FromResult(new McpResponse { Id = request.Id, Result = new { } });
     }
 
     private async Task<McpResourceContent> GetAllProjectsContent(string uri)
