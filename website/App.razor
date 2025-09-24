@@ -1,36 +1,15 @@
-﻿<ErrorBoundary>
-    <Router AppAssembly="@typeof(App).Assembly">
-        <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            @* <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
-        </Found>
-        <NotFound>
-            <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </NotFound>
-    </Router>
-
-    <ErrorContent Context="errorException">
+﻿<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        @* <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <div class="container mx-auto px-4 py-20 text-center">
-                <div class="bg-red-900/20 border border-red-500/50 rounded-lg p-8 max-w-2xl mx-auto">
-                    <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
-                    <h3 class="text-2xl font-bold text-red-400 mb-4">Oops! Something went wrong.</h3>
-                    <p class="text-gray-300 mb-4">Check the browser console for technical details.</p>
-                    <div class="text-left bg-gray-900 rounded p-4 mb-4">
-                        <p class="text-red-400 font-mono text-sm">Error: @errorException.GetType().Name</p>
-                        <p class="text-gray-400 font-mono text-sm">@errorException.Message</p>
-                    </div>
-                    <button onclick="location.reload()" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-2 px-6 rounded">
-                        <i class="fas fa-refresh mr-2"></i>Reload Page
-                    </button>
-                </div>
-            </div>
+            <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>
-    </ErrorContent>
-</ErrorBoundary>
+    </NotFound>
+</Router>
 
 @code {
     protected override void OnInitialized()
