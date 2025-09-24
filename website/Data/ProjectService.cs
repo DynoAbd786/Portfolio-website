@@ -18,7 +18,10 @@ namespace website.Data
                 Console.WriteLine($"[ProjectService] Calling API: {_httpClient.BaseAddress}api/projects");
                 var response = await _httpClient.GetFromJsonAsync<List<Project>>("api/projects");
                 Console.WriteLine($"[ProjectService] API Response received: {response?.Count ?? 0} projects");
-                return response ?? new List<Project>();
+                // Filter out any null entries from API response
+                return (response ?? new List<Project>())
+                    .Where(p => p != null)
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -38,17 +41,17 @@ namespace website.Data
 
             // Featured Personal Projects
             featuredProjects.AddRange(allProjects
-                .Where(p => p.Category == ProjectCategory.Personal && p.IsFeatured)
+                .Where(p => p != null && p.Category == ProjectCategory.Personal && p.IsFeatured)
                 .Take(6));
 
             // Featured Professional Projects
             featuredProjects.AddRange(allProjects
-                .Where(p => p.Category == ProjectCategory.Professional && p.IsFeatured)
+                .Where(p => p != null && p.Category == ProjectCategory.Professional && p.IsFeatured)
                 .Take(6));
 
             // Featured Academic Projects
             featuredProjects.AddRange(allProjects
-                .Where(p => p.Category == ProjectCategory.Academic && p.IsFeatured)
+                .Where(p => p != null && p.Category == ProjectCategory.Academic && p.IsFeatured)
                 .Take(6));
 
             return featuredProjects;
