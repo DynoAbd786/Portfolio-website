@@ -26,7 +26,7 @@ RUN dotnet restore ./website/website.csproj
 COPY website/ ./website/
 
 # Build and publish Blazor WASM with all framework files
-RUN dotnet publish ./website/website.csproj -c Release -o /app/wwwroot
+RUN dotnet publish ./website/website.csproj -c Release -o /app/published
 
 # Stage 3: Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
@@ -35,8 +35,8 @@ WORKDIR /app
 # Copy API from build stage
 COPY --from=api-build /app/api .
 
-# Copy Blazor WASM files to wwwroot (the published output has a nested wwwroot)
-COPY --from=wasm-build /app/wwwroot/wwwroot ./wwwroot
+# Copy Blazor WASM files to wwwroot (published output structure)
+COPY --from=wasm-build /app/published/wwwroot ./wwwroot
 
 # Ensure proper permissions for all files
 RUN chmod -R 644 ./wwwroot/*
