@@ -42,17 +42,9 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configure Host filtering to allow subdomains in production
+// Configure forwarded headers for proxy/CDN scenarios in production
 if (builder.Environment.IsProduction())
 {
-    builder.Services.Configure<HostFilteringOptions>(options =>
-    {
-        options.AllowedHosts.Add("mkkai.dev");
-        options.AllowedHosts.Add("*.mkkai.dev");
-        options.AllowEmptyHosts = false;
-    });
-
-    // Configure forwarded headers for proxy/CDN scenarios
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
         options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
@@ -63,7 +55,7 @@ if (builder.Environment.IsProduction())
 
 var app = builder.Build();
 
-// Configure forwarded headers for proxy scenarios
+// Configure forwarded headers for proxy scenarios (must be early in pipeline)
 app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
@@ -79,29 +71,8 @@ if (app.Environment.IsDevelopment())
 // Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
 
-// API project doesn't serve static files - Blazor WebAssembly handles its own hosting
-
 app.UseAuthorization();
 
-// Add request logging middleware for API paths
-// app.Use(async (context, next) =>
-// {
-//     if (context.Request.Path.StartsWithSegments("/api"))
-//     {
-//         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-//         logger.LogInformation("=== API REQUEST RECEIVED ===");
-//         logger.LogInformation("Method: {Method}", context.Request.Method);
-//         logger.LogInformation("Path: {Path}", context.Request.Path);
-//         logger.LogInformation("QueryString: {QueryString}", context.Request.QueryString);
-//         logger.LogInformation("ContentType: {ContentType}", context.Request.ContentType);
-//         logger.LogInformation("ContentLength: {ContentLength}", context.Request.ContentLength);
-//         logger.LogInformation("UserAgent: {UserAgent}", context.Request.Headers.UserAgent.ToString());
-//         logger.LogInformation("Host: {Host}", context.Request.Headers.Host.ToString());
-//         logger.LogInformation("=== FORWARDING TO CONTROLLER ===");
-//     }
-
-//     await next();
-// });
 
 // Configure static file serving for production
 app.UseDefaultFiles();
