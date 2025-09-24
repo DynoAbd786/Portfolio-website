@@ -81,9 +81,14 @@ app.UseAuthorization();
 //     await next();
 // });
 
+// Configure static file serving for production
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 // Map API controllers BEFORE fallback routing
 app.MapControllers();
 
-// API project doesn't handle SPA routing - Blazor WebAssembly handles client-side routing
+// SPA fallback routing - serve index.html for non-API routes (production only)
+app.MapFallbackToFile("index.html");
 
 app.Run();
