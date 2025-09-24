@@ -1,12 +1,35 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        @* <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<ErrorBoundary>
+    <ChildContent>
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                @* <FocusOnNavigate RouteData="@routeData" Selector="h1" /> *@
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </ChildContent>
+    <ErrorContent Context="errorException">
+        <div style="padding: 2rem; background: #fee; border: 1px solid #f00; margin: 1rem;">
+            <h2>Application Error</h2>
+            <p><strong>Error Type:</strong> @errorException.GetType().Name</p>
+            <p><strong>Message:</strong> @errorException.Message</p>
+            <details>
+                <summary>Stack Trace</summary>
+                <pre style="white-space: pre-wrap; font-size: 12px;">@errorException.ToString()</pre>
+            </details>
+            <button onclick="location.reload()">Reload Page</button>
+        </div>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("[App] Application starting...");
+    }
+}

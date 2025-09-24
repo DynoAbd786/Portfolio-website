@@ -15,11 +15,15 @@ namespace website.Data
         {
             try
             {
+                Console.WriteLine($"[ProjectService] Calling API: {_httpClient.BaseAddress}api/projects");
                 var response = await _httpClient.GetFromJsonAsync<List<Project>>("api/projects");
+                Console.WriteLine($"[ProjectService] API Response received: {response?.Count ?? 0} projects");
                 return response ?? new List<Project>();
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"[ProjectService] API Error: {ex.GetType().Name} - {ex.Message}");
+                Console.WriteLine($"[ProjectService] Stack trace: {ex.StackTrace}");
                 // Fallback to empty list if API is unavailable
                 return new List<Project>();
             }

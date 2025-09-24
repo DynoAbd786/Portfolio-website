@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Logging;
 using website;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+// Enable detailed logging for debugging
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 

@@ -61,7 +61,11 @@
       "Bash(git pull:*)",
       "Bash(git restore:*)",
       "Bash(git fetch:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(dotnet build:*)",
+      "Read(//home/abdua786/Downloads/**)",
+      "WebFetch(domain:www.mkkai.dev)",
+      "WebFetch(domain:mkkai.dev)"
     ],
     "deny": []
   }
