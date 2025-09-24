@@ -1,5 +1,7 @@
 using website.api.Services;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.HostFiltering;
+using Microsoft.AspNetCore.HttpOverrides;
 using DotNetEnv;
 
 // Load .env file for local development
@@ -40,9 +42,29 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Static files are configured in the pipeline, not in services
+// Configure Host filtering to allow subdomains in production
+if (builder.Environment.IsProduction())
+{
+    builder.Services.Configure<HostFilteringOptions>(options =>
+    {
+        options.AllowedHosts.Add("mkkai.dev");
+        options.AllowedHosts.Add("*.mkkai.dev");
+        options.AllowEmptyHosts = false;
+    });
+
+    // Configure forwarded headers for proxy/CDN scenarios
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+        options.KnownNetworks.Clear();
+        options.KnownProxies.Clear();
+    });
+}
 
 var app = builder.Build();
+
+// Configure forwarded headers for proxy scenarios
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -83,7 +105,15 @@ app.UseAuthorization();
 
 // Configure static file serving for production
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        // Allow static files to be served regardless of Host header
+        // This fixes subdomain issues like mcp.mkkai.dev
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=31536000");
+    }
+});
 
 // Map API controllers BEFORE fallback routing
 app.MapControllers();
