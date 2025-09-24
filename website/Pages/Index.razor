@@ -215,16 +215,17 @@
         <h2 class="text-5xl font-bold text-center mb-6 text-white">Featured Projects</h2>
         <p class="text-xl text-center text-gray-400 mb-4">A curated snapshot of my most impactful work across different domains</p>
         <p class="text-center text-gray-500 mb-16">Showcasing AI integration, multidisciplinary problem-solving, and technical excellence from my complete portfolio</p>
-        
-        @if (projects == null)
-        {
-            <div class="text-center">
-                <div class="loader mx-auto mb-4"></div>
-                <p class="text-gray-400"><em>Loading projects...</em></p>
-            </div>
-        }
-        else
-        {
+
+        <ErrorBoundary>
+            @if (projects == null)
+            {
+                <div class="text-center">
+                    <div class="loader mx-auto mb-4"></div>
+                    <p class="text-gray-400"><em>Loading projects...</em></p>
+                </div>
+            }
+            else
+            {
             <!-- Professional Experience Projects Section -->
             @if (projects.Any(p => p.Category == ProjectCategory.Professional))
             {
@@ -349,7 +350,16 @@
                     <i class="fas fa-folder-open mr-2"></i>View All Projects
                 </a>
             </div>
-        }
+            }
+
+            <ErrorContent>
+                <div class="bg-red-900/20 border border-red-500/50 rounded-lg p-8 text-center">
+                    <i class="fas fa-exclamation-triangle text-red-400 text-3xl mb-4"></i>
+                    <h3 class="text-xl font-bold text-red-400 mb-2">Could not load featured projects</h3>
+                    <p class="text-gray-400">Check the browser console for technical details.</p>
+                </div>
+            </ErrorContent>
+        </ErrorBoundary>
     </div>
 </section>
 
@@ -369,9 +379,9 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[Index] Error loading projects: {ex.GetType().Name} - {ex.Message}");
-            Console.WriteLine($"[Index] Stack trace: {ex.StackTrace}");
-            projects = new List<Project>(); // Fallback to empty list
+            Console.Error.WriteLine($"[Index] Exception: {ex}");
+            // Log the error but don't rethrow - use empty list fallback for graceful degradation
+            projects = new List<Project>();
         }
     }
 }
