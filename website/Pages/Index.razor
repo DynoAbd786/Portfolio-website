@@ -240,9 +240,18 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projects.Where(p => p.Category == ProjectCategory.Professional))
+                        @foreach (var project in projects.Where(p => p != null && p.Category == ProjectCategory.Professional))
                         {
-                            <ProjectCard Project="project" />
+                            <ErrorBoundary>
+                                <ChildContent>
+                                    <ProjectCard Project="project" />
+                                </ChildContent>
+                                <ErrorContent>
+                                    <div class="bg-gray-800 rounded-lg p-6 border border-red-500/50">
+                                        <p class="text-red-400">Error loading project: @project?.Title</p>
+                                    </div>
+                                </ErrorContent>
+                            </ErrorBoundary>
                         }
                     </div>
                 </div>
@@ -263,9 +272,18 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projects.Where(p => p.Category == ProjectCategory.Academic))
+                        @foreach (var project in projects.Where(p => p != null && p.Category == ProjectCategory.Academic))
                         {
-                            <ProjectCard Project="project" />
+                            <ErrorBoundary>
+                                <ChildContent>
+                                    <ProjectCard Project="project" />
+                                </ChildContent>
+                                <ErrorContent>
+                                    <div class="bg-gray-800 rounded-lg p-6 border border-red-500/50">
+                                        <p class="text-red-400">Error loading project: @project?.Title</p>
+                                    </div>
+                                </ErrorContent>
+                            </ErrorBoundary>
                         }
                     </div>
                 </div>
@@ -308,9 +326,18 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projects.Where(p => p.Category == ProjectCategory.Personal))
+                        @foreach (var project in projects.Where(p => p != null && p.Category == ProjectCategory.Personal))
                         {
-                            <ProjectCard Project="project" />
+                            <ErrorBoundary>
+                                <ChildContent>
+                                    <ProjectCard Project="project" />
+                                </ChildContent>
+                                <ErrorContent>
+                                    <div class="bg-gray-800 rounded-lg p-6 border border-red-500/50">
+                                        <p class="text-red-400">Error loading project: @project?.Title</p>
+                                    </div>
+                                </ErrorContent>
+                            </ErrorBoundary>
                         }
                     </div>
                 </div>
@@ -334,6 +361,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-        projects = await ProjectSvc.GetFeaturedProjectsAsync();
+        try
+        {
+            Console.WriteLine("[Index] Loading featured projects...");
+            projects = await ProjectSvc.GetFeaturedProjectsAsync();
+            Console.WriteLine($"[Index] Loaded {projects?.Count ?? 0} featured projects");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[Index] Error loading projects: {ex.GetType().Name} - {ex.Message}");
+            Console.WriteLine($"[Index] Stack trace: {ex.StackTrace}");
+            projects = new List<Project>(); // Fallback to empty list
+        }
     }
 }
