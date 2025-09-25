@@ -35,8 +35,10 @@ WORKDIR /app
 # Copy API from build stage
 COPY --from=api-build /app/api .
 
-# Copy all Blazor WASM published files including _framework folder
-COPY --from=wasm-build /app/published/ ./wwwroot/
+# Copy Blazor WASM wwwroot files
+COPY --from=wasm-build /app/published/wwwroot/ ./wwwroot/
+# Copy Blazor WASM framework files to the correct location
+COPY --from=wasm-build /app/published/_framework/ ./wwwroot/_framework/
 
 # Ensure proper permissions for all files
 RUN chmod -R 644 ./wwwroot/*
