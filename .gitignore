@@ -324,4 +324,4 @@ appsettings.Development.json
 appsettings.local.json
 
 # Claude Code specific files
-.claude/
+# .claude/ - now tracked for portfolio consistency
