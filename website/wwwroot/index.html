@@ -161,48 +161,31 @@ URL: ${window.location.href}
 
     <script src="_framework/blazor.webassembly.js"></script>
 
-    <!-- Script for the 3D tilt effect on project cards -->
-    <script src="js/vanilla-tilt.min.js"></script>
+    <!-- Enhanced project card hover effects -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            console.log('[VanillaTilt] Initializing...');
-            try {
-                if (typeof VanillaTilt !== 'undefined') {
-                    const elements = document.querySelectorAll(".project-card-container");
-                    console.log(`[VanillaTilt] Found ${elements.length} elements to initialize`);
+            console.log('[ProjectCards] Initializing enhanced hover effects...');
 
-                    if (elements.length > 0) {
-                        VanillaTilt.init(elements, {
-                            max: 15,
-                            speed: 400,
-                            glare: true,
-                            "max-glare": 0.5
-                        });
-                        console.log('[VanillaTilt] Initialized successfully');
-                    } else {
-                        console.log('[VanillaTilt] No elements found, will retry later');
-                        // Retry after a delay in case elements load later
-                        setTimeout(function() {
-                            const retryElements = document.querySelectorAll(".project-card-container");
-                            if (retryElements.length > 0) {
-                                console.log(`[VanillaTilt] Retry: Found ${retryElements.length} elements`);
-                                VanillaTilt.init(retryElements, {
-                                    max: 15,
-                                    speed: 400,
-                                    glare: true,
-                                    "max-glare": 0.5
-                                });
-                                console.log('[VanillaTilt] Retry initialization successful');
-                            }
-                        }, 2000);
-                    }
-                } else {
-                    console.warn('[VanillaTilt] Library not loaded');
-                }
-            } catch (error) {
-                console.error('[VanillaTilt] Error during initialization:', error);
-                updateErrorDisplay(error, 'VanillaTilt Initialization');
-            }
+            // Add smooth hover effects to project cards
+            const projectCards = document.querySelectorAll(".project-card-container");
+
+            projectCards.forEach(card => {
+                const projectCard = card.querySelector('.project-card');
+
+                card.addEventListener('mouseenter', function() {
+                    // Smooth lift effect with glow
+                    projectCard.style.transform = 'translateY(-8px) scale(1.02)';
+                    projectCard.style.boxShadow = '0 20px 40px rgba(6, 182, 212, 0.3), 0 0 20px rgba(6, 182, 212, 0.1)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    // Return to normal
+                    projectCard.style.transform = 'translateY(0) scale(1)';
+                    projectCard.style.boxShadow = '';
+                });
+            });
+
+            console.log(`[ProjectCards] Enhanced effects applied to ${projectCards.length} cards`);
         });
 
         function toggleMobileMenu() {
