@@ -20,7 +20,6 @@ namespace website.api.Services
                     Description = "Enterprise-grade distributed task processing framework with 34 Python modules spanning 10,000+ lines. Features Redis priority queues, PostgreSQL persistence, FastAPI REST APIs, WebSocket real-time updates, and Prometheus monitoring. Includes async/sync task execution, auto-scaling workers, circuit breakers, and comprehensive CLI with 20+ admin commands. Built to systematically compare agentic AI capabilities, revealing Claude Code Pro's superior architectural reasoning over Gemini CLI.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TaskFlow",
                     ProjectUrl = "/projects/taskflow",
-                    GitHubUrl = "https://github.com/DynoAbd786/Taskflow",
                     Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" },
                     Category = ProjectCategory.Personal,
                     IsFeatured = true
@@ -31,7 +30,6 @@ namespace website.api.Services
                     Description = "Blazor WebAssembly portfolio built with .NET 8 and C# to master modern web development fundamentals. Features client-side rendering, responsive Tailwind CSS design, component architecture, dependency injection, and Font Awesome icons. Includes dynamic project showcase, mobile navigation, and 3D tilt effects via Vanilla Tilt.js. Developed entirely with Claude Code assistance to demonstrate AI-accelerated learning and document the C# development journey for employers and fellow developers.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
                     ProjectUrl = "/projects/portfolio",
-                    GitHubUrl = "https://github.com/DynoAbd786/Portfolio-website",
                     Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
                     Category = ProjectCategory.Personal,
                     IsFeatured = true

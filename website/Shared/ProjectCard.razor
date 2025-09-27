@@ -29,20 +29,12 @@
                         }
                     </div>
                 }
-                <div class="flex gap-3 mt-2">
-                    @if (!string.IsNullOrEmpty(Project.ProjectUrl))
-                    {
-                        <a href="@Project.ProjectUrl" class="inline-block font-bold text-cyan-400 hover:text-white transition-colors duration-300">
-                            View Project &rarr;
-                        </a>
-                    }
-                    @if (!string.IsNullOrEmpty(Project.GitHubUrl))
-                    {
-                        <a href="@Project.GitHubUrl" target="_blank" class="inline-block font-bold text-gray-400 hover:text-white transition-colors duration-300">
-                            <i class="fab fa-github mr-1"></i>GitHub
-                        </a>
-                    }
-                </div>
+                @if (!string.IsNullOrEmpty(Project.ProjectUrl))
+                {
+                    <a href="@Project.ProjectUrl" class="inline-block mt-2 font-bold text-cyan-400 hover:text-white transition-colors duration-300">
+                        View Project &rarr;
+                    </a>
+                }
             </div>
         </div>
     </div>
