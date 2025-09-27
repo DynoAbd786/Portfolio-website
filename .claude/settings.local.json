@@ -50,7 +50,12 @@
       "Bash(dotnet build:*)",
       "Bash(git stash:*)",
       "WebFetch(domain:www.mkkai.dev)",
-      "WebFetch(domain:mkkai.dev)"
+      "WebFetch(domain:mkkai.dev)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Leeds Uni/Year 2/Computer Science/Numerical Computation/Coursework (Summative)/**)",
+      "Bash(dir:*)",
+      "Bash(copy:*)",
+      "Bash(cmd:*)",
+      "Read(//c/Users/Abdua/OneDrive/Documents/Life Admin/Job stuff/CV's/Internships/**)"
     ],
     "deny": []
   }
