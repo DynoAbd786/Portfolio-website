@@ -72,6 +72,7 @@ public class McpService : IMcpService
             protocolVersion = "2025-06-18",
             capabilities = new
             {
+                logging = new { },
                 resources = new
                 {
                     subscribe = false,
@@ -79,7 +80,7 @@ public class McpService : IMcpService
                 },
                 tools = new
                 {
-                    listChanged = false
+                    listChanged = true
                 }
             },
             serverInfo = new
