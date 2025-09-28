@@ -127,6 +127,23 @@ public class McpController : ControllerBase
         return Ok(response);
     }
 
+    [HttpGet("tools")]
+    public async Task<IActionResult> GetToolsList()
+    {
+        _logger.LogInformation("=== DIRECT TOOLS GET REQUEST ===");
+
+        // Create a tools/list request
+        var toolsRequest = new McpRequest
+        {
+            Id = "http-get-tools",
+            Method = "tools/list",
+            JsonRpc = "2.0"
+        };
+
+        var response = await _mcpService.HandleRequestAsync(toolsRequest);
+        return Ok(response);
+    }
+
     [HttpGet("info")]
     public IActionResult GetServerInfo()
     {

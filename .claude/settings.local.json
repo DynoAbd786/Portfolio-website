@@ -55,7 +55,10 @@
       "Bash(dir:*)",
       "Bash(copy:*)",
       "Bash(cmd:*)",
-      "Read(//c/Users/Abdua/OneDrive/Documents/Life Admin/Job stuff/CV's/Internships/**)"
+      "Read(//c/Users/Abdua/OneDrive/Documents/Life Admin/Job stuff/CV's/Internships/**)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": []
   }

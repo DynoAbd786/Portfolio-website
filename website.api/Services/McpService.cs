@@ -81,13 +81,16 @@ public class McpService : IMcpService
                 tools = new
                 {
                     listChanged = true
-                }
+                },
+                completion = new { },
+                experimental = new { }
             },
             serverInfo = new
             {
                 name = "muhammad-portfolio-mcp",
                 version = "1.0.0"
-            }
+            },
+            instructions = "MCP server for Muhammad Kashif-Khan's portfolio. Use submit_contact to send messages and search_projects to find project information."
         };
 
         var response = new McpResponse
@@ -318,6 +321,8 @@ public class McpService : IMcpService
     {
         _logger.LogInformation("=== INITIALIZED NOTIFICATION ===");
         _logger.LogInformation("Client has completed initialization handshake");
+        _logger.LogInformation("Tools available: submit_contact, search_projects");
+        _logger.LogInformation("Client should now call tools/list to discover available tools");
 
         // Return empty response for notification (no result expected)
         return Task.FromResult(new McpResponse { Id = request.Id, Result = new { } });
