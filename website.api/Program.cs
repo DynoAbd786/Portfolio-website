@@ -1,7 +1,9 @@
 using website.api.Services;
+using website.api.Middleware;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.HostFiltering;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DotNetEnv;
 
 // Load .env file for local development
@@ -21,6 +23,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IMcpService, McpService>();
+builder.Services.AddScoped<IOAuthService, OAuthService>();
+
+// Configure JWT Bearer authentication for OAuth
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        // JWT configuration will be handled by our custom OAuth service
+        options.Events = new JwtBearerEvents
+        {
+            OnChallenge = context =>
+            {
+                // Skip default JWT challenge - we handle OAuth challenges in middleware
+                context.HandleResponse();
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 // Configure CORS for Blazor WebAssembly
 builder.Services.AddCors(options =>
@@ -71,6 +90,9 @@ if (app.Environment.IsDevelopment())
 // Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
 
+// Use authentication and our custom MCP OAuth middleware
+app.UseAuthentication();
+app.UseMcpOAuth(); // Custom OAuth middleware for MCP
 app.UseAuthorization();
 
 
