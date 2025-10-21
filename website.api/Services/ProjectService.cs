@@ -36,6 +36,17 @@ namespace website.api.Services
                 },
                 new Project
                 {
+                    Title = "Workflow-Centric Graph Platform for AI-Enhanced Code Understanding",
+                    Description = "MEng flagship research project developing a graph-based platform that transforms codebases into interactive, multi-level visual representations with AI-generated documentation. Features workflow-centric organization of structural and behavioral graphs, version-specific package analysis for open-source libraries, and dual-interface system with web visualization and MCP API for LLM integration. Built on 7-service microservices architecture using Neo4j, Doxygen, and OpenAI APIs. Includes comprehensive validation framework with LLM before/after evaluation targeting 75-80% token reduction and advanced features like hierarchical LLM agents, cross-language architecture generalization, and security threat modeling. Currently in feasibility assessment stage for MEng final year group project.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Graph+Analysis",
+                    ProjectUrl = "/projects/workflow-graph-platform",
+                    Tags = new[] { "MEng Research", "Graph Databases", "Neo4j", "Python", "Doxygen", "LLM Integration", "MCP", "FastAPI", "React", "Software Architecture", "AI Documentation", "Open Source Analysis" },
+                    Category = ProjectCategory.Academic,
+                    IsFeatured = true,
+                    IsInDevelopment = true
+                },
+                new Project
+                {
                     Title = "Flow Diverter Deployment Algorithm & Medical Simulation Platform",
                     Description = "Advanced biomedical research platform for simulating flow diverter stent deployment in patient-specific vascular geometries. Built during 8-week internship, extending the 2016 Paliwal Virtual Stenting Workflow algorithm. Features physics-based stent expansion, VMTK vessel analysis, GPU-accelerated PyVista/VTK visualization, and professional PyQt6 interface. Supports multiple stent models (Enterprise, Pipeline, Silk) with realistic wire mechanics, HDF5 export, and Docker containerization for cross-platform deployment.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Medical+Sim",
@@ -62,7 +73,7 @@ namespace website.api.Services
                     ProjectUrl = "/projects/data-mining",
                     Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
                     Category = ProjectCategory.Academic,
-                    IsFeatured = true
+                    IsFeatured = false
                 },
                 new Project
                 {

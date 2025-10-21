@@ -3,7 +3,17 @@
 @if (Project != null)
 {
     <div class="project-card-container">
-        <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-xl transition-all duration-500 border border-transparent hover:border-cyan-500/50">
+        <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-xl transition-all duration-500 border border-transparent hover:border-cyan-500/50 relative">
+            @* Diagonal "IN DEVELOPMENT" ribbon *@
+            @if (Project.IsInDevelopment)
+            {
+                <div class="absolute top-0 right-0 z-10 overflow-hidden w-32 h-32 pointer-events-none">
+                    <div class="absolute transform rotate-45 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold py-1 right-[-35px] top-[32px] w-[170px] text-center shadow-lg">
+                        IN DEVELOPMENT
+                    </div>
+                </div>
+            }
+
             @if (!string.IsNullOrEmpty(Project.ImageUrl))
             {
                 <img src="@Project.ImageUrl" alt="@(Project.Title ?? "Project")" class="w-full h-48 object-cover">

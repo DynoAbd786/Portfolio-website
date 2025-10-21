@@ -1,0 +1,510 @@
+@page "/projects/workflow-graph-platform"
+@using website.Data
+
+<PageTitle>Workflow-Centric Graph Platform for AI-Enhanced Code Understanding</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Workflow-Centric Graph Platform</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Personal Projects • MEng Flagship Research (In Development)
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">Workflow-Centric Graph Platform</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">AI-Enhanced Code Understanding Through Multi-Level Graph Visualization</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                MEng flagship research project transforming codebases into interactive graph representations with AI documentation, targeting 75-80% token reduction for LLM code comprehension
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">MEng Research</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Graph Databases</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Neo4j</span>
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">AI Integration</span>
+                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">MCP Protocol</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🕸️</div>
+            <p class="text-gray-400 text-lg">7-Service Microservices • Package-Centric Organization • Dual-Level Graph Architecture</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+
+                <!-- Project Status & Research Context -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-info-circle text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-yellow-400">Project Status & Context</h2>
+                    </div>
+                    <div class="bg-yellow-900/20 rounded-lg p-6 border border-yellow-500/25 mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-500 rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-yellow-400">Current Stage: Feasibility Assessment</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed">
+                            This project is currently in the consideration and feasibility assessment stage for my MEng final year group project (Semester 1 2025 - Semester 2 2026). Originally conceived as a personal research initiative, the project is being evaluated for viability as a collaborative flagship research effort with potential for future commercialization and academic publication. A potential pivot is being considered to prioritize hierarchical LLM architecture for maintainable codebases, focusing on the enterprise scalability and distributed systems analysis aspects.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Timeline</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• <strong>Conceptualization:</strong> October 2025</li>
+                                <li>• <strong>Feasibility Assessment:</strong> October - November 2025</li>
+                                <li>• <strong>Planned Start:</strong> January 2026 (if approved)</li>
+                                <li>• <strong>Completion Target:</strong> April 2026</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-white mb-2">Research Focus</h4>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Open-source package/library analysis</li>
+                                <li>• LLM knowledge gap mitigation</li>
+                                <li>• Version-specific code understanding</li>
+                                <li>• Token-efficient AI assistance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Problem: Code Understanding Challenges -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-red-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-red-400">The Problem</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6">Understanding large, unfamiliar codebases is a fundamental challenge in software development. Developers must navigate thousands of files and reconstruct mental models of how components relate and interact.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                                <i class="fas fa-folder-tree mr-3"></i>Current Limitations
+                            </h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>File-centric organization:</strong> Code stored by directory structure, not workflows</li>
+                                <li><strong>Static documentation:</strong> Quickly outdated, missing system-level interactions</li>
+                                <li><strong>Fragmented relationships:</strong> Only immediate connections visible</li>
+                                <li><strong>Lost context:</strong> Functional workflows spanning multiple modules</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-orange-600/25">
+                            <h3 class="text-xl font-bold text-orange-400 mb-4 flex items-center">
+                                <i class="fas fa-robot mr-3"></i>The LLM Knowledge Gap
+                            </h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li><strong>Version Mismatch:</strong> Training data frozen at specific points</li>
+                                <li><strong>New Package Blindness:</strong> Recently released packages unknown</li>
+                                <li><strong>Private Codebase Inaccessibility:</strong> Internal libraries not in training</li>
+                                <li><strong>Confident Hallucination:</strong> Plausible but incorrect code generation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-900/20 rounded-lg p-6 border border-red-500/25">
+                        <h3 class="text-xl font-bold text-red-400 mb-4">Critical Impact</h3>
+                        <p class="text-gray-300">
+                            When developers use numpy 1.24.0 in production but the LLM was trained on 1.20.0, generated code references deprecated APIs or features that don't exist yet, leading to runtime errors and broken deployments. Without access to accurate, version-specific structured knowledge, both human developers and AI systems remain limited in their ability to understand and work with unfamiliar code effectively.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Proposed Solution: Dual-Level Graph Architecture -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-lightbulb text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-green-400">Proposed Solution</h2>
+                    </div>
+
+                    <p class="text-gray-300 mb-6">A graph-based platform that transforms codebases into interactive, multi-level visual representations with AI-generated documentation, analyzed at two fundamental levels inspired by UML diagrams:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Structural Level (Static Architecture)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li>• Class diagrams showing inheritance hierarchies</li>
+                                <li>• Component relationships and dependencies</li>
+                                <li>• Package organization and module structure</li>
+                                <li>• Object composition and aggregation patterns</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                            <h3 class="text-xl font-bold text-purple-400 mb-4">Behavioral Level (Dynamic Workflows) - PRIMARY FOCUS</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li>• Workflow execution paths and call sequences</li>
+                                <li>• API endpoint implementations</li>
+                                <li>• Feature pipelines and processing flows</li>
+                                <li>• Interaction patterns between components</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-900/20 rounded-lg p-6 border border-green-500/25">
+                        <h3 class="text-xl font-bold text-green-400 mb-4">Core Innovation: Workflow-Centric Organization</h3>
+                        <p class="text-gray-300">
+                            The platform prioritizes <strong>workflow-centric organization</strong> while preserving the ability to query structural relationships. Each workflow becomes an independent, modular subgraph that can be analyzed, visualized, and understood in isolation or as part of the larger system, organized around <strong>packages as the fundamental unit</strong> (e.g., numpy:1.24.0, requests:2.31.0) enabling version-specific queries and cross-version comparisons.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- System Architecture: 7-Service Microservices -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-server text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">System Architecture</h2>
+                    </div>
+                    <p class="text-gray-300 mb-6">Multi-container microservices architecture with seven independent services coordinated through a centralized Database Service API:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-cyan-400 mb-4">Analysis Service</h3>
+                            <p class="text-gray-300 text-sm mb-3">Doxygen integration and code parsing</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• DOT file generation and parsing</li>
+                                <li>• AST module for supplementary analysis</li>
+                                <li>• Leaf node identification</li>
+                                <li>• Metadata extraction (signatures, decorators)</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">AI Service</h3>
+                            <p class="text-gray-300 text-sm mb-3">Intelligent documentation generation</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Complexity scoring and AI value assessment</li>
+                                <li>• Token-constrained summary generation</li>
+                                <li>• Semantic embeddings for similarity search</li>
+                                <li>• Redis caching to minimize API calls</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4">Graph Database (Neo4j)</h3>
+                            <p class="text-gray-300 text-sm mb-3">Package-centric graph storage</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Version-specific namespacing (numpy:1.24.0)</li>
+                                <li>• Workflow as distinct subgraphs</li>
+                                <li>• Cypher queries for graph traversal</li>
+                                <li>• Incremental update logic via hashing</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Database Service - Centralized Access</h3>
+                            <p class="text-gray-300 text-sm mb-3">Standardized REST API for all operations</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Package-centric query patterns</li>
+                                <li>• Version management and metadata</li>
+                                <li>• Authentication and access control</li>
+                                <li>• Team-consumable API documentation</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Web Interface</h3>
+                            <p class="text-gray-300 text-sm mb-3">React + D3.js/Cytoscape visualization</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Multi-level graph visualization</li>
+                                <li>• Toggle structural/behavioral views</li>
+                                <li>• Natural language query interface</li>
+                                <li>• GitHub repository submission</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-indigo-600/25">
+                            <h3 class="text-xl font-bold text-indigo-400 mb-4">MCP Service - PRIMARY ACCESS METHOD</h3>
+                            <p class="text-gray-300 text-sm mb-3">JSON-RPC 2.0 over HTTP for LLM access</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Version-specific queries (package:version)</li>
+                                <li>• API documentation retrieval</li>
+                                <li>• Workflow execution path analysis</li>
+                                <li>• Authentication and rate limiting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Primary Use Case: Open-Source Package Analysis -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-box-open text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Primary Use Case: Open-Source Package Analysis</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">For Human Developers</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li>• Understand package/library APIs before integration</li>
+                                <li>• Learn capabilities and features</li>
+                                <li>• Explore class structure for open-source contributions</li>
+                                <li>• Navigate workflows to understand implementations</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                            <h3 class="text-xl font-bold text-purple-400 mb-4">For AI Systems (via MCP)</h3>
+                            <ul class="space-y-2 text-gray-300 text-sm">
+                                <li>• Query package capabilities by name and version</li>
+                                <li>• Retrieve structured API documentation</li>
+                                <li>• Access class structure for contributions</li>
+                                <li>• Debug version-specific dependency issues</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyan-900/20 rounded-lg p-6 border border-cyan-500/25">
+                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Package-Centric Workflow</h3>
+                        <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="flex items-start">
+                                <span class="text-cyan-400 font-bold mr-3">1.</span>
+                                <span>User submits GitHub repository link and specifies version/tag via web interface</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-cyan-400 font-bold mr-3">2.</span>
+                                <span>Backend clones repository at specified version and runs analysis pipeline</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-cyan-400 font-bold mr-3">3.</span>
+                                <span>Structural and behavioral graphs generated with version metadata (e.g., numpy:1.24.0)</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-cyan-400 font-bold mr-3">4.</span>
+                                <span>Human users explore via web visualization, AI systems query via MCP API</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-cyan-400 font-bold mr-3">5.</span>
+                                <span>Version-specific analysis enables cross-version comparisons and debugging</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validation Framework: LLM Before/After Evaluation -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-yellow-400">Validation Framework</h2>
+                    </div>
+
+                    <p class="text-gray-300 mb-6"><strong>Primary Evaluation:</strong> Three-condition LLM experiment using Manim v0.17.3 as test codebase</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-3">Condition A: Baseline</h3>
+                            <p class="text-gray-300 text-sm">LLM with Manim documentation only, no codebase access</p>
+                            <div class="mt-3 text-sm text-gray-400">
+                                <strong>Expected Error Rate:</strong> ~50%
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                            <h3 class="text-xl font-bold text-yellow-400 mb-3">Condition B: Full Codebase</h3>
+                            <p class="text-gray-300 text-sm">Claude Code / Agentic Tool with entire repository access</p>
+                            <div class="mt-3 text-sm text-gray-400">
+                                <strong>Expected Error Rate:</strong> ~28%<br/>
+                                <strong>Avg Input Tokens:</strong> 18,500
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-3">Condition C: MCP Tool (Our System)</h3>
+                            <p class="text-gray-300 text-sm">Access to MCP API for structured queries</p>
+                            <div class="mt-3 text-sm text-gray-400">
+                                <strong>Target Error Rate:</strong> &lt;18%<br/>
+                                <strong>Avg Input Tokens:</strong> 4,300<br/>
+                                <strong class="text-green-400">⚡ 75-80% Token Reduction</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-900/20 rounded-lg p-6 border border-yellow-500/25">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Key Validation Metrics</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="font-bold text-white mb-2">Error Rate (Primary)</h4>
+                                <p class="text-gray-400 text-sm">Binary: Does generated code run without errors? Target: Condition C &lt;20% vs. A ~50%</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-2">Token Efficiency (Critical)</h4>
+                                <p class="text-gray-400 text-sm">Context Efficiency Ratio: Target 75-80% reduction vs. full codebase (Cohen's d > 2.0)</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-2">Code Quality</h4>
+                                <p class="text-gray-400 text-sm">Likert scale (1-5): Correctness, idiomatic usage, clarity. Target: >4.0/5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Research Directions & Extensions -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-indigo-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-rocket text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-indigo-400">Future Research Directions</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h3 class="text-xl font-bold text-blue-400 mb-4">Hierarchical LLM Architecture (Potential Pivot)</h3>
+                            <p class="text-gray-300 text-sm mb-3">Multi-level AI agents for enterprise systems:</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Deployment-level agents (distributed topology)</li>
+                                <li>• Component-level agents (subsystem management)</li>
+                                <li>• Package-level agents (module coherence)</li>
+                                <li>• Hierarchical delegation following architectural boundaries</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                            <h3 class="text-xl font-bold text-green-400 mb-4">Big Data: Large-Scale Analysis</h3>
+                            <p class="text-gray-300 text-sm mb-3">Mass repository analysis and pattern discovery:</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Thousands of high-quality open-source projects</li>
+                                <li>• Cross-project architectural pattern discovery</li>
+                                <li>• Community best practices inference</li>
+                                <li>• Graph Neural Networks for design pattern recognition</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                            <h3 class="text-xl font-bold text-purple-400 mb-4">Cross-Language Generalization</h3>
+                            <p class="text-gray-300 text-sm mb-3">Language-agnostic architecture mapping:</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Canonical UML representations across languages</li>
+                                <li>• Structural isomorphisms (Python → C# → Java)</li>
+                                <li>• Capability matrices for construct mapping</li>
+                                <li>• Rapid prototyping in one language, production in another</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h3 class="text-xl font-bold text-red-400 mb-4">Cybersecurity Threat Modeling</h3>
+                            <p class="text-gray-300 text-sm mb-3">Security analysis via graph topology:</p>
+                            <ul class="text-gray-400 text-sm space-y-1">
+                                <li>• Attack surface mapping and privilege escalation paths</li>
+                                <li>• Vulnerability localization using historical CVE data</li>
+                                <li>• Insecure permission flow detection</li>
+                                <li>• Common vulnerability pattern recognition</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Insights & Technologies Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Key Insights -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-lightbulb text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Workflow-centric organization prioritizes how code works together</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Package-version namespacing enables precise LLM knowledge</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Target 75-80% token reduction for sustainable LLM usage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Microservices architecture enables parallel development</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-gray-300">MCP protocol provides standardized AI-system interface</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                                <i class="fas fa-tools text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-300">Technology Stack</h2>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Python</span>
+                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Neo4j</span>
+                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">Doxygen</span>
+                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">FastAPI</span>
+                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">React</span>
+                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">D3.js / Cytoscape</span>
+                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Docker</span>
+                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Redis</span>
+                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Graphviz</span>
+                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">MCP Protocol</span>
+                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">OpenAI API</span>
+                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm">Graph Neural Networks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Development Note -->
+                <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-8 text-center border border-gray-700">
+                    <h3 class="text-2xl font-bold text-white mb-3">MEng Flagship Research Project</h3>
+                    <p class="text-blue-200 mb-4">
+                        This project represents a comprehensive exploration of graph-based code analysis, LLM integration, and software architecture understanding.
+                        Currently in feasibility assessment stage for MEng final year group project, with potential applications in AI-assisted development,
+                        open-source package comprehension, and enterprise codebase navigation. The project demonstrates advanced software engineering principles,
+                        research methodology, and technical innovation at the intersection of AI and software development.
+                    </p>
+                    <div class="flex justify-center space-x-6 text-sm">
+                        <span class="text-green-400">✓ Research Innovation</span>
+                        <span class="text-blue-400">✓ Microservices Architecture</span>
+                        <span class="text-purple-400">✓ AI Integration</span>
+                        <span class="text-yellow-400">✓ Graph Databases</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
+    </div>
+</section>

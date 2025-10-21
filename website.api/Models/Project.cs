@@ -17,5 +17,6 @@ namespace website.api.Models
         public string[] Tags { get; set; } = System.Array.Empty<string>();
         public ProjectCategory Category { get; set; } = ProjectCategory.Personal;
         public bool IsFeatured { get; set; } = false;
+        public bool IsInDevelopment { get; set; } = false;
     }
 }
