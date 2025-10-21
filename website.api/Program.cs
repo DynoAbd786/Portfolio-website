@@ -90,6 +90,9 @@ if (app.Environment.IsDevelopment())
 // Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
 
+// Add comprehensive request logging for MCP debugging
+app.UseRequestLogging(); // Custom request logging middleware
+
 // Use authentication and our custom MCP OAuth middleware
 app.UseAuthentication();
 app.UseMcpOAuth(); // Custom OAuth middleware for MCP

@@ -58,7 +58,13 @@
       "Read(//c/Users/Abdua/OneDrive/Documents/Life Admin/Job stuff/CV's/Internships/**)",
       "Bash(netstat:*)",
       "Bash(taskkill:*)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.bluesmithis.com)",
+      "Bash(awk:*)",
+      "Bash(dotnet --version:*)",
+      "Bash(ConvertFrom-Json)",
+      "Bash(Measure-Object)",
+      "Bash(Select-Object -ExpandProperty Count)"
     ],
     "deny": []
   }

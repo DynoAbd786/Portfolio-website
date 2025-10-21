@@ -25,11 +25,28 @@ public class McpController : ControllerBase
         Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
         Response.Headers["Pragma"] = "no-cache";
         Response.Headers["Expires"] = "0";
+
         _logger.LogInformation("=== MCP REQUEST START (NO MODEL BINDING) ===");
         _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
         _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
         _logger.LogInformation("Content-Type: {ContentType}", HttpContext.Request.ContentType);
         _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
+
+        // Log all request headers
+        _logger.LogInformation("=== REQUEST HEADERS ===");
+        foreach (var header in HttpContext.Request.Headers)
+        {
+            _logger.LogInformation("Header {Name}: {Value}", header.Key, string.Join(", ", header.Value.ToArray()));
+        }
+
+        // Log OAuth context if available
+        if (HttpContext.Items.ContainsKey("oauth_client_id"))
+        {
+            _logger.LogInformation("=== OAUTH CONTEXT ===");
+            _logger.LogInformation("OAuth Client ID: {ClientId}", HttpContext.Items["oauth_client_id"]);
+            _logger.LogInformation("OAuth Scope: {Scope}", HttpContext.Items["oauth_scope"]);
+            _logger.LogInformation("OAuth Resource: {Resource}", HttpContext.Items["oauth_resource"]);
+        }
 
         try
         {

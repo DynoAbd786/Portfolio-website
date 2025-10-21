@@ -45,6 +45,16 @@ public class McpOAuthMiddleware
         _logger.LogInformation("=== MCP OAUTH MIDDLEWARE ===");
         _logger.LogInformation("Path: {Path}", context.Request.Path);
         _logger.LogInformation("Method: {Method}", context.Request.Method);
+        _logger.LogInformation("Query String: {QueryString}", context.Request.QueryString);
+        _logger.LogInformation("Content Type: {ContentType}", context.Request.ContentType);
+        _logger.LogInformation("Content Length: {ContentLength}", context.Request.ContentLength);
+
+        // Log all headers in OAuth middleware
+        _logger.LogInformation("=== ALL REQUEST HEADERS ===");
+        foreach (var header in context.Request.Headers)
+        {
+            _logger.LogInformation("Header {Name}: {Value}", header.Key, string.Join(", ", header.Value.ToArray()));
+        }
 
         // Get OAuth service from the scoped service provider
         var oauthService = context.RequestServices.GetRequiredService<IOAuthService>();

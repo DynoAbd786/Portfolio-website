@@ -79,10 +79,20 @@ namespace website.api.Services
                     Title = "AI-Powered Mental Health App Design",
                     Description = "Comprehensive software engineering design brief for a £100,000 mental health app targeting university students globally. Features advanced ChatGPT-4 Turbo API integration, multi-stakeholder analysis, and sophisticated system architecture. Includes university system integration, crisis intervention protocols, and comprehensive privacy controls. Demonstrates professional software engineering methodology with agile development planning, ethical considerations, and legal compliance (GDPR, Data Protection Act). Designed for global scalability across universities with local encryption, cultural personalization, and healthcare service integration (BetterHelp, NHS).",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Mental+Health+App",
-                    ProjectUrl = "/projects/software-engineering",
+                    ProjectUrl = "/projects/mental-health-app",
                     Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
                     Category = ProjectCategory.Academic,
                     IsFeatured = true
+                },
+                new Project
+                {
+                    Title = "TerraTracker - GPS Route Tracking Platform",
+                    Description = "Collaborative 6-person team project developing a full-stack GPS route tracking and sharing application using professional agile methodologies. Built with Flask, PostgreSQL, and Leaflet.js for interactive mapping. Features comprehensive sprint documentation, Git workflow with branches and pull requests, Docker containerization, and CI/CD pipeline. Demonstrates professional software engineering practices including version control, issue tracking, wiki documentation, and team collaboration. Includes user authentication, route visualization, social sharing features, and activity analytics for outdoor enthusiasts.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TerraTracker",
+                    ProjectUrl = "/projects/terratracker",
+                    Tags = new[] { "Team Project", "Flask", "Python", "PostgreSQL", "Agile", "Git Workflow", "Docker", "CI/CD", "Leaflet.js", "RESTful API" },
+                    Category = ProjectCategory.Academic,
+                    IsFeatured = false
                 },
                 new Project
                 {

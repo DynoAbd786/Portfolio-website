@@ -8,15 +8,18 @@ Full-stack personal portfolio website with Blazor WebAssembly frontend and ASP.N
 
 ## Architecture Overview
 
-### Two-Project Solution Structure
+### Solution Structure
 - **`website/`** - Blazor WebAssembly client (frontend)
 - **`website.api/`** - ASP.NET Core Web API server (backend)
-- **Solution file**: `website.sln` manages both projects
+- **`McpServer/`** - Standalone Model Context Protocol server (not actively used)
+- **Solution file**: `website.sln` manages all projects
 
 ### Client-Server Communication
 - **Development**: Client (`localhost:5195`) calls API (`localhost:5154`)
-- **Production**: API serves both endpoints and static files from single container
-- **API Base URL**: Configured in `website/Program.cs` with environment-specific logic
+- **Production**: API serves both API endpoints and static files from single container
+- **API Base URL**: Configured in `website/Program.cs:15-17` with environment-specific logic
+  - Development: `http://localhost:5154/`
+  - Production: Same-origin (API serves frontend)
 
 ## Development Commands
 
@@ -53,31 +56,64 @@ cd website.api && dotnet watch
 
 ### Docker Commands
 ```bash
-# Development with Docker Compose
+# Full development environment (API + frontend)
 docker-compose up --build
+# Accessible at: http://localhost:8080
+
+# API-only development mode (for separate frontend dev)
+docker-compose --profile dev up api-dev
+# API at: https://localhost:7233 or http://localhost:7232
 
 # Production container
 docker build -t portfolio-app .
-docker run -p 8080:10000 portfolio-app
+docker run -p 8080:8080 portfolio-app
+
+# Stop all services
+docker-compose down
 ```
 
 ## Backend API Architecture
 
 ### Controllers & Endpoints
 - **`ProjectsController`**: `/api/projects` - CRUD operations for project data
+  - `GET /api/projects` - All projects
+  - `GET /api/projects/by-url?url={url}` - Project by URL
+  - `GET /api/projects/categories/{category}` - Projects by category
 - **`ContactController`**: `/api/contact` - Email functionality via Postmark
-- **`McpController`**: `/api/mcp` - Model Context Protocol server for AI agents
+  - `POST /api/contact` - Send contact form email
+- **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
+  - `POST /api/mcp` - Main MCP endpoint for AI agents (Claude Desktop)
+  - `GET /api/mcp` - Initialize endpoint
+  - `GET /api/mcp/tools` - Tools list endpoint
+  - `GET /api/mcp/info` - Server info endpoint
 
 ### Services (Dependency Injection)
+All services registered as scoped in `website.api/Program.cs:23-26`:
 - **`IProjectService`**: Business logic for project data management
-- **`IEmailService`**: Email sending via Postmark (configured in appsettings)
-- **`IMcpService`**: JSON-RPC 2.0 protocol implementation for AI integration
+- **`IEmailService`**: Email sending via Postmark (requires POSTMARK_SERVER_TOKEN in .env)
+- **`IMcpService`**: JSON-RPC 2.0 protocol handler for MCP requests
+- **`IOAuthService`**: OAuth 2.0 authentication for MCP clients
+
+### Middleware Pipeline
+Critical ordering in `website.api/Program.cs:78-118`:
+1. **Forwarded Headers** - Handle proxy/CDN scenarios (line 78)
+2. **Swagger** - Development only (lines 81-84)
+3. **CORS** - AllowMcpClients policy globally (line 91)
+4. **Request Logging** - Custom middleware for debugging (line 94)
+5. **Authentication** - JWT Bearer (line 97)
+6. **MCP OAuth** - Custom OAuth middleware (line 98)
+7. **Authorization** (line 99)
+8. **Static Files** - Serve frontend assets (lines 103-112)
+9. **Controller Mapping** (line 115)
+10. **SPA Fallback** - index.html for non-API routes (line 118)
 
 ### Key API Features
-- **CORS Configuration**: Allows Blazor client origins in development
-- **Static File Serving**: API serves frontend assets in production
+- **CORS Policies**: Two separate policies for Blazor client and MCP clients
+- **Static File Serving**: API serves frontend assets in production with caching headers
 - **SPA Fallback Routing**: Non-API routes serve `index.html` for client-side routing
-- **Environment Variables**: Uses DotNetEnv for development configuration
+- **Environment Variables**: Uses DotNetEnv for .env file loading (line 10-13)
+- **OAuth 2.0**: Custom implementation for MCP client authentication
+- **Forwarded Headers**: Production configuration for proxy scenarios (lines 65-73)
 
 ## Frontend Architecture
 
@@ -119,12 +155,22 @@ Each academic project follows standardized format:
 
 ### Service Registration Patterns
 ```csharp
-// API (website.api/Program.cs)
+// API (website.api/Program.cs:23-26)
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IMcpService, McpService>();
+builder.Services.AddScoped<IOAuthService, OAuthService>();
 
-// Client (website/Program.cs)
+// Client (website/Program.cs:19-20)
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseAddress) });
 builder.Services.AddScoped<website.Data.ProjectService>();
+```
+
+### Environment Configuration
+Create `.env` file in `website.api/` for local development:
+```
+POSTMARK_SERVER_TOKEN=your_token_here
+# Add OAuth tokens if using MCP features
 ```
 
 ### Project Data Management
@@ -151,7 +197,37 @@ curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
 ### Project Categories
 - **Personal**: Independent development projects (TaskFlow, Portfolio)
 - **Professional**: Internship and work-related projects (Medical Simulation, pNanoLocz)
-- **Academic**: University coursework (Software Engineering, Business Plan, AI Projects)
+- **Academic**: University coursework (25+ individual project pages in `website/Pages/`)
+
+## Model Context Protocol (MCP) Integration
+
+This portfolio implements a custom MCP server that allows AI agents (like Claude Desktop) to interact with the portfolio:
+
+### MCP Architecture
+- **Protocol**: JSON-RPC 2.0 over HTTP POST
+- **Endpoint**: `/api/mcp` (see `website.api/Controllers/McpController.cs`)
+- **Service**: `McpService` handles protocol implementation (`website.api/Services/McpService.cs`)
+- **Authentication**: Custom OAuth 2.0 middleware (`website.api/Middleware/McpOAuthMiddleware.cs`)
+
+### MCP Capabilities
+1. **Resources**: Access to profile, projects, contact info, ethos, and AI integration philosophy
+2. **Tools**:
+   - `submit_contact` - Send contact form messages
+   - `search_projects` - Search projects by category, technology, or keyword
+
+### MCP Protocol Flow
+1. Client sends `initialize` request → Server responds with capabilities
+2. Client sends `notifications/initialized` → Handshake complete
+3. Client can call `tools/list` → Discover available tools
+4. Client can call `tools/call` → Execute tools with parameters
+5. Client can call `resources/list` → List available resources
+6. Client can call `resources/read` → Read specific resources
+
+### Adding New MCP Tools
+To add a new tool:
+1. Add tool definition to `HandleToolsList()` in `McpService.cs:368`
+2. Add tool handler to switch statement in `HandleToolCall()` at line 461
+3. Implement handler method following pattern of `HandleSubmitContact()` or `HandleSearchProjects()`
 
 ## Important Note
 
