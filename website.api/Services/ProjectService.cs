@@ -36,12 +36,23 @@ namespace website.api.Services
                 },
                 new Project
                 {
+                    Title = "Formula Student AI - Autonomous Racing Systems Development",
+                    Description = "Active member of Leeds University Formula Student AI team developing autonomous racing systems for international competition. Role focuses on simulation environments using ROS2 on Ubuntu 24.04, Docker containerization, and proof-of-concept validation for autonomous vehicle control systems. Simulation work interfaces with all autonomous subsystems including perception, path planning, SLAM, localization, and vehicle dynamics control. Hardware platform utilizes Nvidia DGX Orin for real-time autonomous decision making. Collaborative engineering project involving multidisciplinary team coordination, project timeline management, and progressive contribution to perception, planning, and control components throughout development cycle.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=FS-AI",
+                    ProjectUrl = "/projects/formula-student-ai",
+                    Tags = new[] { "Formula Student AI", "ROS2", "Autonomous Vehicles", "Simulation", "Ubuntu 24.04", "Docker", "Nvidia DGX Orin", "Team Project", "Perception", "Path Planning", "Vehicle Control" },
+                    Category = ProjectCategory.Personal,
+                    IsFeatured = true,
+                    IsInDevelopment = true
+                },
+                new Project
+                {
                     Title = "Workflow-Centric Graph Platform for AI-Enhanced Code Understanding",
-                    Description = "MEng flagship research project developing a graph-based platform that transforms codebases into interactive, multi-level visual representations with AI-generated documentation. Features workflow-centric organization of structural and behavioral graphs, version-specific package analysis for open-source libraries, and dual-interface system with web visualization and MCP API for LLM integration. Built on 7-service microservices architecture using Neo4j, Doxygen, and OpenAI APIs. Includes comprehensive validation framework with LLM before/after evaluation targeting 75-80% token reduction and advanced features like hierarchical LLM agents, cross-language architecture generalization, and security threat modeling. Currently in feasibility assessment stage for MEng final year group project.",
+                    Description = "Personal research project developing a graph-based platform that transforms codebases into interactive, multi-level visual representations with AI-generated documentation. Features workflow-centric organization of structural and behavioral graphs, version-specific package analysis for open-source libraries, and dual-interface system with web visualization and MCP API for LLM integration. Built on 7-service microservices architecture using Neo4j, Doxygen, and OpenAI APIs. Includes comprehensive validation framework with LLM before/after evaluation targeting 75-80% token reduction and advanced features like hierarchical LLM agents, cross-language architecture generalization, and security threat modeling. Originally conceived for academic collaboration, now developed as independent technical research initiative exploring graph-based code analysis and LLM knowledge enhancement.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Graph+Analysis",
                     ProjectUrl = "/projects/workflow-graph-platform",
-                    Tags = new[] { "MEng Research", "Graph Databases", "Neo4j", "Python", "Doxygen", "LLM Integration", "MCP", "FastAPI", "React", "Software Architecture", "AI Documentation", "Open Source Analysis" },
-                    Category = ProjectCategory.Academic,
+                    Tags = new[] { "Research Project", "Graph Databases", "Neo4j", "Python", "Doxygen", "LLM Integration", "MCP", "FastAPI", "React", "Software Architecture", "AI Documentation", "Open Source Analysis" },
+                    Category = ProjectCategory.Personal,
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
@@ -73,7 +84,7 @@ namespace website.api.Services
                     ProjectUrl = "/projects/data-mining",
                     Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
                     Category = ProjectCategory.Academic,
-                    IsFeatured = false
+                    IsFeatured = true
                 },
                 new Project
                 {
