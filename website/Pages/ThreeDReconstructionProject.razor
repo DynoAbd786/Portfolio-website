@@ -1,0 +1,334 @@
+@page "/projects/3d-reconstruction"
+@using website.Data
+
+<PageTitle>Advanced 3D Reconstruction System</PageTitle>
+
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Advanced 3D Reconstruction System</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Projects • MEng Group Project • In Development
+            </div>
+            <h1 class="text-6xl font-bold text-white mb-4">Advanced 3D Reconstruction System</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Hybrid Framework Fusing Feed-Forward Depth and Optimization-Based Pose</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                Cutting-edge MEng group project developing production-ready 3D reconstruction framework for industrial applications including VR simulation, live room tracking, and medical imaging
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">3D Reconstruction</span>
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Computer Vision</span>
+                <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Deep Learning</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Team Project</span>
+                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Research & Development</span>
+            </div>
+        </div>
+
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🎥</div>
+            <p class="text-white/75 text-lg">Industrial-Grade 3D Capture • Real-Time Reconstruction • Cutting-Edge Research</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Project Overview -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-purple-500 to-blue-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-cube text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-purple-400">Project Overview</h2>
+                </div>
+                <p class="text-gray-300 mb-6 leading-relaxed">
+                    This MEng group project addresses fundamental challenges in 3D reconstruction by developing a novel hybrid framework
+                    that fuses two complementary approaches: feed-forward neural networks for accurate depth estimation and optimization-based
+                    models for globally-consistent pose tracking. The project aims to create production-ready pipelines capable of deployment
+                    in industrial settings, moving beyond academic prototypes to real-world applications.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Project Context</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• <strong>Team Size:</strong> 5-person collaborative engineering team</li>
+                            <li>• <strong>Supervisor:</strong> Dr. Sharib Ali</li>
+                            <li>• <strong>Duration:</strong> Full academic year (2024/2025)</li>
+                            <li>• <strong>Stage:</strong> Planning & background research phase</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                        <h3 class="text-xl font-bold text-blue-400 mb-4">Development Timeline</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• <strong>Semester 1:</strong> Framework R&D and validation</li>
+                            <li>• <strong>Semester 2:</strong> Pipeline optimization and deployment</li>
+                            <li>• <strong>Focus:</strong> Industrial-grade implementation</li>
+                            <li>• <strong>Output:</strong> Production-ready 3D capture system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Technical Problem -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-lightbulb text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-blue-400">The Technical Challenge</h2>
+                </div>
+
+                <div class="bg-blue-900/20 rounded-lg p-6 border border-blue-500/25 mb-6">
+                    <h3 class="text-xl font-bold text-blue-400 mb-4">Fundamental Trade-Off in 3D Reconstruction</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Current 3D reconstruction approaches face a critical limitation: methods that excel at depth estimation
+                        struggle with pose tracking consistency, while methods that provide robust pose tracking produce ambiguous
+                        depth information. This project aims to solve this fundamental trade-off through intelligent fusion.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                        <h3 class="text-xl font-bold text-green-400 mb-4"><i class="fas fa-brain mr-2"></i>Feed-Forward Networks (T1)</h3>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h4 class="font-semibold text-white">Strength: Depth Estimation</h4>
+                                <p class="text-gray-300 text-sm">Produce clean, metrically-accurate depth maps with absolute scale from single images</p>
+                            </div>
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h4 class="font-semibold text-white">Weakness: Pose Drift</h4>
+                                <p class="text-gray-300 text-sm">Small pose errors accumulate over video sequences, causing 3D model drift</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4"><i class="fas fa-chart-line mr-2"></i>Optimization Models (T2)</h3>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h4 class="font-semibold text-white">Strength: Pose Tracking</h4>
+                                <p class="text-gray-300 text-sm">Globally-consistent pose estimation that doesn't drift over time</p>
+                            </div>
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h4 class="font-semibold text-white">Weakness: Depth Ambiguity</h4>
+                                <p class="text-gray-300 text-sm">Produces pseudo-depth with relative ordering only, lacking absolute scale</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Novel Fusion Approach -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-code-branch text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-cyan-400">Novel Fusion Strategy</h2>
+                </div>
+
+                <div class="bg-cyan-900/20 rounded-lg p-6 border border-cyan-500/25 mb-6">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-4">The "Best of Both Worlds" Approach</h3>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        Our hypothesis: By intelligently fusing feed-forward depth estimation with optimization-based pose tracking,
+                        we can create a system that leverages the strengths of both approaches while mitigating their individual weaknesses.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-800 rounded p-4">
+                            <p class="text-green-400 font-semibold mb-2">✓ FF Network fixes optimization depth ambiguity</p>
+                            <p class="text-gray-300 text-sm">Use clean, absolute-scale depth maps to resolve pseudo-depth artifacts</p>
+                        </div>
+                        <div class="bg-gray-800 rounded p-4">
+                            <p class="text-green-400 font-semibold mb-2">✓ Optimization fixes FF pose drift</p>
+                            <p class="text-gray-300 text-sm">Use globally-consistent pose tracking to prevent cumulative errors</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
+                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Research Phase (Semester 1)</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• Validate fusion methodology through experiments</li>
+                            <li>• HPC-accelerated benchmarking against state-of-the-art</li>
+                            <li>• Prove accuracy improvements and speed optimization</li>
+                            <li>• Compare against competitive fusion approaches</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-orange-600/25">
+                        <h3 class="text-xl font-bold text-orange-400 mb-4">Deployment Phase (Semester 2)</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• Pipeline optimization for production deployment</li>
+                            <li>• Comprehensive documentation and workflow design</li>
+                            <li>• Real-time 3D scene capture implementation</li>
+                            <li>• Industrial application demonstrations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Target Applications -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-industry text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-green-400">Industrial Applications</h2>
+                </div>
+
+                <p class="text-gray-300 mb-6 leading-relaxed">
+                    The framework targets deployment in real-world industrial settings, emphasizing production-ready pipelines
+                    beyond academic prototypes. Potential applications span multiple high-value domains requiring accurate,
+                    real-time 3D reconstruction capabilities.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <div class="text-4xl mb-3">🥽</div>
+                        <h3 class="text-xl font-bold text-purple-400 mb-3">VR/AR Simulation</h3>
+                        <p class="text-gray-300 text-sm">
+                            Real-time 3D scene capture for virtual reality applications, enabling immersive digital twin
+                            experiences and interactive simulations
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                        <div class="text-4xl mb-3">🏠</div>
+                        <h3 class="text-xl font-bold text-blue-400 mb-3">Live Room Tracking</h3>
+                        <p class="text-gray-300 text-sm">
+                            Dynamic environment reconstruction for spatial computing, motion capture, and augmented reality
+                            applications requiring real-time updates
+                        </p>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                        <div class="text-4xl mb-3">🏥</div>
+                        <h3 class="text-xl font-bold text-red-400 mb-3">Medical Imaging</h3>
+                        <p class="text-gray-300 text-sm">
+                            Surgical tool tracking and anatomical reconstruction for computer-assisted interventions and
+                            medical visualization systems
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Infrastructure -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-server text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-yellow-400">Technical Infrastructure & Stack</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                        <h3 class="text-xl font-bold text-blue-400 mb-4">Core Technologies</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• <strong>Language:</strong> Python (primary development)</li>
+                            <li>• <strong>Deep Learning:</strong> Neural network frameworks</li>
+                            <li>• <strong>Computer Vision:</strong> OpenCV, image processing</li>
+                            <li>• <strong>Optimization:</strong> Mathematical modeling libraries</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Computing Resources</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• <strong>HPC Access:</strong> University high-performance computing</li>
+                            <li>• <strong>GPU Acceleration:</strong> Large-scale model training</li>
+                            <li>• <strong>Benchmarking:</strong> Performance validation at scale</li>
+                            <li>• <strong>Optimization:</strong> Speed and accuracy testing</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
+                        <h3 class="text-xl font-bold text-green-400 mb-4">Research Components</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>• Feed-forward neural networks</li>
+                            <li>• Optimization-based pose estimation</li>
+                            <li>• Transformer architectures (potential)</li>
+                            <li>• State-of-the-art benchmarking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Success Criteria -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-red-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-red-500 to-pink-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-trophy text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-red-400">Success Criteria & Goals</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                        <h3 class="text-xl font-bold text-blue-400 mb-4">Research Objectives (Semester 1)</h3>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Depth Accuracy:</strong> Metrically-accurate 3D reconstruction free of pseudo-depth artifacts</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Pipeline Speed:</strong> Significant performance improvement over baseline optimization</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Competitiveness:</strong> Novel or superior approach compared to state-of-the-art methods</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                        <h3 class="text-xl font-bold text-purple-400 mb-4">Deployment Goals (Semester 2)</h3>
+                        <ul class="space-y-3 text-gray-300 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Workflow Robustness:</strong> Optimized, well-documented, production-ready pipeline</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Live Demo:</strong> Reliable real-time demonstration in VR or room-tracking scenario</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-400 mr-2">✓</span>
+                                <span><strong>Technical Communication:</strong> Clear presentation effectively communicating novelty</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Outcomes -->
+            <div class="bg-gradient-to-r from-purple-900 to-blue-900 rounded-lg p-8 text-center border border-gray-700">
+                <h3 class="text-2xl font-bold text-white mb-3">Cutting-Edge Computer Vision Research</h3>
+                <p class="text-blue-200 mb-4">
+                    This MEng group project demonstrates advanced computer vision research capabilities, collaborative engineering
+                    in cutting-edge domains, and emphasis on production-ready implementation beyond academic prototypes. The project
+                    addresses fundamental challenges in 3D reconstruction with novel fusion methodology, targeting real-world industrial
+                    applications in VR, medical imaging, and spatial computing.
+                </p>
+                <div class="flex justify-center space-x-6 text-sm flex-wrap gap-y-2">
+                    <span class="text-green-400">✓ Novel Research</span>
+                    <span class="text-blue-400">✓ Industrial Applications</span>
+                    <span class="text-purple-400">✓ Team Collaboration</span>
+                    <span class="text-yellow-400">✓ Production-Ready Systems</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

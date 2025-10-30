@@ -37,11 +37,23 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Formula Student AI - Autonomous Racing Systems Development",
-                    Description = "Active member of Leeds University Formula Student AI team developing autonomous racing systems for international competition. Role focuses on simulation environments using ROS2 on Ubuntu 24.04, Docker containerization, and proof-of-concept validation for autonomous vehicle control systems. Simulation work interfaces with all autonomous subsystems including perception, path planning, SLAM, localization, and vehicle dynamics control. Hardware platform utilizes Nvidia DGX Orin for real-time autonomous decision making. Collaborative engineering project involving multidisciplinary team coordination, project timeline management, and progressive contribution to perception, planning, and control components throughout development cycle.",
+                    Description = "Active member of Leeds University Formula Student AI team developing autonomous racing systems for international competition. Involved in simulation and SLAM team groups, working on simulation environments using ROS2 on Ubuntu 24.04, Docker containerization, and SLAM (Simultaneous Localization and Mapping) for autonomous vehicle navigation. Development uses C++ and Python for ROS2 nodes and autonomous algorithms. Simulation work validates all autonomous subsystems including perception, path planning, localization, and vehicle dynamics control. Hardware platform utilizes Nvidia DGX Orin for real-time autonomous decision making. Collaborative engineering project involving multidisciplinary team coordination, project timeline management, and progressive contribution to localization, perception, planning, and control components throughout development cycle.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=FS-AI",
                     ProjectUrl = "/projects/formula-student-ai",
-                    Tags = new[] { "Formula Student AI", "ROS2", "Autonomous Vehicles", "Simulation", "Ubuntu 24.04", "Docker", "Nvidia DGX Orin", "Team Project", "Perception", "Path Planning", "Vehicle Control" },
+                    Tags = new[] { "Formula Student AI", "ROS2", "C++", "Python", "Autonomous Vehicles", "Simulation", "SLAM", "Ubuntu 24.04", "Docker", "Nvidia DGX Orin", "Team Project", "Localization", "Perception", "Path Planning", "Vehicle Control" },
                     Category = ProjectCategory.Personal,
+                    IsFeatured = true,
+                    IsInDevelopment = true
+                },
+                new Project
+                {
+                    Title = "Advanced 3D Reconstruction System",
+                    Description = "MEng group project developing cutting-edge 3D reconstruction framework by fusing feed-forward depth estimation with optimization-based pose tracking. Novel hybrid approach addresses fundamental trade-offs in computer vision: combining fast neural networks that produce metrically-accurate depth maps with robust optimization models that provide globally-consistent pose tracking. Research phase focuses on validating fusion methodology through HPC-accelerated benchmarking against state-of-the-art techniques. Deployment phase targets industrial applications including VR simulation, live room tracking, and medical imaging with real-time 3D scene capture. Five-person collaborative team supervised by Dr. Sharib Ali, emphasizing production-ready pipelines capable of deployment in industrial settings beyond academic prototypes.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=3D+Recon",
+                    ProjectUrl = "/projects/3d-reconstruction",
+                    GitHubUrl = "",
+                    Tags = new[] { "3D Reconstruction", "Computer Vision", "Deep Learning", "Python", "Team Project", "Research & Development", "VR/AR", "Medical Imaging", "Industrial Applications", "HPC Computing", "Neural Networks", "Optimization" },
+                    Category = ProjectCategory.Academic,
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
@@ -134,7 +146,7 @@ namespace website.api.Services
                     ProjectUrl = "/vascular-blood-flow",
                     Tags = new[] { "Python", "XLB Framework", "CUDA", "CFD", "Lattice Boltzmann Method", "GPU Computing", "Medical Simulation", "Blood Flow", "Aneurysm Risk Assessment", "ParaView", "Docker" },
                     Category = ProjectCategory.Academic,
-                    IsFeatured = true
+                    IsFeatured = false
                 },
                 new Project
                 {
