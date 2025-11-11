@@ -93,6 +93,21 @@ app.UseCors("AllowMcpClients");
 // Add comprehensive request logging for MCP debugging
 app.UseRequestLogging(); // Custom request logging middleware
 
+// Add additional headers for AI bot accessibility
+app.Use(async (context, next) =>
+{
+    // Add headers to help AI bots and ensure API accessibility
+    if (context.Request.Path.StartsWithSegments("/api"))
+    {
+        context.Response.Headers.Append("X-Robots-Tag", "all");
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
+        context.Response.Headers.Append("Access-Control-Max-Age", "86400");
+    }
+    await next();
+});
+
 // Use authentication and our custom MCP OAuth middleware
 app.UseAuthentication();
 app.UseMcpOAuth(); // Custom OAuth middleware for MCP
