@@ -1,284 +1,234 @@
 @page "/vascular-blood-flow"
 @using website.Data
 
-<PageTitle>Vascular Blood Flow Simulation - XLB Project</PageTitle>
-
-<div class="min-h-screen bg-gray-900 text-gray-200">
-    <div class="container mx-auto px-4 py-12">
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-red-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-red-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Vascular Blood Flow Simulation</span>
+            </div>
+        </nav>
 
         <!-- Header Section -->
         <div class="text-center mb-16">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-red-500 to-pink-600 rounded-full mb-6">
-                <i class="fas fa-heart-pulse text-3xl text-white"></i>
+            <div class="inline-block bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Dissertation
             </div>
-            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-pink-500 bg-clip-text text-transparent">
-                Vascular Blood Flow Simulation
-            </h1>
+            <h1 class="text-5xl font-bold text-white mb-4">Vascular Blood Flow Simulation</h1>
             <h2 class="text-2xl text-gray-300 mb-6">GPU-Accelerated CFD for Aneurysm Risk Assessment</h2>
             <p class="text-xl text-gray-400 max-w-4xl mx-auto leading-relaxed">
-                A comprehensive Lattice Boltzmann Method (LBM) framework for simulating pulsatile blood flow in arterial geometries,
-                designed to bridge the gap between research simulations and clinical aneurysm risk assessment.
+                A comprehensive Lattice Boltzmann Method (LBM) framework for simulating pulsatile blood flow in arterial geometries, designed to bridge the gap between research simulations and clinical aneurysm risk assessment.
             </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Python & XLB</span>
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">NVIDIA Warp</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">CUDA & JAX</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">ParaView</span>
+                <span class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm">Lattice Boltzmann</span>
+            </div>
         </div>
 
-        <!-- Project Overview -->
-        <section class="mb-16">
-            <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
-                <div class="flex items-center mb-6">
-                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
-                        <i class="fas fa-microscope text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold text-white">Project Overview</h3>
-                </div>
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-red-900 to-pink-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🩸</div>
+             <p class="text-white/75 text-lg">Computational Fluid Dynamics • Hemodynamics • GPU Acceleration • Clinical Risk Assessment</p>
+        </div>
 
-                <!-- Project Context Note -->
-                <div class="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-600/50 rounded-lg p-4 mb-6">
-                    <div class="flex items-start">
-                        <i class="fas fa-info-circle text-yellow-400 text-lg mr-3 mt-1"></i>
-                        <div>
-                            <p class="text-yellow-200 text-sm leading-relaxed">
-                                <strong>Project Note:</strong> This dissertation was completed under challenging personal circumstances including
-                                long-term illness, which impacted the project timeline and scope. Despite these challenges, the core technical
-                                objectives were successfully achieved, demonstrating the viability of GPU-accelerated LBM for clinical blood flow simulation.
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 gap-8">
+                
+                <!-- Project Overview -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-red-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-microscope text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-red-400">Project Overview</h2>
+                    </div>
+                    
+                     <!-- Context Alert -->
+                    <div class="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-6 mb-8">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-yellow-400 text-xl mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="text-yellow-400 font-bold mb-2">Project Context</h4>
+                                <p class="text-yellow-200/90 text-sm leading-relaxed">
+                                    This dissertation was completed under challenging personal circumstances including long-term illness. Despite this, the core technical objectives were successfully achieved, demonstrating the viability of GPU-accelerated LBM for clinical blood flow simulation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-3">Clinical Challenge</h4>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                Current aneurysm risk assessment relies on computationally expensive finite element methods (FEM) that limit real-time clinical decision-making. With 1.4% annual rupture rates, faster tools are critical.
+                            </p>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-3">Technical Innovation</h4>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                Extends XLB with custom BCs, non-Newtonian fluid modeling, and wall shear stress computation to create a GPU-accelerated environment achieving 2,340+ MLUPS.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="text-xl font-semibold text-cyan-400 mb-3">Clinical Challenge</h4>
-                        <p class="text-gray-300 mb-4">
-                            Current aneurysm risk assessment relies on computationally expensive finite element methods (FEM)
-                            that limit real-time clinical decision-making. With 3.2% of adults having unruptured intracranial
-                            aneurysms and a 1.4% annual rupture rate, faster simulation tools are critically needed.
-                        </p>
-                    </div>
-
-                    <div>
-                        <h4 class="text-xl font-semibold text-cyan-400 mb-3">Technical Innovation</h4>
-                        <p class="text-gray-300 mb-4">
-                            This project extends the XLB framework with custom boundary conditions, non-Newtonian fluid modeling,
-                            and wall shear stress computation to create a GPU-accelerated simulation environment achieving
-                            2,340+ MLUPS performance.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Technical Architecture -->
-        <section class="mb-16">
-            <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-white mb-4">Technical Architecture</h3>
-                <p class="text-gray-400">Built on cutting-edge computational fluid dynamics principles</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Lattice Boltzmann Method -->
-                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                        <i class="fas fa-calculator text-white text-xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Lattice Boltzmann Method</h4>
-                    <ul class="text-gray-300 space-y-2">
-                        <li>• Mesoscopic fluid simulation approach</li>
-                        <li>• D2Q9 velocity model implementation</li>
-                        <li>• GPU-optimized parallel computation</li>
-                        <li>• Superior scalability vs traditional CFD</li>
-                    </ul>
-                </div>
-
-                <!-- Blood Flow Modeling -->
-                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-red-500/50 transition-all duration-300">
-                    <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                        <i class="fas fa-tint text-white text-xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Physiological Modeling</h4>
-                    <ul class="text-gray-300 space-y-2">
-                        <li>• Non-Newtonian Carreau-Yasuda rheology</li>
-                        <li>• Time-dependent pulsatile flow</li>
-                        <li>• Realistic cardiac cycle profiles</li>
-                        <li>• Wall shear stress computation</li>
-                    </ul>
-                </div>
-
-                <!-- Performance & Visualization -->
-                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
-                    <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                        <i class="fas fa-chart-line text-white text-xl"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-3">Performance & Analysis</h4>
-                    <ul class="text-gray-300 space-y-2">
-                        <li>• 2,340+ MLUPS on RTX 3060 Mobile</li>
-                        <li>• ParaView integration for visualization</li>
-                        <li>• Docker containerization</li>
-                        <li>• Jupyter notebook analysis tools</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Key Results -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-8 border border-gray-700">
-                <div class="text-center mb-8">
-                    <h3 class="text-3xl font-bold text-white mb-4">Key Results & Validation</h3>
-                    <p class="text-gray-400">Demonstrating clinical-grade accuracy with research-level performance</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="text-center">
-                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-6 mb-4">
-                            <div class="text-3xl font-bold text-white">2,340+</div>
-                            <div class="text-blue-200">MLUPS</div>
+                <!-- Technical Architecture -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-layer-group text-white text-xl"></i>
                         </div>
-                        <p class="text-gray-400">Peak Performance</p>
+                        <h2 class="text-3xl font-bold text-purple-400">Technical Architecture</h2>
                     </div>
-
-                    <div class="text-center">
-                        <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-lg p-6 mb-4">
-                            <div class="text-3xl font-bold text-white">~1 Pa</div>
-                            <div class="text-red-200">WSS</div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-gray-800 rounded-xl p-6 border border-purple-600/25">
+                            <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                                <i class="fas fa-calculator text-purple-400 mr-2"></i>LBM Core
+                            </h3>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li>• Mesoscopic fluid simulation approach</li>
+                                <li>• D2Q9 velocity model implementation</li>
+                                <li>• GPU-optimized parallel computation</li>
+                                <li>• Superior scalability vs traditional CFD</li>
+                            </ul>
                         </div>
-                        <p class="text-gray-400">Physiological Range</p>
-                    </div>
-
-                    <div class="text-center">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 mb-4">
-                            <div class="text-3xl font-bold text-white">92s</div>
-                            <div class="text-green-200">Runtime</div>
+                         <div class="bg-gray-800 rounded-xl p-6 border border-red-600/25">
+                            <h3 class="text-lg font-bold text-white mb-4 flex items-center">
+                                <i class="fas fa-tint text-red-400 mr-2"></i>Physiological Model
+                            </h3>
+                            <ul class="space-y-2 text-sm text-gray-400">
+                                <li>• Non-Newtonian Carreau-Yasuda rheology</li>
+                                <li>• Time-dependent pulsatile flow</li>
+                                <li>• Realistic cardiac cycle profiles</li>
+                                <li>• Wall shear stress computation</li>
+                            </ul>
                         </div>
-                        <p class="text-gray-400">Complete Simulation</p>
                     </div>
+                </div>
 
-                    <div class="text-center">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 mb-4">
-                            <div class="text-3xl font-bold text-white">2D→3D</div>
-                            <div class="text-purple-200">Scalable</div>
+                <!-- Implementation Details -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
+                     <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-code text-white text-xl"></i>
                         </div>
-                        <p class="text-gray-400">Architecture</p>
+                        <h2 class="text-3xl font-bold text-blue-400">Implementation Highlights</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-2">Custom Boundary Conditions</h4>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Time-dependent Zou-He inlet BC with 64-point cardiac cycle interpolation</li>
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Fullway bounce-back wall conditions for stability</li>
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Extrapolation outflow BC to prevent artificial reflections</li>
+                            </ul>
+                        </div>
+                         <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h4 class="text-lg font-semibold text-cyan-400 mb-2">Non-Newtonian Physics</h4>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Carreau-Yasuda viscosity model implementation</li>
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Spatially varying relaxation time computation</li>
+                                <li class="flex items-start"><i class="fas fa-check text-green-400 mt-1 mr-2"></i>Shear-thinning behavior near vessel walls</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Implementation Details -->
-        <section class="mb-16">
-            <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-white mb-4">Implementation Highlights</h3>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                    <h4 class="text-xl font-semibold text-cyan-400 mb-4">Custom Boundary Conditions</h4>
-                    <ul class="text-gray-300 space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Time-dependent Zou-He inlet BC with 64-point cardiac cycle interpolation</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Fullway bounce-back wall conditions for stability</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Extrapolation outflow BC to prevent artificial reflections</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
-                    <h4 class="text-xl font-semibold text-cyan-400 mb-4">Non-Newtonian Physics</h4>
-                    <ul class="text-gray-300 space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Carreau-Yasuda viscosity model implementation</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Spatially varying relaxation time computation</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-400 mr-3 mt-1"></i>
-                            <span>Shear-thinning behavior near vessel walls</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Future Directions -->
-        <section class="mb-16">
-            <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
-                <div class="flex items-center mb-6">
-                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                        <i class="fas fa-rocket text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold text-white">Clinical Translation Pathway</h3>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="border-l-4 border-blue-500 pl-6">
-                        <h4 class="text-lg font-semibold text-blue-400 mb-2">3D Extension</h4>
-                        <p class="text-gray-300">
-                            Transition to 3D anatomically accurate models using STL mesh domains from medical imaging data.
-                        </p>
+                <!-- Results & Future -->
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <!-- Key Results -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-chart-line text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-green-400">Key Results</h2>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700">
+                                <div class="text-2xl font-bold text-white">2,340+</div>
+                                <div class="text-xs text-blue-400 uppercase tracking-wide mt-1">MLUPS</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700">
+                                <div class="text-2xl font-bold text-white">~1 Pa</div>
+                                <div class="text-xs text-red-400 uppercase tracking-wide mt-1">WSS</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700">
+                                <div class="text-2xl font-bold text-white">92s</div>
+                                <div class="text-xs text-green-400 uppercase tracking-wide mt-1">Runtime</div>
+                            </div>
+                            <div class="bg-gray-800/50 p-4 rounded-xl text-center border border-gray-700">
+                                <div class="text-xl font-bold text-white">2D→3D</div>
+                                <div class="text-xs text-purple-400 uppercase tracking-wide mt-1">Scalable</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="border-l-4 border-green-500 pl-6">
-                        <h4 class="text-lg font-semibold text-green-400 mb-2">ML Integration</h4>
-                        <p class="text-gray-300">
-                            Incorporate machine learning pipelines for rupture risk prediction using haemodynamic features.
-                        </p>
-                    </div>
-
-                    <div class="border-l-4 border-purple-500 pl-6">
-                        <h4 class="text-lg font-semibold text-purple-400 mb-2">Clinical Deployment</h4>
-                        <p class="text-gray-300">
-                            NHS integration with radiologist workflows for patient-specific aneurysm assessment.
-                        </p>
+                    <!-- Future Directions -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-orange-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                             <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-rocket text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-orange-400">Clinical Pathway</h2>
+                        </div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start text-sm">
+                                <i class="fas fa-arrow-right text-blue-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">3D anatomically accurate models from STL</span>
+                            </li>
+                             <li class="flex items-start text-sm">
+                                <i class="fas fa-arrow-right text-green-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">ML rupture risk prediction integration</span>
+                            </li>
+                             <li class="flex items-start text-sm">
+                                <i class="fas fa-arrow-right text-purple-400 mt-1 mr-3"></i>
+                                <span class="text-gray-300">NHS radiologist workflow integration</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Technical Stack -->
-        <section class="mb-16">
-            <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-white mb-4">Technical Stack</h3>
-            </div>
+                <!-- Links -->
+                <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700/50 hover:border-red-500/30 transition-all text-center md:text-left">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="flex items-center">
+                            <div class="bg-gray-700/50 rounded-full p-4 mr-4 hidden md:block">
+                                <i class="fas fa-link text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-1">Project Resources</h3>
+                                <p class="text-gray-400">Access source code and full technical report</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                             <a href="https://github.com/DynoAbd786/dissertation-xlb-blood-flow-simulation" target="_blank" class="inline-flex items-center px-6 py-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white font-medium transition-colors border border-gray-600">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                            <a href="/docs/dissertation-report.pdf" target="_blank" class="inline-flex items-center px-6 py-3 rounded-lg bg-red-600 hover:bg-red-500 text-white font-medium transition-colors shadow-lg shadow-red-900/20">
+                                <i class="fas fa-file-pdf mr-2"></i>PDF Report
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full font-semibold">Python</span>
-                <span class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-2 rounded-full font-semibold">XLB Framework</span>
-                <span class="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full font-semibold">NVIDIA Warp</span>
-                <span class="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-full font-semibold">CUDA</span>
-                <span class="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full font-semibold">JAX</span>
-                <span class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-full font-semibold">ParaView</span>
-                <span class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-4 py-2 rounded-full font-semibold">Jupyter</span>
-                <span class="bg-gradient-to-r from-teal-500 to-teal-600 text-white px-4 py-2 rounded-full font-semibold">Docker</span>
-                <span class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-4 py-2 rounded-full font-semibold">Git</span>
-            </div>
-        </section>
-
-        <!-- Navigation -->
-        <div class="text-center space-y-4">
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="https://github.com/DynoAbd786/dissertation-xlb-blood-flow-simulation" target="_blank" class="inline-flex items-center bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                    <i class="fab fa-github mr-2"></i>
-                    View on GitHub
-                </a>
-                <a href="/docs/dissertation-report.pdf" target="_blank" class="inline-flex items-center bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                    <i class="fas fa-file-pdf mr-2"></i>
-                    Technical Report (PDF)
-                </a>
-                <a href="/projects" class="inline-flex items-center bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Back to Projects
-                </a>
             </div>
         </div>
 
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
+        </div>
     </div>
-</div>
+</section>

@@ -1,395 +1,249 @@
 @page "/projects/autonomous-robotics"
 @using website.Data
 
-<div class="bg-gray-900 min-h-screen text-white p-8">
-    <div class="max-w-6xl mx-auto">
-        <!-- Hero Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                Autonomous Robot Navigation & Object Detection
-            </h1>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-8">
+            <div class="flex items-center space-x-2 text-gray-400">
+                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
+                <span>/</span>
+                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+                <span>/</span>
+                <span class="text-white">Autonomous Robotics</span>
+            </div>
+        </nav>
+
+        <!-- Header Section -->
+        <div class="text-center mb-16">
+            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                Academic Project
+            </div>
+            <h1 class="text-5xl font-bold text-white mb-4">Autonomous Robotics</h1>
+            <h2 class="text-2xl text-gray-400 mb-6">Navigation & Object Detection</h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
                 Advanced ROS2-based autonomous robotics project implementing computer vision, motion planning, and intelligent navigation for TurtleBot3 simulation with sophisticated exploration strategies and precision object interaction.
             </p>
-        </div>
-
-        <!-- Project Overview -->
-        <div class="bg-gray-800 rounded-lg p-8 mb-8 border border-gray-700">
-            <div class="flex items-center mb-6">
-                <div class="bg-blue-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-robot text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Project Overview</h2>
-                    <p class="text-gray-400">Intelligent Systems and Robotics Coursework</p>
-                </div>
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">ROS2</span>
+                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Python</span>
+                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Computer Vision</span>
+                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">SLAM</span>
+                <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">OpenCV</span>
             </div>
-            <p class="text-gray-300 leading-relaxed mb-4">
-                This comprehensive autonomous robotics project demonstrates the integration of multiple AI and robotics technologies
-                to create an intelligent system capable of exploration, object detection, and precision navigation. Built using ROS2
-                and deployed in Gazebo simulation, the project showcases advanced concepts including SLAM (Simultaneous Localization
-                and Mapping), computer vision, and autonomous decision-making.
-            </p>
-            <p class="text-gray-300 leading-relaxed">
-                The robot autonomously explores environments, detects RGB colored objects using sophisticated computer vision algorithms,
-                and performs precision approach maneuvers to reach target objects with sub-meter accuracy.
-            </p>
         </div>
 
-        <!-- Core Features -->
-        <div class="grid md:grid-cols-2 gap-8 mb-8">
-            <!-- Autonomous Navigation -->
-            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-purple-600 rounded-full p-2 mr-3">
-                        <i class="fas fa-route text-white"></i>
+        <!-- Hero Visual -->
+        <div class="bg-gradient-to-r from-cyan-900 to-blue-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
+            <div class="text-8xl mb-4">🤖</div>
+            <p class="text-white/75 text-lg">ROS2 Navigation • Computer Vision • SLAM • Autonomous Exploration</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Content Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                
+                <!-- Project Overview -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-robot text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-cyan-400">Project Overview</h2>
                     </div>
-                    <h3 class="text-xl font-semibold text-white">Autonomous Navigation System</h3>
-                </div>
-                <ul class="text-gray-300 space-y-2">
-                    <li>• <strong>ROS2 Integration:</strong> Modern robotics framework with Nav2 stack</li>
-                    <li>• <strong>Motion Planning:</strong> Autonomous exploration with waypoint navigation</li>
-                    <li>• <strong>SLAM Integration:</strong> Real-time mapping and localization</li>
-                    <li>• <strong>Obstacle Avoidance:</strong> Dynamic path planning with laser scans</li>
-                    <li>• <strong>State Machine Control:</strong> Robust behavior management</li>
-                    <li>• <strong>Precision Positioning:</strong> Sub-meter accuracy for target approach</li>
-                </ul>
-            </div>
-
-            <!-- Computer Vision -->
-            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-green-600 rounded-full p-2 mr-3">
-                        <i class="fas fa-eye text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white">Computer Vision & Detection</h3>
-                </div>
-                <ul class="text-gray-300 space-y-2">
-                    <li>• <strong>Real-time RGB Detection:</strong> OpenCV-based color classification</li>
-                    <li>• <strong>HSV Color Processing:</strong> Robust detection under varying lighting</li>
-                    <li>• <strong>Contour Analysis:</strong> Precise object boundary detection</li>
-                    <li>• <strong>Visual Feedback:</strong> Live camera feed with tracking overlay</li>
-                    <li>• <strong>Distance Estimation:</strong> Contour area-based proximity measurement</li>
-                    <li>• <strong>Multi-target Tracking:</strong> Simultaneous detection of multiple objects</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Technical Architecture -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-indigo-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-cogs text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">System Architecture</h2>
-                    <p class="text-gray-400">Modular design with sophisticated component integration</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="bg-gray-800 rounded-lg p-4">
-                    <h4 class="font-semibold text-cyan-400 mb-2">robot.py</h4>
-                    <p class="text-gray-300 text-sm">
-                        Main control node managing state coordination, sensor integration, and
-                        high-level behavior orchestration across all system components.
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        This comprehensive autonomous robotics project demonstrates the integration of multiple AI and robotics technologies
+                        to create an intelligent system capable of exploration, object detection, and precision navigation. Built using ROS2
+                        and deployed in Gazebo simulation, the project showcases advanced concepts including SLAM (Simultaneous Localization
+                        and Mapping), computer vision, and autonomous decision-making.
                     </p>
-                </div>
-
-                <div class="bg-gray-800 rounded-lg p-4">
-                    <h4 class="font-semibold text-green-400 mb-2">color_detector.py</h4>
-                    <p class="text-gray-300 text-sm">
-                        Computer vision module implementing HSV color space processing,
-                        contour analysis, and real-time object tracking with visual feedback.
-                    </p>
-                </div>
-
-                <div class="bg-gray-800 rounded-lg p-4">
-                    <h4 class="font-semibold text-yellow-400 mb-2">motion_controller.py</h4>
-                    <p class="text-gray-300 text-sm">
-                        Low-level movement control with precise velocity management,
-                        safety integration, and smooth trajectory generation.
-                    </p>
-                </div>
-
-                <div class="bg-gray-800 rounded-lg p-4">
-                    <h4 class="font-semibold text-orange-400 mb-2">exploration_strategy.py</h4>
-                    <p class="text-gray-300 text-sm">
-                        High-level navigation logic implementing waypoint navigation,
-                        systematic scanning, and intelligent state transitions.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Advanced Implementation -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-purple-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-brain text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Intelligent Exploration Strategy</h2>
-                    <p class="text-gray-400">Sophisticated multi-phase autonomous behavior system</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold text-cyan-400 mb-3">Operational Phases</h3>
-                    <div class="space-y-3">
-                        <div class="border-l-4 border-blue-500 pl-4">
-                            <h4 class="font-semibold text-white">1. Navigation Phase</h4>
-                            <p class="text-gray-300 text-sm">Autonomous travel to strategic scanning positions using Nav2 framework with obstacle avoidance</p>
-                        </div>
-                        <div class="border-l-4 border-green-500 pl-4">
-                            <h4 class="font-semibold text-white">2. Exploration Phase</h4>
-                            <p class="text-gray-300 text-sm">Systematic 360-degree environmental scanning with real-time object detection and classification</p>
-                        </div>
-                        <div class="border-l-4 border-yellow-500 pl-4">
-                            <h4 class="font-semibold text-white">3. Target Acquisition</h4>
-                            <p class="text-gray-300 text-sm">Intelligent object identification and localization using computer vision algorithms</p>
-                        </div>
-                        <div class="border-l-4 border-red-500 pl-4">
-                            <h4 class="font-semibold text-white">4. Precision Approach</h4>
-                            <p class="text-gray-300 text-sm">Visual servoing-based approach to target object with sub-meter positioning accuracy</p>
+                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-500/25">
+                         <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                                    <i class="fas fa-route text-cyan-400 mr-3"></i>Autonomous Navigation
+                                </h3>
+                                <ul class="space-y-3 text-gray-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>ROS2 Integration:</strong> Modern robotics framework with Nav2 stack</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>Motion Planning:</strong> Autonomous exploration with waypoint navigation</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>SLAM Integration:</strong> Real-time mapping and localization</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                                    <i class="fas fa-eye text-cyan-400 mr-3"></i>Computer Vision
+                                </h3>
+                                <ul class="space-y-3 text-gray-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>Real-time RGB Detection:</strong> OpenCV-based color classification</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>HSV Color Processing:</strong> Robust detection under varying lighting</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <span><strong>Contour Analysis:</strong> Precise object boundary detection</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-lg font-semibold text-green-400 mb-3">Computer Vision Pipeline</h3>
-                    <div class="space-y-3">
-                        <div class="bg-gray-800 rounded-lg p-3">
-                            <h4 class="font-semibold text-blue-400">Color Space Conversion</h4>
-                            <p class="text-gray-300 text-sm">BGR → HSV transformation for robust color detection under varying lighting conditions</p>
+                <!-- System Architecture -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-cogs text-white text-xl"></i>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-3">
-                            <h4 class="font-semibold text-purple-400">Contour Analysis</h4>
-                            <p class="text-gray-300 text-sm">Advanced boundary detection with area calculation and centroid determination using moments</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-3">
-                            <h4 class="font-semibold text-yellow-400">Visual Servoing</h4>
-                            <p class="text-gray-300 text-sm">Real-time object tracking with offset calculation for precision alignment and approach control</p>
-                        </div>
+                        <h2 class="text-3xl font-bold text-purple-400">System Architecture</h2>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Technical Features -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-red-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-microchip text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Advanced Technical Features</h2>
-                    <p class="text-gray-400">Professional robotics development practices and system integration</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div>
-                    <h4 class="font-semibold text-cyan-400 mb-3">ROS2 Integration</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• Modern publisher/subscriber architecture</li>
-                        <li>• Nav2 navigation stack integration</li>
-                        <li>• Action client/server communication</li>
-                        <li>• Topic-based sensor data streaming</li>
-                        <li>• Parameter-based configuration</li>
-                        <li>• Robust error handling and recovery</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-green-400 mb-3">Sensor Integration</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• 360° LiDAR scan processing</li>
-                        <li>• RGB camera feed analysis</li>
-                        <li>• Odometry and pose estimation</li>
-                        <li>• Multi-modal sensor fusion</li>
-                        <li>• Real-time data synchronization</li>
-                        <li>• Sensor failure detection</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-yellow-400 mb-3">Control Systems</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• State machine behavior management</li>
-                        <li>• Velocity profile optimization</li>
-                        <li>• Dynamic obstacle avoidance</li>
-                        <li>• Emergency stop protocols</li>
-                        <li>• Smooth trajectory planning</li>
-                        <li>• Adaptive behavior adjustment</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Performance Metrics -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-orange-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-chart-line text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Performance Analysis</h2>
-                    <p class="text-gray-400">System capabilities and operational metrics</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-lg font-semibold text-cyan-400 mb-3">Detection Capabilities</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Color Recognition Accuracy</span>
-                            <span class="text-green-400 font-semibold">95%+</span>
+                    
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
+                            <h4 class="text-xl font-bold text-purple-400 mb-3">Core Nodes</h4>
+                             <div class="space-y-4">
+                                <div>
+                                    <strong class="text-white block mb-1">robot.py</strong>
+                                    <p class="text-gray-400 text-sm">Main control node managing state coordination, sensor integration, and high-level behavior orchestration.</p>
+                                </div>
+                                <div>
+                                    <strong class="text-white block mb-1">color_detector.py</strong>
+                                    <p class="text-gray-400 text-sm">Computer vision module implementing HSV color space processing and real-time object tracking.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Detection Range</span>
-                            <span class="text-blue-400 font-semibold">3-4 meters</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Processing Speed</span>
-                            <span class="text-purple-400 font-semibold">10-30 FPS</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Positioning Accuracy</span>
-                            <span class="text-yellow-400 font-semibold">±5cm</span>
+                         <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
+                            <h4 class="text-xl font-bold text-blue-400 mb-3">Control Systems</h4>
+                             <div class="space-y-4">
+                                <div>
+                                    <strong class="text-white block mb-1">motion_controller.py</strong>
+                                    <p class="text-gray-400 text-sm">Low-level movement control with precise velocity management and smooth trajectory generation.</p>
+                                </div>
+                                <div>
+                                    <strong class="text-white block mb-1">exploration_strategy.py</strong>
+                                    <p class="text-gray-400 text-sm">High-level navigation logic implementing waypoint navigation and intelligent state transitions.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-lg font-semibold text-green-400 mb-3">Navigation Performance</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Waypoint Precision</span>
-                            <span class="text-green-400 font-semibold">Sub-meter</span>
+                <!-- Intelligent Exploration Strategy -->
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
+                            <i class="fas fa-brain text-white text-xl"></i>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Exploration Coverage</span>
-                            <span class="text-blue-400 font-semibold">360° scan</span>
+                        <h2 class="text-3xl font-bold text-green-400">Intelligent Exploration Strategy</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-white mb-2">1. Navigation Phase</h4>
+                             <p class="text-sm text-gray-400">Autonomous travel to strategic scanning positions using Nav2 framework</p>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">Scan Duration</span>
-                            <span class="text-purple-400 font-semibold">30-45 seconds</span>
+                         <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-white mb-2">2. Exploration Phase</h4>
+                             <p class="text-sm text-gray-400">Systematic 360-degree environmental scanning with detection</p>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-gray-300">System Robustness</span>
-                            <span class="text-yellow-400 font-semibold">Graceful degradation</span>
+                         <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-white mb-2">3. Target Acquisition</h4>
+                             <p class="text-sm text-gray-400">Object identification and localization using CV algorithms</p>
+                        </div>
+                         <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-green-500">
+                            <h4 class="font-bold text-white mb-2">4. Precision Approach</h4>
+                             <p class="text-sm text-gray-400">Visual servoing approach with sub-meter accuracy</p>
                         </div>
                     </div>
                 </div>
+
+                 <!-- Performance & structure -->
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <!-- Performance -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
+                                <i class="fas fa-chart-line text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-yellow-400">Performance Metrics</h2>
+                        </div>
+                         <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">Recognition Accuracy</span>
+                                    <span class="text-yellow-400">95%+</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">Detection Range</span>
+                                    <span class="text-yellow-400">3-4m</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="text-gray-400">Positioning Accuracy</span>
+                                    <span class="text-yellow-400">±5cm</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Features Sidebar Content -->
+                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
+                        <div class="flex items-center mb-6">
+                             <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
+                                <i class="fas fa-folder-tree text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-300">Project Structure</h2>
+                        </div>
+                         <pre class="bg-gray-800 rounded-lg p-4 text-xs text-gray-400 overflow-x-auto font-mono">
+ros2_project/
+├── robot.py
+├── color_detector.py
+├── motion_controller.py
+├── exploration_strategy.py
+├── test/
+├── package.xml
+└── setup.py</pre>
+                         <div class="mt-6 flex flex-wrap gap-2">
+                            <span class="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-xs">Publisher/Subscriber</span>
+                            <span class="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-xs">Sensor Fusion</span>
+                            <span class="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-xs">State Machine</span>
+                             <span class="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-xs">Dynamic Obstacle Avoidance</span>
+                        </div>
+                    </div>
+                 </div>
+
             </div>
         </div>
 
-        <!-- Technology Stack -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-teal-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-layer-group text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Technology Stack</h2>
-                    <p class="text-gray-400">Modern robotics and AI development frameworks</p>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-4 gap-6">
-                <div>
-                    <h4 class="font-semibold text-cyan-400 mb-3">Robotics Framework</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• ROS2 Humble</li>
-                        <li>• Nav2 Navigation Stack</li>
-                        <li>• Gazebo Simulation</li>
-                        <li>• TurtleBot3 Platform</li>
-                        <li>• AMCL Localization</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-green-400 mb-3">Computer Vision</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• OpenCV 4.0+</li>
-                        <li>• HSV Color Processing</li>
-                        <li>• Contour Detection</li>
-                        <li>• Morphological Operations</li>
-                        <li>• Real-time Processing</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-yellow-400 mb-3">Programming</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• Python 3.8+</li>
-                        <li>• Async/Await Patterns</li>
-                        <li>• Object-Oriented Design</li>
-                        <li>• Modular Architecture</li>
-                        <li>• Error Handling</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-semibold text-orange-400 mb-3">Build & Deploy</h4>
-                    <ul class="text-gray-300 space-y-1 text-sm">
-                        <li>• Colcon Build System</li>
-                        <li>• ament_python Setup</li>
-                        <li>• ROS2 Package Format</li>
-                        <li>• Automated Testing</li>
-                        <li>• CI/CD Integration</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Project Structure -->
-        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
-            <div class="flex items-center mb-6">
-                <div class="bg-pink-600 rounded-full p-3 mr-4">
-                    <i class="fas fa-folder-tree text-white text-xl"></i>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Project Structure</h2>
-                    <p class="text-gray-400">Clean, modular architecture for maintainability and extensibility</p>
-                </div>
-            </div>
-
-            <div class="bg-gray-800 rounded-lg p-6">
-                <pre class="text-gray-300 text-sm overflow-x-auto">
-<span class="text-cyan-400">ros2_project_sc22makk/</span>
-├── <span class="text-green-400">ros2_project_sc22makk/</span>
-│   ├── <span class="text-yellow-400">__init__.py</span>
-│   ├── <span class="text-blue-400">robot.py</span>                 <span class="text-gray-500"># Main robot control node</span>
-│   ├── <span class="text-blue-400">color_detector.py</span>        <span class="text-gray-500"># Computer vision module</span>
-│   ├── <span class="text-blue-400">motion_controller.py</span>     <span class="text-gray-500"># Movement control</span>
-│   └── <span class="text-blue-400">exploration_strategy.py</span>  <span class="text-gray-500"># Navigation logic</span>
-├── <span class="text-green-400">test/</span>                        <span class="text-gray-500"># Unit tests</span>
-├── <span class="text-purple-400">package.xml</span>                  <span class="text-gray-500"># ROS2 package configuration</span>
-├── <span class="text-purple-400">setup.py</span>                     <span class="text-gray-500"># Python package setup</span>
-└── <span class="text-orange-400">README.md</span>                    <span class="text-gray-500"># Project documentation</span>
-                </pre>
-            </div>
-        </div>
-
-        <!-- Learning Outcomes -->
-        <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-8 text-center border border-gray-700">
-            <h3 class="text-2xl font-bold text-white mb-3">Advanced Robotics and AI Integration</h3>
-            <p class="text-blue-200 mb-4">
-                This autonomous robotics project demonstrates comprehensive mastery of modern robotics frameworks,
-                computer vision algorithms, and intelligent system design. The integration of ROS2, advanced navigation
-                strategies, and sophisticated object detection showcases the technical expertise and problem-solving
-                skills essential for careers in robotics, autonomous systems, and AI engineering.
-            </p>
-            <div class="flex justify-center space-x-6 text-sm">
-                <span class="text-green-400">✓ ROS2 Expertise</span>
-                <span class="text-blue-400">✓ Computer Vision</span>
-                <span class="text-purple-400">✓ Autonomous Navigation</span>
-                <span class="text-yellow-400">✓ AI System Integration</span>
-            </div>
+        <!-- Back Button -->
+        <div class="text-center mt-16">
+            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
+            </a>
         </div>
     </div>
-</div>
+</section>

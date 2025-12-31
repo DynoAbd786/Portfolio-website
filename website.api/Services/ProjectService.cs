@@ -17,7 +17,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "TaskFlow - Distributed Task Processing System",
-                    Description = "Enterprise-grade distributed task processing framework with 34 Python modules spanning 10,000+ lines. Features Redis priority queues, PostgreSQL persistence, FastAPI REST APIs, WebSocket real-time updates, and Prometheus monitoring. Includes async/sync task execution, auto-scaling workers, circuit breakers, and comprehensive CLI with 20+ admin commands. Built to systematically compare agentic AI capabilities, revealing Claude Code Pro's superior architectural reasoning over Gemini CLI.",
+                    Description = "A robust distributed task processing system designed to benchmark AI agent capabilities. Built with Python, Redis, and FastAPI to handle high-concurrency workloads. Demonstrates enterprise architectural patterns including priority queues, auto-scaling workers, and real-time WebSocket monitoring.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TaskFlow",
                     ProjectUrl = "/projects/taskflow",
                     Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" },
@@ -27,7 +27,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Personal Portfolio & C# Learning Journey",
-                    Description = "Blazor WebAssembly portfolio built with .NET 8 and C# to master modern web development fundamentals. Features client-side rendering, responsive Tailwind CSS design, component architecture, dependency injection, and Font Awesome icons. Includes dynamic project showcase, mobile navigation, and 3D tilt effects via Vanilla Tilt.js. Developed entirely with Claude Code assistance to demonstrate AI-accelerated learning and document the C# development journey for employers and fellow developers.",
+                    Description = "A modern, responsive portfolio website showcasing full-stack development skills. Built with Blazor WebAssembly (.NET 8) and Tailwind CSS for high-performance client-side rendering. Features 3D interactive elements and a component-based architecture, developed to demonstrate rapid AI-assisted engineering.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
                     ProjectUrl = "/projects/portfolio",
                     Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
@@ -37,7 +37,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Formula Student AI - Autonomous Racing Systems Development",
-                    Description = "Active member of Leeds University Formula Student AI team developing autonomous racing systems for international competition. Involved in simulation and SLAM team groups, working on simulation environments using ROS2 on Ubuntu 24.04, Docker containerization, and SLAM (Simultaneous Localization and Mapping) for autonomous vehicle navigation. Development uses C++ and Python for ROS2 nodes and autonomous algorithms. Simulation work validates all autonomous subsystems including perception, path planning, localization, and vehicle dynamics control. Hardware platform utilizes Nvidia DGX Orin for real-time autonomous decision making. Collaborative engineering project involving multidisciplinary team coordination, project timeline management, and progressive contribution to localization, perception, planning, and control components throughout development cycle.",
+                    Description = "Autonomous racing system for the Formula Student AI competition. Developed SLAM and path-planning algorithms using ROS2, C++, and Python on Nvidia DGX hardware. A multidisciplinary engineering effort validating autonomous subsystems in simulated and real-world racing environments.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=FS-AI",
                     ProjectUrl = "/projects/formula-student-ai",
                     Tags = new[] { "Formula Student AI", "ROS2", "C++", "Python", "Autonomous Vehicles", "Simulation", "SLAM", "Ubuntu 24.04", "Docker", "Nvidia DGX Orin", "Team Project", "Localization", "Perception", "Path Planning", "Vehicle Control" },
@@ -48,7 +48,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Advanced 3D Reconstruction System",
-                    Description = "MEng group project developing cutting-edge 3D reconstruction framework by fusing feed-forward depth estimation with optimization-based pose tracking. Novel hybrid approach addresses fundamental trade-offs in computer vision: combining fast neural networks that produce metrically-accurate depth maps with robust optimization models that provide globally-consistent pose tracking. Currently in background research phase with agile sprint methodology, Kanban board tracking, and comprehensive Gantt chart timeline management. Team leadership focuses on playing to individual strengths, active listening, and collaborative decision-making to ensure effective coordination across parallel workstreams. Research phase validates fusion methodology through HPC-accelerated benchmarking against state-of-the-art techniques. Deployment phase targets industrial applications including VR simulation, live room tracking, and medical imaging with real-time 3D scene capture. Five-person collaborative team supervised by Dr. Sharib Ali, emphasizing production-ready pipelines capable of deployment in industrial settings beyond academic prototypes.",
+                    Description = "Innovative hybrid framework fusing neural networks (depth) with optimization models (pose) for industrial 3D capture. Leverages Python and HPC resources to solve fundamental computer vision trade-offs. Targeted for VR and medical imaging applications with a focus on production-ready deployment.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=3D+Recon",
                     ProjectUrl = "/projects/3d-reconstruction",
                     GitHubUrl = "",
@@ -59,8 +59,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Workflow-Centric Graph Construction & Architectural Intelligence Platform",
-                    Description = "Hybrid C#/.NET and Python research platform transforming codebases into queryable graphs with architectural intelligence. Features ASP.NET Core Web API exposing graph data via MCP (Model Context Protocol) to AI agents and Blazor WASM UI for humans. Python microservice handles deep analysis (AST, Doxygen), while C# layer provides enterprise-grade API gateway, MCP host, and active refactoring service that hunts architectural violations (God Classes, complexity metrics). Implements 'Architectural Linter' capabilities—critiquing codebase health using graph topology and project philosophies. Built for AI-assisted development with Neo4j graph database, Redis caching, and comprehensive validation framework targeting 75-80% token reduction for LLM code comprehension. Originally conceived for academic collaboration, now developed as independent technical research initiative exploring graph-based code analysis and AI-enhanced architectural understanding.",
+                    Title = "Workflow-Centric Graph Code Analysis Platform",
+                    Description = "An intelligent architectural analysis platform transforming codebases into queryable graphs. Combines C#/.NET for enterprise APIs and Python for AST analysis to detect architectural violations. enhancing LLM code comprehension by reducing token usage by up to 80%.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Graph+Analysis",
                     ProjectUrl = "/projects/workflow-graph-platform",
                     Tags = new[] { "Research Project", "C#", ".NET 8", "ASP.NET Core", "Blazor WASM", "Python", "Neo4j", "Graph Databases", "Doxygen", "LLM Integration", "MCP", "Redis", "Software Architecture", "Architectural Linter", "AI Documentation", "Microservices" },
@@ -70,8 +70,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Flow Diverter Deployment Algorithm & Medical Simulation Platform",
-                    Description = "Advanced biomedical research platform for simulating flow diverter stent deployment in patient-specific vascular geometries. Built during 8-week internship, extending the 2016 Paliwal Virtual Stenting Workflow algorithm. Features physics-based stent expansion, VMTK vessel analysis, GPU-accelerated PyVista/VTK visualization, and professional PyQt6 interface. Supports multiple stent models (Enterprise, Pipeline, Silk) with realistic wire mechanics, HDF5 export, and Docker containerization for cross-platform deployment.",
+                    Title = "Flow Diverter Deployment & Medical Simulation Platform",
+                    Description = "Biomedical simulation platform for predicting stent deployment in patient-specific vascular geometries. Built with Python, VMTK, and GPU-accelerated visualization to aid surgical planning. Extends clinical research capabilities with realistic physics modeling and seamless data export.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Medical+Sim",
                     ProjectUrl = "/projects/medical-simulation",
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
@@ -81,7 +81,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "pNanoLocz: Python AFM Analysis Platform Development",
-                    Description = "Initial development phase of converting the acclaimed NanoLocz MATLAB application into a modern Python-based AFM (Atomic Force Microscopy) analysis platform. Designed modular PyQt6-based architecture with extensible file reading system supporting 8+ AFM formats (.spm, .asd, .jpk, .ibw, .ARIS, .nhf, .gwy, .tiff). Implemented core data management, GUI foundation with responsive layout, and video player infrastructure for AFM data visualization. Established scalable framework for complete migration of research-grade scientific application used by AFM researchers worldwide.",
+                    Description = "Modern Python-based analysis platform for Atomic Force Microscopy (AFM), migrating a legacy MATLAB tool. Features a modular PyQt6 GUI and multi-format file support to streamline scientific workflows. empowers researchers with robust data visualization and processing capabilities.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=pNanoLocz",
                     ProjectUrl = "/projects/pnanolocz",
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
@@ -90,8 +90,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Medical AI Research: Patient-Centric EHR System Development",
-                    Description = "Comprehensive Data Mining research project developing a patient-centric AI system for enhanced electronic health record integration within the NHS. Features GPT-4 Turbo API integration, advanced speech-to-text recognition, SpaCy-based pseudonymisation for GDPR compliance, and automated clinical documentation generation. Implements CRISP-DM methodology with comprehensive pilot study using rheumatoid arthritis case scenarios. Addresses critical NHS administrative burden affecting healthcare professionals who spend one-third of working hours on documentation. Includes detailed 6-month implementation timeline, stakeholder analysis, and comprehensive evaluation framework for seamless NHS workflow integration.",
+                    Title = "Medical AI Research: Patient-Centric EHR System",
+                    Description = "Patient-centric AI system designed to reduce NHS administrative burden via automated documentation. Integrates GPT-4 and speech-to-text to streamline electronic health records while ensuring GDPR compliance. Validated through pilot studies to enhance clinical workflow efficiency.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=NHS+AI+System",
                     ProjectUrl = "/projects/data-mining",
                     Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
@@ -101,7 +101,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Numerical Methods for Predator-Prey Systems",
-                    Description = "Advanced numerical computation coursework implementing and analyzing differential equation solvers for predator-prey models (Lotka-Volterra equations). Built custom Euler method and compared performance against SSPRK3 and Runge-Kutta methods across multiple time steps. Features comprehensive error analysis with absolute error calculations, Euclidean norm computations, and stability assessment. Includes CPU core isolation for accurate performance benchmarking, mathematical convergence analysis, and professional scientific computing practices. Demonstrates exceptional understanding of numerical methods theory and implementation complexity for undergraduate-level coursework.",
+                    Description = "High-performance differential equation solver analyzing predator-prey system stability. Implemented custom Euler and Runge-Kutta methods in Python with rigorous error analysis. Demonstrates scientific computing expertise through CPU-isolated benchmarking and mathematical convergence proof.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Numerical+Methods",
                     ProjectUrl = "/projects/numerical-computation",
                     Tags = new[] { "Python", "NumPy", "Matplotlib", "Numerical Analysis", "Differential Equations", "Scientific Computing", "Performance Analysis", "Mathematical Modeling" },
@@ -111,7 +111,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "AI-Powered Mental Health App Design",
-                    Description = "Comprehensive software engineering design brief for a £100,000 mental health app targeting university students globally. Features advanced ChatGPT-4 Turbo API integration, multi-stakeholder analysis, and sophisticated system architecture. Includes university system integration, crisis intervention protocols, and comprehensive privacy controls. Demonstrates professional software engineering methodology with agile development planning, ethical considerations, and legal compliance (GDPR, Data Protection Act). Designed for global scalability across universities with local encryption, cultural personalization, and healthcare service integration (BetterHelp, NHS).",
+                    Description = "Strategic technical design for a scalable mental health platform targeting global university students. Proposes a secure, AI-integrated (ChatGPT-4) architecture with strict privacy controls. Comprehensive engineering roadmap focusing on ethical compliance, API integration, and system scalability.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Mental+Health+App",
                     ProjectUrl = "/projects/mental-health-app",
                     Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
@@ -121,7 +121,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "TerraTracker - GPS Route Tracking Platform",
-                    Description = "Collaborative 6-person team project developing a full-stack GPS route tracking and sharing application using professional agile methodologies. Built with Flask, PostgreSQL, and Leaflet.js for interactive mapping. Features comprehensive sprint documentation, Git workflow with branches and pull requests, Docker containerization, and CI/CD pipeline. Demonstrates professional software engineering practices including version control, issue tracking, wiki documentation, and team collaboration. Includes user authentication, route visualization, social sharing features, and activity analytics for outdoor enthusiasts.",
+                    Description = "Full-stack GPS tracking application built by a 6-person agile team. Utilizes Flask, PostgreSQL, and Leaflet.js for real-time route sharing and analytics. Showcases professional DevOps practices including CI/CD pipelines, Docker containerization, and rigorous version control.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TerraTracker",
                     ProjectUrl = "/projects/terratracker",
                     Tags = new[] { "Team Project", "Flask", "Python", "PostgreSQL", "Agile", "Git Workflow", "Docker", "CI/CD", "Leaflet.js", "RESTful API" },
@@ -130,8 +130,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Project Synapse - AI Healthcare Documentation System",
-                    Description = "Comprehensive business plan for an AI-powered healthcare documentation system targeting NHS doctors and healthcare professionals. Features advanced speech-to-text technology, automated patient record generation, and seamless NHS system integration. Addresses critical NHS administrative burden affecting 1.8 million healthcare workers with £2 billion government digitalization support. Includes detailed market feasibility analysis, industry research using IBISWorld data, Blue Ocean Strategy competitive analysis, and financial viability assessment. Demonstrates professional business planning methodology with stakeholder analysis, target market segmentation, and scalable implementation strategy.",
+                    Title = "Project Synapse - AI Healthcare Documentation",
+                    Description = "Strategic business plan for an AI healthcare documentation system, addressing the £2bn NHS digitalization market. Analyzes financial viability and competitive strategy (Blue Ocean) for a speech-to-text solution. Targets reduced clinician burnout through automated patient record generation.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Project+Synapse",
                     ProjectUrl = "/projects/business-plan",
                     Tags = new[] { "Business Planning", "Healthcare Technology", "AI Documentation", "NHS Integration", "Market Research", "Blue Ocean Strategy", "Entrepreneurship", "Speech-to-Text" },
@@ -140,8 +140,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Advanced CFD Blood Flow Simulation using XLB",
-                    Description = "GPU-accelerated Lattice Boltzmann Method (LBM) framework for simulating pulsatile blood flow in arterial geometries with aneurysms. Extended XLB framework with custom boundary conditions, non-Newtonian Carreau-Yasuda rheology model, and wall shear stress computation for clinical risk assessment. Achieved 2,340+ MLUPS performance on RTX 3060 Mobile with time-dependent cardiac cycle profiles and physiological accuracy. Developed custom collision operators, 64-point pulsatile inlet conditions, and comprehensive visualization workflows using ParaView and Jupyter notebooks. Establishes foundation for transitioning LBM simulations from research to clinical aneurysm rupture risk assessment, addressing critical need for faster CFD analysis compared to traditional finite element methods.",
+                    Title = "Advanced CFD Blood Flow Simulation (XLB)",
+                    Description = "High-performance CFD framework simulating blood flow in aneurysms using GPU acceleration (CUDA). Extended the XLB library to achieve 2,340+ MLUPS with physiological accuracy. Enables rapid clinical risk assessment significantly faster than traditional methods.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=XLB+CFD+Simulation",
                     ProjectUrl = "/vascular-blood-flow",
                     Tags = new[] { "Python", "XLB Framework", "CUDA", "CFD", "Lattice Boltzmann Method", "GPU Computing", "Medical Simulation", "Blood Flow", "Aneurysm Risk Assessment", "ParaView", "Docker" },
@@ -150,8 +150,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Advanced Machine Learning: Regression & Dimensionality Reduction",
-                    Description = "Comprehensive machine learning coursework implementing advanced regression techniques and dimensionality reduction algorithms for complex data analysis. Features polynomial regression, ridge regression, principal component analysis (PCA), and independent component analysis (ICA) implementations. Demonstrates mastery of statistical modeling, feature extraction, data preprocessing, and model evaluation techniques. Includes practical applications to real-world datasets with comprehensive performance analysis and visualization of high-dimensional data structures.",
+                    Title = "Machine Learning: Regression & Dimensionality Reduction",
+                    Description = "Implementation of advanced dimensionality reduction (PCA/ICA) and regression algorithms from scratch. Applied to complex high-dimensional datasets to extract meaningful features. Demonstrates deep understanding of statistical modeling and mathematical foundations of ML.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Machine+Learning",
                     ProjectUrl = "/projects/machine-learning",
                     Tags = new[] { "Python", "Machine Learning", "Regression Analysis", "PCA", "ICA", "Statistical Modeling", "Data Science", "NumPy", "Scikit-learn", "Dimensionality Reduction" },
@@ -161,7 +161,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Azure Serverless Inventory Management System",
-                    Description = "Enterprise-grade distributed systems project implementing a cloud-native inventory management solution using Azure serverless architecture. Features Azure Functions for compute, Cosmos DB for data persistence, Event Grid for event-driven communication, and API Management for scalable API endpoints. Demonstrates mastery of microservices architecture, event-driven design patterns, cloud deployment strategies, and modern DevOps practices. Includes comprehensive monitoring, logging, and automated deployment pipelines for production-ready distributed applications.",
+                    Description = "Cloud-native inventory management system built on Azure serverless architecture. Orchestrates Azure Functions, Cosmos DB, and Event Grid for a scalable, event-driven workflow. Exemplifies modern microservices design and automated DevOps deployment standards.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Distributed+Systems",
                     ProjectUrl = "/projects/distributed-systems",
                     Tags = new[] { "Azure", "Serverless", "Distributed Systems", "Cloud Computing", "Microservices", "Event-Driven Architecture", "DevOps", "API Management", "Cosmos DB", "Azure Functions" },
@@ -171,7 +171,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "AI Search Algorithms: Sliding Block Puzzle Analysis",
-                    Description = "Artificial intelligence coursework implementing and analyzing various search algorithms for solving sliding block puzzles and robot worker scenarios. Features breadth-first search, depth-first search, A* algorithm, and heuristic optimization techniques. Demonstrates understanding of search space complexity, algorithm efficiency, and intelligent problem-solving strategies. Includes comprehensive performance analysis comparing different search approaches and optimization of heuristic functions for complex state-space exploration.",
+                    Description = "Comparative analysis of AI search algorithms (A*, BFS, DFS) solving complex puzzle states. Optimized heuristic functions to inspect search space complexity and efficiency. Demonstrates strong algorithmic problem-solving skills in constraint satisfaction scenarios.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=AI+Search",
                     ProjectUrl = "/projects/ai-search-algorithms",
                     Tags = new[] { "Python", "Artificial Intelligence", "Search Algorithms", "A* Algorithm", "Heuristics", "Problem Solving", "State Space Search", "Algorithm Analysis", "BFS", "DFS" },
@@ -181,7 +181,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Machine Learning: Decision Trees for Fraud Detection",
-                    Description = "Advanced artificial intelligence project implementing decision tree algorithms for financial fraud detection systems. Features ID3 algorithm implementation, entropy calculation, information gain optimization, and tree pruning techniques. Demonstrates mastery of supervised learning, classification algorithms, and practical machine learning applications in financial security. Includes comprehensive evaluation metrics, cross-validation techniques, and performance optimization for real-world fraud detection scenarios.",
+                    Description = "Custom implementation of ID3 decision tree algorithms for financial fraud detection. Optimized information gain and entropy calculations for accurate classification. Showcases practical application of supervised learning to improved security systems.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Decision+Trees",
                     ProjectUrl = "/projects/ai-decision-trees",
                     Tags = new[] { "Python", "Machine Learning", "Decision Trees", "Fraud Detection", "Classification", "ID3 Algorithm", "Data Mining", "Financial Security", "Supervised Learning", "Feature Selection" },
@@ -191,7 +191,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Advanced Parallel Computing: OpenMP, MPI & OpenCL",
-                    Description = "Comprehensive parallel computing specialization spanning three major paradigms: shared memory (OpenMP), distributed systems (MPI), and GPU acceleration (OpenCL). Implemented Conway's Game of Life with OpenMP parallelization, developed scalable MPI applications with multi-machine performance analysis achieving 3.09x speedup, and created GPU-accelerated heat equation solvers using OpenCL kernels. Demonstrates mastery of data dependencies, red-black patterns, message passing, and heterogeneous computing across the complete parallel programming ecosystem. Includes rigorous performance benchmarking and optimization techniques for high-performance computing applications.",
+                    Description = "High-performance computing project spanning MPI, OpenMP, and OpenCL paradigms. Achieved nearly linear (3.09x) speedup on distributed systems and accelerated heat equation solvers on GPUs. Proves mastery of parallel architecture, memory optimization, and thread synchronization.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Parallel+Computing",
                     ProjectUrl = "/projects/parallel-computing",
                     Tags = new[] { "OpenMP", "MPI", "OpenCL", "C Programming", "Parallel Computing", "GPU Programming", "Distributed Systems", "Performance Analysis", "High Performance Computing", "CUDA" },
@@ -201,7 +201,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Autonomous Robot Navigation & Object Detection",
-                    Description = "Advanced ROS2-based autonomous robotics project implementing computer vision, motion planning, and intelligent navigation for TurtleBot3 simulation with sophisticated exploration strategies and precision object interaction. Features SLAM (Simultaneous Localization and Mapping), YOLOv8 object detection, OpenCV image processing, and advanced pathfinding algorithms. Demonstrates integration of multiple AI and robotics technologies including sensor fusion, behavior trees, and real-time decision making for complex autonomous navigation tasks.",
+                    Description = "ROS2-based navigation system aiming for intelligent object interactions in simulated environments. Integrates SLAM, YOLOv8 object detection, and motion planning algorithms. Delivers a robust autonomous agent capable of mapping and navigating dynamic spaces.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Autonomous+Robotics",
                     ProjectUrl = "/projects/autonomous-robotics",
                     Tags = new[] { "ROS2", "Python", "Computer Vision", "SLAM", "YOLOv8", "OpenCV", "TurtleBot3", "Gazebo", "Motion Planning", "Autonomous Systems" },
@@ -211,7 +211,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "3D OpenGL Renderer with Advanced Graphics Pipeline",
-                    Description = "Computer graphics coursework implementing a comprehensive 3D rendering application using modern OpenGL with complete projective graphics pipeline. Features terrain visualization using real-world elevation data, advanced lighting models, texture mapping, and interactive space launch simulation. Built as collaborative project demonstrating mastery of 3D mathematics, shader programming, and real-time rendering techniques with focus on performance optimization and visual fidelity for complex scene rendering.",
+                    Description = "Real-time 3D rendering engine built with C++ and modern OpenGL. Features a complete programmable pipeline with custom shaders, terrain generation, and advanced lighting. Demonstrates core graphics programming skills and optimization for visual fidelity.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=OpenGL+Renderer",
                     ProjectUrl = "/projects/opengl-renderer",
                     Tags = new[] { "OpenGL", "C++", "Computer Graphics", "3D Rendering", "Shader Programming", "Terrain Visualization", "Real-time Rendering", "Collaborative Project" },
@@ -221,7 +221,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "xv6 Operating System Development & Custom Shell",
-                    Description = "Advanced operating systems coursework implementing a complete Unix-style shell and extending the xv6 educational operating system with custom system calls and kernel modifications. Features comprehensive shell functionality including command parsing, process management, I/O redirection, and signal handling. Demonstrates deep understanding of operating system internals, kernel programming, and system-level C development with focus on memory management, process scheduling, and inter-process communication.",
+                    Description = "Kernel-level development extending the xv6 educational operating system. Implemented a custom Unix-style shell, system calls, and process management features. Provides a deep dive into low-level memory management and OS architecture.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=xv6+OS",
                     ProjectUrl = "/projects/xv6-operating-system",
                     Tags = new[] { "C Programming", "Operating Systems", "Unix Shell", "Kernel Development", "System Calls", "Process Management", "Memory Management", "xv6" },
@@ -230,8 +230,8 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Quantum Dot Investment Case for Photonic Quantum Computing",
-                    Description = "Comprehensive nanotechnology business case exploring quantum dot manufacturing for the revolutionary potential of light-based quantum computation. Features detailed market analysis, investment feasibility assessment, and technical evaluation of quantum dot applications in photonic quantum computing systems. Demonstrates understanding of emerging nanotechnology markets, quantum computing principles, and strategic business planning for cutting-edge technology investments with focus on commercialization potential and scalability challenges.",
+                    Title = "Quantum Dot Investment Case",
+                    Description = "Technical business case analyzing the commercial viability of quantum dot manufacturing. Explores applications in photonic quantum computing and future displays. Bridges deep tech research with market impact assessment for emerging nanotechnologies.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Quantum+Dots",
                     ProjectUrl = "/projects/quantum-dots",
                     Tags = new[] { "Nanotechnology", "Quantum Computing", "Business Analysis", "Investment Strategy", "Market Research", "Photonic Computing", "Quantum Dots", "Technology Assessment" },
@@ -241,7 +241,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Custom Image Format & Compression System",
-                    Description = "Sophisticated systems programming project implementing custom image file formats with advanced compression algorithms and bit-level manipulation. Features comprehensive image processing capabilities including custom binary formats, lossless compression techniques, and efficient memory management. Demonstrates mastery of low-level C programming, file I/O operations, and algorithm optimization with focus on performance-critical systems programming and data structure design.",
+                    Description = "Low-level image processing system with custom binary file formats and compression algorithms. Written in pure C to optimize memory usage and processing speed. Demonstrates strong systems programming fundamentals and bit-level data manipulation.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=C+Programming",
                     ProjectUrl = "/projects/c-programming",
                     Tags = new[] { "C Programming", "Image Processing", "Compression Algorithms", "File Formats", "Memory Management", "Systems Programming", "Bit Manipulation", "Algorithm Optimization" },
@@ -251,7 +251,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "2D Graphics Fundamentals & Rasterization Engine",
-                    Description = "Computer graphics coursework implementing fundamental 2D graphics algorithms including line drawing, triangle rasterization, and image processing with comprehensive performance analysis and testing frameworks. Features pixel manipulation, geometric rendering algorithms, and mathematical foundations of computer graphics. Built from scratch in C++ demonstrating mastery of graphics primitives, algorithm implementation, and performance optimization for real-time rendering applications.",
+                    Description = "Fundamental 2D rasterization engine built from scratch in C++. Implements line drawing and rendering algorithms to visualize geometric primitives. Validates core mathematical concepts behind modern computer graphics systems.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=2D+Graphics",
                     ProjectUrl = "/projects/graphics-fundamentals",
                     Tags = new[] { "C++", "Computer Graphics", "2D Rendering", "Rasterization", "Algorithm Implementation", "Performance Analysis", "Graphics Primitives", "Mathematical Modeling" },

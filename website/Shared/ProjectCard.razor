@@ -2,57 +2,94 @@
 
 @if (Project != null)
 {
-    <div class="project-card-container">
-        <div class="project-card bg-gray-800 rounded-lg overflow-hidden shadow-xl transition-all duration-500 border border-transparent hover:border-cyan-500/50 relative">
+    @* Added h-full to ensure cards stretch effectively in grid *@
+    <div class="project-card-container h-full">
+        <div class="project-card bg-gray-900 rounded-lg overflow-hidden shadow-lg transition-all duration-300 border border-gray-700 hover:border-cyan-500 hover:shadow-cyan-500/20 relative flex flex-col h-full group">
+            
             @* Diagonal "IN DEVELOPMENT" ribbon *@
             @if (Project.IsInDevelopment)
             {
-                <div class="absolute top-0 right-0 z-10 overflow-hidden w-32 h-32 pointer-events-none">
-                    <div class="absolute transform rotate-45 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-bold py-1 right-[-35px] top-[32px] w-[170px] text-center shadow-lg">
-                        IN DEVELOPMENT
+                <div class="absolute top-0 right-0 z-10 overflow-hidden w-24 h-24 pointer-events-none">
+                    <div class="absolute transform rotate-45 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-bold py-1 right-[-30px] top-[20px] w-[120px] text-center shadow-lg">
+                        IN DEV
                     </div>
                 </div>
             }
 
-            @if (!string.IsNullOrEmpty(Project.ImageUrl))
-            {
-                <img src="@Project.ImageUrl" alt="@(Project.Title ?? "Project")" class="w-full h-48 object-cover">
-            }
-            else
-            {
-                <div class="w-full h-48 bg-gray-700 flex items-center justify-center">
-                    <i class="fas fa-code text-gray-500 text-4xl"></i>
-                </div>
-            }
-            <div class="p-6">
-                <h3 class="text-2xl font-bold text-white mb-2">@(Project.Title ?? "Untitled Project")</h3>
-                <p class="text-gray-400 mb-4">@(Project.Description ?? "No description available")</p>
-                @if (Project.Tags != null && Project.Tags.Any())
+            @* Image Section - Compressed height (h-36) *@
+            <div class="relative overflow-hidden h-36">
+                @if (!string.IsNullOrEmpty(Project.ImageUrl))
                 {
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        @foreach(var tag in Project.Tags)
-                        {
-                            @if (!string.IsNullOrEmpty(tag))
-                            {
-                                <span class="bg-gray-700 text-cyan-400 text-xs font-semibold px-2.5 py-1 rounded-full">@tag</span>
-                            }
-                        }
+                    <img src="@Project.ImageUrl" 
+                         alt="@(Project.Title ?? "Project")" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                }
+                else
+                {
+                    <div class="w-full h-full bg-gray-800 flex items-center justify-center border-b border-gray-700">
+                        <i class="fas fa-code text-gray-600 text-3xl"></i>
                     </div>
                 }
-                @if (!string.IsNullOrEmpty(Project.ProjectUrl))
-                {
-                    <a href="@Project.ProjectUrl" class="inline-block mt-2 font-bold text-cyan-400 hover:text-white transition-colors duration-300">
-                        View Project &rarr;
-                    </a>
-                }
+                @* Overlay gradient for better text contrast if we wanted text over image, but here just for polish *@
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-60"></div>
+            </div>
+
+            @* Content Section *@
+            <div class="p-5 flex flex-col flex-grow">
+                
+                @* HR Focus: Title & High-Level Summary *@
+                <div class="mb-3">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg font-bold text-white leading-tight group-hover:text-cyan-400 transition-colors">
+                            @(Project.Title ?? "Untitled Project")
+                        </h3>
+                    </div>
+                </div>
+
+                @* Description - Naturally expanded *@
+                <div class="mb-4 flex-grow">
+                     <p class="text-sm text-gray-400 leading-relaxed">
+                        @(Project.Description ?? "No description available")
+                    </p>
+                </div>
+
+                @* Tech Focus: Compact Tech Stack & Link *@
+                <div class="pt-3 border-t border-gray-800 mt-auto">
+                    @if (Project.Tags != null && Project.Tags.Any())
+                    {
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                            @foreach(var tag in Project.Tags.Take(10)) @* Expanded to show more tech stack *@
+                            {
+                                @if (!string.IsNullOrEmpty(tag))
+                                {
+                                    <span class="bg-gray-800 text-gray-300 text-[10px] font-medium px-2 py-0.5 rounded border border-gray-700">
+                                        @tag
+                                    </span>
+                                }
+                            }
+                            @if(Project.Tags.Length > 10)
+                            {
+                                <span class="text-[10px] text-gray-500 py-0.5 px-1">+@(Project.Tags.Length - 10)</span>
+                            }
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Project.ProjectUrl))
+                    {
+                        <a href="@Project.ProjectUrl" class="text-sm font-semibold text-cyan-500 hover:text-cyan-300 flex items-center transition-colors">
+                            View Details <i class="fas fa-arrow-right ml-2 text-xs transform group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    }
+                </div>
             </div>
         </div>
     </div>
 }
 else
 {
-    <div class="bg-gray-800 rounded-lg p-6 border border-red-500/50">
-        <p class="text-red-400">Error: Project data not available</p>
+    @* Fallback for error *@
+    <div class="bg-gray-900 rounded-lg p-4 border border-red-900/50">
+        <p class="text-red-400 text-sm">Project Unavailable</p>
     </div>
 }
 
