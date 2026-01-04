@@ -175,7 +175,7 @@
                     </div>
                 </div>
 
-                <!-- Simulation Process Gallery -->
+                <!-- Simulation Process Gallery (Interactive Carousel) -->
                 <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
                     <div class="flex items-center mb-6">
                         <div class="bg-gradient-to-r from-pink-500 to-rose-500 rounded-full p-3 mr-4">
@@ -184,59 +184,44 @@
                         <h2 class="text-3xl font-bold text-pink-400">Simulation Process Gallery</h2>
                     </div>
                     
-                    <div class="space-y-12">
-                        <!-- 1. Vessel with IO -->
-                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
-                            <img src="images/medical-simulation/vessel-with-io.png" alt="Vessel with IO" class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">1. Initial Vessel Processing</h3>
-                                <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4">
-                                    The raw sample vessel geometry is loaded into the pipeline, where the input and output boundaries are automatically detected and capped. This topology-preservation step is crucial for defining valid boundary conditions for subsequent fluid simulations.
-                                </p>
-                            </div>
+                    <div class="relative bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
+                        <!-- Navigation Buttons -->
+                        <button @onclick="PreviousImage" class="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-200 focus:outline-none backdrop-blur-sm border border-white/10">
+                            <i class="fas fa-chevron-left text-xl"></i>
+                        </button>
+                        
+                        <button @onclick="NextImage" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-200 focus:outline-none backdrop-blur-sm border border-white/10">
+                            <i class="fas fa-chevron-right text-xl"></i>
+                        </button>
+
+                        <!-- Image Display -->
+                        <div class="relative w-full aspect-video bg-gray-900">
+                             <img src="@GalleryItems[CurrentImageIndex].ImagePath" 
+                                  alt="@GalleryItems[CurrentImageIndex].Title" 
+                                  class="w-full h-full object-contain transition-opacity duration-300">
                         </div>
 
-                        <!-- 2. Centerlines -->
-                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
-                            <img src="images/medical-simulation/vessel-centerlines.png" alt="Vessel Centerlines" class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">2. Centerline Computation</h3>
-                                <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4">
-                                    Vascular centerlines are computationally calculated using wave-propagation from a user-defined seed point. The <span class="text-blue-400 font-bold">blue line</span> explicitly identifies the aneurysm sac, distinguishing it from the main arterial flow path.
-                                </p>
+                        <!-- Caption Container -->
+                        <div class="p-6 bg-gray-800 border-t border-gray-700">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-xl font-bold text-white">
+                                    <span class="text-pink-400 mr-2">@(CurrentImageIndex + 1)/@GalleryItems.Count</span> 
+                                    @GalleryItems[CurrentImageIndex].Title
+                                </h3>
                             </div>
-                        </div>
-
-                        <!-- 3. Parent Vessel Extraction -->
-                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
-                            <img src="images/medical-simulation/parent-vessel-extraction.png" alt="Parent Vessel Extraction" class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">3. Parent Vessel Extraction</h3>
-                                <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4">
-                                   The parent vessel geometry is mathematically isolated by tracing along the computed centerline. This effectively separates the healthy artery from the pathology, defining the precise "landing zone" required for the flow diverter.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- 4. Mock Stent -->
-                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
-                            <img src="images/medical-simulation/mock-stent.png" alt="Mock Stent" class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">4. Mock Device Generation</h3>
-                                <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4">
-                                     An experimental "mock stent" lattice generated to validate the deployment logic. Designed to be fitted across the parent vessel, this parametric model tests the algorithm's ability to adapt rigid mesh structures to biological curvature.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- 5. Failed Stent Fitting -->
-                        <div class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 shadow-xl">
-                            <img src="images/medical-simulation/failed-stent-fitting.png" alt="Failed Stent Fitting" class="w-full h-auto object-cover opacity-90 hover:opacity-100 transition-opacity duration-300">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">5. Deployment Simulation Status</h3>
-                                <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4">
-                                    Current state of the stent fitting algorithm (implementing the Paliwal VSW method). The incomplete deployment highlights the immense computational complexity of simulating physics-based wall apposition and collision detection within the project's timeframe.
-                                </p>
+                            <p class="text-gray-300 leading-relaxed border-l-4 border-pink-500 pl-4 h-24 overflow-y-auto">
+                                @GalleryItems[CurrentImageIndex].Description
+                            </p>
+                            
+                            <!-- Dot Indicators -->
+                            <div class="flex justify-center gap-2 mt-4">
+                                @for (int i = 0; i < GalleryItems.Count; i++)
+                                {
+                                    var index = i;
+                                    <button @onclick="() => SetImage(index)" 
+                                            class="w-2.5 h-2.5 rounded-full transition-all duration-300 @(i == CurrentImageIndex ? "bg-pink-500 w-6" : "bg-gray-600 hover:bg-gray-500")">
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -438,3 +423,70 @@
         </div>
     </div>
 </section>
+
+@code {
+    private int CurrentImageIndex = 0;
+    private List<GalleryItem> GalleryItems = new();
+
+    protected override void OnInitialized()
+    {
+        GalleryItems = new List<GalleryItem>
+        {
+            new GalleryItem 
+            { 
+                ImagePath = "images/medical-simulation/vessel-with-io.png", 
+                Title = "1. Initial Vessel Processing", 
+                Description = "The raw sample vessel geometry is loaded into the pipeline, where the input and output boundaries are automatically detected and capped. This topology-preservation step is crucial for defining valid boundary conditions for subsequent fluid simulations."
+            },
+            new GalleryItem 
+            { 
+                ImagePath = "images/medical-simulation/vessel-centerlines.png", 
+                Title = "2. Centerline Computation", 
+                Description = "Vascular centerlines are computationally calculated using wave-propagation from a user-defined seed point. The <span class=\"text-blue-400 font-bold\">blue line</span> explicitly identifies the aneurysm sac, distinguishing it from the main arterial flow path."
+            },
+            new GalleryItem 
+            { 
+                ImagePath = "images/medical-simulation/parent-vessel-extraction.png", 
+                Title = "3. Parent Vessel Extraction", 
+                Description = "The parent vessel geometry is mathematically isolated by tracing along the computed centerline. This effectively separates the healthy artery from the pathology, defining the precise \"landing zone\" required for the flow diverter."
+            },
+            new GalleryItem 
+            { 
+                ImagePath = "images/medical-simulation/mock-stent.png", 
+                Title = "4. Mock Device Generation", 
+                Description = "An experimental \"mock stent\" lattice generated to validate the deployment logic. Designed to be fitted across the parent vessel, this parametric model tests the algorithm's ability to adapt rigid mesh structures to biological curvature."
+            },
+            new GalleryItem 
+            { 
+                ImagePath = "images/medical-simulation/failed-stent-fitting.png", 
+                Title = "5. Deployment Simulation Status", 
+                Description = "Current state of the stent fitting algorithm (implementing the Paliwal VSW method). The incomplete deployment highlights the immense computational complexity of simulating physics-based wall apposition and collision detection within the project's timeframe."
+            }
+        };
+    }
+
+    private void NextImage()
+    {
+        CurrentImageIndex = (CurrentImageIndex + 1) % GalleryItems.Count;
+    }
+
+    private void PreviousImage()
+    {
+        CurrentImageIndex = (CurrentImageIndex - 1 + GalleryItems.Count) % GalleryItems.Count;
+    }
+
+    private void SetImage(int index)
+    {
+        if (index >= 0 && index < GalleryItems.Count)
+        {
+            CurrentImageIndex = index;
+        }
+    }
+
+    public class GalleryItem
+    {
+        public string ImagePath { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+    }
+}
