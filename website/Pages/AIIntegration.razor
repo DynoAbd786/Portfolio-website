@@ -114,29 +114,29 @@
                     </ul>
                 </div>
 
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-amber-500/50 transition-all duration-300">
+                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
                     <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-clock text-white text-xl"></i>
+                        <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-full p-3 mr-4">
+                            <i class="fas fa-plug text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-amber-400">Platform Integration Status</h3>
+                        <h3 class="text-2xl font-bold text-green-400">Platform Status</h3>
                     </div>
                     <ul class="space-y-3">
                         <li class="flex items-start">
                             <span class="text-green-400 mr-3 mt-1">✅</span>
-                            <span class="text-gray-300"><strong>MCP Inspector:</strong> Fully functional</span>
+                            <span class="text-gray-300"><strong>LM Studio:</strong> Fully verified & optimized</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-400 mr-3 mt-1">✅</span>
+                            <span class="text-gray-300"><strong>MCP Inspector:</strong> 100% compliance</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-amber-400 mr-3 mt-1">⏳</span>
-                            <span class="text-gray-300"><strong>Claude Desktop:</strong> Awaiting stable support</span>
+                            <span class="text-gray-300"><strong>Claude Desktop:</strong> Testing in progress</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="text-amber-400 mr-3 mt-1">⏳</span>
-                            <span class="text-gray-300"><strong>Other AI Platforms:</strong> Beta phase</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-400 mr-3 mt-1">🔮</span>
-                            <span class="text-gray-300"><strong>Future:</strong> Universal AI agent compatibility</span>
+                            <span class="text-blue-400 mr-3 mt-1">🛡️</span>
+                            <span class="text-gray-300"><strong>Security:</strong> Direct SSE / No proxy required</span>
                         </li>
                     </ul>
                 </div>
@@ -185,25 +185,25 @@
                 <div class="space-y-8">
                     <!-- LM Studio Setup -->
                     <div>
-                        <h4 class="text-xl font-bold text-cyan-400 mb-4">🤖 LM Studio Setup (Recommended)</h4>
+                        <h4 class="text-xl font-bold text-cyan-400 mb-4">🤖 LM Studio Configuration</h4>
                         <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <p class="text-gray-300 mb-4">Connect LM Studio directly to the remote server using the built-in MCP client:</p>
-                            <ol class="list-decimal list-inside text-gray-400 space-y-3 mb-6">
-                                <li>Open <strong>LM Studio</strong> (v0.3.17 or later)</li>
-                                <li>Go to the <strong>MCP</strong> tab (bottom left)</li>
-                                <li>Click <strong>"Add MCP Server"</strong></li>
-                                <li>Select <strong>"Remote MCP (via URL)"</strong> (SSE)</li>
-                                <li>Enter the name: <code class="bg-gray-700 px-2 py-0.5 rounded text-cyan-400">muhammad-portfolio</code></li>
-                                <li>Paste the Server URL:</li>
-                                <div class="bg-gray-900 rounded-lg p-3 font-mono text-sm border border-gray-700 mt-2 flex items-center justify-between group">
-                                    <code class="text-cyan-400">https://mkkai.dev/api/mcp/sse</code>
-                                    <span class="text-gray-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity">SSE Transport</span>
+                            <p class="text-gray-300 mb-4">Add the portfolio server to LM Studio by editing your <code class="bg-gray-700 px-2 py-0.5 rounded">mcp.json</code> file:</p>
+                            
+                            <div class="mb-6">
+                                <p class="text-sm text-gray-400 mb-2">1. Locate <code class="text-cyan-400">mcp.json</code> (In LM Studio: Settings → MCP → Open Config File)</p>
+                                <p class="text-sm text-gray-400 mb-4">2. Append the following to your <code class="text-cyan-400">mcpServers</code> object:</p>
+                                
+                                <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm border border-gray-700 overflow-x-auto">
+<pre class="text-cyan-400"><code>"muhammad-portfolio": {
+  "transport": "sse",
+  "url": "https://mkkai.dev/api/mcp/sse"
+}</code></pre>
                                 </div>
-                                <li>Click <strong>Connect</strong></li>
-                            </ol>
-                            <div class="p-3 bg-green-900/20 rounded-lg border border-green-600/30">
+                            </div>
+
+                            <div class="p-4 bg-green-900/20 rounded-lg border border-green-600/30">
                                 <p class="text-green-300 text-sm">
-                                    <i class="fas fa-info-circle mr-2"></i><strong>Success:</strong> Once the dot turns green, you can chat with any model and ask it to "List projects from the MCP server" or "Search for Python projects".
+                                    <i class="fas fa-check-circle mr-2"></i><strong>Verify Connection:</strong> After saving, you should see a green dot next to <strong>muhammad-portfolio</strong> in the LM Studio sidebar.
                                 </p>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                         </div>
                     </div>
 
-                    <!-- Claude Desktop Setup -->
+                    <!-- Claude Desktop Setup (Untested)
                     <div>
                         <h4 class="text-xl font-bold text-purple-400 mb-4">🖥️ Claude Desktop Configuration</h4>
                         <div class="bg-gray-800 rounded-lg p-4 border border-gray-600">
@@ -240,6 +240,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
 
                     <!-- Direct API Testing -->
                     <div>
@@ -327,15 +328,7 @@
                 </div>
             </div>
 
-            <!-- Future Vision -->
-            <div class="bg-gradient-to-r from-blue-900 via-purple-900 to-cyan-900 rounded-lg p-8 border border-gray-700 text-center">
-                <div class="text-6xl mb-4">🚀</div>
-                <h3 class="text-3xl font-bold text-white mb-4">Future AI Integration</h3>
-                <p class="text-gray-300 text-lg max-w-3xl mx-auto">
-                    Once MCP support stabilizes across AI platforms, this portfolio will offer seamless integration with AI assistants,
-                    enabling dynamic project exploration, automated contact handling, and intelligent portfolio navigation through natural language interactions.
-                </p>
-            </div>
+
         </div>
 
         <!-- Back Button -->
