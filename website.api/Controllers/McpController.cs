@@ -204,11 +204,14 @@ public class McpController : ControllerBase
                 // Handle the request via our service
                 var response = await _mcpService.HandleRequestAsync(request);
                 
-                // Send the response back via SSE
-                await client.SendEventAsync("message", JsonSerializer.Serialize(response, new JsonSerializerOptions 
-                { 
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
-                }));
+                // ONLY send a response back via SSE if it's not a notification (has an ID)
+                if (request.Id != null)
+                {
+                    await client.SendEventAsync("message", JsonSerializer.Serialize(response, new JsonSerializerOptions 
+                    { 
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+                    }));
+                }
                 
                 return Accepted();
             }

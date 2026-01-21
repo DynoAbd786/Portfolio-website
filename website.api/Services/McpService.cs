@@ -36,10 +36,12 @@ public class McpService : IMcpService
             {
                 "initialize" => HandleInitialize(request),
                 "notifications/initialized" => await HandleInitializedNotification(request),
+                "notifications/cancelled" => HandleNotification(request),
                 "resources/list" => await HandleResourcesList(request),
                 "resources/read" => await HandleResourceRead(request),
                 "tools/list" => HandleToolsList(request),
                 "tools/call" => await HandleToolCall(request),
+                _ when request.Method.StartsWith("notifications/") => HandleNotification(request),
                 _ => CreateErrorResponse(request.Id, -32601, "Method not found")
             };
 
@@ -317,6 +319,14 @@ public class McpService : IMcpService
         };
     }
 
+    private McpResponse HandleNotification(McpRequest request)
+    {
+        _logger.LogInformation("Recieved notification: {Method}", request.Method);
+        // Notifications MUST NOT return a response to the client.
+        // We return a response object with IsNotification = true so the controller knows not to send it.
+        return new McpResponse { Id = null, Result = null };
+    }
+
     private Task<McpResponse> HandleInitializedNotification(McpRequest request)
     {
         _logger.LogInformation("=== INITIALIZED NOTIFICATION ===");
@@ -325,7 +335,7 @@ public class McpService : IMcpService
         _logger.LogInformation("Client should now call tools/list to discover available tools");
 
         // Return empty response for notification (no result expected)
-        return Task.FromResult(new McpResponse { Id = request.Id, Result = new { } });
+        return Task.FromResult(new McpResponse { Id = null, Result = null });
     }
 
     private async Task<McpResourceContent> GetAllProjectsContent(string uri)

@@ -95,7 +95,7 @@ public class RequestLoggingMiddleware
             _logger.LogInformation("{Name}: {Value}", header.Key, string.Join(", ", header.Value.ToArray()));
         }
 
-        // Log response body
+        // Log response body - truncate if too long
         responseBody.Seek(0, SeekOrigin.Begin);
         var responseBodyText = await new StreamReader(responseBody).ReadToEndAsync();
         responseBody.Seek(0, SeekOrigin.Begin);
@@ -104,7 +104,14 @@ public class RequestLoggingMiddleware
         _logger.LogInformation("Content-Length: {Length}", responseBody.Length);
         if (responseBody.Length > 0)
         {
-            _logger.LogInformation("Body: {Body}", responseBodyText);
+            if (responseBodyText.Length > 1000)
+            {
+                _logger.LogInformation("Body (truncated): {Body}", responseBodyText.Substring(0, 1000) + "...");
+            }
+            else
+            {
+                _logger.LogInformation("Body: {Body}", responseBodyText);
+            }
         }
 
         _logger.LogInformation("=== END RESPONSE ===");
