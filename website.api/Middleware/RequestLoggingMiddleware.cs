@@ -18,26 +18,32 @@ public class RequestLoggingMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        // Only intercept and log MCP and OAuth requests
-        if (context.Request.Path.StartsWithSegments("/api/mcp") ||
-            context.Request.Path.StartsWithSegments("/api/oauth"))
+        var isMcpOrOAuth = context.Request.Path.StartsWithSegments("/api/mcp") ||
+                           context.Request.Path.StartsWithSegments("/api/oauth");
+        
+        var isSse = context.Request.Path.Value?.Contains("/sse") == true;
+
+        // Log request info regardless
+        if (isMcpOrOAuth)
         {
             await LogRequestAsync(context);
+        }
 
+        // For SSE, we MUST NOT buffer the response body, or the stream will never reach the client
+        if (isMcpOrOAuth && !isSse)
+        {
             var originalBodyStream = context.Response.Body;
-
             using var responseBody = new MemoryStream();
             context.Response.Body = responseBody;
 
             await _next(context);
 
             await LogResponseAsync(context, responseBody);
-
             await responseBody.CopyToAsync(originalBodyStream);
         }
         else
         {
-            // For non-MCP/OAuth requests, just pass through without logging
+            // Just pass through for SSE or non-MCP requests
             await _next(context);
         }
     }

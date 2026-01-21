@@ -119,8 +119,16 @@ public class McpController : ControllerBase
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
 
     [HttpGet("sse")]
+    [HttpPost("sse")] // Support POST for initialization handshake if needed
     public async Task HandleSseConnection()
     {
+        if (Request.Method == "POST")
+        {
+            // Just treat it as a message or a ping if it's hitting the SSE URL with POST
+            await HandleMcpRequest();
+            return;
+        }
+
         Response.Headers.Append("Content-Type", "text/event-stream");
         Response.Headers.Append("Cache-Control", "no-cache");
         Response.Headers.Append("Connection", "keep-alive");
