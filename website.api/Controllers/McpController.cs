@@ -18,6 +18,25 @@ public class McpController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> HandleRootGet()
+    {
+        // If the client wants SSE, delegate to the SSE handler
+        if (Request.Headers["Accept"].ToString().Contains("text/event-stream"))
+        {
+            await HandleSseConnection();
+            return new EmptyResult(); // Handled as SSE
+        }
+
+        // Otherwise, provide basic discovery info
+        return Ok(new 
+        { 
+            status = "MCP Server Operational", 
+            sse_endpoint = "/api/mcp/sse",
+            message_endpoint = "/api/mcp/message"
+        });
+    }
+
     [HttpPost]
     public async Task<IActionResult> HandleMcpRequest()
     {

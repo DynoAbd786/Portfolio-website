@@ -21,7 +21,8 @@ public class RequestLoggingMiddleware
         var isMcpOrOAuth = context.Request.Path.StartsWithSegments("/api/mcp") ||
                            context.Request.Path.StartsWithSegments("/api/oauth");
         
-        var isSse = context.Request.Path.Value?.Contains("/sse") == true;
+        var isSse = context.Request.Path.Value?.Contains("/sse") == true || 
+                     context.Request.Headers["Accept"].ToString().Contains("text/event-stream");
 
         // Log request info regardless
         if (isMcpOrOAuth)
