@@ -126,6 +126,13 @@ public class McpController : ControllerBase
         Response.Headers.Append("Connection", "keep-alive");
         Response.Headers.Append("X-Accel-Buffering", "no"); // For Nginx/proxies
 
+        // Disable response buffering for the server
+        var bufferingFeature = HttpContext.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpResponseBodyFeature>();
+        if (bufferingFeature != null)
+        {
+            bufferingFeature.DisableBuffering();
+        }
+
         // Flush headers immediately to establish connection
         await Response.Body.FlushAsync();
 
