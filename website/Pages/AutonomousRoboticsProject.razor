@@ -40,6 +40,8 @@
         </div>
 
         <div class="max-w-6xl mx-auto">
+
+
             <!-- Main Content Sections -->
             <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
                 
@@ -100,6 +102,29 @@
                         </div>
                     </div>
                 </div>
+
+            <!-- Live Simulation Demo -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-play-circle text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-cyan-400">Live Simulation Demo</h2>
+                </div>
+                
+                <div class="relative w-full rounded-lg overflow-hidden border border-gray-700 shadow-xl bg-black">
+                    <video controls muted loop class="w-full h-auto rounded-lg">
+                        <source src="videos/robot_2x.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="mt-4 p-4 bg-gray-800 rounded-lg border-l-4 border-cyan-500">
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        <strong class="text-white">Demonstration (2x Speed):</strong> Autonomous navigation and object detection in action. The TurtleBot3 successfully identifies targets while mapping the environment and avoiding dynamic obstacles.
+                    </p>
+                </div>
+            </div>
 
                 <!-- System Architecture -->
                 <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">

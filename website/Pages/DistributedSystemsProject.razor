@@ -42,6 +42,8 @@
         </div>
 
         <div class="max-w-6xl mx-auto">
+
+
             <!-- Main Content Sections -->
             <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
 
@@ -79,6 +81,29 @@
                         </div>
                     </div>
                 </div>
+
+            <!-- Project Walkthrough Video -->
+            <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300 mb-8">
+                <div class="flex items-center mb-6">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-500 rounded-full p-3 mr-4">
+                        <i class="fas fa-play-circle text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-blue-400">Project Walkthrough</h2>
+                </div>
+                
+                <div class="relative w-full rounded-lg overflow-hidden border border-gray-700 shadow-xl bg-black">
+                    <video controls class="w-full h-auto rounded-lg">
+                        <source src="videos/ds_cw2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                
+                <div class="mt-4 p-4 bg-gray-800 rounded-lg border-l-4 border-blue-500">
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        <strong class="text-white">System Demo:</strong> A comprehensive walkthrough of the Azure Serverless Inventory Management System, demonstrating the HTTP triggers, Cosmos DB integration, and performance testing results.
+                    </p>
+                </div>
+            </div>
 
                 <!-- Serverless Architecture & Implementation -->
                 <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
@@ -298,7 +323,7 @@
                             <p class="text-gray-400">Coursework brief and implementation requirements</p>
                         </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-4">
+                    <div class="grid md:grid-cols-3 gap-4">
                         <a href="https://github.com/DynoAbd786/distributed-cw" target="_blank"
                            class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
                             <i class="fab fa-github mr-3 text-xl"></i>
@@ -313,6 +338,14 @@
                             <div>
                                 <div class="font-bold">Coursework Brief</div>
                                 <div class="text-sm opacity-90">COMP3211 serverless architecture assignment</div>
+                            </div>
+                        </a>
+                        <a href="/docs/DistributedSystemsReport.html" target="_blank"
+                           class="bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
+                            <i class="fas fa-file-invoice mr-3 text-xl"></i>
+                            <div>
+                                <div class="font-bold">Performance Report</div>
+                                <div class="text-sm opacity-90">Q&A, Metrics & Evaluation (Printable)</div>
                             </div>
                         </a>
                     </div>

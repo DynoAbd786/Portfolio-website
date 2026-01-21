@@ -115,110 +115,97 @@ public class McpController : ControllerBase
         }
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetMcpRoot()
+    // --- SSE IMPLEMENTATION FOR STANDARD MCP CLIENTS ---
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
+
+    [HttpGet("sse")]
+    public async Task HandleSseConnection()
     {
-        _logger.LogInformation("=== MCP ROOT GET REQUEST - INITIALIZING ===");
-        _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
-        _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
+        Response.Headers.Append("Content-Type", "text/event-stream");
+        Response.Headers.Append("Cache-Control", "no-cache");
+        Response.Headers.Append("Connection", "keep-alive");
 
-        _logger.LogInformation("Creating default initialize request for GET");
+        var sessionId = Guid.NewGuid().ToString();
+        var client = new SseClient(Response);
+        _connectedClients.TryAdd(sessionId, client);
 
-        // Create a default "initialize" request and process it through the MCP service
-        var initRequest = new McpRequest
+        _logger.LogInformation($"Client connected via SSE. SessionId: {sessionId}");
+
+        try
         {
-            Id = "http-get-init",
-            Method = "initialize",
-            JsonRpc = "2.0"
-        };
+            // Send the endpoint URL for subsequent POST messages as the first event
+            // Standard MCP: send "endpoint" event with the URL
+            var endpointUri = $"{Request.Scheme}://{Request.Host}/api/mcp/message?sessionId={sessionId}";
+            await client.SendEventAsync("endpoint", endpointUri);
 
-        _logger.LogInformation("Processing initialize request through MCP service");
-
-        // Use the existing McpService to handle the initialize request
-        var response = await _mcpService.HandleRequestAsync(initRequest);
-
-        _logger.LogInformation("Returning MCP initialize response for GET request");
-
-        // Return the full McpResponse directly - this is what Claude expects
-        return Ok(response);
-    }
-
-    [HttpGet("tools")]
-    public async Task<IActionResult> GetToolsList()
-    {
-        _logger.LogInformation("=== DIRECT TOOLS GET REQUEST ===");
-
-        // Create a tools/list request
-        var toolsRequest = new McpRequest
-        {
-            Id = "http-get-tools",
-            Method = "tools/list",
-            JsonRpc = "2.0"
-        };
-
-        var response = await _mcpService.HandleRequestAsync(toolsRequest);
-        return Ok(response);
-    }
-
-    [HttpGet("info")]
-    public IActionResult GetServerInfo()
-    {
-        _logger.LogInformation("=== MCP INFO REQUEST ===");
-        _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
-        _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("User-Agent: {UserAgent}", HttpContext.Request.Headers.UserAgent.ToString());
-
-        var serverInfo = new McpServerInfo
-        {
-            Name = "muhammad-portfolio-mcp",
-            Version = "1.0.0",
-            Capabilities = new McpCapabilities
+            // Keep connection open
+            while (!HttpContext.RequestAborted.IsCancellationRequested)
             {
-                Resources = true,
-                Tools = true,
-                Prompts = false
+                await Task.Delay(1000); // Heartbeat/Keep-alive
             }
-        };
-
-        _logger.LogInformation("Returning server info: {@ServerInfo}", serverInfo);
-        return Ok(serverInfo);
-    }
-
-    [HttpGet("debug/tools")]
-    public async Task<IActionResult> GetToolsDebug()
-    {
-        _logger.LogInformation("=== DEBUG TOOLS REQUEST ===");
-
-        // Create a mock tools/list request to test our response
-        var mockRequest = new McpRequest
+        }
+        catch (Exception ex)
         {
-            Id = "debug-tools",
-            Method = "tools/list",
-            JsonRpc = "2.0"
-        };
-
-        var response = await _mcpService.HandleRequestAsync(mockRequest);
-
-        _logger.LogInformation("Debug tools response: {Response}",
-            JsonSerializer.Serialize(response, new JsonSerializerOptions { WriteIndented = true }));
-
-        return Ok(response);
+            _logger.LogError(ex, "SSE connection error");
+        }
+        finally
+        {
+            _connectedClients.TryRemove(sessionId, out _);
+            _logger.LogInformation($"Client disconnected. SessionId: {sessionId}");
+        }
     }
 
-    [HttpOptions("")]
-    public IActionResult HandlePreflight()
+    [HttpPost("message")]
+    public async Task<IActionResult> HandleSseMessage([FromQuery] string sessionId)
     {
-        _logger.LogInformation("=== MCP OPTIONS REQUEST (CORS Preflight) ===");
-        _logger.LogInformation("HTTP Method: {HttpMethod}", HttpContext.Request.Method);
-        _logger.LogInformation("Request Path: {Path}", HttpContext.Request.Path);
-        _logger.LogInformation("Origin: {Origin}", HttpContext.Request.Headers.Origin.ToString());
-        _logger.LogInformation("Access-Control-Request-Method: {RequestMethod}",
-            HttpContext.Request.Headers["Access-Control-Request-Method"].ToString());
-        _logger.LogInformation("Access-Control-Request-Headers: {RequestHeaders}",
-            HttpContext.Request.Headers["Access-Control-Request-Headers"].ToString());
+        if (!_connectedClients.TryGetValue(sessionId, out var client))
+        {
+            return NotFound("Session not found");
+        }
 
-        _logger.LogInformation("Returning OK for preflight request");
-        return Ok();
+        using var reader = new StreamReader(Request.Body);
+        var body = await reader.ReadToEndAsync();
+        
+        try 
+        {
+            var request = JsonSerializer.Deserialize<McpRequest>(body, new JsonSerializerOptions 
+            { 
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+            });
+
+            if (request != null)
+            {
+                // Handle the request via our service
+                var response = await _mcpService.HandleRequestAsync(request);
+                
+                // Send the response back via SSE
+                await client.SendEventAsync("message", JsonSerializer.Serialize(response, new JsonSerializerOptions 
+                { 
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+                }));
+                
+                return Accepted();
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error processing SSE message");
+            return BadRequest(ex.Message);
+        }
+
+        return BadRequest("Invalid request");
+    }
+
+    private class SseClient
+    {
+        private readonly HttpResponse _response;
+        public SseClient(HttpResponse response) => _response = response;
+
+        public async Task SendEventAsync(string eventType, string data)
+        {
+            await _response.WriteAsync($"event: {eventType}\n");
+            await _response.WriteAsync($"data: {data}\n\n");
+            await _response.Body.FlushAsync();
+        }
     }
 }
