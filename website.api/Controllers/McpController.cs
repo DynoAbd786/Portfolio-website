@@ -124,6 +124,10 @@ public class McpController : ControllerBase
         Response.Headers.Append("Content-Type", "text/event-stream");
         Response.Headers.Append("Cache-Control", "no-cache");
         Response.Headers.Append("Connection", "keep-alive");
+        Response.Headers.Append("X-Accel-Buffering", "no"); // For Nginx/proxies
+
+        // Flush headers immediately to establish connection
+        await Response.Body.FlushAsync();
 
         var sessionId = Guid.NewGuid().ToString();
         var client = new SseClient(Response);
@@ -133,15 +137,22 @@ public class McpController : ControllerBase
 
         try
         {
-            // Send the endpoint URL for subsequent POST messages as the first event
-            // Standard MCP: send "endpoint" event with the URL
-            var endpointUri = $"{Request.Scheme}://{Request.Host}/api/mcp/message?sessionId={sessionId}";
+            // Calculate the correct endpoint for POST messages
+            // Use X-Forwarded-Proto/Host if available (e.g. from Render load balancer)
+            var scheme = Request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? Request.Scheme;
+            var host = Request.Headers["X-Forwarded-Host"].FirstOrDefault() ?? Request.Host.ToString();
+            
+            // Fallback to simple construction if headers missing (local dev)
+            var endpointUri = $"{scheme}://{host}/api/mcp/message?sessionId={sessionId}";
+            
+            _logger.LogInformation($"Sending endpoint: {endpointUri}");
             await client.SendEventAsync("endpoint", endpointUri);
 
-            // Keep connection open
+            // Keep connection open with heartbeats
             while (!HttpContext.RequestAborted.IsCancellationRequested)
             {
-                await Task.Delay(1000); // Heartbeat/Keep-alive
+                await Task.Delay(15000); // 15s heartbeat
+                await client.SendEventAsync("ping", "keepalive");
             }
         }
         catch (Exception ex)
@@ -203,9 +214,16 @@ public class McpController : ControllerBase
 
         public async Task SendEventAsync(string eventType, string data)
         {
-            await _response.WriteAsync($"event: {eventType}\n");
-            await _response.WriteAsync($"data: {data}\n\n");
-            await _response.Body.FlushAsync();
+            try 
+            {
+                await _response.WriteAsync($"event: {eventType}\n");
+                await _response.WriteAsync($"data: {data}\n\n");
+                await _response.Body.FlushAsync();
+            }
+            catch (Exception)
+            {
+                // Ignore write errors as they likely mean client disconnected
+            }
         }
     }
 }
