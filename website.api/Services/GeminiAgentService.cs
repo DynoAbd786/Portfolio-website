@@ -116,6 +116,12 @@ public class GeminiAgentService
             {
                 var error = await response.Content.ReadAsStringAsync();
                 _logger.LogError("Gemini API Error: {Error}", error);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                {
+                    return "🚫 **Daily Limit Reached**: My AI brain has exhausted its free resources for today. Please try again later or ask Muhammad to upgrade his plan! 🧠💤";
+                }
+
                 return "I apologize, but I'm having trouble connecting to my brain right now. Please try again later.";
             }
 
