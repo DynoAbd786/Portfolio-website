@@ -1,0 +1,224 @@
+@using System.Text.Json
+@inject HttpClient Http
+@inject IJSRuntime JS
+
+<div class="terminal-window" @onclick="FocusInput">
+    <div class="terminal-header">
+        <div class="terminal-buttons">
+            <span class="terminal-button red"></span>
+            <span class="terminal-button yellow"></span>
+            <span class="terminal-button green"></span>
+        </div>
+        <div class="terminal-title">@GetTitle()</div>
+    </div>
+    <div class="terminal-body" id="terminal-body">
+        @foreach (var message in history)
+        {
+            <div class="terminal-line @(message.Role)">
+                @if (message.Role == "user")
+                {
+                    <span class="prompt">guest@mkkai:~$</span> <span class="cmd">@message.Content</span>
+                }
+                else
+                {
+                    <div class="ai-response">
+                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content))
+                    </div>
+                }
+            </div>
+        }
+
+        @if (isTyping)
+        {
+             <div class="terminal-line ai">
+                <span class="typing-indicator">Gemini is thinking...</span>
+            </div>
+        }
+
+        <div class="input-line">
+            <span class="prompt">guest@mkkai:~$</span>
+            <input @ref="inputElement" 
+                   type="text" 
+                   class="terminal-input" 
+                   @bind="currentInput" 
+                   @bind:event="oninput" 
+                   @onkeydown="HandleKeyDown" 
+                   autocomplete="off" 
+                   spellcheck="false" />
+        </div>
+    </div>
+</div>
+
+<style>
+    .terminal-window {
+        /* Inherits from existing CSS, adding interactive specific styles */
+        display: flex;
+        flex-direction: column;
+        cursor: text;
+        min-height: 400px;
+        max-height: 600px;
+    }
+    
+    .terminal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        font-family: 'Fira Code', 'Courier New', monospace;
+        text-align: left; /* Ensure text alignment is left for terminal feel */
+    }
+
+    .terminal-line {
+        margin-bottom: 1rem;
+        word-wrap: break-word;
+    }
+
+    .terminal-line.ai-response {
+        color: #e0e0e0;
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
+    /* Markdown Styles within Terminal */
+    ::deep .ai-response p { margin-bottom: 0.5em; }
+    ::deep .ai-response ul { list-style-type: disc; margin-left: 1.5em; }
+    ::deep .ai-response h1, ::deep .ai-response h2, ::deep .ai-response h3 { 
+        color: #4ade80; /* Green highlight */
+        margin-top: 1em; 
+        margin-bottom: 0.5em; 
+        font-size: 1.1em;
+    }
+    ::deep .ai-response a { color: #38bdf8; text-decoration: underline; }
+    ::deep .ai-response code { 
+        background-color: #333; 
+        padding: 0.2em 0.4em; 
+        border-radius: 3px; 
+        font-family: monospace; 
+    }
+
+    .input-line {
+        display: flex;
+        align-items: center;
+    }
+
+    .terminal-input {
+        background: transparent;
+        border: none;
+        color: inherit;
+        font-family: inherit;
+        font-size: inherit;
+        flex: 1;
+        margin-left: 10px;
+        outline: none;
+        width: 100%;
+    }
+
+    .typing-indicator {
+        color: #888;
+        font-style: italic;
+        animation: pulse 1.5s infinite;
+    }
+
+    @@keyframes pulse {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+    }
+</style>
+
+@code {
+    private ElementReference inputElement;
+    private string currentInput = "";
+    private bool isTyping = false;
+    private List<MessageItem> history = new();
+    private string title = "/bin/bash - Gemini Agent";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Initial Welcome Message
+            history.Add(new MessageItem { Role = "model", Content = "Welcome to **Mkkai.dev**! I'm your AI assistant. Ask me about my projects, skills, or how to contact any of us." });
+            StateHasChanged();
+            await FocusInput();
+        }
+        await ScrollToBottom();
+    }
+
+    private async Task FocusInput()
+    {
+        await inputElement.FocusAsync();
+    }
+
+    private async Task ScrollToBottom()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("messageUtils.scrollToBottom", "terminal-body");
+        }
+        catch { /* Ignore JS errors if script not loaded yet */ }
+    }
+
+    private string GetTitle() => isTyping ? "Gemini 3 Flash... (Processing)" : "/bin/bash";
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(currentInput) && !isTyping)
+        {
+            var userMsg = currentInput;
+            currentInput = "";
+            
+            // Add user message immediately
+            history.Add(new MessageItem { Role = "user", Content = userMsg });
+            isTyping = true;
+            StateHasChanged();
+            await ScrollToBottom();
+
+            try
+            {
+                // Prepare request payload
+                var chatHistory = history
+                    .Where(x => x.Role != "error") // Filter out UI errors
+                    .Select(x => new { role = x.Role, content = x.Content })
+                    .ToList();
+
+                var response = await Http.PostAsJsonAsync("api/chat", new { message = userMsg, history = chatHistory });
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
+                    history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "No response received." });
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    history.Add(new MessageItem { Role = "model", Content = $"**Error:** Connection failed. ({response.StatusCode})" });
+                    Console.Error.WriteLine($"Chat Error: {response.StatusCode} {error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                history.Add(new MessageItem { Role = "model", Content = "**Error:** Failed to reach the server. Is the API running?" });
+                Console.Error.WriteLine(ex);
+            }
+            finally
+            {
+                isTyping = false;
+                StateHasChanged();
+                await ScrollToBottom();
+                await FocusInput();
+            }
+        }
+    }
+
+    public class MessageItem
+    {
+        public string Role { get; set; } = "user";
+        public string Content { get; set; } = "";
+    }
+
+    public class ChatResponseModel
+    {
+        public string Response { get; set; } = "";
+    }
+}

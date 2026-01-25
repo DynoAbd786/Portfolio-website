@@ -24,6 +24,8 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
+builder.Services.AddHttpClient<GeminiAgentService>();
+builder.Services.AddScoped<GeminiAgentService>();
 
 // Configure JWT Bearer authentication for OAuth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

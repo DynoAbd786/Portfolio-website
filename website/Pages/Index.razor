@@ -1,25 +1,14 @@
 
 @page "/"
 @using website.Data
+@using website.Shared
 @inject ProjectService ProjectSvc
 
 <PageTitle>Muhammad Kashif-Khan - Portfolio</PageTitle>
 
 <div class="hero-container" id="home">
     <div class="hero-content">
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="terminal-buttons">
-                    <span class="terminal-button red"></span>
-                    <span class="terminal-button yellow"></span>
-                    <span class="terminal-button green"></span>
-                </div>
-                <div class="terminal-title">/bin/bash</div>
-            </div>
-            <div class="terminal-body">
-                <span class="prompt">$</span> <span class="typing-animation">@displayedText</span><span class="cursor"></span>
-            </div>
-        </div>
+        <AiTerminal />
         <div class="hero-text">
              <h1>Muhammad Kashif-Khan</h1>
              <p class="subtitle">4th Year MEng/BSc CS & AI Student | AI/ML Engineer</p>
