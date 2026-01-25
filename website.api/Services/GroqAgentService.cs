@@ -30,7 +30,7 @@ public class GroqAgentService
         _logger = logger;
     }
 
-    public async Task<string> ChatAsync(string userMessage, List<MessageHistoryItem> history, string model = "llama3-70b-8192")
+    public async Task<string> ChatAsync(string userMessage, List<MessageHistoryItem> history, string model = "llama-3.3-70b-versatile")
     {
         if (string.IsNullOrEmpty(_apiKey))
         {
@@ -131,14 +131,19 @@ public class GroqAgentService
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Groq API Error: {Error}", error);
+                _logger.LogError("Groq API Error: {StatusCode} - {Error}", response.StatusCode, error);
                 
                 if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
                 {
                     return "🚫 **Groq Rate Limit Reached**: Please switch back to Gemini or try another model!";
                 }
                 
-                return $"I encountered an error with the Groq brain ({response.StatusCode}). Please try again.";
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                     return $"⚠️ **Model Not Found**: The model `{model}` might not be available or the API key is invalid. Please check your settings.";
+                }
+
+                return $"I encountered an error with the Groq brain ({response.StatusCode}). Check logs for details.";
             }
 
             var resultModel = await response.Content.ReadFromJsonAsync<OpenAiChatResponse>();

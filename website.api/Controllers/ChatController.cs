@@ -43,7 +43,7 @@ public class ChatController : ControllerBase
             // Route based on provider
             if (request.Provider?.ToLower() == "groq")
             {
-                var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama3-70b-8192";
+                var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama-3.3-70b-versatile";
                 response = await _groqService.ChatAsync(request.Message, history, model);
             }
             else
