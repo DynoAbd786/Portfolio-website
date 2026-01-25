@@ -2,127 +2,329 @@
 @inject HttpClient Http
 @inject IJSRuntime JS
 
-<div class="terminal-window" @onclick="FocusInput">
-    <div class="terminal-header">
-        <div class="terminal-buttons">
-            <span class="terminal-button red"></span>
-            <span class="terminal-button yellow"></span>
-            <span class="terminal-button green"></span>
+<div class="chat-widget">
+    <div class="chat-header">
+        <div class="header-info">
+            <div class="avatar-circle">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="header-text">
+                <h3>AI Assistant</h3>
+                <span class="status-indicator">
+                    <span class="dot"></span> Online
+                </span>
+            </div>
         </div>
-        <div class="terminal-title">@GetTitle()</div>
     </div>
-    <div class="terminal-body" id="terminal-body">
+
+    <div class="chat-body" id="chat-body">
         @foreach (var message in history)
         {
-            <div class="terminal-line @(message.Role)">
-                @if (message.Role == "user")
+            <div class="message-wrapper @(message.Role == "user" ? "user" : "ai")">
+                @if (message.Role != "user")
                 {
-                    <span class="prompt">guest@mkkai:~$</span> <span class="cmd">@message.Content</span>
-                }
-                else
-                {
-                    <div class="ai-response">
-                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content))
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
                     </div>
                 }
+                <div class="message-content">
+                    @if (message.Role == "user")
+                    {
+                        @message.Content
+                    }
+                    else
+                    {
+                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content))
+                    }
+                </div>
             </div>
         }
 
         @if (isTyping)
         {
-             <div class="terminal-line ai">
-                <span class="typing-indicator">Gemini is thinking...</span>
+            <div class="message-wrapper ai">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content typing">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
             </div>
         }
+    </div>
 
-        <div class="input-line">
-            <span class="prompt">guest@mkkai:~$</span>
+    <div class="chat-footer">
+        @if (history.Count < 2)
+        {
+            <div class="suggestion-chips">
+                <button @onclick='() => SendSuggestion("What are your skills?")'>What are your skills?</button>
+                <button @onclick='() => SendSuggestion("Show me Python projects")'>Show me Python projects</button>
+                <button @onclick='() => SendSuggestion("How can I contact Muhammad?")'>Contact info</button>
+            </div>
+        }
+        
+        <div class="input-area">
             <input @ref="inputElement" 
                    type="text" 
-                   class="terminal-input" 
+                   placeholder="Ask me anything about the portfolio..." 
                    @bind="currentInput" 
                    @bind:event="oninput" 
-                   @onkeydown="HandleKeyDown" 
-                   autocomplete="off" 
-                   spellcheck="false" />
+                   @onkeydown="HandleKeyDown" />
+            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping)">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 </div>
 
 <style>
-    .terminal-window {
-        /* Inherits from existing CSS, adding interactive specific styles */
+    /* Modern Chat Widget Styles */
+    .chat-widget {
         display: flex;
         flex-direction: column;
-        cursor: text;
-        min-height: 400px;
-        max-height: 600px;
-    }
-    
-    .terminal-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-        font-family: 'Fira Code', 'Courier New', monospace;
-        text-align: left; /* Ensure text alignment is left for terminal feel */
-    }
-
-    .terminal-line {
-        margin-bottom: 1rem;
-        word-wrap: break-word;
+        height: 600px;
+        max-height: 80vh;
+        width: 100%;
+        max-width: 100%;
+        background: rgba(30, 41, 59, 0.7); /* Slate-800 with opacity */
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
-    .terminal-line.ai-response {
-        color: #e0e0e0;
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.5;
+    /* Header */
+    .chat-header {
+        padding: 1rem;
+        background: rgba(15, 23, 42, 0.8); /* Slate-900 */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* Markdown Styles within Terminal */
-    ::deep .ai-response p { margin-bottom: 0.5em; }
-    ::deep .ai-response ul { list-style-type: disc; margin-left: 1.5em; }
-    ::deep .ai-response h1, ::deep .ai-response h2, ::deep .ai-response h3 { 
-        color: #4ade80; /* Green highlight */
-        margin-top: 1em; 
-        margin-bottom: 0.5em; 
-        font-size: 1.1em;
-    }
-    ::deep .ai-response a { color: #38bdf8; text-decoration: underline; }
-    ::deep .ai-response code { 
-        background-color: #333; 
-        padding: 0.2em 0.4em; 
-        border-radius: 3px; 
-        font-family: monospace; 
-    }
-
-    .input-line {
+    .header-info {
         display: flex;
         align-items: center;
+        gap: 12px;
     }
 
-    .terminal-input {
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #06b6d4, #3b82f6); /* Cyan to Blue */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .header-text h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #f8fafc;
+    }
+
+    .status-indicator {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+        background-color: #22c55e;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #22c55e;
+    }
+
+    /* Body */
+    .chat-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        scroll-behavior: smooth;
+    }
+
+    .message-wrapper {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        max-width: 85%;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .message-wrapper.user {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #06b6d4;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+    }
+
+    .message-content {
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #e2e8f0;
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .message-wrapper.user .message-content {
+        background: linear-gradient(135deg, #06b6d4, #2563eb);
+        color: white;
+        border: none;
+        box-shadow: 0 2px 10px rgba(6, 182, 212, 0.2);
+    }
+
+    /* Markdown Styles in Chat */
+    ::deep .message-content p { margin-bottom: 0.5em; }
+    ::deep .message-content p:last-child { margin-bottom: 0; }
+    ::deep .message-content ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+    ::deep .message-content a { color: #38bdf8; text-decoration: underline; }
+    ::deep .message-content code { 
+        background: rgba(0, 0, 0, 0.3); 
+        padding: 2px 6px; 
+        border-radius: 4px; 
+        font-family: 'Fira Code', monospace;
+        font-size: 0.85em;
+    }
+
+    /* Typing Indicator */
+    .message-content.typing {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 16px;
+    }
+
+    .typing-dot {
+        width: 6px;
+        height: 6px;
+        background: #94a3b8;
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+    /* Footer */
+    .chat-footer {
+        padding: 1rem;
+        background: rgba(15, 23, 42, 0.6);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .suggestion-chips {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 12px;
+        scrollbar-width: none; /* Hide scrollbar */
+    }
+
+    .suggestion-chips button {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #cbd5e1;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s;
+    }
+
+    .suggestion-chips button:hover {
+        background: rgba(6, 182, 212, 0.1);
+        border-color: #06b6d4;
+        color: #06b6d4;
+    }
+
+    .input-area {
+        display: flex;
+        gap: 8px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 6px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .input-area:focus-within {
+        border-color: #06b6d4;
+        box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+    }
+
+    input {
+        flex: 1;
         background: transparent;
         border: none;
-        color: inherit;
-        font-family: inherit;
-        font-size: inherit;
-        flex: 1;
-        margin-left: 10px;
+        padding: 8px 16px;
+        color: white;
+        font-size: 0.95rem;
         outline: none;
-        width: 100%;
     }
 
-    .typing-indicator {
-        color: #888;
-        font-style: italic;
-        animation: pulse 1.5s infinite;
+    input::placeholder {
+        color: #64748b;
     }
 
-    @@keyframes pulse {
-        0% { opacity: 0.5; }
-        50% { opacity: 1; }
-        100% { opacity: 0.5; }
+    .send-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #06b6d4, #2563eb);
+        border: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .send-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+    }
+
+    .send-btn:disabled {
+        background: #334155;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes typingBounce {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
     }
 </style>
 
@@ -131,83 +333,83 @@
     private string currentInput = "";
     private bool isTyping = false;
     private List<MessageItem> history = new();
-    private string title = "/bin/bash - Gemini Agent";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            // Initial Welcome Message
-            history.Add(new MessageItem { Role = "model", Content = "Welcome to **Mkkai.dev**! I'm your AI assistant. Ask me about my projects, skills, or how to contact any of us." });
+            // Modern Welcome Message
+            history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **Mkkai's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
             StateHasChanged();
-            await FocusInput();
         }
         await ScrollToBottom();
-    }
-
-    private async Task FocusInput()
-    {
-        await inputElement.FocusAsync();
     }
 
     private async Task ScrollToBottom()
     {
         try
         {
-            await JS.InvokeVoidAsync("messageUtils.scrollToBottom", "terminal-body");
+            await JS.InvokeVoidAsync("messageUtils.scrollToBottom", "chat-body");
         }
-        catch { /* Ignore JS errors if script not loaded yet */ }
+        catch { /* Ignore JS errors */ }
     }
 
-    private string GetTitle() => isTyping ? "Gemini 3 Flash... (Processing)" : "/bin/bash";
+    private async Task SendSuggestion(string text)
+    {
+        currentInput = text;
+        await SendMessage();
+    }
 
     private async Task HandleKeyDown(KeyboardEventArgs e)
     {
-        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(currentInput) && !isTyping)
+        if (e.Key == "Enter")
         {
-            var userMsg = currentInput;
-            currentInput = "";
+            await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(currentInput) || isTyping) return;
+
+        var userMsg = currentInput;
+        currentInput = "";
+        
+        history.Add(new MessageItem { Role = "user", Content = userMsg });
+        isTyping = true;
+        StateHasChanged();
+        await ScrollToBottom();
+
+        try
+        {
+            var chatHistory = history
+                .Where(x => x.Role != "error")
+                .Select(x => new { role = x.Role, content = x.Content })
+                .ToList();
+
+            var response = await Http.PostAsJsonAsync("api/chat", new { message = userMsg, history = chatHistory });
             
-            // Add user message immediately
-            history.Add(new MessageItem { Role = "user", Content = userMsg });
-            isTyping = true;
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
+                history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "I didn't get a response." });
+            }
+            else
+            {
+                history.Add(new MessageItem { Role = "model", Content = "😔 I'm having trouble connecting to the server. Please try again later." });
+            }
+        }
+        catch (Exception ex)
+        {
+            history.Add(new MessageItem { Role = "model", Content = "⚠️ Connection error. Is the backend running?" });
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            isTyping = false;
             StateHasChanged();
             await ScrollToBottom();
-
-            try
-            {
-                // Prepare request payload
-                var chatHistory = history
-                    .Where(x => x.Role != "error") // Filter out UI errors
-                    .Select(x => new { role = x.Role, content = x.Content })
-                    .ToList();
-
-                var response = await Http.PostAsJsonAsync("api/chat", new { message = userMsg, history = chatHistory });
-                
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
-                    history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "No response received." });
-                }
-                else
-                {
-                    var error = await response.Content.ReadAsStringAsync();
-                    history.Add(new MessageItem { Role = "model", Content = $"**Error:** Connection failed. ({response.StatusCode})" });
-                    Console.Error.WriteLine($"Chat Error: {response.StatusCode} {error}");
-                }
-            }
-            catch (Exception ex)
-            {
-                history.Add(new MessageItem { Role = "model", Content = "**Error:** Failed to reach the server. Is the API running?" });
-                Console.Error.WriteLine(ex);
-            }
-            finally
-            {
-                isTyping = false;
-                StateHasChanged();
-                await ScrollToBottom();
-                await FocusInput();
-            }
+            await inputElement.FocusAsync();
         }
     }
 
