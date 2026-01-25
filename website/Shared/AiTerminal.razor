@@ -6,13 +6,35 @@
     <div class="chat-header">
         <div class="header-info">
             <div class="avatar-circle">
-                <i class="fas fa-robot"></i>
+                @if (selectedProvider == "groq")
+                {
+                    <i class="fas fa-bolt"></i>
+                }
+                else
+                {
+                    <i class="fas fa-robot"></i>
+                }
             </div>
             <div class="header-text">
                 <h3>AI Assistant</h3>
-                <span class="status-indicator">
-                    <span class="dot"></span> Online
-                </span>
+                <div class="model-selector">
+                    <select @bind="selectedProvider" class="provider-select">
+                        <option value="gemini">Gemini</option>
+                        <option value="groq">Groq</option>
+                    </select>
+                    <span class="divider">/</span>
+                    <select @bind="selectedModel" class="model-select">
+                        @if (selectedProvider == "gemini")
+                        {
+                            <option value="gemini-3-flash">Gemini 3 Flash</option>
+                        }
+                        else
+                        {
+                            <option value="llama3-70b-8192">Llama 3 70B</option>
+                            <option value="mixtral-8x7b-32768">Mixtral 8x7B</option>
+                        }
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -24,7 +46,14 @@
                 @if (message.Role != "user")
                 {
                     <div class="message-avatar">
-                        <i class="fas fa-robot"></i>
+                        @if (selectedProvider == "groq")
+                        {
+                            <i class="fas fa-bolt"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-robot"></i>
+                        }
                     </div>
                 }
                 <div class="message-content">
@@ -44,7 +73,14 @@
         {
             <div class="message-wrapper ai">
                 <div class="message-avatar">
-                    <i class="fas fa-robot"></i>
+                    @if (selectedProvider == "groq")
+                    {
+                        <i class="fas fa-bolt"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-robot"></i>
+                    }
                 </div>
                 <div class="message-content typing">
                     <div class="typing-dot"></div>
@@ -124,26 +160,43 @@
     }
 
     .header-text h3 {
-        margin: 0;
+        margin: 0 0 4px 0;
         font-size: 1rem;
         font-weight: 600;
         color: #f8fafc;
     }
 
-    .status-indicator {
-        font-size: 0.75rem;
-        color: #94a3b8;
+    /* Model Selector Styles */
+    .model-selector {
         display: flex;
         align-items: center;
         gap: 4px;
+        font-size: 0.75rem;
+        color: #94a3b8;
     }
 
-    .dot {
-        width: 6px;
-        height: 6px;
-        background-color: #22c55e;
-        border-radius: 50%;
-        box-shadow: 0 0 8px #22c55e;
+    .provider-select, .model-select {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        font-size: 0.75rem;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+        font-family: inherit;
+    }
+
+    .provider-select:hover, .model-select:hover {
+        color: #cbd5e1;
+    }
+
+    .provider-select option, .model-select option {
+        background: #1e293b;
+        color: #f8fafc;
+    }
+
+    .divider {
+        color: #64748b;
     }
 
     /* Body */
@@ -333,6 +386,10 @@
     private string currentInput = "";
     private bool isTyping = false;
     private List<MessageItem> history = new();
+    
+    // Model Selection State
+    private string selectedProvider = "gemini";
+    private string selectedModel = "gemini-3-flash";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -387,7 +444,15 @@
                 .Select(x => new { role = x.Role, content = x.Content })
                 .ToList();
 
-            var response = await Http.PostAsJsonAsync("api/chat", new { message = userMsg, history = chatHistory });
+            var payload = new 
+            { 
+                message = userMsg, 
+                history = chatHistory,
+                provider = selectedProvider,
+                model = selectedModel
+            };
+
+            var response = await Http.PostAsJsonAsync("api/chat", payload);
             
             if (response.IsSuccessStatusCode)
             {

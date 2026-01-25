@@ -119,7 +119,7 @@ public class GeminiAgentService
 
                 if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
                 {
-                    return "🚫 **Daily Limit Reached**: My AI brain has exhausted its free resources for today. Please try again later or ask Muhammad to upgrade his plan! 🧠💤";
+                    return "🚫 **Daily Limit Reached**: My AI brain has exhausted its free resources for today. Please switch to the **Groq** provider in the settings above to continue chatting! ⚡";
                 }
 
                 return "I apologize, but I'm having trouble connecting to my brain right now. Please try again later.";

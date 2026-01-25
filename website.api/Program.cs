@@ -26,6 +26,8 @@ builder.Services.AddScoped<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
 builder.Services.AddHttpClient<GeminiAgentService>();
 builder.Services.AddScoped<GeminiAgentService>();
+builder.Services.AddHttpClient<GroqAgentService>();
+builder.Services.AddScoped<GroqAgentService>();
 
 // Configure JWT Bearer authentication for OAuth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -8,11 +8,16 @@ namespace website.api.Controllers;
 public class ChatController : ControllerBase
 {
     private readonly GeminiAgentService _geminiService;
+    private readonly GroqAgentService _groqService;
     private readonly ILogger<ChatController> _logger;
 
-    public ChatController(GeminiAgentService geminiService, ILogger<ChatController> logger)
+    public ChatController(
+        GeminiAgentService geminiService, 
+        GroqAgentService groqService,
+        ILogger<ChatController> logger)
     {
         _geminiService = geminiService;
+        _groqService = groqService;
         _logger = logger;
     }
 
@@ -33,7 +38,19 @@ public class ChatController : ControllerBase
                 history = history.TakeLast(20).ToList();
             }
 
-            var response = await _geminiService.ChatAsync(request.Message, history);
+            string response;
+            
+            // Route based on provider
+            if (request.Provider?.ToLower() == "groq")
+            {
+                var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama3-70b-8192";
+                response = await _groqService.ChatAsync(request.Message, history, model);
+            }
+            else
+            {
+                // Default to Gemini
+                response = await _geminiService.ChatAsync(request.Message, history);
+            }
             
             return Ok(new ChatResponse { Response = response });
         }
@@ -49,6 +66,8 @@ public class ChatRequest
 {
     public string Message { get; set; } = "";
     public List<MessageHistoryItem>? History { get; set; }
+    public string? Provider { get; set; } = "gemini"; // "gemini" or "groq"
+    public string? Model { get; set; } = "gemini-3-flash";
 }
 
 public class ChatResponse
