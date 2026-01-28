@@ -1,4 +1,5 @@
 @using System.Text.Json
+@using Markdig
 @inject HttpClient Http
 @inject IJSRuntime JS
 
@@ -184,7 +185,7 @@
                     }
                     else
                     {
-                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content))
+                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content, pipeline))
                     }
                 </div>
             </div>
@@ -379,17 +380,68 @@
     }
 
     /* Markdown Styles in Chat */
-    ::deep .message-content p { margin-bottom: 0.5em; }
+    ::deep .message-content p { margin-bottom: 0.8em; }
     ::deep .message-content p:last-child { margin-bottom: 0; }
-    ::deep .message-content ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
-    ::deep .message-content a { color: #38bdf8; text-decoration: underline; }
-    ::deep .message-content code { 
-        background: rgba(0, 0, 0, 0.3); 
-        padding: 2px 6px; 
-        border-radius: 4px; 
-        font-family: 'Fira Code', monospace;
-        font-size: 0.85em;
+    ::deep .message-content ul, ::deep .message-content ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ::deep .message-content li { margin-bottom: 0.4rem; }
+    ::deep .message-content a { color: #38bdf8; text-decoration: underline; font-weight: 500; }
+    
+    /* Tables */
+    ::deep .message-content table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin: 1rem 0; 
+        font-size: 0.85rem;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        overflow: hidden;
     }
+    ::deep .message-content th, ::deep .message-content td { 
+        padding: 10px 12px; 
+        text-align: left; 
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    ::deep .message-content th { 
+        background: rgba(6, 182, 212, 0.2); 
+        color: #38bdf8; 
+        font-weight: 600; 
+    }
+    ::deep .message-content tr:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
+
+    /* Code Blocks */
+    ::deep .message-content pre {
+        background: #0d1117;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        overflow-x: auto;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    ::deep .message-content code { 
+        font-family: 'Fira Code', 'Roboto Mono', monospace;
+        font-size: 0.85em;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2px 4px;
+        border-radius: 4px;
+        color: #e2e8f0;
+    }
+    ::deep .message-content pre code { 
+        background: transparent; 
+        padding: 0; 
+        display: block; 
+    }
+
+    /* Blockquotes */
+    ::deep .message-content blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1rem 0;
+        color: #94a3b8;
+        font-style: italic;
+    }
+
+    /* Math (KaTeX) */
+    ::deep .katex-display { margin: 1rem 0; overflow-x: auto; overflow-y: hidden; }
 
     /* Typing Indicator */
     .message-content.typing {
@@ -667,6 +719,10 @@
     private bool isTyping = false;
     private List<MessageItem> history = new();
     
+    private static Markdig.MarkdownPipeline pipeline = new Markdig.MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
+        .Build();
+    
     // Model Selection State
     private string selectedProvider = "gemini";
     private string selectedModel = "gemini-3-flash";
@@ -677,14 +733,25 @@
     {
         if (firstRender)
         {
-            // Try to restore session
+            // Try to restore session and history
             try 
             {
+                var savedProvider = await JS.InvokeAsync<string>("localStorage.getItem", "aiProvider");
+                if (!string.IsNullOrEmpty(savedProvider)) selectedProvider = savedProvider;
+
+                var savedModel = await JS.InvokeAsync<string>("localStorage.getItem", "aiModel");
+                if (!string.IsNullOrEmpty(savedModel)) selectedModel = savedModel;
+
+                var savedHistory = await JS.InvokeAsync<string>("localStorage.getItem", "aiChatHistory");
+                if (!string.IsNullOrEmpty(savedHistory))
+                {
+                    history = JsonSerializer.Deserialize<List<MessageItem>>(savedHistory) ?? new();
+                }
+
                 var savedId = await JS.InvokeAsync<string>("localStorage.getItem", "ollamaAccessRequestId");
                 if (!string.IsNullOrEmpty(savedId))
                 {
                     currentRequestId = savedId;
-                    // Check status immediately to see if still valid
                     await CheckStatus(true);
                 }
             }
@@ -693,17 +760,32 @@
             // Modern Welcome Message
             if (!history.Any())
             {
-                history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **Mkkai's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
+                history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **MKKAI's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
+                await SaveStateAsync();
             }
             StateHasChanged();
         }
         await ScrollToBottom();
+        await JS.InvokeVoidAsync("messageUtils.highlightAll");
+        await JS.InvokeVoidAsync("messageUtils.renderMath", "chat-body");
     }
 
-    private void StartNewChat()
+    private async Task SaveStateAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("localStorage.setItem", "aiChatHistory", JsonSerializer.Serialize(history));
+            await JS.InvokeVoidAsync("localStorage.setItem", "aiProvider", selectedProvider);
+            await JS.InvokeVoidAsync("localStorage.setItem", "aiModel", selectedModel);
+        }
+        catch (Exception ex) { Console.WriteLine("Save state error: " + ex.Message); }
+    }
+
+    private async Task StartNewChat()
     {
         history.Clear();
         history.Add(new MessageItem { Role = "model", Content = "New chat started! How can I help you explore Muhammad's portfolio today?" });
+        await SaveStateAsync();
         StateHasChanged();
     }
 
@@ -790,6 +872,7 @@
             showAccessForm = false;
             selectedModel = "gemini-3-flash";
         }
+        await SaveStateAsync();
         StateHasChanged();
     }
 
@@ -923,6 +1006,7 @@
         currentInput = "";
         
         history.Add(new MessageItem { Role = "user", Content = userMsg });
+        await SaveStateAsync();
         isTyping = true;
         StateHasChanged();
         await ScrollToBottom();
@@ -956,6 +1040,7 @@
             {
                 var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
                 history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "I didn't get a response." });
+                await SaveStateAsync();
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && selectedProvider == "ollama")
             {

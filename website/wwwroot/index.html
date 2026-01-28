@@ -7,14 +7,17 @@
     <title>Muhammad Kashif Khan - Portfolio | Software Engineer & Computer Science Student</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Portfolio of Muhammad Kashif Khan - Computer Science student at University of Leeds, showcasing projects in web development, machine learning, distributed systems, and software engineering." />
-    <meta name="keywords" content="Muhammad Kashif Khan, Portfolio, Software Engineer, Computer Science, University of Leeds, Web Development, Machine Learning, Blazor, ASP.NET Core" />
+    <meta name="description"
+        content="Portfolio of Muhammad Kashif Khan - Computer Science student at University of Leeds, showcasing projects in web development, machine learning, distributed systems, and software engineering." />
+    <meta name="keywords"
+        content="Muhammad Kashif Khan, Portfolio, Software Engineer, Computer Science, University of Leeds, Web Development, Machine Learning, Blazor, ASP.NET Core" />
     <meta name="author" content="Muhammad Kashif Khan" />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Muhammad Kashif Khan - Portfolio" />
-    <meta property="og:description" content="Computer Science student at University of Leeds showcasing projects in web development, machine learning, and software engineering." />
+    <meta property="og:description"
+        content="Computer Science student at University of Leeds showcasing projects in web development, machine learning, and software engineering." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://mkkai.dev" />
     <meta property="og:site_name" content="Muhammad Kashif Khan Portfolio" />
@@ -22,7 +25,8 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Muhammad Kashif Khan - Portfolio" />
-    <meta name="twitter:description" content="Computer Science student showcasing projects in web development, machine learning, and software engineering." />
+    <meta name="twitter:description"
+        content="Computer Science student showcasing projects in web development, machine learning, and software engineering." />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mkkai.dev" />
@@ -44,19 +48,32 @@
     </script>
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Source+Code+Pro:wght@400;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Source+Code+Pro:wght@400;700;900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
         <!-- Fallback content for crawlers and non-JS browsers -->
         <noscript>
-            <div style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">
+            <div
+                style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">
                 <h1>Muhammad Kashif Khan - Portfolio</h1>
-                <p>Computer Science student at University of Leeds specializing in web development, machine learning, distributed systems, and software engineering.</p>
+                <p>Computer Science student at University of Leeds specializing in web development, machine learning,
+                    distributed systems, and software engineering.</p>
 
                 <h2>Projects</h2>
                 <h3>Academic Projects</h3>
@@ -80,42 +97,55 @@
                     <li>Portfolio Website - Blazor WebAssembly & ASP.NET Core</li>
                 </ul>
 
-                <p><strong>Technologies:</strong> C#, ASP.NET Core, Blazor, JavaScript, Python, Machine Learning, Distributed Systems, Docker, Git</p>
+                <p><strong>Technologies:</strong> C#, ASP.NET Core, Blazor, JavaScript, Python, Machine Learning,
+                    Distributed Systems, Docker, Git</p>
 
-                <p>This site requires JavaScript to function properly. Please enable JavaScript or use a modern browser to view the full interactive portfolio.</p>
+                <p>This site requires JavaScript to function properly. Please enable JavaScript or use a modern browser
+                    to view the full interactive portfolio.</p>
             </div>
         </noscript>
 
         <!-- Cool loading animation -->
-        <div style="position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background-color:#111827;">
+        <div
+            style="position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background-color:#111827;">
             <div class="loader"></div>
         </div>
     </div>
 
-    <div id="blazor-error-ui" style="background: rgba(0,0,0,0.9); color: white; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; padding: 2rem; display: none; font-family: monospace;">
-        <div style="max-width: 800px; margin: 0 auto; background: #1a1a1a; border: 2px solid #ef4444; border-radius: 8px; padding: 2rem;">
+    <div id="blazor-error-ui"
+        style="background: rgba(0,0,0,0.9); color: white; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 10000; padding: 2rem; display: none; font-family: monospace;">
+        <div
+            style="max-width: 800px; margin: 0 auto; background: #1a1a1a; border: 2px solid #ef4444; border-radius: 8px; padding: 2rem;">
             <div style="display: flex; align-items: center; margin-bottom: 1rem;">
                 <span style="color: #ef4444; font-size: 2rem; margin-right: 1rem;">⚠️</span>
                 <h2 style="color: #ef4444; margin: 0;">Unhandled Blazor Error</h2>
             </div>
-            <div id="blazor-error-details" style="background: #0a0a0a; border: 1px solid #333; border-radius: 4px; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow: auto; max-height: 400px;">
+            <div id="blazor-error-details"
+                style="background: #0a0a0a; border: 1px solid #333; border-radius: 4px; padding: 1rem; margin: 1rem 0; white-space: pre-wrap; overflow: auto; max-height: 400px;">
                 <div style="color: #888;">Loading error details...</div>
             </div>
             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                <a href="" class="reload" style="background: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-weight: bold;">🔄 Reload</a>
-                <a class="dismiss" style="background: #333; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; cursor: pointer;">🗙 Dismiss</a>
-                <button onclick="navigator.clipboard.writeText(document.getElementById('blazor-error-details').textContent)" style="background: #0891b2; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">📋 Copy Error</button>
+                <a href="" class="reload"
+                    style="background: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; font-weight: bold;">🔄
+                    Reload</a>
+                <a class="dismiss"
+                    style="background: #333; color: white; padding: 0.5rem 1rem; border-radius: 4px; text-decoration: none; cursor: pointer;">🗙
+                    Dismiss</a>
+                <button
+                    onclick="navigator.clipboard.writeText(document.getElementById('blazor-error-details').textContent)"
+                    style="background: #0891b2; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">📋
+                    Copy Error</button>
             </div>
         </div>
     </div>
     <script>
         // Global error handler to capture Blazor exceptions
-        window.addEventListener('error', function(e) {
+        window.addEventListener('error', function (e) {
             console.error('[Global Error Handler]', e.error || e.message);
             updateErrorDisplay(e.error || new Error(e.message), 'Global Error');
         });
 
-        window.addEventListener('unhandledrejection', function(e) {
+        window.addEventListener('unhandledrejection', function (e) {
             console.error('[Unhandled Promise Rejection]', e.reason);
             updateErrorDisplay(e.reason, 'Promise Rejection');
         });
@@ -144,10 +174,10 @@ URL: ${window.location.href}
 
         // Blazor specific error handling
         window.Blazor = window.Blazor || {};
-        window.Blazor.start = window.Blazor.start || function() {};
+        window.Blazor.start = window.Blazor.start || function () { };
 
         const originalStart = window.Blazor.start;
-        window.Blazor.start = function() {
+        window.Blazor.start = function () {
             console.log('[Blazor] Starting application...');
             try {
                 return originalStart.apply(this, arguments);
@@ -163,7 +193,7 @@ URL: ${window.location.href}
 
     <!-- Enhanced project card hover effects -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             console.log('[ProjectCards] Initializing enhanced hover effects...');
 
             // Add smooth hover effects to project cards
@@ -172,13 +202,13 @@ URL: ${window.location.href}
             projectCards.forEach(card => {
                 const projectCard = card.querySelector('.project-card');
 
-                card.addEventListener('mouseenter', function() {
+                card.addEventListener('mouseenter', function () {
                     // Smooth lift effect with glow
                     projectCard.style.transform = 'translateY(-8px) scale(1.02)';
                     projectCard.style.boxShadow = '0 20px 40px rgba(6, 182, 212, 0.3), 0 0 20px rgba(6, 182, 212, 0.1)';
                 });
 
-                card.addEventListener('mouseleave', function() {
+                card.addEventListener('mouseleave', function () {
                     // Return to normal
                     projectCard.style.transform = 'translateY(0) scale(1)';
                     projectCard.style.boxShadow = '';
@@ -218,8 +248,33 @@ URL: ${window.location.href}
                 if (element) {
                     element.scrollTop = element.scrollHeight;
                 }
+            },
+            highlightAll: function () {
+                if (window.hljs) {
+                    document.querySelectorAll('pre code').forEach((el) => {
+                        if (!el.dataset.highlighted) {
+                            window.hljs.highlightElement(el);
+                            el.dataset.highlighted = 'true';
+                        }
+                    });
+                }
+            },
+            renderMath: function (elementId) {
+                var element = document.getElementById(elementId);
+                if (element && window.renderMathInElement) {
+                    window.renderMathInElement(element, {
+                        delimiters: [
+                            { left: '$$', right: '$$', display: true },
+                            { left: '$', right: '$', display: false },
+                            { left: '\\(', right: '\\)', display: false },
+                            { left: '\\[', right: '\\]', display: true }
+                        ],
+                        throwOnError: false
+                    });
+                }
             }
         };
     </script>
 </body>
+
 </html>
