@@ -324,7 +324,10 @@ appsettings.Development.json
 appsettings.local.json
 
 # Claude Code specific files
-# .claude/ - now tracked for portfolio consistency
-# Security
-mcp-bridge.service
+.claude/
+
+# MCP Bridge (Keep local as requested)
 mcp_bridge.py
+mcp-bridge.service
+local_agent.py
+.mcp_bridge_state.json
