@@ -104,7 +104,7 @@
                 <h3>Waiting for Approval...</h3>
                 <p>Muhammad has been notified. Please wait while he reviews your request.</p>
                 <p class="status-note"><i class="fas fa-sync fa-spin"></i> Checking status...</p>
-                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; statusTimer?.Dispose(); StateHasChanged(); }'>
+                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; StopPolling(); StateHasChanged(); }'>
                     Cancel & Return to Gemini
                 </button>
             </div>
@@ -927,6 +927,12 @@
         statusTimer = new System.Threading.Timer(async _ => await CheckStatus(false), null, 0, 3000);
     }
 
+    private void StopPolling()
+    {
+        statusTimer?.Dispose();
+        statusTimer = null;
+    }
+
     private async Task CheckStatus(bool silent = false)
     {
         if (string.IsNullOrEmpty(currentRequestId)) return;
@@ -941,8 +947,7 @@
                 {
                     await InvokeAsync(async () =>
                     {
-                        statusTimer?.Dispose();
-                        statusTimer = null;
+                        StopPolling();
                         isWaitingForApproval = false;
                         accessRequestSent = false;
                         showAccessForm = false; 
@@ -972,7 +977,7 @@
 
     public void Dispose()
     {
-        statusTimer?.Dispose();
+        StopPolling();
     }
 
     private async Task ScrollToBottom()
