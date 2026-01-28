@@ -14,6 +14,8 @@ public interface IMcpService
     bool IsBridgeConnected();
     Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message);
     void HandleChatResponse(string callbackId, string response, string model);
+    Task<List<string>> GetModelsAsync();
+    void HandleModelsResponse(string callbackId, List<string> models);
 }
 
 public class McpService : IMcpService
@@ -24,6 +26,7 @@ public class McpService : IMcpService
     // SSE State
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<string>> _pendingChatRequests = new();
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<List<string>>> _pendingModelsRequests = new();
 
     public McpService(IServiceScopeFactory scopeFactory, ILogger<McpService> logger)
     {
@@ -676,6 +679,54 @@ public class McpService : IMcpService
         else
         {
             _logger.LogWarning("Received chat response for unknown or expired callback ID: {CallbackId}", callbackId);
+        }
+    }
+
+    public async Task<List<string>> GetModelsAsync()
+    {
+        if (_connectedClients.IsEmpty)
+        {
+            return new List<string>();
+        }
+
+        var client = _connectedClients.Values.FirstOrDefault(c => c.IsBridge);
+        if (client == null) return new List<string>();
+
+        var callbackId = Guid.NewGuid().ToString();
+        var tcs = new TaskCompletionSource<List<string>>(TaskCreationOptions.RunContinuationsAsynchronously);
+        
+        // Timeout after 15 seconds for model listing
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+        cts.Token.Register(() => 
+        {
+            _pendingModelsRequests.TryRemove(callbackId, out _);
+            tcs.TrySetResult(new List<string>()); // Empty list on timeout
+        });
+
+        _pendingModelsRequests.TryAdd(callbackId, tcs);
+
+        try 
+        {
+            await client.SendEventAsync("models_request", JsonSerializer.Serialize(new { callback_id = callbackId }));
+            return await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            _pendingModelsRequests.TryRemove(callbackId, out _);
+            _logger.LogError(ex, "Failed to send models request to bridge");
+            return new List<string>();
+        }
+    }
+
+    public void HandleModelsResponse(string callbackId, List<string> models)
+    {
+        if (_pendingModelsRequests.TryRemove(callbackId, out var tcs))
+        {
+            tcs.TrySetResult(models);
+        }
+        else
+        {
+            _logger.LogWarning("Received models response for unknown or expired callback ID: {CallbackId}", callbackId);
         }
     }
 

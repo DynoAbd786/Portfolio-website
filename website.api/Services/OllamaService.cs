@@ -22,8 +22,21 @@ public class OllamaService
 
     public async Task<List<string>> GetModelsAsync()
     {
-        // TODO: Ideally fetch this via bridge too (using notify models list)
-        // For now relying on local or cached values
+        // 1. Check for Bridge Connection (Scenario A: Remote Site -> Local PC)
+        if (_mcpService.IsBridgeConnected())
+        {
+            _logger.LogInformation("Routing models request via SSE Bridge to registered client.");
+            try 
+            {
+                return await _mcpService.GetModelsAsync();
+            }
+            catch (Exception bridgeEx)
+            {
+                 _logger.LogWarning("Bridge model discovery failed, falling back to local: {Message}", bridgeEx.Message);
+            }
+        }
+
+        // 2. Fallback to Local/Same-Network Ollama (Scenario B: Local Dev / Same Server)
         try
         {
             var response = await _httpClient.GetAsync("/api/tags");
@@ -34,7 +47,7 @@ public class OllamaService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to fetch Ollama models");
+            _logger.LogError(ex, "Failed to fetch Ollama models from local API");
             return new List<string>();
         }
     }

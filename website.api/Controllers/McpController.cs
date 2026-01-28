@@ -251,7 +251,7 @@ public class McpController : ControllerBase
 
             if (request != null)
             {
-                // SPECIAL HANDLER: Bridge Responses
+                // SPECIAL HANDLER: Bridge Responses (Chat)
                 if (request.Method == "notifications/chat_response" && request.Params != null)
                 {
                     string? callbackId = null;
@@ -279,6 +279,32 @@ public class McpController : ControllerBase
                     if (!string.IsNullOrEmpty(callbackId) && content != null) 
                     {
                          _mcpService.HandleChatResponse(callbackId, content, model);
+                         return Accepted();
+                    }
+                }
+
+                // SPECIAL HANDLER: Bridge Responses (Models)
+                if (request.Method == "notifications/models_response" && request.Params != null)
+                {
+                    string? callbackId = null;
+                    List<string>? models = null;
+
+                    if (request.Params is JsonElement paramsElem)
+                    {
+                        if (paramsElem.TryGetProperty("callback_id", out var idElem))
+                        {
+                            callbackId = idElem.ToString();
+                        }
+                        
+                        if (paramsElem.TryGetProperty("models", out var modelsElem) && modelsElem.ValueKind == JsonValueKind.Array)
+                        {
+                            models = JsonSerializer.Deserialize<List<string>>(modelsElem.GetRawText());
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(callbackId) && models != null) 
+                    {
+                         _mcpService.HandleModelsResponse(callbackId, models);
                          return Accepted();
                     }
                 }
