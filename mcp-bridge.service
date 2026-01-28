@@ -1,0 +1,18 @@
+[Unit]
+Description=MCP Bridge Client for Portfolio Website
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=mk
+WorkingDirectory=/home/mk/code/personal/website
+Environment="BRIDGE_API_KEY=BGVFNHRBTHYU65e478io8p90pgytfytvu8i76g678,,l,uop078io8p90pgytfytvu8i76g678,,l,uop0"
+ExecStart=/home/mk/miniconda3/bin/python3 -u mcp_bridge.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

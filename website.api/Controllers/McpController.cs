@@ -149,17 +149,32 @@ public class McpController : ControllerBase
             return;
         }
 
-        // SECURITY CHECK
+        // SECURITY CHECK (Hybrid Model)
+        // If BRIDGE_API_KEY is allowed to be missing (public), connection is "Guest"
+        // If BRIDGE_API_KEY is present, we check it.
+        // - Match = "Bridge" role (can receive chat requests)
+        // - Mismatch = "Guest" role (can only use tools, cannot be a bridge)
+        
+        bool isBridge = false;
         var apiKey = _configuration["BRIDGE_API_KEY"];
+
         if (!string.IsNullOrEmpty(apiKey))
         {
-            if (!Request.Headers.TryGetValue("X-Bridge-Key", out var providedKey) || providedKey != apiKey)
+            if (Request.Headers.TryGetValue("X-Bridge-Key", out var providedKey) && providedKey == apiKey)
             {
-                _logger.LogWarning("Unauthorized SSE connection attempt. Missing or invalid X-Bridge-Key.");
-                Response.StatusCode = 401;
-                await Response.WriteAsync("Unauthorized");
-                return;
+                isBridge = true;
+                _logger.LogInformation("Authenticated Bridge connection accepted.");
             }
+            else
+            {
+                _logger.LogInformation("Unauthenticated connection accepted as Guest (Read-Only/Tools).");
+            }
+        }
+        else
+        {
+             // If no key configured on server, everything is "Guest" to be safe, 
+             // or "Bridge" if you want totally open system. defaulting to Guest for safety.
+             _logger.LogWarning("No BRIDGE_API_KEY configured. Connection accepted as Guest.");
         }
 
         Response.Headers.Append("Content-Type", "text/event-stream");
@@ -180,7 +195,7 @@ public class McpController : ControllerBase
         var sessionId = Guid.NewGuid().ToString();
         
         // Register connection with the Singleton Service
-        _mcpService.RegisterConnection(sessionId, Response);
+        _mcpService.RegisterConnection(sessionId, Response, isBridge);
 
         _logger.LogInformation($"Client connected via SSE. SessionId: {sessionId}");
 

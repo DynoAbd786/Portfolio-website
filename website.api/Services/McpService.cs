@@ -9,7 +9,7 @@ public interface IMcpService
     Task<McpResponse> HandleRequestAsync(McpRequest request);
     
     // SSE Bridge Methods
-    void RegisterConnection(string sessionId, HttpResponse response);
+    void RegisterConnection(string sessionId, HttpResponse response, bool isBridge);
     void RemoveConnection(string sessionId);
     bool IsBridgeConnected();
     Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message);
@@ -606,11 +606,11 @@ public class McpService : IMcpService
 
     // --- SSE BRIDGE IMPLEMENTATION ---
 
-    public void RegisterConnection(string sessionId, HttpResponse response)
+    public void RegisterConnection(string sessionId, HttpResponse response, bool isBridge)
     {
-        var client = new SseClient(response);
+        var client = new SseClient(response, isBridge);
         _connectedClients.TryAdd(sessionId, client);
-        _logger.LogInformation("Client registered in McpService. SessionId: {SessionId}", sessionId);
+        _logger.LogInformation("Client registered in McpService. SessionId: {SessionId}, IsBridge: {IsBridge}", sessionId, isBridge);
     }
 
     public void RemoveConnection(string sessionId)
@@ -621,7 +621,7 @@ public class McpService : IMcpService
 
     public bool IsBridgeConnected()
     {
-        return !_connectedClients.IsEmpty;
+        return _connectedClients.Values.Any(c => c.IsBridge);
     }
 
     public async Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message)
@@ -631,8 +631,8 @@ public class McpService : IMcpService
             throw new InvalidOperationException("No local bridge connected via SSE.");
         }
 
-        // Use the first available client (User-to-HomePC 1:1 assumption for now)
-        var client = _connectedClients.Values.FirstOrDefault();
+        // Use the first available BRIDGE client (User-to-HomePC 1:1 assumption for now)
+        var client = _connectedClients.Values.FirstOrDefault(c => c.IsBridge);
         if (client == null) throw new InvalidOperationException("Bridge client unavailable.");
 
         var callbackId = Guid.NewGuid().ToString();
@@ -682,7 +682,13 @@ public class McpService : IMcpService
     private class SseClient
     {
         private readonly HttpResponse _response;
-        public SseClient(HttpResponse response) => _response = response;
+        public bool IsBridge { get; }
+
+        public SseClient(HttpResponse response, bool isBridge)
+        {
+            _response = response;
+            IsBridge = isBridge;
+        }
 
         public async Task SendEventAsync(string eventType, string data)
         {
