@@ -25,6 +25,12 @@ def listen_to_server():
     
     try:
         response = requests.get(SERVER_URL, stream=True, headers=headers)
+        if response.status_code != 200:
+            sys.stderr.write(f"Server returned error: {response.status_code} {response.reason}\n")
+            if response.status_code == 401:
+                sys.stderr.write("Check your BRIDGE_API_KEY. It may be incorrect.\n")
+            sys.exit(1)
+            
         client = sseclient.SSEClient(response)
         
         for event in client.events():
