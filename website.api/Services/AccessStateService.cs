@@ -5,8 +5,16 @@ namespace website.api.Services;
 public enum AccessStatus
 {
     Pending,
-    Approved, // Clicked in Discord (optional step if we want to track it)
-    Ready     // System is ready (n8n finished)
+    Approved,
+    Ready
+}
+
+
+public class AccessRequestInfo
+{
+    public AccessStatus Status { get; set; }
+    public DateTime LastAccessedAt { get; set; }
+    public string Email { get; set; } = "";
 }
 
 public interface IAccessStateService
@@ -14,38 +22,54 @@ public interface IAccessStateService
     string CreateRequest(string email);
     AccessStatus GetStatus(string id);
     void SetStatus(string id, AccessStatus status);
+    void RefreshAccess(string id);
 }
 
 public class AccessStateService : IAccessStateService
 {
-    // ID -> Status
-    private readonly ConcurrentDictionary<string, AccessStatus> _requests = new();
-    
-    // ID -> Email (for logging/debug)
-    private readonly ConcurrentDictionary<string, string> _emails = new();
+    private readonly ConcurrentDictionary<string, AccessRequestInfo> _requests = new();
+    private static readonly TimeSpan SessionTimeout = TimeSpan.FromMinutes(30);
 
     public string CreateRequest(string email)
     {
         var id = Guid.NewGuid().ToString();
-        _requests[id] = AccessStatus.Pending;
-        _emails[id] = email;
+        _requests[id] = new AccessRequestInfo 
+        { 
+            Status = AccessStatus.Pending, 
+            Email = email,
+            LastAccessedAt = DateTime.UtcNow 
+        };
         return id;
     }
 
     public AccessStatus GetStatus(string id)
     {
-        if (_requests.TryGetValue(id, out var status))
+        if (_requests.TryGetValue(id, out var info))
         {
-            return status;
+            if (info.Status == AccessStatus.Ready && (DateTime.UtcNow - info.LastAccessedAt) > SessionTimeout)
+            {
+                _requests.TryRemove(id, out _);
+                return AccessStatus.Pending; // Treat as expired/not found
+            }
+            return info.Status;
         }
-        return AccessStatus.Pending; // Default to pending if not found (or expired)
+        return AccessStatus.Pending;
     }
 
     public void SetStatus(string id, AccessStatus status)
     {
-        if (_requests.ContainsKey(id))
+        if (_requests.TryGetValue(id, out var info))
         {
-            _requests[id] = status;
+            info.Status = status;
+            info.LastAccessedAt = DateTime.UtcNow;
+        }
+    }
+
+    public void RefreshAccess(string id)
+    {
+        if (_requests.TryGetValue(id, out var info))
+        {
+            info.LastAccessedAt = DateTime.UtcNow;
         }
     }
 }

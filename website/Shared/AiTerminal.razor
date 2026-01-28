@@ -63,6 +63,9 @@
                     </select>
                 </div>
             </div>
+            <button class="info-btn" @onclick="StartNewChat" title="Start New Chat" style="margin-left: auto; margin-right: 8px;">
+                <i class="fas fa-plus"></i>
+            </button>
             <button class="info-btn" @onclick="ToggleInfo" title="About this assistant">
                 <i class="fas fa-info-circle"></i>
             </button>
@@ -220,14 +223,15 @@
             </div>
         }
         
-        <div class="input-area">
+        <div class="input-area @(selectedProvider == "ollama" && !hasAccess ? "disabled" : "")">
             <input @ref="inputElement" 
                    type="text" 
-                   placeholder="Ask me anything about the portfolio..." 
+                   placeholder="@(selectedProvider == "ollama" && !hasAccess ? "Request access to use Ollama..." : "Ask me anything about the portfolio...")" 
                    @bind="currentInput" 
                    @bind:event="oninput" 
-                   @onkeydown="HandleKeyDown" />
-            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping)">
+                   @onkeydown="HandleKeyDown"
+                   disabled="@(selectedProvider == "ollama" && !hasAccess)" />
+            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping || (selectedProvider == "ollama" && !hasAccess))">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
@@ -455,6 +459,16 @@
         box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
     }
 
+    .input-area.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: rgba(0, 0, 0, 0.4);
+    }
+    
+    .input-area.disabled input {
+        cursor: not-allowed;
+    }
+
     input {
         flex: 1;
         background: transparent;
@@ -663,11 +677,34 @@
     {
         if (firstRender)
         {
+            // Try to restore session
+            try 
+            {
+                var savedId = await JS.InvokeAsync<string>("localStorage.getItem", "ollamaAccessRequestId");
+                if (!string.IsNullOrEmpty(savedId))
+                {
+                    currentRequestId = savedId;
+                    // Check status immediately to see if still valid
+                    await CheckStatus(true);
+                }
+            }
+            catch (Exception ex) { Console.WriteLine("localStorage error: " + ex.Message); }
+
             // Modern Welcome Message
-            history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **Mkkai's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
+            if (!history.Any())
+            {
+                history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **Mkkai's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
+            }
             StateHasChanged();
         }
         await ScrollToBottom();
+    }
+
+    private void StartNewChat()
+    {
+        history.Clear();
+        history.Add(new MessageItem { Role = "model", Content = "New chat started! How can I help you explore Muhammad's portfolio today?" });
+        StateHasChanged();
     }
 
     // Access Request State
@@ -803,10 +840,11 @@
 
     private void StartPolling()
     {
-        statusTimer = new System.Threading.Timer(async _ => await CheckStatus(), null, 0, 3000);
+        if (statusTimer != null) return;
+        statusTimer = new System.Threading.Timer(async _ => await CheckStatus(false), null, 0, 3000);
     }
 
-    private async Task CheckStatus()
+    private async Task CheckStatus(bool silent = false)
     {
         if (string.IsNullOrEmpty(currentRequestId)) return;
 
@@ -818,23 +856,28 @@
                 var status = statusElement.GetString();
                 if (status == "Ready")
                 {
-                    await InvokeAsync(() =>
+                    await InvokeAsync(async () =>
                     {
                         statusTimer?.Dispose();
                         statusTimer = null;
                         isWaitingForApproval = false;
                         accessRequestSent = false;
-                        showAccessForm = false; // Fully authorized now
+                        showAccessForm = false; 
                         hasAccess = true;
-                        selectedProvider = "ollama";
                         
-                        // Pick first available model or default
-                        if (ollamaModels.Any()) selectedModel = ollamaModels.First();
-                        else selectedModel = "llama3";
-                        
-                        history.Add(new MessageItem { Role = "model", Content = "🎉 Access Granted! You are now connected to the local Ollama instance." });
+                        // Persist to localStorage
+                        try { await JS.InvokeVoidAsync("localStorage.setItem", "ollamaAccessRequestId", currentRequestId); } catch {}
+
+                        if (!silent)
+                        {
+                            history.Add(new MessageItem { Role = "model", Content = "🎉 Access Restored! You are connected to the local Ollama instance. Your session will remain active for 30 minutes of inactivity." });
+                        }
                         StateHasChanged();
                     });
+                }
+                else if (status == "Pending" || status == "Approved")
+                {
+                    if (silent) StartPolling();
                 }
             }
         }
@@ -899,7 +942,15 @@
                 model = selectedModel
             };
 
-            var response = await Http.PostAsJsonAsync("api/chat", payload);
+            using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "api/chat");
+            httpRequest.Content = JsonContent.Create(payload);
+            
+            if (selectedProvider == "ollama" && !string.IsNullOrEmpty(currentRequestId))
+            {
+                httpRequest.Headers.Add("X-Access-RequestId", currentRequestId);
+            }
+
+            var response = await Http.SendAsync(httpRequest);
             
             if (response.IsSuccessStatusCode)
             {

@@ -101,7 +101,23 @@ public class ChatController : ControllerBase
                 return BadRequest(new { message = "Message is required" });
             }
 
-            // Limit history to last 20 messages to prevent token overflow
+            // Route based on provider
+            var provider = request.Provider?.ToLower() ?? "gemini";
+
+            // If local model, check access request ID
+            if (provider == "ollama")
+            {
+                Request.Headers.TryGetValue("X-Access-RequestId", out var requestId);
+                if (string.IsNullOrEmpty(requestId) || _accessState.GetStatus(requestId!) != AccessStatus.Ready)
+                {
+                    return Unauthorized(new { message = "Ollama access required." });
+                }
+                
+                // Refresh session on every message
+                _accessState.RefreshAccess(requestId!);
+            }
+
+            // Limit history to last 20 messages
             var history = request.History ?? new List<MessageHistoryItem>();
             if (history.Count > 20)
             {
@@ -109,10 +125,6 @@ public class ChatController : ControllerBase
             }
 
             string response;
-            
-            // Route based on provider
-            var provider = request.Provider?.ToLower() ?? "gemini";
-
             if (provider == "groq")
             {
                 var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama-3.3-70b-versatile";
@@ -125,7 +137,6 @@ public class ChatController : ControllerBase
             }
             else
             {
-                // Default to Gemini
                 response = await _geminiService.ChatAsync(request.Message, history);
             }
             
