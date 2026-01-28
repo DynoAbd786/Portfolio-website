@@ -325,3 +325,5 @@ appsettings.local.json
 
 # Claude Code specific files
 # .claude/ - now tracked for portfolio consistency
+# Security
+mcp-bridge.service
