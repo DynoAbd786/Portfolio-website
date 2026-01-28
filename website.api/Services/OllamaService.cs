@@ -9,12 +9,14 @@ public class OllamaService
     private readonly HttpClient _httpClient;
     private readonly ILogger<OllamaService> _logger;
     private readonly IMcpService _mcpService;
+    private readonly IProjectService _projectService;
 
-    public OllamaService(HttpClient httpClient, ILogger<OllamaService> logger, IConfiguration configuration, IMcpService mcpService)
+    public OllamaService(HttpClient httpClient, ILogger<OllamaService> logger, IConfiguration configuration, IMcpService mcpService, IProjectService projectService)
     {
         _httpClient = httpClient;
         _logger = logger;
         _mcpService = mcpService;
+        _projectService = projectService;
         
         var baseUrl = configuration["Ollama:BaseUrl"] ?? "http://localhost:11434";
         _httpClient.BaseAddress = new Uri(baseUrl);
@@ -54,13 +56,32 @@ public class OllamaService
 
     public async Task<string> ChatAsync(string message, List<Models.MessageHistoryItem> history, string model)
     {
+        // Construct System Prompt with Context
+        var allProjects = await _projectService.GetProjectsAsync();
+        var systemInstruction = 
+            "You are the interactive portfolio assistant for Muhammad Kashif-Khan (MkKai). " +
+            "Your goal is to help recruiters and visitors navigate his portfolio, understand his skills, and explore his projects.\n\n" +
+            "CORE BEHAVIORS:\n" +
+            "- Be professional, enthusiastic, and concise.\n" +
+            "- You may receive project data in JSON format below. Use it to answer questions accurately.\n" +
+            "- If asked about skills or projects you don't see in the context, refer to his main portfolio at mkkai.dev.\n\n" +
+            "PORTFOLIO DATA CONTEXT:\n" +
+            JsonSerializer.Serialize(allProjects);
+
+        // Prepend system instruction to history for Ollama
+        var fullHistory = new List<Models.MessageHistoryItem> 
+        { 
+            new Models.MessageHistoryItem { Role = "system", Content = systemInstruction }
+        };
+        fullHistory.AddRange(history);
+
         // 1. Check for Bridge Connection (Scenario A: Remote Site -> Local PC)
         if (_mcpService.IsBridgeConnected())
         {
             _logger.LogInformation("Routing chat request via SSE Bridge to registered client.");
             try 
             {
-                return await _mcpService.SendChatRequestAsync(model, history, message);
+                return await _mcpService.SendChatRequestAsync(model, fullHistory, message);
             }
             catch (Exception bridgeEx)
             {
@@ -74,7 +95,7 @@ public class OllamaService
             var messages = new List<object>();
             
             // Convert history to Ollama format
-            foreach (var item in history)
+            foreach (var item in fullHistory)
             {
                 messages.Add(new { role = item.Role, content = item.Content });
             }

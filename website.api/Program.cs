@@ -41,7 +41,7 @@ builder.Services.AddScoped<GroqAgentService>();
 builder.Services.AddHttpClient<DiscordService>();
 builder.Services.AddSingleton<IDiscordService, DiscordService>();
 builder.Services.AddHttpClient<OllamaService>();
-builder.Services.AddSingleton<OllamaService>();
+builder.Services.AddScoped<OllamaService>();
 builder.Services.AddSingleton<IAccessStateService, AccessStateService>();
 
 // Configure JWT Bearer authentication for OAuth

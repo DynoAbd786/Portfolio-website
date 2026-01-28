@@ -28,7 +28,14 @@ public interface IAccessStateService
 public class AccessStateService : IAccessStateService
 {
     private readonly ConcurrentDictionary<string, AccessRequestInfo> _requests = new();
-    private static readonly TimeSpan SessionTimeout = TimeSpan.FromMinutes(30);
+    private static readonly TimeSpan SessionTimeout = TimeSpan.FromMinutes(60);
+    private readonly ILogger<AccessStateService> _logger;
+
+    public AccessStateService(ILogger<AccessStateService> logger)
+    {
+        _logger = logger;
+        _logger.LogInformation("AccessStateService initialized. Session timeout: {Timeout}", SessionTimeout);
+    }
 
     public string CreateRequest(string email)
     {
@@ -39,6 +46,7 @@ public class AccessStateService : IAccessStateService
             Email = email,
             LastAccessedAt = DateTime.UtcNow 
         };
+        _logger.LogInformation("Created access request {Id} for {Email}", id, email);
         return id;
     }
 
@@ -46,10 +54,18 @@ public class AccessStateService : IAccessStateService
     {
         if (_requests.TryGetValue(id, out var info))
         {
-            if (info.Status == AccessStatus.Ready && (DateTime.UtcNow - info.LastAccessedAt) > SessionTimeout)
+            var age = DateTime.UtcNow - info.LastAccessedAt;
+            if (info.Status == AccessStatus.Ready)
             {
-                _requests.TryRemove(id, out _);
-                return AccessStatus.Pending; // Treat as expired/not found
+                _logger.LogInformation("Session {Id} ({Email}) age: {AgeMinutes:F2} min. Limit: {Limit} min", 
+                    id, info.Email, age.TotalMinutes, SessionTimeout.TotalMinutes);
+
+                if (age > SessionTimeout)
+                {
+                    _logger.LogWarning("Session {Id} expired after {AgeMinutes:F2} min", id, age.TotalMinutes);
+                    _requests.TryRemove(id, out _);
+                    return AccessStatus.Pending;
+                }
             }
             return info.Status;
         }
@@ -62,6 +78,7 @@ public class AccessStateService : IAccessStateService
         {
             info.Status = status;
             info.LastAccessedAt = DateTime.UtcNow;
+            _logger.LogInformation("Status updated to {Status} for session {Id}", status, id);
         }
     }
 
@@ -70,6 +87,7 @@ public class AccessStateService : IAccessStateService
         if (_requests.TryGetValue(id, out var info))
         {
             info.LastAccessedAt = DateTime.UtcNow;
+            _logger.LogInformation("Access refreshed for session {Id}", id);
         }
     }
 }
