@@ -81,7 +81,7 @@ public class GroqAgentService
         // 2. Prepare Context
         var allProjects = await _projectService.GetProjectsAsync();
         var systemInstruction = 
-            "You are the interactive portfolio assistant for Muhammad Kashif-Khan (MkKai). " +
+            "You are the interactive portfolio assistant for Muhammad Kashif-Khan (MKKAI). " +
             "Your goal is to help recruiters and visitors navigate his portfolio, understand his skills, and contact him.\n\n" +
             "CORE BEHAVIORS:\n" +
             "- Be professional, enthusiastic, and concise.\n" +
