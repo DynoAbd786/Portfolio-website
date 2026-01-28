@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using website.api.Models;
 using website.api.Services;
 
@@ -409,15 +410,8 @@ public class McpService : IMcpService
         };
     }
 
-        _logger.LogInformation("Returning {ToolCount} tools", tools.Count);
-        return tools;
-    }
-
-    private McpResponse HandleToolsList(McpRequest request)
+    public List<McpTool> GetTools()
     {
-        var tools = GetTools();
-        _logger.LogInformation("Listing tools for Request ID: {RequestId}", request.Id);
-
         var tools = new List<McpTool>
         {
             new McpTool
@@ -457,16 +451,19 @@ public class McpService : IMcpService
         };
 
         _logger.LogInformation("Returning {ToolCount} tools", tools.Count);
+        return tools;
+    }
 
-        var response = new McpResponse
+    private McpResponse HandleToolsList(McpRequest request)
+    {
+        _logger.LogInformation("Listing tools for Request ID: {RequestId}", request.Id);
+        var tools = GetTools();
+
+        return new McpResponse
         {
             Id = request.Id,
             Result = new { tools }
         };
-
-
-
-        return response;
     }
 
     private async Task<McpResponse> HandleToolCall(McpRequest request)
