@@ -104,7 +104,7 @@
                 <h3>Waiting for Approval...</h3>
                 <p>Muhammad has been notified. Please wait while he reviews your request.</p>
                 <p class="status-note"><i class="fas fa-sync fa-spin"></i> Checking status...</p>
-                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; StopPolling(); StateHasChanged(); }'>
+                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; accessRequestSent = false; showAccessForm = false; StopPolling(); StateHasChanged(); }'>
                     Cancel & Return to Gemini
                 </button>
             </div>
@@ -112,11 +112,11 @@
         else if (accessRequestSent)
         {
             <div class="access-success">
-                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                <h3>Request Sent!</h3>
-                <p>Muhammad has been notified via Discord. He will review your request to access the local Ollama service.</p>
+                <div class="success-icon"><i class="fas fa-paper-plane"></i></div>
+                <h3>Request Submitted!</h3>
+                <p>Muhammad has been notified via Discord. You can keep chatting with the <strong>Gemini Assistant</strong> while you wait.</p>
                 <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; accessRequestSent = false; StateHasChanged(); }'>
-                    Back to Gemini
+                    <i class="fas fa-comment"></i> Continue Chatting
                 </button>
             </div>
         }
@@ -865,12 +865,18 @@
         else if (selectedProvider == "groq")
         {
             showAccessForm = false;
+            accessRequestSent = false;
+            isWaitingForApproval = false;
             selectedModel = "llama-3.3-70b-versatile";
+            StopPolling();
         }
         else
         {
             showAccessForm = false;
+            accessRequestSent = false;
+            isWaitingForApproval = false;
             selectedModel = "gemini-3-flash";
+            StopPolling();
         }
         await SaveStateAsync();
         StateHasChanged();
