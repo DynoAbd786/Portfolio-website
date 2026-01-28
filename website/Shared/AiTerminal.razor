@@ -754,6 +754,11 @@
                     currentRequestId = savedId;
                     await CheckStatus(true);
                 }
+
+                if (selectedProvider == "ollama")
+                {
+                    await FetchOllamaModelsAsync();
+                }
             }
             catch (Exception ex) { Console.WriteLine("localStorage error: " + ex.Message); }
 
@@ -834,33 +839,7 @@
             }
             
             // Fetch models dynamically
-            isLoadingModels = true;
-            StateHasChanged();
-            try 
-            {
-                var response = await Http.GetFromJsonAsync<JsonElement>("api/chat/models?provider=ollama");
-                if (response.TryGetProperty("models", out var modelsElement) && modelsElement.ValueKind == JsonValueKind.Array)
-                {
-                    ollamaModels = modelsElement.EnumerateArray()
-                        .Select(m => m.GetString())
-                        .Where(s => !string.IsNullOrEmpty(s))
-                        .ToList()!;
-                        
-                    if (ollamaModels.Any())
-                    {
-                        selectedModel = ollamaModels.First();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to load models: {ex.Message}");
-            }
-            finally
-            {
-                isLoadingModels = false;
-                StateHasChanged();
-            }
+            await FetchOllamaModelsAsync();
         }
         else if (selectedProvider == "groq")
         {
@@ -880,6 +859,42 @@
         }
         await SaveStateAsync();
         StateHasChanged();
+    }
+
+    private async Task FetchOllamaModelsAsync()
+    {
+        isLoadingModels = true;
+        StateHasChanged();
+        try 
+        {
+            var response = await Http.GetFromJsonAsync<JsonElement>("api/chat/models?provider=ollama");
+            if (response.TryGetProperty("models", out var modelsElement) && modelsElement.ValueKind == JsonValueKind.Array)
+            {
+                var models = modelsElement.EnumerateArray()
+                    .Select(m => m.GetString())
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToList()!;
+                
+                if (models.Any())
+                {
+                    ollamaModels = models;
+                    // Preserve selected model if it exists in the list, otherwise take first
+                    if (!ollamaModels.Contains(selectedModel))
+                    {
+                        selectedModel = ollamaModels.First();
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to load models: {ex.Message}");
+        }
+        finally
+        {
+            isLoadingModels = false;
+            StateHasChanged();
+        }
     }
 
     private async Task SubmitAccessRequest()
