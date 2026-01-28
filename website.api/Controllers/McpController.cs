@@ -258,6 +258,7 @@ public class McpController : ControllerBase
                     string? content = null;
                     string? model = "unknown";
                     List<OllamaToolCall>? toolCalls = null;
+                    bool toolsDisabled = false;
 
                     if (request.Params is JsonElement paramsElem)
                     {
@@ -280,11 +281,16 @@ public class McpController : ControllerBase
                         {
                             toolCalls = JsonSerializer.Deserialize<List<OllamaToolCall>>(toolCallsElem.GetRawText());
                         }
+
+                        if (paramsElem.TryGetProperty("tools_disabled", out var disabledElem))
+                        {
+                            toolsDisabled = disabledElem.GetBoolean();
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(callbackId)) 
                     {
-                         _mcpService.HandleChatResponse(callbackId, content ?? "", model, toolCalls);
+                         _mcpService.HandleChatResponse(callbackId, content ?? "", model, toolCalls, toolsDisabled);
                          return Accepted();
                     }
                 }

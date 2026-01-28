@@ -14,7 +14,7 @@ public interface IMcpService
     void RemoveConnection(string sessionId);
     bool IsBridgeConnected();
     Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null);
-    void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null);
+    void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null, bool toolsDisabled = false);
     void HandleChatError(string callbackId, string error);
     Task<List<string>> GetModelsAsync();
     void HandleModelsResponse(string callbackId, List<string> models);
@@ -25,6 +25,7 @@ public class OllamaBridgeResponse
 {
     public string Response { get; set; } = "";
     public List<OllamaToolCall>? ToolCalls { get; set; }
+    public bool ToolsDisabled { get; set; }
 }
 
 public class OllamaToolCall
@@ -697,14 +698,15 @@ public class McpService : IMcpService
         }
     }
 
-    public void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null)
+    public void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null, bool toolsDisabled = false)
     {
         if (_pendingChatRequests.TryRemove(callbackId, out var tcs))
         {
             tcs.TrySetResult(new OllamaBridgeResponse 
             { 
                 Response = response,
-                ToolCalls = toolCalls
+                ToolCalls = toolCalls,
+                ToolsDisabled = toolsDisabled
             });
         }
         else

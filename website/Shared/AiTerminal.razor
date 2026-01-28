@@ -64,7 +64,10 @@
                     </select>
                 </div>
             </div>
-            <button class="info-btn" @onclick="StartNewChat" title="Start New Chat" style="margin-left: auto; margin-right: 8px;">
+            <button class="info-btn" @onclick="() => historySidebarOpen = !historySidebarOpen" title="Chat History" style="margin-left: auto; margin-right: 8px;">
+                <i class="fas fa-history"></i>
+            </button>
+            <button class="info-btn" @onclick="StartNewChat" title="Start New Chat" style="margin-right: 8px;">
                 <i class="fas fa-plus"></i>
             </button>
             <button class="info-btn" @onclick="ToggleInfo" title="About this assistant">
@@ -72,6 +75,44 @@
             </button>
         </div>
     </div>
+
+    @if (historySidebarOpen)
+    {
+        <div class="history-sidebar-overlay" @onclick="() => historySidebarOpen = false"></div>
+        <div class="history-sidebar">
+            <div class="sidebar-header">
+                <h4>Chat History</h4>
+                <button @onclick="() => historySidebarOpen = false"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="sidebar-content">
+                @if (!sessions.Any())
+                {
+                    <div class="empty-history">No past conversations yet.</div>
+                }
+                else
+                {
+                    @foreach (var session in sessions)
+                    {
+                        <div class="history-item @(session.Id == currentSessionId ? "active" : "")" @onclick="() => LoadSession(session.Id)">
+                            <div class="item-icon"><i class="fas fa-comment-alt"></i></div>
+                            <div class="item-info">
+                                <div class="item-title">@session.Title</div>
+                                <div class="item-meta">@session.LastUpdated.ToString("MMM dd, HH:mm") • @session.Provider</div>
+                            </div>
+                            <button class="delete-session-btn" @onclick:stopPropagation="true" @onclick="() => DeleteSession(session.Id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="sidebar-footer">
+                <button class="new-chat-sidebar-btn" @onclick="StartNewChat">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
+            </div>
+        </div>
+    }
 
     <div class="chat-body" id="chat-body">
         @if (showInfo)
@@ -186,6 +227,13 @@
                     else
                     {
                         @((MarkupString)Markdig.Markdown.ToHtml(message.Content, pipeline))
+                        
+                        @if (message.ToolsDisabled && message.Role == "model")
+                        {
+                            <div class="tool-notice">
+                                <i class="fas fa-info-circle"></i> This model doesn't support tools. Results may be less detailed.
+                            </div>
+                        }
                     }
                 </div>
             </div>
@@ -584,6 +632,124 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    /* History Sidebar */
+    .history-sidebar-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 100;
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.2s ease;
+    }
+
+    .history-sidebar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 280px;
+        height: 100%;
+        background: #0f172a; /* Slate-900 */
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 101;
+        display: flex;
+        flex-direction: column;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @@keyframes slideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    .sidebar-header {
+        padding: 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sidebar-header h4 { margin: 0; font-size: 1rem; color: #f8fafc; }
+    .sidebar-header button { background: transparent; border: none; color: #94a3b8; cursor: pointer; }
+
+    .sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .history-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+        position: relative;
+    }
+
+    .history-item:hover { background: rgba(255, 255, 255, 0.05); }
+    .history-item.active { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
+
+    .item-icon { color: #64748b; font-size: 0.9rem; }
+    .history-item.active .item-icon { color: #06b6d4; }
+
+    .item-info { flex: 1; min-width: 0; }
+    .item-title { font-size: 0.85rem; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-meta { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
+
+    .delete-session-btn {
+        opacity: 0;
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        padding: 4px;
+        transition: all 0.2s;
+    }
+
+    .history-item:hover .delete-session-btn { opacity: 1; }
+    .delete-session-btn:hover { color: #ef4444; }
+
+    .sidebar-footer {
+        padding: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .new-chat-sidebar-btn {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+    .new-chat-sidebar-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #06b6d4; color: #06b6d4; }
+
+    .empty-history { text-align: center; color: #64748b; font-size: 0.85rem; margin-top: 2rem; }
+
+    /* Tool Notice */
+    .tool-notice {
+        margin-top: 8px;
+        font-size: 0.75rem;
+        color: #94a3b8;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 4px 8px;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-left: 2px solid #eab308; /* Yellow-500 */
+    }
     
     .status-note {
         font-size: 0.85rem;
@@ -728,6 +894,12 @@
     private string selectedModel = "gemini-3-flash";
     private List<string> ollamaModels = new();
     private bool isLoadingModels = false;
+    
+    // Multi-session History
+    private List<ChatSession> sessions = new();
+    private string currentSessionId = Guid.NewGuid().ToString();
+    private string currentSessionTitle = "New Chat";
+    private bool historySidebarOpen = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -759,6 +931,27 @@
                 {
                     await FetchOllamaModelsAsync();
                 }
+
+                // Load Sessions
+                var savedSessions = await JS.InvokeAsync<string>("localStorage.getItem", "aiSessions");
+                if (!string.IsNullOrEmpty(savedSessions))
+                {
+                    sessions = JsonSerializer.Deserialize<List<ChatSession>>(savedSessions) ?? new();
+                }
+
+                var activeId = await JS.InvokeAsync<string>("localStorage.getItem", "currentSessionId");
+                if (!string.IsNullOrEmpty(activeId))
+                {
+                    var activeSession = sessions.FirstOrDefault(s => s.Id == activeId);
+                    if (activeSession != null)
+                    {
+                        currentSessionId = activeSession.Id;
+                        currentSessionTitle = activeSession.Title;
+                        history = activeSession.Messages;
+                        selectedProvider = activeSession.Provider;
+                        selectedModel = activeSession.Model;
+                    }
+                }
             }
             catch (Exception ex) { Console.WriteLine("localStorage error: " + ex.Message); }
 
@@ -779,17 +972,73 @@
     {
         try
         {
-            await JS.InvokeVoidAsync("localStorage.setItem", "aiChatHistory", JsonSerializer.Serialize(history));
+            // Sync current state to active session
+            var currentSession = sessions.FirstOrDefault(s => s.Id == currentSessionId);
+            if (currentSession == null)
+            {
+                currentSession = new ChatSession { Id = currentSessionId };
+                sessions.Insert(0, currentSession);
+            }
+
+            currentSession.Title = currentSessionTitle;
+            currentSession.Messages = history;
+            currentSession.Provider = selectedProvider;
+            currentSession.Model = selectedModel;
+            currentSession.LastUpdated = DateTime.Now;
+
+            // Limit to last 50 sessions for performance
+            if (sessions.Count > 50) sessions = sessions.Take(50).ToList();
+
+            await JS.InvokeVoidAsync("localStorage.setItem", "aiSessions", JsonSerializer.Serialize(sessions));
+            await JS.InvokeVoidAsync("localStorage.setItem", "currentSessionId", currentSessionId);
+            
+            // Legacy fallbacks for compatibility
             await JS.InvokeVoidAsync("localStorage.setItem", "aiProvider", selectedProvider);
             await JS.InvokeVoidAsync("localStorage.setItem", "aiModel", selectedModel);
         }
         catch (Exception ex) { Console.WriteLine("Save state error: " + ex.Message); }
     }
 
+    private async Task LoadSession(string sessionId)
+    {
+        var session = sessions.FirstOrDefault(s => s.Id == sessionId);
+        if (session == null) return;
+
+        currentSessionId = session.Id;
+        currentSessionTitle = session.Title;
+        history = session.Messages;
+        selectedProvider = session.Provider;
+        selectedModel = session.Model;
+        
+        historySidebarOpen = false;
+        StateHasChanged();
+        await ScrollToBottom();
+        await SaveStateAsync();
+        
+        if (selectedProvider == "ollama") await FetchOllamaModelsAsync();
+    }
+
+    private async Task DeleteSession(string sessionId)
+    {
+        sessions.RemoveAll(s => s.Id == sessionId);
+        if (currentSessionId == sessionId)
+        {
+            await StartNewChat();
+        }
+        else
+        {
+            await SaveStateAsync();
+        }
+    }
+
     private async Task StartNewChat()
     {
+        currentSessionId = Guid.NewGuid().ToString();
+        currentSessionTitle = "New Chat";
         history.Clear();
         history.Add(new MessageItem { Role = "model", Content = "New chat started! How can I help you explore Muhammad's portfolio today?" });
+        
+        historySidebarOpen = false;
         await SaveStateAsync();
         StateHasChanged();
     }
@@ -1031,6 +1280,8 @@
         var userMsg = currentInput;
         currentInput = "";
         
+        bool isFirstMessage = !history.Any(m => m.Role == "user");
+
         history.Add(new MessageItem { Role = "user", Content = userMsg });
         await SaveStateAsync();
         isTyping = true;
@@ -1065,7 +1316,17 @@
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
-                history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "I didn't get a response." });
+                history.Add(new MessageItem { 
+                    Role = "model", 
+                    Content = result?.Response ?? "I didn't get a response.",
+                    ToolsDisabled = result?.ToolsDisabled ?? false
+                });
+
+                if (isFirstMessage)
+                {
+                    GenerateAutoTitle(userMsg);
+                }
+
                 await SaveStateAsync();
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && selectedProvider == "ollama")
@@ -1095,14 +1356,38 @@
         }
     }
 
+    private void GenerateAutoTitle(string firstMessage)
+    {
+        if (string.IsNullOrEmpty(firstMessage)) return;
+        
+        // Take first 5-7 words or 40 characters
+        var words = firstMessage.Split(' ');
+        var title = string.Join(" ", words.Take(6));
+        if (title.Length > 40) title = title.Substring(0, 37) + "...";
+        
+        currentSessionTitle = title;
+    }
+
     public class MessageItem
     {
         public string Role { get; set; } = "user";
         public string Content { get; set; } = "";
+        public bool ToolsDisabled { get; set; }
+    }
+
+    public class ChatSession
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Title { get; set; } = "New Chat";
+        public List<MessageItem> Messages { get; set; } = new();
+        public string Provider { get; set; } = "gemini";
+        public string Model { get; set; } = "gemini-3-flash";
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
     }
 
     public class ChatResponseModel
     {
         public string Response { get; set; } = "";
+        public bool ToolsDisabled { get; set; }
     }
 }
