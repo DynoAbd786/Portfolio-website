@@ -15,6 +15,7 @@ public interface IMcpService
     bool IsBridgeConnected();
     Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null);
     void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null);
+    void HandleChatError(string callbackId, string error);
     Task<List<string>> GetModelsAsync();
     void HandleModelsResponse(string callbackId, List<string> models);
     List<McpTool> GetTools();
@@ -709,6 +710,14 @@ public class McpService : IMcpService
         else
         {
             _logger.LogWarning("Received chat response for unknown or expired callback ID: {CallbackId}", callbackId);
+        }
+    }
+
+    public void HandleChatError(string callbackId, string error)
+    {
+        if (_pendingChatRequests.TryRemove(callbackId, out var tcs))
+        {
+            tcs.TrySetException(new Exception(error));
         }
     }
 

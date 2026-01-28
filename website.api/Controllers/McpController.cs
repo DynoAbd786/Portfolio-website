@@ -289,6 +289,25 @@ public class McpController : ControllerBase
                     }
                 }
 
+                // SPECIAL HANDLER: Bridge Errors
+                if (request.Method == "notifications/chat_error" && request.Params != null)
+                {
+                    string? callbackId = null;
+                    string? error = null;
+
+                    if (request.Params is JsonElement paramsElem)
+                    {
+                        if (paramsElem.TryGetProperty("callback_id", out var idElem)) callbackId = idElem.ToString();
+                        if (paramsElem.TryGetProperty("error", out var errElem)) error = errElem.ToString();
+                    }
+
+                    if (!string.IsNullOrEmpty(callbackId))
+                    {
+                        _mcpService.HandleChatError(callbackId, error ?? "Unknown bridge error");
+                        return Accepted();
+                    }
+                }
+
                 // SPECIAL HANDLER: Bridge Responses (Models)
                 if (request.Method == "notifications/models_response" && request.Params != null)
                 {
