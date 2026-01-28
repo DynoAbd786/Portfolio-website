@@ -11,11 +11,13 @@ public class McpController : ControllerBase
 {
     private readonly IMcpService _mcpService;
     private readonly ILogger<McpController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public McpController(IMcpService mcpService, ILogger<McpController> logger)
+    public McpController(IMcpService mcpService, ILogger<McpController> logger, IConfiguration configuration)
     {
         _mcpService = mcpService;
         _logger = logger;
+        _configuration = configuration;
     }
 
     [HttpGet]
@@ -135,8 +137,7 @@ public class McpController : ControllerBase
     }
 
     // --- SSE IMPLEMENTATION FOR STANDARD MCP CLIENTS ---
-    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
-
+    
     [HttpGet("sse")]
     [HttpPost("sse")] // Support POST for initialization handshake if needed
     public async Task HandleSseConnection()
@@ -146,6 +147,19 @@ public class McpController : ControllerBase
             // Just treat it as a message or a ping if it's hitting the SSE URL with POST
             await HandleMcpRequest();
             return;
+        }
+
+        // SECURITY CHECK
+        var apiKey = _configuration["BRIDGE_API_KEY"];
+        if (!string.IsNullOrEmpty(apiKey))
+        {
+            if (!Request.Headers.TryGetValue("X-Bridge-Key", out var providedKey) || providedKey != apiKey)
+            {
+                _logger.LogWarning("Unauthorized SSE connection attempt. Missing or invalid X-Bridge-Key.");
+                Response.StatusCode = 401;
+                await Response.WriteAsync("Unauthorized");
+                return;
+            }
         }
 
         Response.Headers.Append("Content-Type", "text/event-stream");
@@ -164,8 +178,9 @@ public class McpController : ControllerBase
         await Response.Body.FlushAsync();
 
         var sessionId = Guid.NewGuid().ToString();
-        var client = new SseClient(Response);
-        _connectedClients.TryAdd(sessionId, client);
+        
+        // Register connection with the Singleton Service
+        _mcpService.RegisterConnection(sessionId, Response);
 
         _logger.LogInformation($"Client connected via SSE. SessionId: {sessionId}");
 
@@ -180,13 +195,19 @@ public class McpController : ControllerBase
             var endpointUri = $"{scheme}://{host}/api/mcp/message?sessionId={sessionId}";
             
             _logger.LogInformation($"Sending endpoint: {endpointUri}");
-            await client.SendEventAsync("endpoint", endpointUri);
+            
+            // Manual event sending (since we are responding on this thread)
+            await Response.WriteAsync($"event: endpoint\n");
+            await Response.WriteAsync($"data: {endpointUri}\n\n");
+            await Response.Body.FlushAsync();
 
             // Keep connection open with heartbeats
             while (!HttpContext.RequestAborted.IsCancellationRequested)
             {
                 await Task.Delay(15000); // 15s heartbeat
-                await client.SendEventAsync("ping", "keepalive");
+                await Response.WriteAsync($"event: ping\n");
+                await Response.WriteAsync($"data: keepalive\n\n");
+                await Response.Body.FlushAsync();
             }
         }
         catch (Exception ex)
@@ -195,7 +216,7 @@ public class McpController : ControllerBase
         }
         finally
         {
-            _connectedClients.TryRemove(sessionId, out _);
+            _mcpService.RemoveConnection(sessionId);
             _logger.LogInformation($"Client disconnected. SessionId: {sessionId}");
         }
     }
@@ -203,11 +224,6 @@ public class McpController : ControllerBase
     [HttpPost("message")]
     public async Task<IActionResult> HandleSseMessage([FromQuery] string sessionId)
     {
-        if (!_connectedClients.TryGetValue(sessionId, out var client))
-        {
-            return NotFound("Session not found");
-        }
-
         using var reader = new StreamReader(Request.Body);
         var body = await reader.ReadToEndAsync();
         
@@ -220,19 +236,48 @@ public class McpController : ControllerBase
 
             if (request != null)
             {
-                // Handle the request via our service
+                // SPECIAL HANDLER: Bridge Responses
+                if (request.Method == "notifications/chat_response" && request.Params != null)
+                {
+                    string? callbackId = null;
+                    string? content = null;
+                    string? model = "unknown";
+
+                    if (request.Params is JsonElement paramsElem)
+                    {
+                        if (paramsElem.TryGetProperty("callback_id", out var idElem))
+                        {
+                            callbackId = idElem.ToString();
+                        }
+                        
+                        if (paramsElem.TryGetProperty("response", out var respElem))
+                        {
+                            content = respElem.ToString();
+                        }
+
+                        if (paramsElem.TryGetProperty("model", out var modelElem))
+                        {
+                            model = modelElem.ToString();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(callbackId) && content != null) 
+                    {
+                         _mcpService.HandleChatResponse(callbackId, content, model);
+                         return Accepted();
+                    }
+                }
+
+                // Normal Handler
                 var response = await _mcpService.HandleRequestAsync(request);
                 
-                // ONLY send a response back via SSE if it's not a notification (has an ID)
-                if (request.Id != null)
-                {
-                    await client.SendEventAsync("message", JsonSerializer.Serialize(response, new JsonSerializerOptions 
-                    { 
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
-                    }));
-                }
+                // Note: We don't need to manually send the response back via SSE here anymore
+                // because standard Clients (like prompts) usually poll or expect an immediate HTTP return if using POST.
+                // However, the JSON-RPC spec over SSE implies we might push the response via the connection if checking ID.
+                // For simplicity and compatibility with most MCP clients, if we receive a POST, we return the result in the HTTP Body.
+                // BUT, if it was an Async notification, we return Accepted.
                 
-                return Accepted();
+                return Ok(response);
             }
         }
         catch (Exception ex)
@@ -244,23 +289,9 @@ public class McpController : ControllerBase
         return BadRequest("Invalid request");
     }
 
-    private class SseClient
+    [HttpGet("status/bridge")]
+    public IActionResult GetBridgeStatus()
     {
-        private readonly HttpResponse _response;
-        public SseClient(HttpResponse response) => _response = response;
-
-        public async Task SendEventAsync(string eventType, string data)
-        {
-            try 
-            {
-                await _response.WriteAsync($"event: {eventType}\n");
-                await _response.WriteAsync($"data: {data}\n\n");
-                await _response.Body.FlushAsync();
-            }
-            catch (Exception)
-            {
-                // Ignore write errors as they likely mean client disconnected
-            }
-        }
+        return Ok(new { isConnected = _mcpService.IsBridgeConnected() });
     }
 }

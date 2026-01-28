@@ -7,28 +7,33 @@ namespace website.api.Services;
 public interface IMcpService
 {
     Task<McpResponse> HandleRequestAsync(McpRequest request);
+    
+    // SSE Bridge Methods
+    void RegisterConnection(string sessionId, HttpResponse response);
+    void RemoveConnection(string sessionId);
+    bool IsBridgeConnected();
+    Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message);
+    void HandleChatResponse(string callbackId, string response, string model);
 }
 
 public class McpService : IMcpService
 {
-    private readonly IProjectService _projectService;
-    private readonly IEmailService _emailService;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<McpService> _logger;
 
-    public McpService(IProjectService projectService, IEmailService emailService, ILogger<McpService> logger)
+    // SSE State
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<string>> _pendingChatRequests = new();
+
+    public McpService(IServiceScopeFactory scopeFactory, ILogger<McpService> logger)
     {
-        _projectService = projectService;
-        _emailService = emailService;
+        _scopeFactory = scopeFactory;
         _logger = logger;
     }
 
     public async Task<McpResponse> HandleRequestAsync(McpRequest request)
     {
-        _logger.LogInformation("=== MCP SERVICE REQUEST ===");
-        _logger.LogInformation("Method: {Method} | ID: {Id} | JsonRpc: {JsonRpc}",
-            request.Method, request.Id, request.JsonRpc);
-        _logger.LogInformation("Params: {Params}",
-            request.Params != null ? JsonSerializer.Serialize(request.Params) : "null");
+        _logger.LogInformation("MCP Request: {Method} (ID: {Id})", request.Method, request.Id);
 
         try
         {
@@ -101,20 +106,17 @@ public class McpService : IMcpService
             Result = serverInfo
         };
 
-        // Log the exact initialize response being sent
-        var jsonResponse = JsonSerializer.Serialize(response,
-            new JsonSerializerOptions { WriteIndented = true });
-
-        _logger.LogInformation("--- INITIALIZE RESPONSE JSON ---");
-        _logger.LogInformation(jsonResponse);
-        _logger.LogInformation("--------------------------------");
+        _logger.LogInformation("Initialized with protocol {Protocol}", "2025-06-18");
 
         return response;
     }
 
     private async Task<McpResponse> HandleResourcesList(McpRequest request)
     {
-        var projects = await _projectService.GetProjectsAsync();
+        using var scope = _scopeFactory.CreateScope();
+        var projectService = scope.ServiceProvider.GetRequiredService<IProjectService>();
+        
+        var projects = await projectService.GetProjectsAsync();
         var resources = new List<object>
         {
             new {
@@ -340,7 +342,10 @@ public class McpService : IMcpService
 
     private async Task<McpResourceContent> GetAllProjectsContent(string uri)
     {
-        var projects = await _projectService.GetProjectsAsync();
+        using var scope = _scopeFactory.CreateScope();
+        var projectService = scope.ServiceProvider.GetRequiredService<IProjectService>();
+
+        var projects = await projectService.GetProjectsAsync();
         return new McpResourceContent
         {
             Uri = uri,
@@ -352,7 +357,11 @@ public class McpService : IMcpService
     private async Task<McpResourceContent> GetProjectContent(string uri)
     {
         var projectId = uri.Replace("portfolio://projects/", "");
-        var projects = await _projectService.GetProjectsAsync();
+        
+        using var scope = _scopeFactory.CreateScope();
+        var projectService = scope.ServiceProvider.GetRequiredService<IProjectService>();
+        
+        var projects = await projectService.GetProjectsAsync();
 
         var project = projects.FirstOrDefault(p =>
             p.Title.ToLower().Replace(" ", "-").Replace("&", "and") == projectId);
@@ -377,9 +386,7 @@ public class McpService : IMcpService
 
     private McpResponse HandleToolsList(McpRequest request)
     {
-        _logger.LogInformation("=== TOOLS/LIST REQUEST START ===");
-        _logger.LogInformation("Request ID: {RequestId}", request.Id);
-        _logger.LogInformation("Request Method: {Method}", request.Method);
+        _logger.LogInformation("Listing tools for Request ID: {RequestId}", request.Id);
 
         var tools = new List<McpTool>
         {
@@ -419,11 +426,7 @@ public class McpService : IMcpService
             }
         };
 
-        _logger.LogInformation("Created {ToolCount} tools:", tools.Count);
-        foreach (var tool in tools)
-        {
-            _logger.LogInformation("- Tool: {ToolName} | Description: {Description}", tool.Name, tool.Description);
-        }
+        _logger.LogInformation("Returning {ToolCount} tools", tools.Count);
 
         var response = new McpResponse
         {
@@ -431,34 +434,19 @@ public class McpService : IMcpService
             Result = new { tools }
         };
 
-        // Add this logging to see the exact output
-        var jsonResponse = JsonSerializer.Serialize(response,
-            new JsonSerializerOptions { WriteIndented = true });
 
-        _logger.LogInformation("--- FINAL 'tools/list' JSON RESPONSE ---");
-        _logger.LogInformation(jsonResponse);
-        _logger.LogInformation("------------------------------------");
-
-        _logger.LogInformation("Tools list response created with ID: {ResponseId}", response.Id);
-        _logger.LogInformation("Response Result Type: {ResultType}", response.Result?.GetType().Name);
-        _logger.LogInformation("=== TOOLS/LIST REQUEST COMPLETE ===");
 
         return response;
     }
 
     private async Task<McpResponse> HandleToolCall(McpRequest request)
     {
-        _logger.LogInformation("=== TOOLS/CALL REQUEST START ===");
-        _logger.LogInformation("Request ID: {RequestId}", request.Id);
-        _logger.LogInformation("Request Method: {Method}", request.Method);
-        _logger.LogInformation("Request Params: {Params}", JsonSerializer.Serialize(request.Params));
+        _logger.LogInformation("Tool Call Request ID: {RequestId}", request.Id);
 
         var paramsJson = JsonSerializer.Serialize(request.Params);
         var toolCall = JsonSerializer.Deserialize<McpToolCall>(paramsJson);
 
-        _logger.LogInformation("Parsed tool call - Name: {ToolName}", toolCall?.Name);
-        _logger.LogInformation("Tool arguments: {Arguments}",
-            toolCall?.Arguments != null ? JsonSerializer.Serialize(toolCall.Arguments) : "null");
+        _logger.LogInformation("Executing tool: {ToolName}", toolCall?.Name);
 
         if (toolCall?.Name == null)
         {
@@ -523,7 +511,9 @@ public class McpService : IMcpService
                 Message = arguments.GetValueOrDefault("message")?.ToString() ?? ""
             };
 
-            var success = await _emailService.SendContactEmailAsync(contactRequest);
+            using var scope = _scopeFactory.CreateScope();
+            var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
+            var success = await emailService.SendContactEmailAsync(contactRequest);
 
             return new McpToolResult
             {
@@ -556,7 +546,9 @@ public class McpService : IMcpService
 
     private async Task<McpToolResult> HandleSearchProjects(Dictionary<string, object>? arguments)
     {
-        var projects = await _projectService.GetProjectsAsync();
+        using var scope = _scopeFactory.CreateScope();
+        var projectService = scope.ServiceProvider.GetRequiredService<IProjectService>();
+        var projects = await projectService.GetProjectsAsync();
 
         if (arguments != null)
         {
@@ -610,5 +602,100 @@ public class McpService : IMcpService
                 Message = message
             }
         };
+    }
+
+    // --- SSE BRIDGE IMPLEMENTATION ---
+
+    public void RegisterConnection(string sessionId, HttpResponse response)
+    {
+        var client = new SseClient(response);
+        _connectedClients.TryAdd(sessionId, client);
+        _logger.LogInformation("Client registered in McpService. SessionId: {SessionId}", sessionId);
+    }
+
+    public void RemoveConnection(string sessionId)
+    {
+        _connectedClients.TryRemove(sessionId, out _);
+        _logger.LogInformation("Client removed from McpService. SessionId: {SessionId}", sessionId);
+    }
+
+    public bool IsBridgeConnected()
+    {
+        return !_connectedClients.IsEmpty;
+    }
+
+    public async Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message)
+    {
+        if (_connectedClients.IsEmpty)
+        {
+            throw new InvalidOperationException("No local bridge connected via SSE.");
+        }
+
+        // Use the first available client (User-to-HomePC 1:1 assumption for now)
+        var client = _connectedClients.Values.FirstOrDefault();
+        if (client == null) throw new InvalidOperationException("Bridge client unavailable.");
+
+        var callbackId = Guid.NewGuid().ToString();
+        var tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+        
+        // Timeout after 60 seconds
+        var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+        cts.Token.Register(() => 
+        {
+            _pendingChatRequests.TryRemove(callbackId, out _);
+            tcs.TrySetException(new TimeoutException("Local LLM did not respond in time."));
+        });
+
+        _pendingChatRequests.TryAdd(callbackId, tcs);
+
+        var payload = new
+        {
+            model = model,
+            callback_id = callbackId,
+            messages = history.Select(h => new { role = h.Role, content = h.Content }).Concat(new[] { new { role = "user", content = message } })
+        };
+
+        try 
+        {
+            await client.SendEventAsync("chat_request", JsonSerializer.Serialize(payload));
+            return await tcs.Task;
+        }
+        catch (Exception ex)
+        {
+            _pendingChatRequests.TryRemove(callbackId, out _);
+            throw new Exception($"Failed to send request to bridge: {ex.Message}");
+        }
+    }
+
+    public void HandleChatResponse(string callbackId, string response, string model)
+    {
+        if (_pendingChatRequests.TryRemove(callbackId, out var tcs))
+        {
+            tcs.TrySetResult(response);
+        }
+        else
+        {
+            _logger.LogWarning("Received chat response for unknown or expired callback ID: {CallbackId}", callbackId);
+        }
+    }
+
+    private class SseClient
+    {
+        private readonly HttpResponse _response;
+        public SseClient(HttpResponse response) => _response = response;
+
+        public async Task SendEventAsync(string eventType, string data)
+        {
+            try 
+            {
+                await _response.WriteAsync($"event: {eventType}\n");
+                await _response.WriteAsync($"data: {data}\n\n");
+                await _response.Body.FlushAsync();
+            }
+            catch
+            {
+                // Likely disconnected
+            }
+        }
     }
 }

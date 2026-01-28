@@ -7,9 +7,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DotNetEnv;
 
 // Load .env file for local development
+// Load .env file for local development
 if (File.Exists(".env"))
 {
+    Console.WriteLine("Loading .env file...");
     Env.Load();
+    var token = Env.GetString("DISCORD_BOT_TOKEN");
+    var channel = Env.GetString("DISCORD_CHANNEL_ID");
+    Console.WriteLine($"Loaded .env file. Token starts with: {(token?.Length > 5 ? token.Substring(0, 5) : "null")}, Channel: {channel}");
+}
+else
+{
+    Console.WriteLine("WARNING: .env file not found!");
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,12 +31,18 @@ builder.Services.AddSwaggerGen();
 // Register custom services
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IMcpService, McpService>();
+
+builder.Services.AddSingleton<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
 builder.Services.AddHttpClient<GeminiAgentService>();
 builder.Services.AddScoped<GeminiAgentService>();
 builder.Services.AddHttpClient<GroqAgentService>();
 builder.Services.AddScoped<GroqAgentService>();
+builder.Services.AddHttpClient<DiscordService>();
+builder.Services.AddSingleton<IDiscordService, DiscordService>();
+builder.Services.AddHttpClient<OllamaService>();
+builder.Services.AddSingleton<OllamaService>();
+builder.Services.AddSingleton<IAccessStateService, AccessStateService>();
 
 // Configure JWT Bearer authentication for OAuth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,7 +65,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorWasm", policy =>
     {
-        policy.WithOrigins("http://localhost:5195", "https://localhost:7112")
+        policy.WithOrigins("http://localhost:5195", "https://localhost:7112", "http://100.88.183.40:5195")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -136,4 +151,4 @@ app.MapControllers();
 // SPA fallback routing - serve index.html for non-API routes (production only)
 app.MapFallbackToFile("index.html");
 
-app.Run();
+app.Run("http://0.0.0.0:5154");

@@ -23,7 +23,9 @@
                     <a href="#home" class="nav-link">Home</a>
                     <a href="#about" class="nav-link">About</a>
                     <a href="#projects" class="nav-link">Projects</a>
-                    <a href="/ai-integration" class="nav-link">AI/MCP</a>
+                    <button @onclick="ToggleChat" class="nav-link flex items-center gap-2 text-cyan-400 hover:text-cyan-300">
+                        <i class="fas fa-robot"></i> AI Assistant
+                    </button>
                     <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">Contact</a>
                 </div>
                 
@@ -39,7 +41,9 @@
                     <a href="#home" class="nav-link text-center">Home</a>
                     <a href="#about" class="nav-link text-center">About</a>
                     <a href="#projects" class="nav-link text-center">Projects</a>
-                    <a href="/ai-integration" class="nav-link text-center">AI/MCP</a>
+                    <button @onclick="ToggleChat" class="nav-link text-center text-cyan-400">
+                        <i class="fas fa-robot mr-2"></i>AI Assistant
+                    </button>
                     <a href="#contact" class="nav-link text-center">Contact</a>
                     <div class="flex justify-center gap-4 pt-2">
                         <a href="#contact" aria-label="Contact" class="text-cyan-400 hover:text-white text-xl"><i class="fas fa-envelope"></i></a>
@@ -68,8 +72,50 @@
             <p>&copy; @DateTime.Now.Year Muhammad Kashif-Khan. Built with Blazor & ❤️.</p>
         </div>
     </footer>
+
+    <!-- AI Assistant Side Panel -->
+    <div class="fixed inset-y-0 right-0 z-[60] bg-gray-900 border-l border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out @(isChatOpen ? "translate-x-0" : "translate-x-full") flex flex-col @(isFullScreen ? "w-full" : "w-full sm:w-[450px]")">
+        <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
+            <div class="flex items-center gap-3">
+                <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                <div>
+                    <span class="font-bold text-lg text-white block">AI Assistant</span>
+                    <span class="text-xs text-gray-400">Powered by Gemini & Local LLMs</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button @onclick="ToggleFullScreen" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700" title="@(isFullScreen ? "Exit Full Screen" : "Full Screen")">
+                    <i class="fas @(isFullScreen ? "fa-compress" : "fa-expand") text-lg"></i>
+                </button>
+                <button @onclick="ToggleChat" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex-1 overflow-hidden relative">
+            <AiTerminal />
+        </div>
+    </div>
+
+    <!-- Backdrop for mobile -->
+    @if (isChatOpen)
+    {
+        <div class="fixed inset-0 bg-black/50 z-[55] backdrop-blur-sm" @onclick="ToggleChat"></div>
+    }
 </div>
 
 @code {
     private bool showWorkInProgress = false;
+    private bool isChatOpen = false;
+    private bool isFullScreen = false;
+
+    private void ToggleChat()
+    {
+        isChatOpen = !isChatOpen;
+    }
+
+    private void ToggleFullScreen()
+    {
+        isFullScreen = !isFullScreen;
+    }
 }

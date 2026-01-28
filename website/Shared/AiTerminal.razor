@@ -18,9 +18,10 @@
             <div class="header-text">
                 <h3>AI Assistant</h3>
                 <div class="model-selector">
-                    <select @bind="selectedProvider" class="provider-select">
-                        <option value="gemini">Gemini</option>
-                        <option value="groq">Groq</option>
+                    <select @onchange="OnProviderChanged" class="provider-select">
+                        <option value="gemini" selected="@(selectedProvider == "gemini")">Gemini</option>
+                        <option value="groq" selected="@(selectedProvider == "groq")">Groq</option>
+                        <option value="ollama" selected="@(selectedProvider == "ollama")">Ollama (Local)</option>
                     </select>
                     <span class="divider">/</span>
                     <select @bind="selectedModel" class="model-select">
@@ -28,21 +29,138 @@
                         {
                             <option value="gemini-3-flash">Gemini 3 Flash</option>
                         }
+                        else if (selectedProvider == "ollama")
+                        {
+                            if (isLoadingModels)
+                            {
+                                <option>Loading models...</option>
+                            }
+                            else if (ollamaModels.Any())
+                            {
+                                foreach (var model in ollamaModels)
+                                {
+                                    <option value="@model">@model</option>
+                                }
+                            }
+                            else
+                            {
+                                <option disabled>No models found</option>
+                            }
+                        }
                         else
                         {
                             <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
                             <option value="llama-3.1-8b-instant">Llama 3.1 8B</option>
+                            <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout 17B</option>
+                            <option value="meta-llama/llama-4-maverick-17b-128e-instruct">Llama 4 Maverick 17B</option>
+                            <option value="qwen/qwen3-32b">Qwen 3 32B</option>
+                            <option value="openai/gpt-oss-120b">GPT-OSS 120B</option>
+                            <option value="openai/gpt-oss-20b">GPT-OSS 20B</option>
+                            <option value="moonshotai/kimi-k2-instruct">Kimi K2 Instruct</option>
+                            <option value="groq/compound">Groq Compound</option>
+                            <option value="allam-2-7b">Allam 2 7B</option>
                         }
                     </select>
                 </div>
             </div>
+            <button class="info-btn" @onclick="ToggleInfo" title="About this assistant">
+                <i class="fas fa-info-circle"></i>
+            </button>
         </div>
     </div>
 
     <div class="chat-body" id="chat-body">
-        @foreach (var message in history)
+        @if (showInfo)
         {
-            <div class="message-wrapper @(message.Role == "user" ? "user" : "ai")">
+            <div class="info-panel">
+                <h4>About this Assistant</h4>
+                <p>This AI is powered by advanced LLMs (Gemini, Llama, Qwen) to help you explore my portfolio.</p>
+                
+                <h5>Capabilities:</h5>
+                <ul>
+                    <li>Search projects by skill or detailed query (RAG).</li>
+                    <li>Answer questions about my experience & skills.</li>
+                    <li>Connect you to local models running on my home PC (Ollama).</li>
+                </ul>
+
+                <h5>Limitations:</h5>
+                <ul>
+                    <li><strong>Context Limit:</strong> Standard token limits apply.</li>
+                    <li><strong>Accuracy:</strong> May occasionally hallucinate details. Verify important info.</li>
+                    <li><strong>Rate Limits:</strong> Public API tiers are used for cloud models.</li>
+                </ul>
+                
+                <button class="close-info-btn" @onclick="ToggleInfo">Got it</button>
+            </div>
+        }
+        else if (isWaitingForApproval)
+        {
+            <div class="access-success">
+                <div class="loading-spinner"></div>
+                <h3>Waiting for Approval...</h3>
+                <p>Muhammad has been notified. Please wait while he reviews your request.</p>
+                <p class="status-note"><i class="fas fa-sync fa-spin"></i> Checking status...</p>
+                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; statusTimer?.Dispose(); StateHasChanged(); }'>
+                    Cancel & Return to Gemini
+                </button>
+            </div>
+        }
+        else if (accessRequestSent)
+        {
+            <div class="access-success">
+                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                <h3>Request Sent!</h3>
+                <p>Muhammad has been notified via Discord. He will review your request to access the local Ollama service.</p>
+                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; accessRequestSent = false; StateHasChanged(); }'>
+                    Back to Gemini
+                </button>
+            </div>
+        }
+        else if (showAccessForm)
+        {
+            <div class="access-form">
+                <h3><i class="fas fa-server"></i> Request Ollama Access</h3>
+                <p class="form-desc">This service runs locally on Muhammad's PC. Please request access to use it.</p>
+                
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" @bind="accessRequest.Name" placeholder="Your Name" />
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" @bind="accessRequest.Email" placeholder="your@email.com" />
+                </div>
+
+                <div class="form-group">
+                    <label>Reason (Optional)</label>
+                    <textarea @bind="accessRequest.Reason" placeholder="Why do you need local access?"></textarea>
+                </div>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i> @errorMessage
+                    </div>
+                }
+
+                <button class="submit-btn" @disabled="isSendingRequest" @onclick="SubmitAccessRequest">
+                    @if (isSendingRequest)
+                    {
+                        <span><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+                    }
+                    else
+                    {
+                        <span><i class="fas fa-paper-plane"></i> Request Access</span>
+                    }
+                </button>
+            </div>
+        }
+        else
+        {
+            @foreach (var message in history)
+            {
+                <div class="message-wrapper @(message.Role == "user" ? "user" : "ai")">
                 @if (message.Role != "user")
                 {
                     <div class="message-avatar">
@@ -89,6 +207,7 @@
                 </div>
             </div>
         }
+    }
     </div>
 
     <div class="chat-footer">
@@ -120,11 +239,13 @@
     .chat-widget {
         display: flex;
         flex-direction: column;
-        height: 600px;
-        max-height: 80vh;
+        height: 100%;
+        max-height: 100%;
         width: 100%;
         max-width: 100%;
-        background: rgba(30, 41, 59, 0.7); /* Slate-800 with opacity */
+        background: transparent; /* Background handled by panel */
+        border: none;
+        border-radius: 0;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -287,17 +408,18 @@
 
     /* Footer */
     .chat-footer {
-        padding: 1rem;
+        padding: 1.5rem;
+        padding-bottom: 2rem;
         background: rgba(15, 23, 42, 0.6);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
     }
 
     .suggestion-chips {
         display: flex;
+        flex-wrap: wrap; /* Allow wrapping to prevent cutoff */
         gap: 8px;
-        overflow-x: auto;
         padding-bottom: 12px;
-        scrollbar-width: none; /* Hide scrollbar */
     }
 
     .suggestion-chips button {
@@ -322,9 +444,10 @@
         display: flex;
         gap: 8px;
         background: rgba(0, 0, 0, 0.2);
-        padding: 6px;
+        padding: 8px; /* Detailed padding */
         border-radius: 24px;
         border: 1px solid rgba(255, 255, 255, 0.1);
+        align-items: center;
     }
 
     .input-area:focus-within {
@@ -379,9 +502,152 @@
         0%, 80%, 100% { transform: scale(0); }
         40% { transform: scale(1); }
     }
+
+    /* Loading Spinner */
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #06b6d4;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1.5rem;
+    }
+
+    @@keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .status-note {
+        font-size: 0.85rem;
+        color: #64748b;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    /* Access Form Styles */
+    .access-form, .access-success {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #f8fafc;
+        padding: 2rem;
+        text-align: center;
+        animation: fadeIn 0.4s ease;
+    }
+
+    .access-form h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+    .form-desc { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .form-group { width: 100%; max-width: 100%; margin-bottom: 1.5rem; text-align: left; }
+    .form-group label { display: block; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 8px; font-weight: 500; }
+    .form-group input, .form-group textarea {
+        width: 100%;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 1rem;
+        color: white;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .form-group textarea { height: 80px; resize: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: #38bdf8; }
+
+    .submit-btn, .back-btn {
+        background: linear-gradient(135deg, #06b6d4, #3b82f6);
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s, opacity 0.2s;
+        margin-top: 0.5rem;
+    }
+    .submit-btn:hover, .back-btn:hover { transform: scale(1.05); }
+    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* Success State */
+    .success-icon { font-size: 3rem; color: #22c55e; margin-bottom: 1rem; }
+    .access-success h3 { font-size: 1.5rem; color: #f8fafc; margin: 0 0 0.5rem 0; }
+    .access-success p { color: #94a3b8; max-width: 300px; margin-bottom: 1.5rem; line-height: 1.5; }
+    .back-btn { background: #334155; }
+    .back-btn:hover { background: #475569; }
+
+    .error-message {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        max-width: 320px;
+    }
+    }
+
+    /* Info Panel Styles */
+    .info-btn {
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        padding: 4px;
+        transition: color 0.2s;
+        margin-left: auto;
+    }
+    .info-btn:hover { color: #38bdf8; }
+
+    .info-panel {
+        background: rgba(30, 41, 59, 0.95);
+        padding: 1.5rem;
+        border-radius: 12px;
+        color: #e2e8f0;
+        animation: fadeIn 0.3s ease;
+        position: absolute;
+        top: 60px;
+        left: 20px;
+        right: 20px;
+        z-index: 10;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+    .info-panel h4 { color: #38bdf8; margin-bottom: 1rem; font-size: 1.1rem; }
+    .info-panel h5 { color: #f8fafc; margin: 1rem 0 0.5rem 0; font-size: 0.95rem; }
+    .info-panel ul { padding-left: 1.2rem; margin-bottom: 1rem; font-size: 0.9rem; color: #cbd5e1; }
+    .info-panel li { margin-bottom: 4px; }
+    .close-info-btn {
+        background: #334155;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        width: 100%;
+        margin-top: 1rem;
+        transition: background 0.2s;
+    }
+    .close-info-btn:hover { background: #475569; }
 </style>
 
 @code {
+    private bool showInfo = false;
+    private void ToggleInfo() => showInfo = !showInfo;
+
     private ElementReference inputElement;
     private string currentInput = "";
     private bool isTyping = false;
@@ -390,6 +656,8 @@
     // Model Selection State
     private string selectedProvider = "gemini";
     private string selectedModel = "gemini-3-flash";
+    private List<string> ollamaModels = new();
+    private bool isLoadingModels = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -400,6 +668,185 @@
             StateHasChanged();
         }
         await ScrollToBottom();
+    }
+
+    // Access Request State
+    private bool showAccessForm = false;
+    private bool accessRequestSent = false;
+    private bool isWaitingForApproval = false;
+    private bool hasAccess = false; // Persistent flag for the session
+    private string? currentRequestId = null;
+    private AccessRequestModel accessRequest = new();
+    private bool isSendingRequest = false;
+    private string? errorMessage = null;
+    private System.Threading.Timer? statusTimer;
+
+    private class AccessRequestModel
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Reason { get; set; } = "";
+    }
+
+    private async Task OnProviderChanged(ChangeEventArgs e)
+    {
+        selectedProvider = e.Value?.ToString() ?? "gemini";
+        errorMessage = null;
+        
+        if (selectedProvider == "ollama")
+        {
+            if (hasAccess)
+            {
+                showAccessForm = false;
+                accessRequestSent = false;
+                isWaitingForApproval = false;
+            }
+            else if (isWaitingForApproval)
+            {
+                showAccessForm = false;
+                accessRequestSent = true;
+                // isWaitingForApproval remains true
+            }
+            else
+            {
+                showAccessForm = true;
+                accessRequestSent = false;
+                isWaitingForApproval = false;
+            }
+            
+            // Fetch models dynamically
+            isLoadingModels = true;
+            StateHasChanged();
+            try 
+            {
+                var response = await Http.GetFromJsonAsync<JsonElement>("api/chat/models?provider=ollama");
+                if (response.TryGetProperty("models", out var modelsElement) && modelsElement.ValueKind == JsonValueKind.Array)
+                {
+                    ollamaModels = modelsElement.EnumerateArray()
+                        .Select(m => m.GetString())
+                        .Where(s => !string.IsNullOrEmpty(s))
+                        .ToList()!;
+                        
+                    if (ollamaModels.Any())
+                    {
+                        selectedModel = ollamaModels.First();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load models: {ex.Message}");
+            }
+            finally
+            {
+                isLoadingModels = false;
+                StateHasChanged();
+            }
+        }
+        else if (selectedProvider == "groq")
+        {
+            showAccessForm = false;
+            selectedModel = "llama-3.3-70b-versatile";
+        }
+        else
+        {
+            showAccessForm = false;
+            selectedModel = "gemini-3-flash";
+        }
+        StateHasChanged();
+    }
+
+    private async Task SubmitAccessRequest()
+    {
+        if (string.IsNullOrWhiteSpace(accessRequest.Name) || string.IsNullOrWhiteSpace(accessRequest.Email)) return;
+
+        errorMessage = null;
+        isSendingRequest = true;
+        StateHasChanged();
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/chat/request-access", accessRequest);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<JsonElement>();
+                if (result.TryGetProperty("requestId", out var requestIdElement))
+                {
+                    currentRequestId = requestIdElement.GetString();
+                    accessRequestSent = true;
+                    showAccessForm = false;
+                    isWaitingForApproval = true;
+                    StartPolling();
+                }
+                else 
+                {
+                    errorMessage = "Server returned success but no Request ID.";
+                }
+            }
+            else
+            {
+                errorMessage = $"Request failed. Status: {response.StatusCode}";
+                Console.WriteLine("Failed to send request");
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Connection Error: {ex.Message}";
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            isSendingRequest = false;
+            StateHasChanged();
+        }
+    }
+
+    private void StartPolling()
+    {
+        statusTimer = new System.Threading.Timer(async _ => await CheckStatus(), null, 0, 3000);
+    }
+
+    private async Task CheckStatus()
+    {
+        if (string.IsNullOrEmpty(currentRequestId)) return;
+
+        try
+        {
+            var response = await Http.GetFromJsonAsync<JsonElement>($"api/chat/status/{currentRequestId}");
+            if (response.TryGetProperty("status", out var statusElement))
+            {
+                var status = statusElement.GetString();
+                if (status == "Ready")
+                {
+                    await InvokeAsync(() =>
+                    {
+                        statusTimer?.Dispose();
+                        statusTimer = null;
+                        isWaitingForApproval = false;
+                        accessRequestSent = false;
+                        showAccessForm = false; // Fully authorized now
+                        hasAccess = true;
+                        selectedProvider = "ollama";
+                        
+                        // Pick first available model or default
+                        if (ollamaModels.Any()) selectedModel = ollamaModels.First();
+                        else selectedModel = "llama3";
+                        
+                        history.Add(new MessageItem { Role = "model", Content = "🎉 Access Granted! You are now connected to the local Ollama instance." });
+                        StateHasChanged();
+                    });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Polling error: {ex.Message}");
+        }
+    }
+
+    public void Dispose()
+    {
+        statusTimer?.Dispose();
     }
 
     private async Task ScrollToBottom()

@@ -157,7 +157,7 @@ public class GeminiAgentService
                     Params = new Dictionary<string, object>
                     {
                         ["name"] = fc.Name,
-                        ["arguments"] = fc.Args
+                        ["arguments"] = fc.Args ?? new Dictionary<string, object>()
                     }
                 };
 
@@ -195,11 +195,7 @@ public class GeminiAgentService
 }
 
 // Helper Models for Gemini API
-public class MessageHistoryItem
-{
-    public string Role { get; set; } = "user";
-    public string Content { get; set; } = "";
-}
+
 
 public class GeminiResponse
 {

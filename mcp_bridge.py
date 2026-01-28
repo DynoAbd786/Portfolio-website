@@ -1,5 +1,6 @@
 
 import sys
+import os
 import json
 import requests
 import sseclient # pip install sseclient-py
@@ -13,7 +14,14 @@ POST_ENDPOINT = None
 
 def listen_to_server():
     global SESSION_ID, POST_ENDPOINT
+    
+    api_key = os.environ.get("BRIDGE_API_KEY")
     headers = {'Accept': 'text/event-stream'}
+    if api_key:
+        headers['X-Bridge-Key'] = api_key
+        sys.stderr.write(f"Using API Key: {api_key[:4]}***\n")
+    else:
+        sys.stderr.write("Warning: BRIDGE_API_KEY not set. Connection may be rejected.\n")
     
     try:
         response = requests.get(SERVER_URL, stream=True, headers=headers)
@@ -44,7 +52,11 @@ def listen_to_client():
         if POST_ENDPOINT:
             try:
                 # Forward to server
-                requests.post(POST_ENDPOINT, data=line, headers={'Content-Type': 'application/json'})
+                headers = {'Content-Type': 'application/json'}
+                if os.environ.get("BRIDGE_API_KEY"):
+                    headers['X-Bridge-Key'] = os.environ.get("BRIDGE_API_KEY")
+                    
+                requests.post(POST_ENDPOINT, data=line, headers=headers)
             except Exception as e:
                 sys.stderr.write(f"Post error: {e}\n")
         else:

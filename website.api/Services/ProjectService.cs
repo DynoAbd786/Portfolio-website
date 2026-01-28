@@ -257,6 +257,16 @@ namespace website.api.Services
                     Tags = new[] { "C++", "Computer Graphics", "2D Rendering", "Rasterization", "Algorithm Implementation", "Performance Analysis", "Graphics Primitives", "Mathematical Modeling" },
                     Category = ProjectCategory.Academic,
                     IsFeatured = false
+                },
+                new Project
+                {
+                    Title = "Home Lab & Remote Infrastructure",
+                    Description = "A self-hosted home lab ecosystem powered by Tailscale and Linux. Features a high-performance PC for local LLM inference (Ollama), connected via a secure mesh network to Android devices running Termux as lightweight servers. Automates Wake-on-LAN via n8n workflows for on-demand remote access.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Home+Lab",
+                    ProjectUrl = "/projects/home-lab",
+                    Tags = new[] { "Tailscale", "Linux", "Self-Hosting", "n8n", "Termux", "Ollama", "Wake-on-LAN", "Networking", "Home Automation" },
+                    Category = ProjectCategory.Personal,
+                    IsFeatured = true
                 }
             };
 
