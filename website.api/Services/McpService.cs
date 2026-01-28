@@ -12,7 +12,7 @@ public interface IMcpService
     void RegisterConnection(string sessionId, HttpResponse response, bool isBridge);
     void RemoveConnection(string sessionId);
     bool IsBridgeConnected();
-    Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null);
+    Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null);
     void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null);
     Task<List<string>> GetModelsAsync();
     void HandleModelsResponse(string callbackId, List<string> models);
@@ -654,7 +654,7 @@ public class McpService : IMcpService
         return _connectedClients.Values.Any(c => c.IsBridge);
     }
 
-    public async Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null)
+    public async Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null)
     {
         if (_connectedClients.IsEmpty)
         {
@@ -683,7 +683,8 @@ public class McpService : IMcpService
             model = model,
             callback_id = callbackId,
             messages = history.Select(h => new { role = h.Role, content = h.Content }).Concat(new[] { new { role = "user", content = message } }),
-            tools = tools
+            tools = tools,
+            options = options
         };
 
         try 

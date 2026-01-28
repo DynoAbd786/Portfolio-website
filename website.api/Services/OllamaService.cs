@@ -56,17 +56,24 @@ public class OllamaService
 
     public async Task<string> ChatAsync(string message, List<Models.MessageHistoryItem> history, string model)
     {
-        // Construct System Prompt with Context
+        // Construct System Prompt with Condensed Context
         var allProjects = await _projectService.GetProjectsAsync();
+        var condensedProjects = allProjects.Select(p => new {
+            p.Title,
+            p.Description,
+            p.Tags,
+            p.Category
+        });
+
         var systemInstruction = 
             "You are the interactive portfolio assistant for Muhammad Kashif-Khan (MkKai). " +
             "Your goal is to help recruiters and visitors navigate his portfolio, understand his skills, and explore his projects.\n\n" +
             "CORE BEHAVIORS:\n" +
             "- Be professional, enthusiastic, and concise.\n" +
-            "- You may receive project data in JSON format below. Use it to answer questions accurately.\n" +
+            "- Use the project data below to answer questions accurately.\n" +
             "- If asked about skills or projects you don't see in the context, refer to his main portfolio at mkkai.dev.\n\n" +
             "PORTFOLIO DATA CONTEXT:\n" +
-            JsonSerializer.Serialize(allProjects);
+            JsonSerializer.Serialize(condensedProjects);
 
         // Prepend system instruction to history for Ollama
         var fullHistory = new List<Models.MessageHistoryItem> 
@@ -79,10 +86,13 @@ public class OllamaService
         var workingHistory = new List<Models.MessageHistoryItem>(fullHistory);
         var currentInput = message;
 
+        // Ollama Options to increase context window
+        var ollamaOptions = new { num_ctx = 8192, temperature = 0.7 };
+
         // 1. Check for Bridge Connection (Scenario A: Remote Site -> Local PC)
         if (_mcpService.IsBridgeConnected())
         {
-            _logger.LogInformation("Routing chat request via SSE Bridge with TOOL support.");
+            _logger.LogInformation("Routing chat request via SSE Bridge with TOOL support and expanded context.");
             
             int maxTurns = 5;
             int currentTurn = 0;
@@ -94,25 +104,25 @@ public class OllamaService
                 while (currentTurn < maxTurns)
                 {
                     _logger.LogInformation("Bridge Turn {Turn} for model {Model}", currentTurn + 1, model);
-                    var bridgeResponse = await _mcpService.SendChatRequestAsync(model, workingHistory, currentInput, availableTools);
+                    
+                    // We'll pass options in the payload if needed, but the bridge needs to be updated to use them
+                    var response = await _mcpService.SendChatRequestAsync(model, workingHistory, currentInput, availableTools, ollamaOptions);
                     
                     // Case A: Tool Calls
-                    if (bridgeResponse.ToolCalls != null && bridgeResponse.ToolCalls.Count > 0)
+                    if (response.ToolCalls != null && response.ToolCalls.Count > 0)
                     {
-                        _logger.LogInformation("Bridge model requested {Count} tool calls", bridgeResponse.ToolCalls.Count);
+                        _logger.LogInformation("Bridge model requested {Count} tool calls", response.ToolCalls.Count);
                         
                         // Add model's tool call response to history
-                        workingHistory.Add(new Models.MessageHistoryItem { Role = "user", Content = currentInput }); // Ensure last input is in history
+                        workingHistory.Add(new Models.MessageHistoryItem { Role = "user", Content = currentInput });
                         workingHistory.Add(new Models.MessageHistoryItem 
                         { 
                             Role = "assistant", 
-                            Content = bridgeResponse.Response // Might be empty or contain thought
+                            Content = response.Response 
                         });
 
-                        foreach (var toolCall in bridgeResponse.ToolCalls)
+                        foreach (var toolCall in response.ToolCalls)
                         {
-                            _logger.LogInformation("Executing tool via bridge: {ToolName}", toolCall.Function.Name);
-                            
                             var mcpRequest = new McpRequest
                             {
                                 Method = "tools/call",
@@ -125,23 +135,20 @@ public class OllamaService
                             };
 
                             var mcpResponse = await _mcpService.HandleRequestAsync(mcpRequest);
-                            var toolResult = mcpResponse.Result;
-
-                            // Add tool result to history
                             workingHistory.Add(new Models.MessageHistoryItem 
                             { 
                                 Role = "tool", 
-                                Content = JsonSerializer.Serialize(toolResult)
+                                Content = JsonSerializer.Serialize(mcpResponse.Result)
                             });
                         }
 
                         currentTurn++;
-                        currentInput = ""; // We are now providing tool results as "input" context
+                        currentInput = ""; 
                         continue;
                     }
 
                     // Case B: Final Text Response
-                    return bridgeResponse.Response;
+                    return response.Response;
                 }
             }
             catch (Exception bridgeEx)
@@ -151,14 +158,18 @@ public class OllamaService
         }
 
         // 2. Fallback to Local/Same-Network Ollama (Scenario B: Local Dev / Same Server)
-        // Note: Local fallback does NOT support tools yet as it's a simple legacy path
         try
         {
             var messages = new List<object>();
             foreach (var item in fullHistory) { messages.Add(new { role = item.Role, content = item.Content }); }
             messages.Add(new { role = "user", content = message });
 
-            var request = new { model = model, messages = messages, stream = false };
+            var request = new { 
+                model = model, 
+                messages = messages, 
+                stream = false,
+                options = ollamaOptions
+            };
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
