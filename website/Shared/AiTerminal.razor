@@ -957,6 +957,14 @@
                 var result = await response.Content.ReadFromJsonAsync<ChatResponseModel>();
                 history.Add(new MessageItem { Role = "model", Content = result?.Response ?? "I didn't get a response." });
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && selectedProvider == "ollama")
+            {
+                hasAccess = false;
+                showAccessForm = true;
+                errorMessage = "Your session has expired. Please request access again.";
+                history.Add(new MessageItem { Role = "model", Content = "🔒 **Session Expired.** Please re-request access to continue using Ollama." });
+                try { await JS.InvokeVoidAsync("localStorage.removeItem", "ollamaAccessRequestId"); } catch {}
+            }
             else
             {
                 history.Add(new MessageItem { Role = "model", Content = "😔 I'm having trouble connecting to the server. Please try again later." });
