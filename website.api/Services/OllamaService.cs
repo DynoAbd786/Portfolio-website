@@ -74,42 +74,91 @@ public class OllamaService
             new Models.MessageHistoryItem { Role = "system", Content = systemInstruction }
         };
         fullHistory.AddRange(history);
+        
+        // Add current user message to working list
+        var workingHistory = new List<Models.MessageHistoryItem>(fullHistory);
+        var currentInput = message;
 
         // 1. Check for Bridge Connection (Scenario A: Remote Site -> Local PC)
         if (_mcpService.IsBridgeConnected())
         {
-            _logger.LogInformation("Routing chat request via SSE Bridge to registered client.");
+            _logger.LogInformation("Routing chat request via SSE Bridge with TOOL support.");
+            
+            int maxTurns = 5;
+            int currentTurn = 0;
+
             try 
             {
-                return await _mcpService.SendChatRequestAsync(model, fullHistory, message);
+                var availableTools = _mcpService.GetTools();
+
+                while (currentTurn < maxTurns)
+                {
+                    _logger.LogInformation("Bridge Turn {Turn} for model {Model}", currentTurn + 1, model);
+                    var bridgeResponse = await _mcpService.SendChatRequestAsync(model, workingHistory, currentInput, availableTools);
+                    
+                    // Case A: Tool Calls
+                    if (bridgeResponse.ToolCalls != null && bridgeResponse.ToolCalls.Count > 0)
+                    {
+                        _logger.LogInformation("Bridge model requested {Count} tool calls", bridgeResponse.ToolCalls.Count);
+                        
+                        // Add model's tool call response to history
+                        workingHistory.Add(new Models.MessageHistoryItem { Role = "user", Content = currentInput }); // Ensure last input is in history
+                        workingHistory.Add(new Models.MessageHistoryItem 
+                        { 
+                            Role = "assistant", 
+                            Content = bridgeResponse.Response // Might be empty or contain thought
+                        });
+
+                        foreach (var toolCall in bridgeResponse.ToolCalls)
+                        {
+                            _logger.LogInformation("Executing tool via bridge: {ToolName}", toolCall.Function.Name);
+                            
+                            var mcpRequest = new McpRequest
+                            {
+                                Method = "tools/call",
+                                Id = Guid.NewGuid().ToString(),
+                                Params = new Dictionary<string, object>
+                                {
+                                    ["name"] = toolCall.Function.Name,
+                                    ["arguments"] = toolCall.Function.Arguments ?? new Dictionary<string, object>()
+                                }
+                            };
+
+                            var mcpResponse = await _mcpService.HandleRequestAsync(mcpRequest);
+                            var toolResult = mcpResponse.Result;
+
+                            // Add tool result to history
+                            workingHistory.Add(new Models.MessageHistoryItem 
+                            { 
+                                Role = "tool", 
+                                Content = JsonSerializer.Serialize(toolResult)
+                            });
+                        }
+
+                        currentTurn++;
+                        currentInput = ""; // We are now providing tool results as "input" context
+                        continue;
+                    }
+
+                    // Case B: Final Text Response
+                    return bridgeResponse.Response;
+                }
             }
             catch (Exception bridgeEx)
             {
-                 _logger.LogWarning("Bridge execution failed, falling back to local: {Message}", bridgeEx.Message);
+                 _logger.LogWarning("Bridge tool execution failed, falling back to simple local: {Message}", bridgeEx.Message);
             }
         }
 
         // 2. Fallback to Local/Same-Network Ollama (Scenario B: Local Dev / Same Server)
+        // Note: Local fallback does NOT support tools yet as it's a simple legacy path
         try
         {
             var messages = new List<object>();
-            
-            // Convert history to Ollama format
-            foreach (var item in fullHistory)
-            {
-                messages.Add(new { role = item.Role, content = item.Content });
-            }
-
-            // Add current user message
+            foreach (var item in fullHistory) { messages.Add(new { role = item.Role, content = item.Content }); }
             messages.Add(new { role = "user", content = message });
 
-            var request = new
-            {
-                model = model,
-                messages = messages,
-                stream = false // For simplicity, we disable streaming for now
-            };
-
+            var request = new { model = model, messages = messages, stream = false };
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
@@ -121,7 +170,7 @@ public class OllamaService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error calling Ollama chat API");
+            _logger.LogError(ex, "Error calling local Ollama fallback");
             return $"Error connecting to Ollama: {ex.Message}";
         }
     }

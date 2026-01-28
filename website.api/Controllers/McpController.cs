@@ -257,6 +257,7 @@ public class McpController : ControllerBase
                     string? callbackId = null;
                     string? content = null;
                     string? model = "unknown";
+                    List<OllamaToolCall>? toolCalls = null;
 
                     if (request.Params is JsonElement paramsElem)
                     {
@@ -274,11 +275,16 @@ public class McpController : ControllerBase
                         {
                             model = modelElem.ToString();
                         }
+
+                        if (paramsElem.TryGetProperty("tool_calls", out var toolCallsElem) && toolCallsElem.ValueKind == JsonValueKind.Array)
+                        {
+                            toolCalls = JsonSerializer.Deserialize<List<OllamaToolCall>>(toolCallsElem.GetRawText());
+                        }
                     }
 
-                    if (!string.IsNullOrEmpty(callbackId) && content != null) 
+                    if (!string.IsNullOrEmpty(callbackId)) 
                     {
-                         _mcpService.HandleChatResponse(callbackId, content, model);
+                         _mcpService.HandleChatResponse(callbackId, content ?? "", model, toolCalls);
                          return Accepted();
                     }
                 }

@@ -12,10 +12,32 @@ public interface IMcpService
     void RegisterConnection(string sessionId, HttpResponse response, bool isBridge);
     void RemoveConnection(string sessionId);
     bool IsBridgeConnected();
-    Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message);
-    void HandleChatResponse(string callbackId, string response, string model);
+    Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null);
+    void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null);
     Task<List<string>> GetModelsAsync();
     void HandleModelsResponse(string callbackId, List<string> models);
+    List<McpTool> GetTools();
+}
+
+public class OllamaBridgeResponse
+{
+    public string Response { get; set; } = "";
+    public List<OllamaToolCall>? ToolCalls { get; set; }
+}
+
+public class OllamaToolCall
+{
+    [JsonPropertyName("function")]
+    public OllamaFunction Function { get; set; } = new();
+}
+
+public class OllamaFunction
+{
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = "";
+
+    [JsonPropertyName("arguments")]
+    public Dictionary<string, object>? Arguments { get; set; }
 }
 
 public class McpService : IMcpService
@@ -25,7 +47,7 @@ public class McpService : IMcpService
 
     // SSE State
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, SseClient> _connectedClients = new();
-    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<string>> _pendingChatRequests = new();
+    private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<OllamaBridgeResponse>> _pendingChatRequests = new();
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<List<string>>> _pendingModelsRequests = new();
 
     public McpService(IServiceScopeFactory scopeFactory, ILogger<McpService> logger)
@@ -387,8 +409,13 @@ public class McpService : IMcpService
         };
     }
 
+        _logger.LogInformation("Returning {ToolCount} tools", tools.Count);
+        return tools;
+    }
+
     private McpResponse HandleToolsList(McpRequest request)
     {
+        var tools = GetTools();
         _logger.LogInformation("Listing tools for Request ID: {RequestId}", request.Id);
 
         var tools = new List<McpTool>
@@ -627,7 +654,7 @@ public class McpService : IMcpService
         return _connectedClients.Values.Any(c => c.IsBridge);
     }
 
-    public async Task<string> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message)
+    public async Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null)
     {
         if (_connectedClients.IsEmpty)
         {
@@ -639,7 +666,7 @@ public class McpService : IMcpService
         if (client == null) throw new InvalidOperationException("Bridge client unavailable.");
 
         var callbackId = Guid.NewGuid().ToString();
-        var tcs = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var tcs = new TaskCompletionSource<OllamaBridgeResponse>(TaskCreationOptions.RunContinuationsAsynchronously);
         
         // Timeout after 60 seconds
         var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
@@ -655,7 +682,8 @@ public class McpService : IMcpService
         {
             model = model,
             callback_id = callbackId,
-            messages = history.Select(h => new { role = h.Role, content = h.Content }).Concat(new[] { new { role = "user", content = message } })
+            messages = history.Select(h => new { role = h.Role, content = h.Content }).Concat(new[] { new { role = "user", content = message } }),
+            tools = tools
         };
 
         try 
@@ -670,11 +698,15 @@ public class McpService : IMcpService
         }
     }
 
-    public void HandleChatResponse(string callbackId, string response, string model)
+    public void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null)
     {
         if (_pendingChatRequests.TryRemove(callbackId, out var tcs))
         {
-            tcs.TrySetResult(response);
+            tcs.TrySetResult(new OllamaBridgeResponse 
+            { 
+                Response = response,
+                ToolCalls = toolCalls
+            });
         }
         else
         {
