@@ -88,7 +88,7 @@ public class OllamaService
         var currentInput = message;
 
         // Ollama Options to increase context window
-        var ollamaOptions = new { num_ctx = 131072, temperature = 0.7 };
+        var ollamaOptions = new { num_ctx = 8192, temperature = 0.7 };
 
         // 1. Check for Bridge Connection (Scenario A: Remote Site -> Local PC)
         if (_mcpService.IsBridgeConnected())
