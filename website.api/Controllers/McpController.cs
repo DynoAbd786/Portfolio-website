@@ -26,8 +26,7 @@ public class McpController : ControllerBase
         // If the client wants SSE, delegate to the SSE handler
         if (Request.Headers["Accept"].ToString().Contains("text/event-stream"))
         {
-            await HandleSseConnection();
-            return new EmptyResult(); // Handled as SSE
+            return await HandleSseConnection();
         }
 
         // Otherwise, provide basic discovery info
@@ -140,13 +139,12 @@ public class McpController : ControllerBase
     
     [HttpGet("sse")]
     [HttpPost("sse")] // Support POST for initialization handshake if needed
-    public async Task HandleSseConnection()
+    public async Task<IActionResult> HandleSseConnection()
     {
         if (Request.Method == "POST")
         {
             // Just treat it as a message or a ping if it's hitting the SSE URL with POST
-            await HandleMcpRequest();
-            return;
+            return await HandleMcpRequest();
         }
 
         // SECURITY CHECK (Hybrid Model)
@@ -177,7 +175,7 @@ public class McpController : ControllerBase
              _logger.LogWarning("No BRIDGE_API_KEY configured. Connection accepted as Guest.");
         }
 
-        Response.Headers.Append("Content-Type", "text/event-stream");
+        Response.ContentType = "text/event-stream";
         Response.Headers.Append("Cache-Control", "no-cache");
         Response.Headers.Append("Connection", "keep-alive");
         Response.Headers.Append("X-Accel-Buffering", "no"); // For Nginx/proxies
@@ -234,6 +232,8 @@ public class McpController : ControllerBase
             _mcpService.RemoveConnection(sessionId);
             _logger.LogInformation($"Client disconnected. SessionId: {sessionId}");
         }
+
+        return new EmptyResult();
     }
 
     [HttpPost("message")]
@@ -291,7 +291,7 @@ public class McpController : ControllerBase
                     if (!string.IsNullOrEmpty(callbackId)) 
                     {
                          _mcpService.HandleChatResponse(callbackId, content ?? "", model, toolCalls, toolsDisabled);
-                         return Accepted();
+                         return Ok(new { status = "accepted", method = request.Method });
                     }
                 }
 
@@ -310,7 +310,7 @@ public class McpController : ControllerBase
                     if (!string.IsNullOrEmpty(callbackId))
                     {
                         _mcpService.HandleChatError(callbackId, error ?? "Unknown bridge error");
-                        return Accepted();
+                        return Ok(new { status = "accepted", method = request.Method });
                     }
                 }
 
@@ -336,7 +336,7 @@ public class McpController : ControllerBase
                     if (!string.IsNullOrEmpty(callbackId) && models != null) 
                     {
                          _mcpService.HandleModelsResponse(callbackId, models);
-                         return Accepted();
+                         return Ok(new { status = "accepted", method = request.Method });
                     }
                 }
 
