@@ -30,13 +30,13 @@ public class McpController : ControllerBase
         }
 
         // Otherwise, provide basic discovery info
-        Response.ContentType = "application/json";
-        return Ok(new 
+        var json = JsonSerializer.Serialize(new 
         { 
             status = "MCP Server Operational", 
             sse_endpoint = "/api/mcp/sse",
             message_endpoint = "/api/mcp/message"
         });
+        return Content(json, "application/json");
     }
 
     [HttpPost]
