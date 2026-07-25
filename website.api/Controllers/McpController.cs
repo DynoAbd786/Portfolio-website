@@ -30,6 +30,7 @@ public class McpController : ControllerBase
         }
 
         // Otherwise, provide basic discovery info
+        Response.ContentType = "application/json";
         return Ok(new 
         { 
             status = "MCP Server Operational", 
