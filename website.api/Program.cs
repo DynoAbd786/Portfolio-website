@@ -51,6 +51,9 @@ builder.Services.AddScoped<OllamaService>();
 builder.Services.AddSingleton<IAccessStateService, AccessStateService>();
 
 // Pages render on the server (static SSR); a few components run in the browser via WebAssembly
+// Render's health check (dashboard setting) polls /health
+builder.Services.AddHealthChecks();
+
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddScoped<website.Data.IProjectSource, ApiProjectSource>();
@@ -191,6 +194,7 @@ app.UseAntiforgery();
 // Fingerprinted assets are cached forever; everything else (e.g. the CV) revalidates via ETag
 app.MapStaticAssets();
 
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.MapRazorComponents<website.api.Components.App>()

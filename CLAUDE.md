@@ -56,6 +56,8 @@ docker-compose down
 
 The listening URL comes from `ASPNETCORE_URLS` (Render/Docker: port 10000); without it the app listens on `http://0.0.0.0:5154`.
 
+Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created in the dashboard, so its settings live there, not in `render.yaml` (kept in sync by hand). Its health check polls `/health` — keep that endpoint, or a deploy times out and Render keeps the previous version.
+
 ## Backend API Architecture
 
 ### Controllers & Endpoints
@@ -93,7 +95,7 @@ Order matters (`website.api/Program.cs`):
 8. **Authentication** → **MCP OAuth** → **Authorization**
 9. **Antiforgery** - required by Razor component endpoints
 10. **`MapStaticAssets`** - fingerprinted assets cached as immutable; others (e.g. PDFs) revalidate via ETag
-11. **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
+11. **`/health`** (health checks), **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
 
 ### Key API Features
 - **CORS Policies**: MCP clients may call from any origin
