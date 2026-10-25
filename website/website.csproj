@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- Disable globalization to avoid ICU data file issues -->
@@ -9,9 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.18" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.18" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.14" />
     <PackageReference Include="Markdig" Version="0.37.0" />
   </ItemGroup>
+
+  <!-- Tailwind CSS: compiled at build time with the standalone CLI (no Node needed).
+       The CLI is downloaded once per version into .tools/ at the repo root. -->
+  <PropertyGroup>
+    <TailwindVersion>v3.4.17</TailwindVersion>
+    <TailwindToolDir>$(MSBuildThisFileDirectory)../.tools/tailwindcss/$(TailwindVersion)/</TailwindToolDir>
+    <TailwindArch>x64</TailwindArch>
+    <TailwindArch Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">arm64</TailwindArch>
+    <TailwindBinary Condition="$([MSBuild]::IsOSPlatform('Linux'))">tailwindcss-linux-$(TailwindArch)</TailwindBinary>
+    <TailwindBinary Condition="$([MSBuild]::IsOSPlatform('OSX'))">tailwindcss-macos-$(TailwindArch)</TailwindBinary>
+    <TailwindBinary Condition="$([MSBuild]::IsOSPlatform('Windows'))">tailwindcss-windows-$(TailwindArch).exe</TailwindBinary>
+    <TailwindOutput>wwwroot/css/tailwind.css</TailwindOutput>
+  </PropertyGroup>
+
+  <Target Name="BuildTailwind" BeforeTargets="BeforeBuild">
+    <DownloadFile Condition="!Exists('$(TailwindToolDir)$(TailwindBinary)')"
+                  SourceUrl="https://github.com/tailwindlabs/tailwindcss/releases/download/$(TailwindVersion)/$(TailwindBinary)"
+                  DestinationFolder="$(TailwindToolDir)" />
+    <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="chmod +x &quot;$(TailwindToolDir)$(TailwindBinary)&quot;" />
+    <Exec Command="&quot;$(TailwindToolDir)$(TailwindBinary)&quot; -c tailwind.config.js -i Styles/tailwind.css -o $(TailwindOutput) --minify" />
+    <!-- The output may not have existed when wwwroot was globbed, so make sure it's a static web asset -->
+    <ItemGroup>
+      <Content Remove="$(TailwindOutput)" />
+      <Content Include="$(TailwindOutput)" />
+    </ItemGroup>
+  </Target>
 
 </Project>

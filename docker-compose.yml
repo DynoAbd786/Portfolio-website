@@ -26,9 +26,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:7233;http://+:7232
     volumes:
-      - ./website.api:/app
-      - ./website.api/bin:/app/bin
-      - ./website.api/obj:/app/obj
+      - ./website:/src/website
+      - ./website.api:/src/website.api
     networks:
       - portfolio-network
     profiles:

@@ -35,3 +35,10 @@ docker-compose*.yml
 *.swp
 *.swo
 *~
+# Secrets and local state never go into the image
+**/.env
+**/*.log
+
+# Build-time tools and generated CSS (rebuilt inside the image)
+.tools/
+website/wwwroot/css/tailwind.css

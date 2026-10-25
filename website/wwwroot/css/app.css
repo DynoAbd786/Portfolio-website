@@ -266,6 +266,11 @@ body {
     will-change: transform, box-shadow;
 }
 
+.project-card-container:hover .project-card {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3), 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
 /* Loading Spinner */
 .loader {
     border: 5px solid #374151; /* border-gray-700 */

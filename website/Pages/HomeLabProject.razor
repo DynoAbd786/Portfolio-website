@@ -1,3 +1,4 @@
+@rendermode InteractiveWebAssembly
 @page "/projects/home-lab"
 @using website.Data
 @using System.Text.Json
@@ -281,8 +282,11 @@
     private bool IsOnline = false;
     private System.Threading.Timer? _timer;
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
+        // Only poll once running in the browser, not while prerendering on the server
+        if (!firstRender) return;
+
         // Poll every 3 seconds to update status
         _timer = new System.Threading.Timer(async _ =>
         {

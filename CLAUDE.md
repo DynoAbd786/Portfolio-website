@@ -4,134 +4,114 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Full-stack personal portfolio website with Blazor WebAssembly frontend and ASP.NET Core Web API backend. Features comprehensive project showcase with academic coursework, professional work, and personal projects, including PDF document downloads and email contact functionality.
+Full-stack personal portfolio website built as a .NET 10 Blazor Web App: pages are rendered on the server (static SSR) by ASP.NET Core, which also hosts the Web API, and a few components run interactively in the browser via WebAssembly. Features a project showcase (academic, professional, personal), PDF downloads, a contact form and an AI assistant.
 
 ## Architecture Overview
 
 ### Solution Structure
-- **`website/`** - Blazor WebAssembly client (frontend)
-- **`website.api/`** - ASP.NET Core Web API server (backend)
+- **`website.api/`** - The host: ASP.NET Core app that renders pages (`Components/App.razor`, `Components/Routes.razor`), serves static assets and the `/api/*` controllers
+- **`website/`** - Blazor WebAssembly client project (referenced by the host): all pages (`Pages/`), layout and shared components (`Shared/`), static assets (`wwwroot/`)
 - **`McpServer/`** - Standalone Model Context Protocol server (not actively used)
 - **Solution file**: `website.sln` manages all projects
 
+### Render Modes
+- **Static SSR (default)**: every page renders to plain HTML on the server; no WebAssembly needed to see content
+- **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): `ContactForm`, `MedicalSimulationProject` (image gallery), `HomeLabProject` (bridge status polling), and `AiTerminal` (in `MainLayout`, `prerender: false` because it reads localStorage)
+- Interactive components are also prerendered on the server, so don't call `HttpClient` or JS from `OnInitialized` in them; do it in `OnAfterRender(firstRender)` or event handlers
+- The layout is static: the mobile menu and the chat panel open/close via `wwwroot/js/site.js`; the chat panel sits in a `data-permanent` container so enhanced navigation keeps it open and running
+
 ### Client-Server Communication
-- **Development**: Client (`localhost:5195`) calls API (`localhost:5154`)
-- **Production**: API serves both API endpoints and static files from single container
-- **API Base URL**: Configured in `website/Program.cs:15-17` with environment-specific logic
-  - Development: `http://localhost:5154/`
-  - Production: Same-origin (API serves frontend)
+- One origin in development and production: the site and API both run on `website.api`
+- Server-rendered pages get project data through `website.Data.IProjectSource`, implemented by `website.api/Services/ApiProjectSource.cs` (reads `IProjectService` directly, no HTTP)
+- Interactive components call the API with `HttpClient` (base address = site origin, set in `website/Program.cs`)
 
 ## Development Commands
 
-### Both Projects (Full-Stack Development)
 ```bash
-# Terminal 1 - Start API server
+# Run the site (pages + API) — http://localhost:5154, Swagger at /swagger
 cd website.api
 dotnet run
 
-# Terminal 2 - Start Blazor client
-cd website
-dotnet run
-
-# Client: http://localhost:5195
-# API: http://localhost:5154 (with Swagger at /swagger)
-```
-
-### Individual Projects
-```bash
-# Build both projects
-dotnet build
-
-# Restore dependencies for solution
-dotnet restore
-
-# Run specific project
-cd website && dotnet run
-cd website.api && dotnet run
-
-# Watch mode for development
-cd website && dotnet watch
+# Watch mode
 cd website.api && dotnet watch
+
+# Build / restore everything
+dotnet build
+dotnet restore
 ```
+
+Requires the .NET 10 SDK. Tailwind CSS (v3.4, standalone CLI, no Node) is compiled during the `website` build into `website/wwwroot/css/tailwind.css` (generated, gitignored); the CLI is downloaded once into `.tools/`. Config: `website/tailwind.config.js`, input `website/Styles/tailwind.css`. Classes must appear literally in `.razor`/`.cs`/`site.js` files to be generated.
 
 ### Docker Commands
 ```bash
-# Full development environment (API + frontend)
-docker-compose up --build
-# Accessible at: http://localhost:8080
-
-# API-only development mode (for separate frontend dev)
-docker-compose --profile dev up api-dev
-# API at: https://localhost:7233 or http://localhost:7232
-
-# Production container
+# Production container (what Render builds)
 docker build -t portfolio-app .
-docker run -p 8080:8080 portfolio-app
+docker run -p 8080:10000 portfolio-app   # http://localhost:8080
 
-# Stop all services
+# docker-compose: production-like site on :8080, or watch mode on :7232/:7233
+docker-compose up --build
+docker-compose --profile dev up api-dev
 docker-compose down
 ```
+
+The listening URL comes from `ASPNETCORE_URLS` (Render/Docker: port 10000); without it the app listens on `http://0.0.0.0:5154`.
 
 ## Backend API Architecture
 
 ### Controllers & Endpoints
-- **`ProjectsController`**: `/api/projects` - CRUD operations for project data
+- **`ProjectsController`**: `/api/projects` - project data
   - `GET /api/projects` - All projects
   - `GET /api/projects/by-url?url={url}` - Project by URL
   - `GET /api/projects/categories/{category}` - Projects by category
 - **`ContactController`**: `/api/contact` - Email functionality via Postmark
   - `POST /api/contact` - Send contact form email
+- **`ChatController`**: `/api/chat/*` - AI assistant (Gemini, Groq, local Ollama via the bridge)
 - **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
   - `POST /api/mcp` - Main MCP endpoint for AI agents (Claude Desktop)
   - `GET /api/mcp` - Initialize endpoint
-  - `GET /api/mcp/tools` - Tools list endpoint
-  - `GET /api/mcp/info` - Server info endpoint
+  - `GET|POST /api/mcp/sse`, `POST /api/mcp/message` - SSE transport
+  - `GET /api/mcp/status/bridge` - Local bridge status (used by the HomeLab page)
 
 ### Services (Dependency Injection)
-All services registered as scoped in `website.api/Program.cs:23-26`:
-- **`IProjectService`**: Business logic for project data management
+Registered in `website.api/Program.cs`:
+- **`IProjectService`**: Project data (single source of truth)
 - **`IEmailService`**: Email sending via Postmark (requires POSTMARK_SERVER_TOKEN in .env)
 - **`IMcpService`**: JSON-RPC 2.0 protocol handler for MCP requests
 - **`IOAuthService`**: OAuth 2.0 authentication for MCP clients
+- **`website.Data.IProjectSource` / `website.Data.ProjectService`**: project data for server-rendered pages
+- Typed `HttpClient`s for the Gemini/Groq/Discord/Ollama services. `AddHttpClient` also registers the default transient `HttpClient` that prerendered interactive components resolve — don't register a scoped `HttpClient` (the singleton `DiscordService` would capture it)
 
 ### Middleware Pipeline
-Critical ordering in `website.api/Program.cs:78-118`:
-1. **Forwarded Headers** - Handle proxy/CDN scenarios (line 78)
-2. **Swagger** - Development only (lines 81-84)
-3. **CORS** - AllowMcpClients policy globally (line 91)
-4. **Request Logging** - Custom middleware for debugging (line 94)
-5. **Authentication** - JWT Bearer (line 97)
-6. **MCP OAuth** - Custom OAuth middleware (line 98)
-7. **Authorization** (line 99)
-8. **Static Files** - Serve frontend assets (lines 103-112)
-9. **Controller Mapping** (line 115)
-10. **SPA Fallback** - index.html for non-API routes (line 118)
+Order matters (`website.api/Program.cs`):
+1. **Forwarded Headers** - proxy/CDN (Render, Cloudflare)
+2. **Status code pages** - unknown page URLs re-execute `/not-found`; disabled for `/api/*` so API 404s keep their own bodies. Must stay early so the re-executed request passes through auth and antiforgery
+3. **Swagger** - Development only
+4. **CORS** - AllowMcpClients policy globally
+5. **Request Logging** - custom middleware
+6. **Authentication** → **MCP OAuth** → **Authorization**
+7. **Antiforgery** - required by Razor component endpoints
+8. **`MapStaticAssets`** - fingerprinted assets cached as immutable; others (e.g. PDFs) revalidate via ETag
+9. **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
 
 ### Key API Features
-- **CORS Policies**: Two separate policies for Blazor client and MCP clients
-- **Static File Serving**: API serves frontend assets in production with caching headers
-- **SPA Fallback Routing**: Non-API routes serve `index.html` for client-side routing
-- **Environment Variables**: Uses DotNetEnv for .env file loading (line 10-13)
+- **CORS Policies**: MCP clients may call from any origin
+- **Environment Variables**: DotNetEnv loads `website.api/.env` for local development
 - **OAuth 2.0**: Custom implementation for MCP client authentication
-- **Forwarded Headers**: Production configuration for proxy scenarios (lines 65-73)
 
 ## Frontend Architecture
 
-### Core Structure
-- **Entry Point**: `website/Program.cs` - Configures HttpClient with API base address
-- **Service Registration**: `ProjectService` for API communication
-- **Routing**: `App.razor` with MainLayout for consistent page structure
-
 ### Pages & Components
-- **Project Pages**: Individual pages for each project (Academic, Professional, Personal)
+- **Project Pages**: Individual pages for each project (Academic, Professional, Personal) in `website/Pages/`
 - **Shared Components**: `ProjectCard.razor` for consistent project display
-- **Layout**: `MainLayout.razor` with responsive navigation and styling
+- **Layout**: `MainLayout.razor` with responsive navigation; sets the default `<PageTitle>` (a page's own `<PageTitle>` wins)
+- **Document head**: `website.api/Components/App.razor` (meta tags, per-page canonical URL, CDN fonts/icons, stylesheets). `app.css` loads before `tailwind.css` so utilities override it
+- **Not found**: `website/Pages/NotFound.razor` (`/not-found`)
 
 ### Project Data Flow
-1. Client `ProjectService` calls API via HttpClient
-2. API `ProjectsController` uses `IProjectService` for business logic
+1. A page injects `website.Data.ProjectService`
+2. On the server, `ApiProjectSource` maps `IProjectService` data to `website.Data.Project`
 3. Projects categorized by `ProjectCategory` enum (Personal, Professional, Academic)
-4. Frontend displays projects in category-grouped sections
+4. Pages display projects in category-grouped sections
 
 ## Document Management System
 
@@ -148,24 +128,6 @@ Each academic project follows standardized format:
 
 ## Critical Configuration
 
-### API Port Configuration
-- **Client expects API on**: `http://localhost:5154/` (set in `website/Program.cs`)
-- **API runs on**: `http://localhost:5154` (set in `website.api/Properties/launchSettings.json`)
-- **Production**: Same-origin requests when API serves static files
-
-### Service Registration Patterns
-```csharp
-// API (website.api/Program.cs:23-26)
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IMcpService, McpService>();
-builder.Services.AddScoped<IOAuthService, OAuthService>();
-
-// Client (website/Program.cs:19-20)
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseAddress) });
-builder.Services.AddScoped<website.Data.ProjectService>();
-```
-
 ### Environment Configuration
 Create `.env` file in `website.api/` for local development:
 ```
@@ -175,8 +137,8 @@ POSTMARK_SERVER_TOKEN=your_token_here
 
 ### Project Data Management
 - **Single Source of Truth**: Project data defined in `website.api/Services/ProjectService.cs`
-- **Client Service**: Makes HTTP calls to API, no fallback data
-- **Error Handling**: Returns empty list if API unavailable
+- **Pages**: Read it in-process through `IProjectSource`; external clients use `/api/projects`
+- **Error Handling**: `ProjectService` returns an empty list if loading fails
 
 ## Common Development Tasks
 
