@@ -21,10 +21,10 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "7233:7233"
+      - "7232:7232"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:7233;http://+:7232
+      - ASPNETCORE_URLS=http://+:7232
     volumes:
       - ./website:/src/website
       - ./website.api:/src/website.api

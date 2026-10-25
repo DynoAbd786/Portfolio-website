@@ -33,8 +33,6 @@
     <link rel="canonical" href="@CanonicalUrl" />
     <base href="/" />
     <link rel="stylesheet" href="@Assets["css/app.css"]" />
-    @* After app.css, matching the old CDN script's cascade: utilities win over app.css rules *@
-    <link rel="stylesheet" href="@Assets["css/tailwind.css"]" />
     <ImportMap />
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -53,6 +51,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Source+Code+Pro:wght@400;700;900&display=swap"
         rel="stylesheet">
+    @* Last stylesheet, as the old CDN script injected it: utilities win over app.css,
+       Font Awesome, KaTeX and highlight.js rules *@
+    <link rel="stylesheet" href="@Assets["css/tailwind.css"]" />
     <ResourcePreloader />
     <HeadOutlet />
 </head>

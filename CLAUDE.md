@@ -40,7 +40,7 @@ dotnet build
 dotnet restore
 ```
 
-Requires the .NET 10 SDK. Tailwind CSS (v3.4, standalone CLI, no Node) is compiled during the `website` build into `website/wwwroot/css/tailwind.css` (generated, gitignored); the CLI is downloaded once into `.tools/`. Config: `website/tailwind.config.js`, input `website/Styles/tailwind.css`. Classes must appear literally in `.razor`/`.cs`/`site.js` files to be generated.
+Requires the .NET 10 SDK. Tailwind CSS (v3.4, standalone CLI, no Node) is compiled during the `website` build into `website/wwwroot/css/tailwind.css` (generated, gitignored); the CLI is downloaded once into `.tools/`. Config: `website/tailwind.config.js`, input `website/Styles/tailwind.css`. Classes must appear literally in `.razor`/`.cs`/`site.js` files to be generated. `dotnet watch` hot reload doesn't recompile Tailwind; while editing markup, run the CLI in watch mode alongside it from `website/`: `../.tools/tailwindcss/v3.4.17/tailwindcss-linux-x64 -c tailwind.config.js -i Styles/tailwind.css -o wwwroot/css/tailwind.css --watch` (the binary appears after the first build).
 
 ### Docker Commands
 ```bash
@@ -48,7 +48,7 @@ Requires the .NET 10 SDK. Tailwind CSS (v3.4, standalone CLI, no Node) is compil
 docker build -t portfolio-app .
 docker run -p 8080:10000 portfolio-app   # http://localhost:8080
 
-# docker-compose: production-like site on :8080, or watch mode on :7232/:7233
+# docker-compose: production-like site on :8080, or watch mode on :7232
 docker-compose up --build
 docker-compose --profile dev up api-dev
 docker-compose down
@@ -84,14 +84,16 @@ Registered in `website.api/Program.cs`:
 ### Middleware Pipeline
 Order matters (`website.api/Program.cs`):
 1. **Forwarded Headers** - proxy/CDN (Render, Cloudflare)
-2. **Status code pages** - unknown page URLs re-execute `/not-found`; disabled for `/api/*` so API 404s keep their own bodies. Must stay early so the re-executed request passes through auth and antiforgery
-3. **Swagger** - Development only
-4. **CORS** - AllowMcpClients policy globally
-5. **Request Logging** - custom middleware
-6. **Authentication** → **MCP OAuth** → **Authorization**
-7. **Antiforgery** - required by Razor component endpoints
-8. **`MapStaticAssets`** - fingerprinted assets cached as immutable; others (e.g. PDFs) revalidate via ETag
-9. **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
+2. **HEAD as GET** - HEAD requests run as GET with the body dropped (pages and API GETs only match GET). Before status code pages, whose re-execute does its own routing
+3. **Status code pages** - unknown page URLs re-execute `/not-found`; disabled for `/api/*` so API 404s keep their own bodies. Must stay early so the re-executed request passes through auth and antiforgery
+4. **`UseRouting`** - explicit, so it runs after the HEAD rewrite
+5. **Swagger** - Development only
+6. **CORS** - AllowMcpClients policy globally
+7. **Request Logging** - custom middleware
+8. **Authentication** → **MCP OAuth** → **Authorization**
+9. **Antiforgery** - required by Razor component endpoints
+10. **`MapStaticAssets`** - fingerprinted assets cached as immutable; others (e.g. PDFs) revalidate via ETag
+11. **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
 
 ### Key API Features
 - **CORS Policies**: MCP clients may call from any origin
@@ -104,7 +106,7 @@ Order matters (`website.api/Program.cs`):
 - **Project Pages**: Individual pages for each project (Academic, Professional, Personal) in `website/Pages/`
 - **Shared Components**: `ProjectCard.razor` for consistent project display
 - **Layout**: `MainLayout.razor` with responsive navigation; sets the default `<PageTitle>` (a page's own `<PageTitle>` wins)
-- **Document head**: `website.api/Components/App.razor` (meta tags, per-page canonical URL, CDN fonts/icons, stylesheets). `app.css` loads before `tailwind.css` so utilities override it
+- **Document head**: `website.api/Components/App.razor` (meta tags, per-page canonical URL, CDN fonts/icons, stylesheets). `tailwind.css` is the last stylesheet (as the old CDN script injected it) so utilities override `app.css`, Font Awesome, KaTeX and highlight.js
 - **Not found**: `website/Pages/NotFound.razor` (`/not-found`)
 
 ### Project Data Flow

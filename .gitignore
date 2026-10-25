@@ -335,3 +335,6 @@ local_agent.py
 # Build-time tools and generated CSS
 .tools/
 website/wwwroot/css/tailwind.css
+
+# Brainstorming mockups (local only)
+.superpowers/

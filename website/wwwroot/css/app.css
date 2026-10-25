@@ -285,3 +285,7 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Chat panel placeholder: hidden as soon as the AI terminal renders next to it */
+.chat-loading:not(:only-child) {
+    display: none;
+}

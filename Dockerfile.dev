@@ -9,8 +9,7 @@ RUN dotnet restore ./website.api/website.api.csproj
 COPY website/ ./website/
 COPY website.api/ ./website.api/
 
-EXPOSE 7233
 EXPOSE 7232
 
 WORKDIR /src/website.api
-ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile", "--urls", "https://+:7233;http://+:7232"]
+ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile", "--urls", "http://+:7232"]
