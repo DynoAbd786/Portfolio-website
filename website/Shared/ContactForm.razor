@@ -64,8 +64,11 @@
 
                 <!-- Contact Form -->
                 <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
-                    <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit" class="space-y-6">
+                    <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">
                         <DataAnnotationsValidator />
+                        @* The form is prerendered as HTML; keep it disabled until it runs in the browser,
+                           so nothing typed is lost and nothing posts to the server early *@
+                        <fieldset disabled="@(!RendererInfo.IsInteractive)" class="space-y-6">
 
                         <div>
                             <label for="name" class="block text-white font-semibold mb-2">Full Name *</label>
@@ -130,7 +133,12 @@
 
                         <button type="submit" disabled="@isSubmitting"
                                 class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
-                            @if (isSubmitting)
+                            @if (!RendererInfo.IsInteractive)
+                            {
+                                <i class="fas fa-spinner fa-spin mr-2"></i>
+                                <span>Loading form...</span>
+                            }
+                            else if (isSubmitting)
                             {
                                 <i class="fas fa-spinner fa-spin mr-2"></i>
                                 <span>Sending...</span>
@@ -149,6 +157,7 @@
                                 @submitMessage
                             </div>
                         }
+                        </fieldset>
                     </EditForm>
                 </div>
             </div>

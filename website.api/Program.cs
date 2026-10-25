@@ -110,6 +110,31 @@ var app = builder.Build();
 // Configure forwarded headers for proxy scenarios (must be early in pipeline)
 app.UseForwardedHeaders();
 
+// Pages and API GET endpoints only match GET, so link checkers and uptime monitors sending
+// HEAD would get 405. Run HEAD as GET and drop the body (headers stay as GET would send them).
+// Before the status code pages, whose re-executed request does its own routing.
+app.Use(async (context, next) =>
+{
+    if (!HttpMethods.IsHead(context.Request.Method))
+    {
+        await next();
+        return;
+    }
+
+    context.Request.Method = HttpMethods.Get;
+    var body = context.Response.Body;
+    context.Response.Body = Stream.Null;
+    try
+    {
+        await next();
+    }
+    finally
+    {
+        context.Response.Body = body;
+        context.Request.Method = HttpMethods.Head;
+    }
+});
+
 // Unknown page URLs render the site's not-found page; API 404s keep their own responses.
 // Registered early so the re-executed request runs through auth and antiforgery again.
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
@@ -122,6 +147,9 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+
+// Routing runs after the HEAD rewrite so endpoints are matched as GET
+app.UseRouting();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

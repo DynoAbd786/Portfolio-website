@@ -93,6 +93,10 @@
                 </div>
             </div>
             <div class="flex-1 overflow-hidden relative">
+                @* Shown until AiTerminal renders beside it (hidden by .chat-loading:not(:only-child) in app.css) *@
+                <div class="chat-loading absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
+                    <i class="fas fa-spinner fa-spin mr-2"></i>Starting assistant...
+                </div>
                 @* Interactive in the browser; not prerendered because it lives in localStorage *@
                 <AiTerminal @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
             </div>
