@@ -1,17 +1,16 @@
-# Development Dockerfile for API only
-FROM mcr.microsoft.com/dotnet/sdk:8.0
-WORKDIR /app
+# Development container: runs the site (pages + API) in watch mode
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+WORKDIR /src
 
-# Copy project files
-COPY website.api/*.csproj ./
-RUN dotnet restore
+COPY website/*.csproj ./website/
+COPY website.api/*.csproj ./website.api/
+RUN dotnet restore ./website.api/website.api.csproj
 
-# Copy source code
-COPY website.api/ ./
+COPY website/ ./website/
+COPY website.api/ ./website.api/
 
-# Expose ports
 EXPOSE 7233
 EXPOSE 7232
 
-# Start in watch mode for development
-ENTRYPOINT ["dotnet", "watch", "run", "--urls", "https://+:7233;http://+:7232"]
+WORKDIR /src/website.api
+ENTRYPOINT ["dotnet", "watch", "run", "--no-launch-profile", "--urls", "https://+:7233;http://+:7232"]

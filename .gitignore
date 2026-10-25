@@ -331,3 +331,7 @@ mcp_bridge.py
 mcp-bridge.service
 local_agent.py
 .mcp_bridge_state.json
+
+# Build-time tools and generated CSS
+.tools/
+website/wwwroot/css/tailwind.css

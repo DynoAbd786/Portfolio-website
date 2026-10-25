@@ -1,33 +1,25 @@
-using System.Net.Http.Json;
-
 namespace website.Data
 {
     public class ProjectService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IProjectSource _source;
 
-        public ProjectService(HttpClient httpClient)
+        public ProjectService(IProjectSource source)
         {
-            _httpClient = httpClient;
+            _source = source;
         }
 
         public async Task<List<Project>> GetProjectsAsync()
         {
             try
             {
-                Console.WriteLine($"[ProjectService] Calling API: {_httpClient.BaseAddress}api/projects");
-                var response = await _httpClient.GetFromJsonAsync<List<Project>>("api/projects");
-                Console.WriteLine($"[ProjectService] API Response received: {response?.Count ?? 0} projects");
-                // Filter out any null entries from API response
-                return (response ?? new List<Project>())
-                    .Where(p => p != null)
-                    .ToList();
+                var projects = await _source.GetProjectsAsync();
+                // Filter out any null entries
+                return projects.Where(p => p != null).ToList();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ProjectService] API Error: {ex.GetType().Name} - {ex.Message}");
-                Console.WriteLine($"[ProjectService] Stack trace: {ex.StackTrace}");
-                // Fallback to empty list if API is unavailable
+                Console.WriteLine($"[ProjectService] Error loading projects: {ex.GetType().Name} - {ex.Message}");
                 return new List<Project>();
             }
         }

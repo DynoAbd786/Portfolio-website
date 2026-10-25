@@ -2,6 +2,9 @@
 
 @inherits LayoutComponentBase
 
+@* Default title; a page's own <PageTitle> renders later and wins *@
+<PageTitle>Muhammad Kashif Khan - Portfolio | Software Engineer & Computer Science Student</PageTitle>
+
 <div class="bg-gray-900 text-gray-200 min-h-screen font-sans">
     <header class="sticky top-0 z-50 bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg shadow-cyan-500/10">
         <nav class="container mx-auto px-4 sm:px-6 py-4">
@@ -23,7 +26,7 @@
                     <a href="#home" class="nav-link">Home</a>
                     <a href="#about" class="nav-link">About</a>
                     <a href="#projects" class="nav-link">Projects</a>
-                    <button @onclick="ToggleChat" class="nav-link flex items-center gap-2 text-cyan-400 hover:text-cyan-300">
+                    <button type="button" onclick="mkChat.toggle()" class="nav-link flex items-center gap-2 text-cyan-400 hover:text-cyan-300">
                         <i class="fas fa-robot"></i> AI Assistant
                     </button>
                     <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">Contact</a>
@@ -41,7 +44,7 @@
                     <a href="#home" class="nav-link text-center">Home</a>
                     <a href="#about" class="nav-link text-center">About</a>
                     <a href="#projects" class="nav-link text-center">Projects</a>
-                    <button @onclick="ToggleChat" class="nav-link text-center text-cyan-400">
+                    <button type="button" onclick="mkChat.toggle()" class="nav-link text-center text-cyan-400">
                         <i class="fas fa-robot mr-2"></i>AI Assistant
                     </button>
                     <a href="#contact" class="nav-link text-center">Contact</a>
@@ -56,12 +59,6 @@
         </nav>
     </header>
 
-    @if (showWorkInProgress)
-    {
-        <div class="bg-yellow-600 text-yellow-900 px-4 sm:px-6 py-2 text-center font-semibold text-sm sm:text-base">
-            🚧 Work in Progress - This site is under development
-        </div>
-    }
 
     <main>
         @Body
@@ -73,49 +70,36 @@
         </div>
     </footer>
 
-    <!-- AI Assistant Side Panel -->
-    <div class="fixed inset-y-0 right-0 z-[60] bg-gray-900 border-l border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out @(isChatOpen ? "translate-x-0" : "translate-x-full") flex flex-col @(isFullScreen ? "w-full" : "w-full sm:w-[450px]")">
-        <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
-            <div class="flex items-center gap-3">
-                <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                <div>
-                    <span class="font-bold text-lg text-white block">AI Assistant</span>
-                    <span class="text-xs text-gray-400">Powered by Gemini & Local LLMs</span>
+    @* data-permanent keeps enhanced navigation from touching anything inside, so the panel's
+       open/full-screen classes (set by site.js) and the running chat survive page changes *@
+    <div id="chat-root" data-permanent>
+        <!-- AI Assistant Side Panel -->
+        <div id="chat-panel" class="fixed inset-y-0 right-0 z-[60] bg-gray-900 border-l border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out translate-x-full flex flex-col w-full sm:w-[450px]">
+            <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                    <div>
+                        <span class="font-bold text-lg text-white block">AI Assistant</span>
+                        <span class="text-xs text-gray-400">Powered by Gemini & Local LLMs</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" id="chat-fullscreen" onclick="mkChat.toggleFullScreen()" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700" title="Full Screen">
+                        <i class="fas fa-expand text-lg"></i>
+                    </button>
+                    <button type="button" onclick="mkChat.toggle()" aria-label="Close AI Assistant" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button @onclick="ToggleFullScreen" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700" title="@(isFullScreen ? "Exit Full Screen" : "Full Screen")">
-                    <i class="fas @(isFullScreen ? "fa-compress" : "fa-expand") text-lg"></i>
-                </button>
-                <button @onclick="ToggleChat" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
+            <div class="flex-1 overflow-hidden relative">
+                @* Interactive in the browser; not prerendered because it lives in localStorage *@
+                <AiTerminal @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
             </div>
         </div>
-        <div class="flex-1 overflow-hidden relative">
-            <AiTerminal />
-        </div>
-    </div>
 
-    <!-- Backdrop for mobile -->
-    @if (isChatOpen)
-    {
-        <div class="fixed inset-0 bg-black/50 z-[55] backdrop-blur-sm" @onclick="ToggleChat"></div>
-    }
+        <!-- Backdrop for mobile -->
+        <div id="chat-backdrop" class="fixed inset-0 bg-black/50 z-[55] backdrop-blur-sm hidden" onclick="mkChat.toggle()"></div>
+    </div>
 </div>
 
-@code {
-    private bool showWorkInProgress = false;
-    private bool isChatOpen = false;
-    private bool isFullScreen = false;
-
-    private void ToggleChat()
-    {
-        isChatOpen = !isChatOpen;
-    }
-
-    private void ToggleFullScreen()
-    {
-        isFullScreen = !isFullScreen;
-    }
-}

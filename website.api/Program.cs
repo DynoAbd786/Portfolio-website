@@ -1,8 +1,8 @@
 using website.api.Services;
 using website.api.Middleware;
-using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.HostFiltering;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DotNetEnv;
 
@@ -22,6 +22,12 @@ else
 }
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Containers set ASPNETCORE_URLS (Render: port 10000); local runs default to 5154
+if (string.IsNullOrEmpty(builder.Configuration["urls"]))
+{
+    builder.WebHost.UseUrls("http://0.0.0.0:5154");
+}
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -43,6 +49,14 @@ builder.Services.AddSingleton<IDiscordService, DiscordService>();
 builder.Services.AddHttpClient<OllamaService>();
 builder.Services.AddScoped<OllamaService>();
 builder.Services.AddSingleton<IAccessStateService, AccessStateService>();
+
+// Pages render on the server (static SSR); a few components run in the browser via WebAssembly
+builder.Services.AddRazorComponents()
+    .AddInteractiveWebAssemblyComponents();
+builder.Services.AddScoped<website.Data.IProjectSource, ApiProjectSource>();
+builder.Services.AddScoped<website.Data.ProjectService>();
+// Interactive components that inject HttpClient are prerendered here too. They only call it once
+// running in the browser, so the default HttpClient that AddHttpClient registers is enough.
 
 // Configure JWT Bearer authentication for OAuth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -86,7 +100,7 @@ if (builder.Environment.IsProduction())
     builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
         options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
-        options.KnownNetworks.Clear();
+        options.KnownIPNetworks.Clear();
         options.KnownProxies.Clear();
     });
 }
@@ -95,6 +109,19 @@ var app = builder.Build();
 
 // Configure forwarded headers for proxy scenarios (must be early in pipeline)
 app.UseForwardedHeaders();
+
+// Unknown page URLs render the site's not-found page; API 404s keep their own responses.
+// Registered early so the re-executed request runs through auth and antiforgery again.
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/api") &&
+        context.Features.Get<IStatusCodePagesFeature>() is { } statusCodePages)
+    {
+        statusCodePages.Enabled = false;
+    }
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -131,24 +158,15 @@ app.Use(async (context, next) =>
 app.UseAuthentication();
 app.UseMcpOAuth(); // Custom OAuth middleware for MCP
 app.UseAuthorization();
+app.UseAntiforgery();
 
+// Fingerprinted assets are cached forever; everything else (e.g. the CV) revalidates via ETag
+app.MapStaticAssets();
 
-// Configure static file serving for production
-app.UseDefaultFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    OnPrepareResponse = ctx =>
-    {
-        // Allow static files to be served regardless of Host header
-        // This fixes subdomain issues like mcp.mkkai.dev
-        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=31536000");
-    }
-});
-
-// Map API controllers BEFORE fallback routing
 app.MapControllers();
 
-// SPA fallback routing - serve index.html for non-API routes (production only)
-app.MapFallbackToFile("index.html");
+app.MapRazorComponents<website.api.Components.App>()
+    .AddInteractiveWebAssemblyRenderMode()
+    .AddAdditionalAssemblies(typeof(website._Imports).Assembly);
 
-app.Run("http://0.0.0.0:5154");
+app.Run();

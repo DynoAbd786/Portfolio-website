@@ -1,0 +1,6 @@
+@* Pages live in the client project (website) so interactive ones can run in the browser *@
+<Router AppAssembly="typeof(website._Imports).Assembly" NotFoundPage="typeof(website.Pages.NotFound)">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+    </Found>
+</Router>

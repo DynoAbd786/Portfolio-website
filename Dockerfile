@@ -1,52 +1,30 @@
-# Multi-stage Dockerfile for Blazor WebAssembly + ASP.NET Core API
+# Blazor Web App: website.api renders the pages and serves the API;
+# the website project is its WebAssembly client for interactive components.
 
-# Stage 1: Build the API
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS api-build
+# Stage 1: build and publish (publishing the host also publishes the client)
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /source
 
-# Copy API project files
+# Restore first so the package layer is cached. Publish restores again once the
+# sources are in: the Blazor framework scripts only resolve when .razor files exist
+COPY website/*.csproj ./website/
 COPY website.api/*.csproj ./website.api/
 RUN dotnet restore ./website.api/website.api.csproj
 
-# Copy API source code
+COPY website/ ./website/
 COPY website.api/ ./website.api/
 
-# Build and publish API
-RUN dotnet publish ./website.api/website.api.csproj -c Release -o /app/api
+# The build downloads the Tailwind CLI into .tools/ and compiles the CSS
+RUN dotnet publish ./website.api/website.api.csproj -c Release -o /app
 
-# Stage 2: Build the Blazor WebAssembly app
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS wasm-build
-WORKDIR /source
-
-# Copy frontend project files
-COPY website/*.csproj ./website/
-RUN dotnet restore ./website/website.csproj
-
-# Copy frontend source code
-COPY website/ ./website/
-
-# Build and publish Blazor WASM with all framework files
-RUN dotnet publish ./website/website.csproj -c Release -o /app/published
-
-# Stage 3: Runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+# Stage 2: runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
+COPY --from=build /app .
 
-# Copy API from build stage
-COPY --from=api-build /app/api .
-
-# Copy all Blazor WASM published files (includes _framework folder)
-COPY --from=wasm-build /app/published/wwwroot/ ./wwwroot/
-
-# Ensure proper permissions for all files
-RUN chmod -R 644 ./wwwroot/*
-
-# Expose port (Render uses port 10000)
+# Render routes to port 10000
 EXPOSE 10000
-
-# Configure ASP.NET Core to serve static files
 ENV ASPNETCORE_URLS=http://+:10000
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-# Update API Program.cs will be needed to serve static files
 ENTRYPOINT ["dotnet", "website.api.dll"]
