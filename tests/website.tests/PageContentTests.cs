@@ -23,4 +23,13 @@ public class PageContentTests : IClassFixture<SiteFactory>
         Assert.DoesNotContain("student", main.TextContent, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("Predicted", main.TextContent);
     }
+
+    [Fact]
+    public async Task Home_lab_status_shows_no_made_up_uptime()
+    {
+        var doc = await Html.GetAsync(_client, "/projects/home-lab");
+        var status = doc.QuerySelector("main .bridge-status")!.TextContent;
+        Assert.DoesNotContain("Uptime", status);
+        Assert.DoesNotContain("%", status);
+    }
 }
