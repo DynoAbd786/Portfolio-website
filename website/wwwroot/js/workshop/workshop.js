@@ -32,8 +32,17 @@ export async function mount(root, data) {
 
   const renderer = createRenderer(canvas); // throws 'webgl-unavailable'
   root.dataset.state = 'loading';
-  const BASE_DPR = Math.min(devicePixelRatio || 1, MOBILE ? 1.35 : 1.5); // bloom and outline passes: 1.5 is plenty
-  let DPR = BASE_DPR;
+  const DEVICE_DPR = devicePixelRatio || 1;
+  const BASE_DPR = Math.min(DEVICE_DPR, 1.5); // a large desktop stage: bloom and outline passes make 1.5 plenty
+  // Phones and tablets (the stacked layout): pixels the scene may draw at each quality tier. Their
+  // stage is small, so within that budget they render at the screen's own density instead of a
+  // blurry fixed scale. Desktop keeps the fixed scale.
+  const PIXEL_BUDGET = [1.0e6, .8e6, .6e6, .42e6, .3e6];
+  const dprFor = (q) => {
+    const fixed = q >= 4 ? .8 : q >= 3 ? Math.min(BASE_DPR, 1) : q >= 2 ? Math.min(BASE_DPR, 1.15) : BASE_DPR;
+    return MOBILE ? Math.min(DEVICE_DPR, Math.max(fixed, Math.sqrt(PIXEL_BUDGET[q] / (W * H)))) : fixed;
+  };
+  let DPR = dprFor(0);
   renderer.setPixelRatio(DPR);
   renderer.setSize(W, H, false);
 
@@ -66,6 +75,7 @@ export async function mount(root, data) {
   const cam = { t: HOME.t.clone(), az: HOME.az, polar: HOME.polar, r: HOME.r };
   function layout() {
     W = Math.max(1, root.clientWidth); H = Math.max(1, root.clientHeight); MOBILE = innerWidth < 900;
+    DPR = dprFor(quality.level); // the budget depends on the stage's size
     camera.aspect = W / H; camera.updateProjectionMatrix();
     room.cloudMat.uniforms.uPx.value = H * DPR * .5;
   }
@@ -78,13 +88,14 @@ export async function mount(root, data) {
   let dirEvery = 1;
   function sizeAll() { renderer.setPixelRatio(DPR); renderer.setSize(W, H, false); post.setSize(W, H, DPR); }
   const quality = createQuality((q) => {
-    DPR = q >= 4 ? .8 : q >= 3 ? Math.min(BASE_DPR, 1) : q >= 2 ? Math.min(BASE_DPR, 1.15) : BASE_DPR;
+    DPR = dprFor(q);
     const spot = lights.spot;
     const wantSpot = q < 3 && !MOBILE; if (spot.castShadow !== wantSpot) spot.castShadow = wantSpot;
     const sz = q >= 2 ? 512 : 1024; if (spot.shadow.mapSize.x !== sz) { spot.shadow.mapSize.set(sz, sz); spot.shadow.map?.dispose(); spot.shadow.map = null; }
     dirEvery = q >= 1 ? 3 : 1;
     post.setBloom(q >= 3 ? .9 : 1, q >= 3 ? .4 : (q >= 1 || MOBILE ? .6 : 1));
-    sizeAll(); post.setMSAA(q === 0 && DPR < 1.4 && !MOBILE ? 4 : 0);
+    // multisampling: desktop at its best tier; phones (tile-based GPUs, where it is cheap) at the top two
+    sizeAll(); post.setMSAA(DPR < 2 && (q === 0 || (MOBILE && q <= 1)) ? 4 : 0);
     room.cloudMat.uniforms.uPx.value = H * DPR * .5; dirty = true;
   }, 60);
 
@@ -293,6 +304,7 @@ export async function mount(root, data) {
       pins: () => hs.pins(camera),
       forceFps: (n) => quality.forceFps(n),
       tier: () => quality.level,
+      setTier: (n) => quality.set(n),
       // renders the current frame at width x height and returns it as a data URL (for the still image)
       snapshot(width, height, type = 'image/webp', q = .8) {
         quality.set(0);

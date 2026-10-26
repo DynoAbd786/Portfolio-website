@@ -211,3 +211,35 @@ def test_phone_card_scrolls_into_view(page, site_url):
     page.wait_for_timeout(1000)
     top = page.evaluate("document.querySelector('.ws-card').getBoundingClientRect().top")
     assert 0 <= top < page.viewport_size["height"] - 100, top
+
+
+def _render_scale(page):
+    return page.evaluate("(() => { const c = document.querySelector('.workshop-canvas'); return c.width / c.clientWidth; })()")
+
+
+@pytest.mark.parametrize("tier, at_least", [(0, 2.5), (2, 1.9), (4, 1.3)])
+def test_phone_renders_sharp_on_a_high_density_screen(browser, site_url, tier, at_least):
+    """A phone's stage is small, so it can afford its screen's density; lower tiers shrink a pixel budget instead of dropping below 1x."""
+    context = browser.new_context(viewport={"width": 412, "height": 915}, device_scale_factor=2.625, is_mobile=True, has_touch=True)
+    page = context.new_page()
+    try:
+        page.goto(site_url + "/?debug=workshop", wait_until="load")
+        page.wait_for_selector(LIVE, timeout=30000)
+        page.evaluate(f"document.getElementById('workshop').__workshop.setTier({tier})")
+        page.wait_for_timeout(300)
+        assert _render_scale(page) >= at_least
+    finally:
+        context.close()
+
+
+def test_desktop_render_scale_is_unchanged(browser, site_url):
+    context = browser.new_context(viewport={"width": 1440, "height": 900}, device_scale_factor=2)
+    page = context.new_page()
+    try:
+        page.goto(site_url + "/?debug=workshop", wait_until="load")
+        page.wait_for_selector(LIVE, timeout=30000)
+        page.evaluate("document.getElementById('workshop').__workshop.setTier(0)")
+        page.wait_for_timeout(300)
+        assert abs(_render_scale(page) - 1.5) < 0.02
+    finally:
+        context.close()
