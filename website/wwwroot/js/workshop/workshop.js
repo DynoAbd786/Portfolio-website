@@ -37,7 +37,7 @@ export async function mount(root, data) {
   // Phones and tablets (the stacked layout): pixels the scene may draw at each quality tier. Their
   // stage is small, so within that budget they render at the screen's own density instead of a
   // blurry fixed scale. Desktop keeps the fixed scale.
-  const PIXEL_BUDGET = [1.0e6, .8e6, .6e6, .42e6, .3e6];
+  const PIXEL_BUDGET = [1.0e6, .7e6, .45e6, .28e6, .16e6]; // the lightest stays animated on modest phones
   const dprFor = (q) => {
     const fixed = q >= 4 ? .8 : q >= 3 ? Math.min(BASE_DPR, 1) : q >= 2 ? Math.min(BASE_DPR, 1.15) : BASE_DPR;
     return MOBILE ? Math.min(DEVICE_DPR, Math.max(fixed, Math.sqrt(PIXEL_BUDGET[q] / (W * H)))) : fixed;
