@@ -3,67 +3,59 @@
 @using System.Net.Http.Json
 @inject HttpClient Http
 
-<section id="contact" class="py-20 bg-gray-900">
-    <div class="container mx-auto px-4">
-        <!-- Header -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Get In Touch
-            </div>
-            <h2 class="text-5xl font-bold text-white mb-6">Contact Me</h2>
-            <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Interested in collaborating or discussing opportunities? I'd love to hear from you.
-                Fill out the form below and I'll get back to you as soon as possible.
-            </p>
-        </div>
+<section id="contact" class="scroll-mt-20 py-20">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <p class="mono-label mb-3">// contact</p>
+        <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Let's talk</h2>
+        <p class="mb-12 max-w-2xl text-lg text-slate-400">
+            Interested in collaborating or discussing opportunities? I'd love to hear from you.
+            Fill out the form below and I'll get back to you as soon as possible.
+        </p>
 
-        <div class="max-w-4xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Contact Information -->
-                <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
-                    <h3 class="text-2xl font-bold text-white mb-6">Let's Connect</h3>
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-5">
+            <!-- Contact Information -->
+            <div class="surface p-8 lg:col-span-2">
+                <h3 class="mb-6 text-xl font-bold text-white">Let's Connect</h3>
 
-                    <div class="space-y-6">
-                        <div class="flex items-center">
-                            <div class="bg-cyan-500 rounded-full p-3 mr-4">
-                                <i class="fas fa-envelope text-white text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-semibold">Email</h4>
-                                <p class="text-gray-300">Abdua786@outlook.com</p>
-                            </div>
+                <ul class="space-y-5">
+                    <li class="flex items-center gap-4">
+                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cy/10 text-cy"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                        <div>
+                            <p class="text-sm text-slate-400">Email</p>
+                            <a href="mailto:Abdua786@outlook.com" class="text-slate-100 transition-colors hover:text-cy">Abdua786@outlook.com</a>
                         </div>
-
-                        <div class="flex items-center">
-                            <div class="bg-cyan-500 rounded-full p-3 mr-4">
-                                <i class="fab fa-linkedin text-white text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-semibold">LinkedIn</h4>
-                                <a href="https://linkedin.com/in/dynoabd786" class="text-cyan-400 hover:text-cyan-300 transition-colors">linkedin.com/in/dynoabd786</a>
-                            </div>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cy/10 text-cy"><i class="fab fa-linkedin" aria-hidden="true"></i></span>
+                        <div>
+                            <p class="text-sm text-slate-400">LinkedIn</p>
+                            <a href="https://linkedin.com/in/dynoabd786" target="_blank" rel="noopener" class="text-slate-100 transition-colors hover:text-cy">linkedin.com/in/dynoabd786</a>
                         </div>
-
-                        <div class="flex items-center">
-                            <div class="bg-cyan-500 rounded-full p-3 mr-4">
-                                <i class="fab fa-github text-white text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white font-semibold">GitHub</h4>
-                                <a href="https://github.com/DynoAbd786" class="text-cyan-400 hover:text-cyan-300 transition-colors">github.com/DynoAbd786</a>
-                            </div>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cy/10 text-cy"><i class="fab fa-github" aria-hidden="true"></i></span>
+                        <div>
+                            <p class="text-sm text-slate-400">GitHub</p>
+                            <a href="https://github.com/DynoAbd786" target="_blank" rel="noopener" class="text-slate-100 transition-colors hover:text-cy">github.com/DynoAbd786</a>
                         </div>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cy/10 text-cy"><i class="fas fa-file-pdf" aria-hidden="true"></i></span>
+                        <div>
+                            <p class="text-sm text-slate-400">CV</p>
+                            <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" class="text-slate-100 transition-colors hover:text-cy">Download PDF</a>
+                        </div>
+                    </li>
+                </ul>
 
-                    </div>
-
-                    <div class="mt-8 p-6 bg-gray-700 rounded-lg border border-cyan-500/25">
-                        <h4 class="text-white font-semibold mb-3">Response Time</h4>
-                        <p class="text-gray-300 text-sm">I typically respond to inquiries within 24-48 hours. For urgent matters, please mention it in your message.</p>
-                    </div>
+                <div class="mt-8 rounded-lg border border-line bg-white/[.02] p-5">
+                    <h4 class="mono-label mb-2">Response time</h4>
+                    <p class="text-sm text-slate-400">I typically respond to inquiries within 24-48 hours. For urgent matters, please mention it in your message.</p>
                 </div>
+            </div>
 
-                <!-- Contact Form -->
-                <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
+            <!-- Contact Form -->
+            <div class="surface p-8 lg:col-span-3">
                     <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">
                         <DataAnnotationsValidator />
                         @* The form is prerendered as HTML; keep it disabled until it runs in the browser,
@@ -71,39 +63,39 @@
                         <fieldset disabled="@(!RendererInfo.IsInteractive)" class="space-y-6">
 
                         <div>
-                            <label for="name" class="block text-white font-semibold mb-2">Full Name *</label>
+                            <label for="name" class="mb-2 block text-sm font-semibold text-slate-200">Full Name *</label>
                             <InputText @bind-Value="contactForm.Name" id="name"
-                                      class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors"
+                                      class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your full name" />
                             <ValidationMessage For="@(() => contactForm.Name)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
-                            <label for="email" class="block text-white font-semibold mb-2">Email Address *</label>
+                            <label for="email" class="mb-2 block text-sm font-semibold text-slate-200">Email Address *</label>
                             <InputText @bind-Value="contactForm.Email" id="email" type="email"
-                                      class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors"
+                                      class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="your.email@example.com" />
                             <ValidationMessage For="@(() => contactForm.Email)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
-                            <label for="company" class="block text-white font-semibold mb-2">Company/Organization</label>
+                            <label for="company" class="mb-2 block text-sm font-semibold text-slate-200">Company/Organization</label>
                             <InputText @bind-Value="contactForm.Company" id="company"
-                                      class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors"
+                                      class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your company or organization" />
                         </div>
 
                         <div>
-                            <label for="role" class="block text-white font-semibold mb-2">Your Role/Position</label>
+                            <label for="role" class="mb-2 block text-sm font-semibold text-slate-200">Your Role/Position</label>
                             <InputText @bind-Value="contactForm.Role" id="role"
-                                      class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors"
+                                      class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="e.g., Software Engineer, Recruiter, CTO" />
                         </div>
 
                         <div>
-                            <label for="subject" class="block text-white font-semibold mb-2">Subject *</label>
+                            <label for="subject" class="mb-2 block text-sm font-semibold text-slate-200">Subject *</label>
                             <InputSelect @bind-Value="contactForm.Subject" id="subject"
-                                        class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors">
+                                        class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25">
                                 <option value="">Select a subject</option>
                                 <option value="Job Opportunity">Job Opportunity</option>
                                 <option value="Freelance Project">Freelance Project</option>
@@ -116,23 +108,23 @@
                         </div>
 
                         <div>
-                            <label for="message" class="block text-white font-semibold mb-2">Message *</label>
+                            <label for="message" class="mb-2 block text-sm font-semibold text-slate-200">Message *</label>
                             <InputTextArea @bind-Value="contactForm.Message" id="message" rows="5"
-                                          class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/25 transition-colors resize-none"
+                                          class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25 resize-none"
                                           placeholder="Tell me about your project, opportunity, or how I can help..." />
                             <ValidationMessage For="@(() => contactForm.Message)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div class="flex items-center">
                             <InputCheckbox @bind-Value="contactForm.AgreeToContact" id="agree" class="mr-3 rounded" />
-                            <label for="agree" class="text-gray-300 text-sm">
+                            <label for="agree" class="text-sm text-slate-400">
                                 I agree to be contacted regarding this inquiry *
                             </label>
                         </div>
                         <ValidationMessage For="@(() => contactForm.AgreeToContact)" class="text-red-400 text-sm" />
 
                         <button type="submit" disabled="@isSubmitting"
-                                class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                                class="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50 disabled:translate-y-0">
                             @if (!RendererInfo.IsInteractive)
                             {
                                 <i class="fas fa-spinner fa-spin mr-2"></i>
@@ -159,7 +151,6 @@
                         }
                         </fieldset>
                     </EditForm>
-                </div>
             </div>
         </div>
     </div>
