@@ -5,77 +5,81 @@
 @* Default title; a page's own <PageTitle> renders later and wins *@
 <PageTitle>Muhammad Kashif Khan - Portfolio | Software Engineer & Computer Science Student</PageTitle>
 
-<div class="bg-gray-900 text-gray-200 min-h-screen font-sans">
-    <header class="sticky top-0 z-50 bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg shadow-cyan-500/10">
-        <nav class="container mx-auto px-4 sm:px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2 sm:gap-4">
-                    <a href="/" class="text-lg sm:text-2xl font-bold text-white hover:text-cyan-400 transition-colors duration-300">
-                        Muhammad Kashif-Khan
-                    </a>
-                    <div class="hidden sm:flex gap-2 ml-2">
-                        <a href="#contact" aria-label="Contact" class="text-cyan-400 hover:text-white text-xl"><i class="fas fa-envelope"></i></a>
-                        <a href="https://github.com/DynoAbd786" target="_blank" aria-label="GitHub" class="text-cyan-400 hover:text-white text-xl"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/dynoabd786" target="_blank" aria-label="LinkedIn" class="text-cyan-400 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
-                        <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" aria-label="Download CV" class="text-cyan-400 hover:text-white text-xl"><i class="fas fa-file-pdf"></i></a>
-                    </div>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden lg:flex space-x-6 items-center">
-                    <a href="#home" class="nav-link">Home</a>
-                    <a href="#about" class="nav-link">About</a>
-                    <a href="#projects" class="nav-link">Projects</a>
-                    <button type="button" onclick="mkChat.toggle()" class="nav-link flex items-center gap-2 text-cyan-400 hover:text-cyan-300">
-                        <i class="fas fa-robot"></i> AI Assistant
-                    </button>
-                    <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105">Contact</a>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button class="lg:hidden text-white text-2xl" id="mobile-menu-button" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars" id="menu-icon"></i>
+<div class="min-h-screen flex flex-col">
+    <header class="sticky top-0 z-50 border-b border-line/60 bg-ink/80 backdrop-blur-md">
+        <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main">
+            <a href="/" class="flex items-center gap-2.5 font-mono text-[15px] font-semibold tracking-tight text-slate-100">
+                <span class="grid h-8 w-8 place-items-center rounded-lg border border-cy/40 bg-cy/10 text-[13px] text-cy">mk</span>
+                kashif-khan
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden items-center gap-7 md:flex">
+                <a href="/projects" class="text-sm font-medium text-slate-400 transition-colors hover:text-slate-100">Work</a>
+                <a href="/about" class="text-sm font-medium text-slate-400 transition-colors hover:text-slate-100">About</a>
+                <a href="/#contact" class="text-sm font-medium text-slate-400 transition-colors hover:text-slate-100">Contact</a>
+                <button type="button" onclick="mkChat.toggle()" class="inline-flex items-center gap-2 rounded-lg border border-cy/40 bg-cy/10 px-3 py-1.5 text-sm font-medium text-cy transition-colors hover:bg-cy/20">
+                    <i class="fas fa-robot" aria-hidden="true"></i> Ask AI
                 </button>
-            </div>
-            
-            <!-- Mobile Navigation Menu -->
-            <div class="lg:hidden mt-4 pb-4 border-t border-gray-700 hidden" id="mobile-menu">
-                <div class="flex flex-col space-y-4 pt-4">
-                    <a href="#home" class="nav-link text-center">Home</a>
-                    <a href="#about" class="nav-link text-center">About</a>
-                    <a href="#projects" class="nav-link text-center">Projects</a>
-                    <button type="button" onclick="mkChat.toggle()" class="nav-link text-center text-cyan-400">
-                        <i class="fas fa-robot mr-2"></i>AI Assistant
-                    </button>
-                    <a href="#contact" class="nav-link text-center">Contact</a>
-                    <div class="flex justify-center gap-4 pt-2">
-                        <a href="#contact" aria-label="Contact" class="text-cyan-400 hover:text-white text-xl"><i class="fas fa-envelope"></i></a>
-                        <a href="https://github.com/DynoAbd786" target="_blank" aria-label="GitHub" class="text-cyan-400 hover:text-white text-xl"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/dynoabd786" target="_blank" aria-label="LinkedIn" class="text-cyan-400 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
-                        <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" aria-label="Download CV" class="text-cyan-400 hover:text-white text-xl"><i class="fas fa-file-pdf"></i></a>
-                    </div>
+                <span class="h-5 w-px bg-line" aria-hidden="true"></span>
+                <div class="flex items-center gap-4 text-slate-400">
+                    <a href="https://github.com/DynoAbd786" target="_blank" rel="noopener" aria-label="GitHub" class="transition-colors hover:text-slate-100"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dynoabd786" target="_blank" rel="noopener" aria-label="LinkedIn" class="transition-colors hover:text-slate-100"><i class="fab fa-linkedin"></i></a>
+                    <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" aria-label="Download CV" class="transition-colors hover:text-slate-100"><i class="fas fa-file-pdf"></i></a>
                 </div>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button type="button" class="text-xl text-slate-200 md:hidden" id="mobile-menu-button" onclick="toggleMobileMenu()" aria-label="Menu" aria-controls="mobile-menu">
+                <i class="fas fa-bars" id="menu-icon"></i>
+            </button>
         </nav>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="hidden border-t border-line px-4 pb-5 md:hidden" id="mobile-menu">
+            <div class="flex flex-col gap-1 pt-3">
+                <a href="/projects" class="rounded-lg px-3 py-2.5 text-slate-200 hover:bg-white/5">Work</a>
+                <a href="/about" class="rounded-lg px-3 py-2.5 text-slate-200 hover:bg-white/5">About</a>
+                <a href="/#contact" class="rounded-lg px-3 py-2.5 text-slate-200 hover:bg-white/5">Contact</a>
+                <button type="button" onclick="toggleMobileMenu(); mkChat.toggle()" class="rounded-lg px-3 py-2.5 text-left text-cy hover:bg-white/5">
+                    <i class="fas fa-robot mr-2" aria-hidden="true"></i>Ask AI
+                </button>
+                <div class="flex gap-5 px-3 pt-3 text-lg text-slate-400">
+                    <a href="https://github.com/DynoAbd786" target="_blank" rel="noopener" aria-label="GitHub" class="hover:text-slate-100"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/dynoabd786" target="_blank" rel="noopener" aria-label="LinkedIn" class="hover:text-slate-100"><i class="fab fa-linkedin"></i></a>
+                    <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" aria-label="Download CV" class="hover:text-slate-100"><i class="fas fa-file-pdf"></i></a>
+                </div>
+            </div>
+        </div>
     </header>
 
-
-    <main>
+    <main class="flex-1">
         @Body
     </main>
 
-    <footer class="bg-gray-900 mt-16 py-8 border-t border-gray-800">
-        <div class="container mx-auto text-center text-gray-500">
-            <p>&copy; @DateTime.Now.Year Muhammad Kashif-Khan. Built with Blazor & ❤️.</p>
+    <footer class="mt-16 border-t border-line">
+        <div class="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+            <div>
+                <p class="mono-label mb-2">// get in touch</p>
+                <a href="mailto:Abdua786@outlook.com" class="text-slate-200 transition-colors hover:text-cy">Abdua786@outlook.com</a>
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-400">
+                <a href="/ethos" class="hover:text-slate-100">Ethos</a>
+                <a href="/ai-integration" class="hover:text-slate-100">AI Integration</a>
+                <a href="https://github.com/DynoAbd786" target="_blank" rel="noopener" class="hover:text-slate-100">GitHub</a>
+                <a href="https://linkedin.com/in/dynoabd786" target="_blank" rel="noopener" class="hover:text-slate-100">LinkedIn</a>
+                <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" class="hover:text-slate-100">CV</a>
+            </div>
         </div>
+        <p class="pb-8 text-center font-mono text-xs text-slate-500">&copy; @DateTime.Now.Year Muhammad Kashif-Khan · built with .NET 10 &amp; Blazor</p>
     </footer>
 
     @* data-permanent keeps enhanced navigation from touching anything inside, so the panel's
        open/full-screen classes (set by site.js) and the running chat survive page changes *@
     <div id="chat-root" data-permanent>
         <!-- AI Assistant Side Panel -->
-        <div id="chat-panel" class="fixed inset-y-0 right-0 z-[60] bg-gray-900 border-l border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out translate-x-full flex flex-col w-full sm:w-[450px]">
-            <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
+        <div id="chat-panel" class="fixed inset-y-0 right-0 z-[60] bg-ink border-l border-line shadow-2xl transform transition-transform duration-300 ease-in-out translate-x-full flex flex-col w-full sm:w-[450px]">
+            <div class="bg-ink-2 p-4 flex justify-between items-center border-b border-line">
                 <div class="flex items-center gap-3">
                     <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
                     <div>

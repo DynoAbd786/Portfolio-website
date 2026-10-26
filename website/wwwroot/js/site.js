@@ -69,3 +69,28 @@ window.messageUtils = {
         }
     }
 };
+
+// Fades .reveal elements up as they scroll into view. Runs on the first load and after
+// every enhanced navigation, which swaps the page's content without a reload.
+function mkReveal() {
+    const items = document.querySelectorAll('.reveal:not(.is-in)');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        items.forEach((el) => el.classList.add('is-in'));
+        return;
+    }
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+            if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                io.unobserve(e.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    items.forEach((el) => io.observe(el));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    mkReveal();
+    // blazor.web.js loads after this file, so Blazor exists by DOMContentLoaded
+    if (window.Blazor) window.Blazor.addEventListener('enhancedload', mkReveal);
+});

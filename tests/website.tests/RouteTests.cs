@@ -1,0 +1,65 @@
+using System.Net;
+using System.Text.Json;
+
+namespace website.tests;
+
+public class RouteTests : IClassFixture<SiteFactory>
+{
+    private readonly HttpClient _client;
+
+    public RouteTests(SiteFactory factory)
+    {
+        _client = factory.CreateClient();
+    }
+
+    public static TheoryData<string> AllPageRoutes => new()
+    {
+        "/", "/about", "/ai-integration", "/ethos", "/not-found", "/projects",
+        "/projects/3d-reconstruction", "/projects/ai-decision-trees", "/projects/ai-search-algorithms",
+        "/projects/autonomous-robotics", "/projects/business-plan", "/projects/c-programming",
+        "/projects/data-mining", "/projects/distributed-systems", "/projects/formula-student-ai",
+        "/projects/graphics-fundamentals", "/projects/home-lab", "/projects/machine-learning",
+        "/projects/medical-simulation", "/projects/mental-health-app", "/projects/numerical-computation",
+        "/projects/opengl-renderer", "/projects/parallel-computing", "/projects/pnanolocz",
+        "/projects/portfolio", "/projects/quantum-dots", "/projects/taskflow", "/projects/terratracker",
+        "/projects/workflow-graph-platform", "/projects/xv6-operating-system",
+        "/vascular-blood-flow",
+    };
+
+    [Theory]
+    [MemberData(nameof(AllPageRoutes))]
+    public async Task Page_returns_200(string path)
+    {
+        var response = await _client.GetAsync(path);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Unknown_page_returns_404_with_not_found_page()
+    {
+        var response = await _client.GetAsync("/nope");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Contains("nothing at this address", await response.Content.ReadAsStringAsync());
+    }
+
+    [Fact]
+    public async Task Api_and_health_still_respond()
+    {
+        var projects = await _client.GetAsync("/api/projects");
+        Assert.Equal(HttpStatusCode.OK, projects.StatusCode);
+        using var json = JsonDocument.Parse(await projects.Content.ReadAsStringAsync());
+        Assert.Equal(25, json.RootElement.GetArrayLength());
+
+        var health = await _client.GetAsync("/health");
+        Assert.Equal(HttpStatusCode.OK, health.StatusCode);
+        Assert.Equal("Healthy", await health.Content.ReadAsStringAsync());
+    }
+
+    [Fact]
+    public async Task Cv_pdf_is_served()
+    {
+        var response = await _client.GetAsync("/docs/Muhammad-Kashif-Khan-CV.pdf");
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal("application/pdf", response.Content.Headers.ContentType?.MediaType);
+    }
+}
