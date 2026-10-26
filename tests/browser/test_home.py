@@ -48,3 +48,18 @@ def test_phone_anchor_stays_on_section_while_the_scene_loads(page, site_url):
         page.goto(site_url + "/" + anchor, wait_until="load")
         page.wait_for_timeout(4000)  # the scene loads (or waits, off screen) above the section
         assert abs(page.evaluate("s => document.querySelector(s).getBoundingClientRect().top", anchor)) < 120, anchor
+
+
+def test_phone_room_links_are_one_swipeable_row(page, site_url):
+    page.set_viewport_size({"width": 412, "height": 915})
+    page.goto(site_url + "/", wait_until="load")
+    box = page.locator(".workshop-links").bounding_box()
+    assert box["height"] < 60, box
+    assert page.evaluate("(() => { const l = document.querySelector('.workshop-links'); return l.scrollWidth > l.clientWidth && getComputedStyle(l).overflowX === 'auto'; })()")
+
+
+def test_phone_sections_are_not_padded_like_desktop(page, site_url):
+    page.set_viewport_size({"width": 412, "height": 915})
+    page.goto(site_url + "/", wait_until="load")
+    for section in ("#work", "#building", "#experience", "#contact"):
+        assert page.evaluate("s => parseFloat(getComputedStyle(document.querySelector(s)).paddingTop)", section) <= 56, section

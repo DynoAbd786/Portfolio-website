@@ -189,10 +189,20 @@
     }
 
     /* always listed on phones: it doubles as a quick index of the room, and hiding it once the
-       scene starts would move everything below it */
+       scene starts would move everything below it. One row that swipes sideways, edge to edge. */
     .workshop-links {
         display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        margin-inline: -1rem;
+        padding-inline: 1rem;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 2.5rem), transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 2.5rem), transparent);
     }
+
+    .workshop-links::-webkit-scrollbar { display: none; }
+    .workshop-links li { flex: none; }
 }
 
 .workshop-pin::before {
