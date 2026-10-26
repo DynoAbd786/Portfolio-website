@@ -102,7 +102,7 @@ def test_workshop_resizes_to_phone(page, site_url):
     for k in ("x", "y", "width", "height"):
         assert abs(canvas[k] - stage[k]) <= 2, (k, canvas, stage)
     h1 = page.locator("h1").bounding_box()
-    assert canvas["y"] >= h1["y"] + h1["height"]
+    assert canvas["y"] + canvas["height"] <= h1["y"]  # phones: the room comes first
     # the drawing buffer follows the element, so the frame is not stretched
     ratio = page.evaluate("(() => { const c = document.querySelector('.workshop-canvas'); return (c.width / c.height) / (c.clientWidth / c.clientHeight); })()")
     assert abs(ratio - 1) < 0.02
@@ -241,5 +241,54 @@ def test_desktop_render_scale_is_unchanged(browser, site_url):
         page.evaluate("document.getElementById('workshop').__workshop.setTier(0)")
         page.wait_for_timeout(300)
         assert abs(_render_scale(page) - 1.5) < 0.02
+    finally:
+        context.close()
+
+
+def test_phone_room_comes_first_and_fills_the_width(page, site_url):
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/", wait_until="load")
+    stage = page.locator("#workshop").bounding_box()
+    copy = page.locator(".hero-copy").bounding_box()
+    assert stage["y"] + stage["height"] <= copy["y"]
+    assert stage["x"] == 0 and stage["width"] == 390
+    assert abs(stage["width"] / stage["height"] - 4 / 3) < 0.02
+    links = page.locator(".workshop-links").bounding_box()
+    assert stage["y"] < links["y"] < copy["y"]
+
+
+def test_phone_card_sits_between_room_and_text(page, site_url):
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    open_card(page, "thesis")
+    card = page.locator(".ws-card").bounding_box()
+    stage = page.locator("#workshop").bounding_box()
+    copy = page.locator(".hero-copy").bounding_box()
+    assert stage["y"] + stage["height"] <= card["y"] < copy["y"]
+
+
+def test_phone_tap_just_beside_a_small_object_opens_it(browser, site_url):
+    """Objects are small on a phone; a tap that just misses one still opens it."""
+    context = browser.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+    page = context.new_page()
+    try:
+        page.goto(site_url + "/?debug=workshop", wait_until="load")
+        wait_live(page)
+        x, y = pin(page, "robot")
+        miss = page.evaluate("""([x, y]) => {
+            const ws = document.getElementById('workshop').__workshop;
+            for (const [dx, dy] of [[0, -1], [1, 0], [-1, 0], [0, 1]]) {
+                let d = 0;
+                while (d < 80 && ws.keyAt(x + dx * d, y + dy * d) === 'robot') d += 2;
+                const px = x + dx * (d + 8), py = y + dy * (d + 8);
+                if (d < 80 && !ws.keyAt(px, py)) return [px, py];
+            }
+            return null;
+        }""", [x, y])
+        assert miss, "no empty spot beside the robot"
+        page.touchscreen.tap(*miss)
+        page.wait_for_selector(".ws-card.open", timeout=3000)
+        assert page.inner_text(".ws-card-title") == "Ask the assistant"
     finally:
         context.close()

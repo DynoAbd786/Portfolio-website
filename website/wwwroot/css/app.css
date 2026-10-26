@@ -98,6 +98,30 @@
     mask-image: radial-gradient(ellipse 56% 58% at 50% 50%, #000 70%, transparent 100%);
 }
 
+/* Stacked layout (phones, tablets): the room comes first, then its card and links, then the text */
+@media (max-width: 899px) {
+    #workshop { order: 1; }
+    .ws-card { order: 2; }
+    .workshop-links { order: 3; }
+    .hero-copy { order: 4; }
+}
+
+/* Phones: the room is limited by the screen's width, so the stage runs edge to edge and is taller
+   (the camera's vertical field of view is fixed, so a taller stage draws the room larger) */
+@media (max-width: 639px) {
+    .workshop {
+        width: calc(100% + 2rem);
+        margin-inline: -1rem;
+        aspect-ratio: 4 / 3;
+    }
+
+    .workshop-still img,
+    .workshop-canvas {
+        -webkit-mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
+        mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
+    }
+}
+
 .workshop-still,
 .workshop-canvas {
     position: absolute;

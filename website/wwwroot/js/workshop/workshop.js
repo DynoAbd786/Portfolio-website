@@ -76,7 +76,10 @@ export async function mount(root, data) {
   function layout() {
     W = Math.max(1, root.clientWidth); H = Math.max(1, root.clientHeight); MOBILE = innerWidth < 900;
     DPR = dprFor(quality.level); // the budget depends on the stage's size
-    camera.aspect = W / H; camera.updateProjectionMatrix();
+    camera.aspect = W / H;
+    // the phone stage (4:3) is narrow enough that the room's left wall would touch the edge: pan to centre it
+    camera.filmOffset = W / H < 1.45 ? -1 : 0;
+    camera.updateProjectionMatrix();
     room.cloudMat.uniforms.uPx.value = H * DPR * .5;
   }
   function placeCamera(az, polar, r, t) {
@@ -107,9 +110,22 @@ export async function mount(root, data) {
   on(window, 'pointermove', (e) => { setNdc(e); hasPointer = true; onCanvas = e.target === canvas; lastMove = clock.elapsedTime; pointerDirty = true; dirty = true; }, { passive: true });
   on(document, 'pointerleave', () => { onCanvas = false; pointerDirty = true; });
   on(canvas, 'pointerdown', (e) => { downAt = [e.clientX, e.clientY]; setNdc(e); hasPointer = true; onCanvas = true; lastMove = clock.elapsedTime; });
+  // the hotspot under a page point; a tolerant (touch) pick that misses tries rings of points around
+  // it, nearest first, since a fingertip covers more than the small objects do on a phone
+  function keyAt(x, y, tolerant) {
+    const at = (px, py) => { setNdc({ clientX: px, clientY: py }); const h = hs.pick(ndc, camera); return (h && h.object.userData.hs) || null; };
+    const k = at(x, y);
+    if (k || !tolerant) return k;
+    for (const r of [12, 24]) for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4, ring = at(x + r * Math.cos(a), y + r * Math.sin(a));
+      if (ring) return ring;
+    }
+    return null;
+  }
   on(canvas, 'pointerup', (e) => {
     if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 8) return; downAt = null;
-    setNdc(e); hit = hs.pick(ndc, camera); const k = hit && hit.object.userData.hs;
+    const k = keyAt(e.clientX, e.clientY, e.pointerType === 'touch');
+    setNdc(e);
     if (k) { if (k !== ui.state.focusKey) ui.openCard(k); } else if (ui.state.focusKey) ui.closeCard();
   });
 
@@ -305,6 +321,8 @@ export async function mount(root, data) {
       forceFps: (n) => quality.forceFps(n),
       tier: () => quality.level,
       setTier: (n) => quality.set(n),
+      // the hotspot exactly under a page point, without the touch tolerance
+      keyAt: (x, y) => keyAt(x, y, false),
       // renders the current frame at width x height and returns it as a data URL (for the still image)
       snapshot(width, height, type = 'image/webp', q = .8) {
         quality.set(0);
