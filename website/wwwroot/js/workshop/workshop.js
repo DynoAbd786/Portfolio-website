@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 import { V3, clamp, lerp, easeInOut, easeOutBack, damp, rnd, BACKGROUND, createRenderer, createKit, isSoftwareRenderer, disposeScene } from './kit.js';
 import { buildRoom, XL, FX1, FZ1, S, RS, BAND } from './room.js';
+import { buildProps } from './props.js';
 import { SW, SH, crt, createSynergyScreen, createTerminal } from './screens.js';
 import { createPost } from './post.js';
 import { bindHotspots } from './hotspots.js';
@@ -37,6 +38,9 @@ export async function mount(root, data) {
   const kit = createKit(renderer);
   const R = rnd(7);
   const room = buildRoom(scene, kit, { reduced: REDUCED, mobile: MOBILE, R });
+  const props = buildProps(room.world, kit);
+  Object.assign(room, props);
+  room.pops.push(...[[props.stent, .55], [props.afm, .8], [props.azure, 1.05]].map(([g, delay]) => ({ g, delay, baseScale: 1 })));
   const { lights, monA, monB } = room;
   const SYN = createSynergyScreen(R), TERM = createTerminal();
   const post = createPost(renderer, scene, camera, { width: W, height: H, dpr: DPR, mobile: MOBILE });
@@ -127,7 +131,7 @@ export async function mount(root, data) {
     if (showKey !== hoverKey) { hoverKey = showKey; canvas.style.cursor = hk ? 'pointer' : 'default'; }
     const visibleTag = hoverKey && hoverKey !== focusKey ? hoverKey : null;
     if (visibleTag !== shownTag) { shownTag = visibleTag; ui.setTag(visibleTag, TOUCH ? 'tap' : 'click'); }
-    post.setOutline(visibleTag ? hs.byKey[visibleTag].g : null, TOUCH);
+    post.setOutline(visibleTag, visibleTag ? hs.byKey[visibleTag].meshes : null, TOUCH);
     const say = visibleTag === 'robot';
     ui.setTagStyle(demo && !hk, say);
     if (say) ui.setTagSub(ROBOT_LINES[Math.floor(now / 2.2) % ROBOT_LINES.length]);
@@ -179,6 +183,7 @@ export async function mount(root, data) {
       room.ledState.forEach((s, i) => { const lit = Math.sin(T * s.rate * 3 + s.ph) > -.2 + (s.rate > 2.5 ? .6 : 0); room.leds.setColorAt(i, tmpC.copy(s.col).multiplyScalar(lit ? 2.4 * Math.max(pw, .02) : .08)); });
       room.leds.instanceColor.needsUpdate = true;
     }
+    props.animate(T, REDUCED);
     if (!REDUCED) room.leaves.forEach((l) => { l.stalk.rotation.x = l.base.x + Math.sin(T * 1.1 + l.ph) * .025; l.stalk.rotation.z = l.base.z + Math.cos(T * .9 + l.ph) * .025; });
 
     // --- hover lift

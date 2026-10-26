@@ -154,3 +154,34 @@ def test_hover_tag_does_not_widen_the_page(page, site_url):
         page.mouse.move(x, y)
         page.wait_for_timeout(600)
         assert page.evaluate("document.documentElement.scrollWidth") <= 390, key
+
+
+HOTSPOT_NAMES = {
+    "synergy": "Synergy", "hireforge": "HireForge", "thesis": "MEng thesis", "stent": "Stent simulation",
+    "afm": "pNanoLocz", "homelab": "Home lab", "azure": "Azure inventory", "whiteboard": "Internships",
+    "certificate": "Education", "bookcase": "All projects", "robot": "Assistant",
+}
+
+
+def test_every_hotspot_is_pickable(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    keys = [p["key"] for p in page.evaluate("document.getElementById('workshop').__workshop.pins()")]
+    assert sorted(keys) == sorted(HOTSPOT_NAMES)
+    for key, name in HOTSPOT_NAMES.items():
+        x, y = pin(page, key)
+        page.mouse.move(x - 3, y)
+        page.mouse.move(x, y)
+        page.wait_for_function("n => document.querySelector('.ws-tag.on b')?.textContent === n", arg=name, timeout=3000)
+
+
+def test_every_hotspot_opens_its_card_when_clicked(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    for key in HOTSPOT_NAMES:
+        open_card(page, key)
+        page.keyboard.press("Escape")
+        page.wait_for_selector(".ws-card:not(.open)", state="attached", timeout=3000)
+        page.wait_for_timeout(1500)  # camera back home before the next pin

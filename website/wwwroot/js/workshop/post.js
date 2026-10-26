@@ -29,10 +29,10 @@ export function createPost(renderer, scene, camera, { width, height, dpr, mobile
   return {
     render() { renderer.toneMappingExposure = 1.2; comp.render(); },
     setSize(w, h, pixelRatio) { comp.setPixelRatio(pixelRatio); comp.setSize(w, h); },
-    // outline one object (or nothing); no outlines on touch screens, where there is no hover
-    setOutline(object, touch) {
-      if (object === selected) return; selected = object;
-      outline.selectedObjects = object ? [object] : []; outline.enabled = !!object && !touch;
+    // outline one hotspot's meshes (or nothing); no outlines on touch screens, where there is no hover
+    setOutline(key, meshes, touch) {
+      if (key === selected) return; selected = key;
+      outline.selectedObjects = key ? meshes : []; outline.enabled = !!key && !touch;
     },
     setMSAA(n) { for (const t of [comp.renderTarget1, comp.renderTarget2]) if (t.samples !== n) { t.samples = n; t.dispose(); } },
     setBloom(strengthScale, scale) { bloom.strength = baseBloom * strengthScale; bloomScale = scale; },

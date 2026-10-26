@@ -12,6 +12,9 @@ const SPOTS = {
   hireforge: (r) => ({ g: r.monB.g, anchor: () => wp(r.monB.screen, 0, .75, 0), focus: { t: () => wp(r.monB.screen, -.05, .02, 0), az: -.08, polar: 1.5, r: 4.3 } }),
   thesis: (r) => ({ g: r.rig, anchor: () => wp(r.rig, 0, 2.55, 0), focus: { t: () => wp(r.rig, -.1, 1.6, 0), az: .5, polar: 1.28, r: 4.4 } }),
   whiteboard: (r) => ({ g: r.wb, anchor: () => wp(r.wb, 0, 2.2, 0), focus: { t: () => wp(r.wb, -.15, 1.38, 0), az: .36, polar: 1.42, r: 4.5 } }),
+  stent: (r) => ({ g: r.stent, lift: .06, anchor: () => wp(r.stent, 0, .42, 0), focus: { t: () => wp(r.stent, 0, .2, 0), az: .3, polar: 1.2, r: 2.1 } }),
+  afm: (r) => ({ g: r.afm, lift: .06, anchor: () => wp(r.afm, 0, 1.5, 0), focus: { t: () => wp(r.afm, 0, 1.0, 0), az: .35, polar: 1.25, r: 2.8 } }),
+  azure: (r) => ({ g: r.azure, anchor: () => wp(r.azure, 0, .5, 0), focus: { t: () => wp(r.azure, 0, -.15, 0), az: .95, polar: 1.3, r: 3.6 } }),
   homelab: (r) => ({ g: r.rack, anchor: () => wp(r.rack, 0, 2.45, 0), focus: { t: () => wp(r.rack, .3, 1.25, 0), az: 1.15, polar: 1.33, r: 5.6 } }),
   certificate: (r) => ({ g: r.certificate, lift: .06, anchor: () => wp(r.certificate, 0, .62, 0), focus: { t: () => wp(r.certificate, .1, 0, 0), az: 1.42, polar: 1.48, r: 3.4 } }),
   bookcase: (r) => ({ g: r.bookcase, lift: .06, anchor: () => wp(r.bookcase, 0, 3.15, 0), focus: { t: () => wp(r.bookcase, 0, 1.6, .2), az: .12, polar: 1.45, r: 5.6 } }),
@@ -64,14 +67,22 @@ export function bindHotspots(data, room) {
       }
       x0 = Math.max(x0, -.98); x1 = Math.min(x1, .98); y0 = Math.max(y0, -.98); y1 = Math.min(y1, .98);
       const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-      let best = null, bestD = Infinity;
-      const N = 14;
-      for (let i = 0; i <= N; i++) for (let j = 0; j <= N; j++) {
+      // sample a grid over the outline; prefer points deep inside the object (all neighbours hit
+      // it too), so a pin still lands when the object lifts on hover; then the one nearest the middle
+      const N = 16, hits = [];
+      for (let i = 0; i <= N; i++) { hits.push([]); for (let j = 0; j <= N; j++) {
         ndc.set(x0 + (x1 - x0) * i / N, y0 + (y1 - y0) * j / N);
         const hit = pick(ndc, camera);
-        if (!hit || hit.object.userData.hs !== k) continue;
-        const d = (ndc.x - cx) ** 2 + (ndc.y - cy) ** 2;
-        if (d < bestD) { bestD = d; best = ndc.clone(); }
+        hits[i].push(!!hit && hit.object.userData.hs === k);
+      } }
+      let best = null, bestScore = -Infinity;
+      for (let i = 0; i <= N; i++) for (let j = 0; j <= N; j++) {
+        if (!hits[i][j]) continue;
+        let around = 0;
+        for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) if (hits[i + di]?.[j + dj]) around++;
+        const x = x0 + (x1 - x0) * i / N, y = y0 + (y1 - y0) * j / N;
+        const score = around * 10 - ((x - cx) ** 2 + (y - cy) ** 2);
+        if (score > bestScore) { bestScore = score; best = new THREE.Vector2(x, y); }
       }
       if (best) out.push({ key: k, x: +((best.x + 1) / 2 * 100).toFixed(2), y: +((1 - best.y) / 2 * 100).toFixed(2) });
     }

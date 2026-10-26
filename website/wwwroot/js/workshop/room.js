@@ -606,7 +606,7 @@ const RUG_LINKS = [
 ];
 const hexA = (hex, a) => { const c = new THREE.Color(hex); return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${a})`; };
 
-function mergeStatic(root) {
+export function mergeStatic(root) {
   root.updateMatrixWorld(true);
   const inv = root.matrixWorld.clone().invert(), buckets = new Map();
   const walk = (o) => {

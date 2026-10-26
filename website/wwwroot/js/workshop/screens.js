@@ -15,24 +15,29 @@ export function crt(ctx, k) {
   if (hh > 2) ctx.fillRect(SW / 2 - w / 2, SH / 2 + hh - 1.5, w, 3);
 }
 
-// Synergy: a force-laid-out architecture graph of a codebase, with an MCP query cycling through it.
-// The cursor (in screen pixels) pushes nodes away and highlights the nearest one.
+// Synergy: a force-laid-out graph of its own packages (models → persistence → analyzer →
+// visualizer, mcp and backend; the frontend talks to the backend), fed by the eight languages
+// it parses, with an MCP query cycling through it. The cursor (in screen pixels) pushes nodes
+// away and highlights the nearest one.
 export function createSynergyScreen(R) {
   const TOP = 28, BOT = 34;
-  const LANG = ['.ts', '.py', '.go', '.rs', '.java', '.cs', '.cpp', '.js'];
-  const MOD = [['parser', 0, 168, 168], ['symbols', 0, 232, 104], ['indexer', 0, 236, 226], ['graph', 0, 310, 166], ['query', 0, 382, 110], ['cache', 0, 318, 254],
-    ['mcp', 2, 446, 156], ['agent', 2, 490, 94], ['embed', 2, 474, 232], ['api', 3, 392, 206], ['explorer', 3, 404, 270], ['cli', 3, 246, 282], ['lsp', 3, 178, 64], ['watcher', 3, 300, 58]];
+  const LANG = ['.py', '.cs', '.java', '.go', '.cpp', '.rs', '.js', '.ts'];
+  // [label, kind, x, y]; kind: 0 core, 2 agent-facing, 3 user-facing
+  const MOD = [['analyzer', 0, 196, 162], ['persistence', 0, 250, 256], ['models', 0, 352, 268], ['visualizer', 3, 300, 82],
+    ['mcp', 2, 380, 150], ['backend', 3, 300, 190], ['frontend', 3, 410, 226]];
   const nodes = [];
-  LANG.forEach((l, i) => { const t = i / 7; nodes.push({ l, k: 1, ax: 48 + Math.sin(t * Math.PI) * 34, ay: 56 + t * 222 }); });
+  LANG.forEach((l, i) => { const t = i / 7; nodes.push({ l, k: 1, ax: 48 + Math.sin(t * Math.PI) * 30, ay: 56 + t * 222 }); });
   MOD.forEach(([l, k, ax, ay]) => nodes.push({ l, k, ax, ay }));
-  nodes.forEach((n) => { n.x = n.ax + (R() - .5) * 20; n.y = n.ay + (R() - .5) * 20; n.vx = 0; n.vy = 0; n.refs = 120 + Math.floor(R() * 1800); });
-  const E = [[0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8], [8, 9], [8, 10], [9, 11], [10, 11], [11, 12], [11, 13], [12, 14], [14, 15], [16, 14],
-    [11, 16], [12, 17], [17, 18], [13, 17], [19, 10], [20, 9], [21, 10], [12, 13]];
-  const ELAB = ['parses', 'emits', 'indexes', 'links', 'feeds', 'reads', 'serves', 'calls'];
+  nodes.forEach((n) => { n.x = n.ax + (R() - .5) * 20; n.y = n.ay + (R() - .5) * 20; n.vx = 0; n.vy = 0; });
+  const A = 8, PER = 9, MODELS = 10, VIS = 11, MCP = 12, BACK = 13, FRONT = 14;
+  const E = [...LANG.map((_, i) => [i, A]), [A, PER], [A, MODELS], [PER, MODELS], [VIS, A], [MCP, A], [BACK, A], [FRONT, BACK]];
+  const ELAB = ['parsed by', 'stores', 'uses', 'uses', 'reads', 'queries', 'queries', 'calls'];
+  const edgeLabel = (ei) => (ei < LANG.length ? ELAB[0] : ELAB[ei - LANG.length + 1]);
   const nb = nodes.map(() => new Set()); E.forEach(([a, b]) => { nb[a].add(b); nb[b].add(a); });
   const COL = ['#22d3ee', '#a78bfa', '#34d399', '#9fb3d1'];
-  const QS = [{ q: 'callers("parse_file")', n: 8, r: '14 callers' }, { q: 'impact("indexer.ts")', n: 10, r: '41 files' }, { q: 'path(api, graph)', n: 17, r: '3 hops' },
-    { q: 'tools/list', n: 14, r: '6 tools' }, { q: 'deps("agent")', n: 15, r: '5 modules' }];
+  // results are true of the graph on screen
+  const QS = [{ q: 'get_context_bundle(depth=2)', n: A, r: '7 packages' }, { q: 'impact("synergy_models")', n: MODELS, r: '6 dependents' },
+    { q: 'path(mcp, models)', n: MCP, r: '2 hops' }, { q: 'compare_refs("main", "HEAD")', n: PER, r: 'structural diff' }];
   const QT = 4.4;
   let cursor = null, hover = -1, auto = -1;
 
@@ -74,7 +79,7 @@ export function createSynergyScreen(R) {
       const f = (T * .55 + ei * .137) % 1; const px = a.x + (b.x - a.x) * f, py = a.y + (b.y - a.y) * f;
       ctx.fillStyle = hl ? '#ffffff' : COL[nodes[j].k]; ctx.beginPath(); ctx.arc(px, py, hl ? 2.8 : 2.1, 0, 7); ctx.fill();
       if (hl && a.k !== 1) {
-        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, t = ELAB[ei % ELAB.length];
+        const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, t = edgeLabel(ei);
         ctx.font = `600 9.5px ${MONO}`; const w = ctx.measureText(t).width + 8;
         ctx.fillStyle = 'rgba(6,10,20,.92)'; ctx.fillRect(mx - w / 2, my - 7, w, 13); ctx.fillStyle = '#7dd3fc'; ctx.fillText(t, mx - w / 2 + 4, my + 3);
       }
@@ -92,7 +97,7 @@ export function createSynergyScreen(R) {
       ctx.globalAlpha = 1;
     });
     if (sel >= 0) {
-      const n = nodes[sel]; const txt = `${n.l} · ${n.refs.toLocaleString('en-GB')} refs · ${nb[sel].size} edges`;
+      const n = nodes[sel]; const txt = n.k === 1 ? `${n.l} · tree-sitter grammar` : `synergy_${n.l} · ${nb[sel].size} links`;
       ctx.font = `600 11px ${MONO}`; const w = ctx.measureText(txt).width + 16; const bx = clamp(n.x - w / 2, 6, SW - w - 6), by = n.y - 38 < TOP + 4 ? n.y + 16 : n.y - 38;
       ctx.fillStyle = 'rgba(8,12,22,.95)'; ctx.strokeStyle = 'rgba(34,211,238,.75)'; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.roundRect(bx, by, w, 22, 6); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#e8f9ff'; ctx.fillText(txt, bx + 8, by + 15);
@@ -114,35 +119,34 @@ export function createSynergyScreen(R) {
   return { step, draw, set cursor(v) { cursor = v; }, get cursor() { return cursor; } };
 }
 
-// HireForge: a terminal session. The idle loop is short; zoomed in, the longer session plays
-// and scrolls as it goes.
+// HireForge: an assessment session, end to end. The idle loop is short; zoomed in, the longer
+// session plays and scrolls as it goes. Illustrative: no real candidate, no real scores.
 export function createTerminal() {
   const base = [
-    { c: 1, t: 'hireforge generate --role backend --level grad' },
-    { t: '  ✓ drafted 3 tasks · rubric · 24 hidden tests', col: '#34d399' },
-    { c: 1, t: 'hireforge sandbox up --candidate c-0427' },
-    { t: '  ▸ isolated gVisor runner · no network · 512 MB', col: '#93a0b8' },
-    { c: 1, t: 'hireforge grade c-0427' },
-    { t: '  ✓ parses_orders                 12 ms', col: '#34d399', q: 1 },
-    { t: '  ✓ handles_empty_cart             4 ms', col: '#34d399', q: 1 },
-    { t: '  ✓ concurrent_checkout           88 ms', col: '#34d399', q: 1 },
-    { t: '  ✗ rate_limit_burst            timeout', col: '#f87171', q: 1 },
-    { t: '  ✓ idempotent_refunds            31 ms', col: '#34d399', q: 1 },
-    { t: '  score 86 / 100  ·  report ready  ↗', col: '#22d3ee', b: 1 },
+    { c: 1, t: 'hireforge session create --scenario checkout-api' },
+    { t: '  ▸ generator agent: building the codebase', col: '#93a0b8' },
+    { t: '  ✓ codebase ready · 1 seeded defect · tests run', col: '#34d399' },
+    { c: 1, t: 'hireforge candidate start --demo' },
+    { t: '  ▸ candidate working · diff + action log recorded', col: '#93a0b8' },
+    { t: '  ✓ session finished · snapshot saved', col: '#34d399', q: 1 },
+    { c: 1, t: 'hireforge review' },
+    { t: '  ▸ reviewer agent · independent of the generator', col: '#93a0b8' },
+    { t: '  ✓ seeded defect found and fixed', col: '#34d399', q: 1 },
+    { t: '  ✓ scorecard ready  ↗', col: '#22d3ee', b: 1 },
   ];
   const more = [
-    { c: 1, t: 'hireforge report c-0427 --breakdown' },
-    { t: '  correctness    ██████████▌   92', col: '#e6edf7', q: 1 },
-    { t: '  code quality   ████████▌     81', col: '#e6edf7', q: 1 },
-    { t: '  test coverage  █████████     88', col: '#e6edf7', q: 1 },
-    { t: '  ⚑ rate_limit_burst: no backoff on 429s', col: '#fbbf24' },
-    { c: 1, t: 'hireforge review c-0427 --share hiring-team' },
-    { t: '  ✓ report shared · 2 reviewers notified', col: '#34d399', b: 1 },
+    { c: 1, t: 'hireforge scorecard --summary' },
+    { t: '  diagnosis       found the root cause', col: '#e6edf7', q: 1 },
+    { t: '  fix             minimal, covered by a test', col: '#e6edf7', q: 1 },
+    { t: '  communication   clear commit message', col: '#e6edf7', q: 1 },
+    { t: '  ⚑ reviewer note: check the retry path', col: '#fbbf24' },
+    { c: 1, t: 'hireforge share --team hiring' },
+    { t: '  ✓ scorecard shared with the hiring team', col: '#34d399', b: 1 },
   ];
-  return createSession(base, more, 86);
+  return createSession(base, more);
 }
 
-function createSession(base, more, score) {
+function createSession(base, more) {
   const CPS = 34;
   const time = (list) => { let t = .4; for (const l of list) { l.s = t; if (l.c) t += l.t.length / CPS + .45; else t += l.q ? .32 : .5; } return t; };
   const doneA = time(base), totalA = doneA + 3.4;
@@ -173,17 +177,17 @@ function createSession(base, more, score) {
     ctx.restore();
     ctx.fillStyle = '#111727'; ctx.fillRect(0, 0, SW, 28);
     ['#f87171', '#fbbf24', '#34d399'].forEach((c, i) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(14 + i * 13, 14, 4, 0, 7); ctx.fill(); });
-    ctx.font = `700 12px ${MONO}`; ctx.fillStyle = '#e4ebf7'; ctx.fillText('hireforge', 60, 18.5); ctx.font = `500 11px ${MONO}`; ctx.fillStyle = '#6c7891'; ctx.fillText('— sandbox://c-0427', 134, 18.5);
+    ctx.font = `700 12px ${MONO}`; ctx.fillStyle = '#e4ebf7'; ctx.fillText('hireforge', 60, 18.5); ctx.font = `500 11px ${MONO}`; ctx.fillStyle = '#6c7891'; ctx.fillText('— session://demo', 134, 18.5);
     ctx.textAlign = 'right'; ctx.fillStyle = '#a78bfa'; ctx.fillText('zsh', SW - 12, 18.5); ctx.textAlign = 'left';
-    // score ring
+    // scorecard ring: fills as the review completes
     const sk = fin ? 1 : clamp((tt - (ext ? scoreAt + .5 : doneA) + .3) / .8, 0, 1);
     if (sk > 0) {
       const cxr = SW - 58, cyr = 82;
       ctx.fillStyle = 'rgba(8,11,19,.85)'; ctx.beginPath(); ctx.arc(cxr, cyr, 46, 0, 7); ctx.fill();
       ctx.lineWidth = 7; ctx.strokeStyle = 'rgba(167,139,250,.18)'; ctx.beginPath(); ctx.arc(cxr, cyr, 34, 0, 7); ctx.stroke();
-      ctx.strokeStyle = '#22d3ee'; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(cxr, cyr, 34, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * score / 100 * smooth(sk)); ctx.stroke(); ctx.lineCap = 'butt';
-      ctx.textAlign = 'center'; ctx.fillStyle = '#ffffff'; ctx.font = `700 20px ${MONO}`; ctx.fillText(String(Math.round(score * smooth(sk))), cxr, cyr + 7);
-      ctx.font = `500 9.5px ${MONO}`; ctx.fillStyle = '#93a0b8'; ctx.fillText('score', cxr, cyr + 52); ctx.textAlign = 'left';
+      ctx.strokeStyle = '#22d3ee'; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(cxr, cyr, 34, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * smooth(sk)); ctx.stroke(); ctx.lineCap = 'butt';
+      ctx.textAlign = 'center'; ctx.fillStyle = '#ffffff'; ctx.font = `700 22px ${MONO}`; ctx.globalAlpha = smooth(sk); ctx.fillText('✓', cxr, cyr + 8); ctx.globalAlpha = 1;
+      ctx.font = `500 9.5px ${MONO}`; ctx.fillStyle = '#93a0b8'; ctx.fillText('scorecard', cxr, cyr + 52); ctx.textAlign = 'left';
     }
     const p = clamp(tt / done, 0, 1);
     ctx.fillStyle = '#121725'; ctx.fillRect(14, SH - 14, SW - 28, 3); ctx.fillStyle = '#a78bfa'; ctx.fillRect(14, SH - 14, (SW - 28) * p, 3);
