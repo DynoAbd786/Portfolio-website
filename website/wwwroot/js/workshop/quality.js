@@ -49,6 +49,7 @@ export function createQuality(apply, refreshHz) {
     // after a pause, start measuring afresh
     reset(now) { QS.win.length = 0; QS.winStart = now; slow.samples.length = 0; slow.since = null; },
     forceFps(n) { forced = n || null; },
+    get forced() { return forced !== null; },
   };
 }
 

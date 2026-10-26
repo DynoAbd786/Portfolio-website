@@ -23,6 +23,9 @@ export async function mount(root, data) {
   // ?still=1 (tools/render-workshop-still.py): no motion and the home pose, for rendering the still image
   const STILL = new URLSearchParams(location.search).get('still') === '1';
   const REDUCED = STILL || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // ?debug=workshop (tests): exposes root.__workshop; the scene only gives up when told to via forceFps,
+  // since headless test browsers render in software and would otherwise fall back mid-test
+  const DEBUG = new URLSearchParams(location.search).get('debug') === 'workshop';
   const TOUCH = matchMedia('(hover: none)').matches;
   let MOBILE = innerWidth < 900;
   let W = Math.max(1, root.clientWidth), H = Math.max(1, root.clientHeight);
@@ -246,7 +249,7 @@ export async function mount(root, data) {
     const need = !REDUCED || dirty || moving || intro < 3 || frameNo < 4;
     if (need) { if (REDUCED) lights.moon.shadow.needsUpdate = true; dirty = false; }
     if (!REDUCED && intro > 2.6) quality.adapt(raw, now);
-    if (!STILL && intro > 2.6 && quality.tooSlow(raw, now)) giveUp();
+    if (!STILL && (!DEBUG || quality.forced) && intro > 2.6 && quality.tooSlow(raw, now)) giveUp();
     return need;
   }
 
@@ -285,7 +288,7 @@ export async function mount(root, data) {
   viewObserver.observe(root);
   updateLoop();
 
-  if (location.search.includes('debug=workshop')) {
+  if (DEBUG) {
     root.__workshop = {
       pins: () => hs.pins(camera),
       forceFps: (n) => quality.forceFps(n),

@@ -10,6 +10,8 @@ def wait_live(page, settle=3500):
 
 def pin(page, key):
     """Page coordinates of a point that hovers/clicks the given object."""
+    state = page.evaluate("document.getElementById('workshop').dataset.state")
+    assert state == "live", f"the scene is not running (data-state={state})"
     found = page.evaluate(
         """key => { const root = document.getElementById('workshop');
                     const p = root.__workshop.pins().find(p => p.key === key);
