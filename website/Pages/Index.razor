@@ -55,7 +55,7 @@
             <canvas class="workshop-canvas" aria-hidden="true"></canvas>
             <script type="application/json" id="workshop-data">@((MarkupString)HomeContent.WorkshopJson())</script>
         </div>
-        @* Narrow screens: the pins would overlap, so the same links are listed under the still instead *@
+        @* Narrow screens: the pins would overlap, so the same links are listed under the room instead *@
         <ul class="workshop-links" aria-label="What's in the workshop">
             @foreach (var hotspot in HomeContent.Workshop)
             {

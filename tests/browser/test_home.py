@@ -27,3 +27,25 @@ def test_chat_styles_do_not_leak_into_contact_form(page, site_url):
     box = page.locator("#agree").bounding_box()
     assert box["width"] < 30
     assert page.eval_on_selector("#name", "el => getComputedStyle(el).borderTopWidth") == "1px"
+
+
+def _top(page, selector):
+    return page.evaluate("s => document.querySelector(s).getBoundingClientRect().top + scrollY", selector)
+
+
+def test_phone_sections_do_not_move_when_the_scene_starts(page, site_url):
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/", wait_until="domcontentloaded")
+    before = _top(page, "#work")
+    page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
+    page.wait_for_timeout(500)
+    assert _top(page, "#work") == before
+
+
+def test_phone_anchor_stays_on_section_after_the_scene_starts(page, site_url):
+    page.set_viewport_size({"width": 390, "height": 844})
+    for anchor in ("#work", "#contact"):
+        page.goto(site_url + "/" + anchor, wait_until="load")
+        page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
+        page.wait_for_timeout(500)
+        assert abs(page.evaluate("s => document.querySelector(s).getBoundingClientRect().top", anchor)) < 120, anchor

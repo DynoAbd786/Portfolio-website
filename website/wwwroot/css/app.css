@@ -130,8 +130,8 @@
     transition: opacity .6s ease, visibility 0s .6s;
 }
 
-/* Pins label each object on the still image; shown only while the still is (no JS, no WebGL,
-   too slow, or before the scene starts) */
+/* Pins label each object on the still image; shown until the scene is live (no JS, no WebGL,
+   too slow, or still loading) */
 .workshop-pin {
     display: none;
     position: absolute;
@@ -149,8 +149,7 @@
     transition: border-color .2s, background .2s;
 }
 
-.workshop[data-state=still] .workshop-pin,
-.workshop[data-state=failed] .workshop-pin {
+.workshop:not([data-state=live]) .workshop-pin {
     display: inline-flex;
 }
 
@@ -165,8 +164,9 @@
         display: none;
     }
 
-    .workshop[data-state=still] + .workshop-links,
-    .workshop[data-state=failed] + .workshop-links {
+    /* always listed on phones: it doubles as a quick index of the room, and hiding it once the
+       scene starts would move everything below it */
+    .workshop-links {
         display: flex;
     }
 }

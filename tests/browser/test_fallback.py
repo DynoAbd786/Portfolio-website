@@ -86,11 +86,14 @@ def test_phone_still_lists_links_instead_of_pins(browser, site_url):
         context.close()
 
 
-def test_links_list_hidden_when_scene_runs_or_on_desktop(page, site_url):
+def test_links_list_shown_on_phones_and_hidden_on_desktop(page, site_url):
     page.set_viewport_size({"width": 390, "height": 844})
     page.goto(site_url + "/", wait_until="load")
     page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
+    assert page.locator(".workshop-links a:visible, .workshop-links button:visible").count() == 11
+    page.set_viewport_size({"width": 1440, "height": 900})
     assert page.locator(".workshop-links:visible").count() == 0
+
 
 def test_slow_check_starts_afresh_after_a_pause(page, site_url):
     """A pause (scrolled away, tab hidden) must not let the slow-device check judge on a handful of frames."""
