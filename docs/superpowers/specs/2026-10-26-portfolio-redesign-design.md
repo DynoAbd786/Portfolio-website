@@ -227,9 +227,9 @@ The C#/.NET + Blazor + Neo4j design on the current page was replaced on purpose.
 - What's next, in engineering terms: the issues the brief lists, such as setup for agents and
   packaging. These are engineering next steps, not business plans.
 
-Include a sentence on why the stack moved from C#/.NET to Python + React; the brief presents
-that as a deliberate decision. The existing write-up stays below it, relabelled
-"How it started". No market, pricing or competitor content from the brief.
+Don't explain or justify the change of stack (Muhammad's decision); just describe the current
+one. The existing write-up stays below it, relabelled "How it started". No market, pricing or
+competitor content from the brief.
 
 The prototype's card and terminal text for both are placeholders. Replace them with these
 facts; the HireForge terminal acts out generate → candidate works → review → scorecard.
