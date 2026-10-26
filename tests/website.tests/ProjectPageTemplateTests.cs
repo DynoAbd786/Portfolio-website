@@ -26,7 +26,7 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         "/projects/ai-decision-trees", "/projects/ai-search-algorithms",
         "/projects/parallel-computing", "/projects/autonomous-robotics", "/projects/opengl-renderer",
         "/projects/xv6-operating-system", "/projects/quantum-dots", "/projects/c-programming",
-        "/projects/graphics-fundamentals", "/projects/taskflow", "/projects/portfolio",
+        "/projects/graphics-fundamentals", "/projects/portfolio",
     };
 
     public static TheoryData<string> MigratedRoutes => new(Routes);

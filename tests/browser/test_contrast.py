@@ -10,7 +10,7 @@ ROUTES = ["/"] + [
     "/projects/business-plan", "/vascular-blood-flow", "/projects/ai-decision-trees",
     "/projects/ai-search-algorithms", "/projects/parallel-computing", "/projects/autonomous-robotics",
     "/projects/opengl-renderer", "/projects/xv6-operating-system", "/projects/quantum-dots",
-    "/projects/c-programming", "/projects/graphics-fundamentals", "/projects/taskflow", "/projects/portfolio",
+    "/projects/c-programming", "/projects/graphics-fundamentals", "/projects/portfolio",
 ]
 
 CHECK = """() => {

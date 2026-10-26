@@ -20,7 +20,6 @@
   "/projects/portfolio": "This is the site you're on. It started as a Blazor WebAssembly app on .NET 8, and I've rebuilt it as I learned. It's now server-rendered on .NET 10, with a 3D homepage, an AI assistant and an MCP server.",
   "/projects/quantum-dots": "A nanotechnology business case for investing in a company that manufactures quantum dots, the light sources behind quantum computing with light.",
   "/projects/synergy": "Hybrid C#/.NET and Python platform transforming codebases into queryable graphs with architectural intelligence, featuring ASP.NET Core API, Blazor WASM UI, and active \"Architectural Linter\" capabilities for AI-assisted development",
-  "/projects/taskflow": "A Python framework of more than 10,000 lines that I used to test how far agentic AI tools can go on a large, complex software project.",
   "/projects/terratracker": "A full-stack app for recording and sharing GPS routes, built by a team of six working in agile sprints. We documented every sprint and ran the project through Git the way a professional team would.",
   "/projects/xv6-operating-system": "Operating systems coursework where I wrote a Unix-style shell for xv6 and extended its kernel with new system calls.",
   "/vascular-blood-flow": "For my dissertation I built a Lattice Boltzmann Method (LBM) framework that simulates pulsing blood flow through arteries. The aim was to move research-style simulation closer to something clinicians could use to assess aneurysm risk."

@@ -23,7 +23,7 @@ public class RouteTests : IClassFixture<SiteFactory>
         "/projects/graphics-fundamentals", "/projects/home-lab", "/projects/machine-learning",
         "/projects/medical-simulation", "/projects/mental-health-app", "/projects/numerical-computation",
         "/projects/opengl-renderer", "/projects/parallel-computing", "/projects/pnanolocz",
-        "/projects/portfolio", "/projects/quantum-dots", "/projects/taskflow", "/projects/terratracker",
+        "/projects/portfolio", "/projects/quantum-dots", "/projects/terratracker",
         "/projects/synergy", "/projects/xv6-operating-system",
         "/vascular-blood-flow",
     };
@@ -34,6 +34,15 @@ public class RouteTests : IClassFixture<SiteFactory>
     {
         var response = await _client.GetAsync(path);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Removed_taskflow_page_redirects_to_all_projects()
+    {
+        var client = _factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var response = await client.GetAsync("/projects/taskflow");
+        Assert.Equal(HttpStatusCode.MovedPermanently, response.StatusCode);
+        Assert.Equal("/projects", response.Headers.Location?.OriginalString);
     }
 
     [Fact]
@@ -59,7 +68,7 @@ public class RouteTests : IClassFixture<SiteFactory>
         var projects = await _client.GetAsync("/api/projects");
         Assert.Equal(HttpStatusCode.OK, projects.StatusCode);
         using var json = JsonDocument.Parse(await projects.Content.ReadAsStringAsync());
-        Assert.Equal(25, json.RootElement.GetArrayLength());
+        Assert.Equal(24, json.RootElement.GetArrayLength());
 
         var health = await _client.GetAsync("/health");
         Assert.Equal(HttpStatusCode.OK, health.StatusCode);

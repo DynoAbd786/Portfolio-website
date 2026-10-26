@@ -16,18 +16,6 @@ namespace website.api.Services
             {
                 new Project
                 {
-                    Title = "TaskFlow - Distributed Task Processing System",
-                    Description = "A robust distributed task processing system designed to benchmark AI agent capabilities. Built with Python, Redis, and FastAPI to handle high-concurrency workloads. Demonstrates enterprise architectural patterns including priority queues, auto-scaling workers, and real-time WebSocket monitoring.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TaskFlow",
-                    ProjectUrl = "/projects/taskflow",
-                    Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" },
-                    Category = ProjectCategory.Personal,
-                    Fields = new[] { ProjectField.CloudDistributed, ProjectField.SystemsInfrastructure },
-                    Result = "Built a distributed task queue with priority scheduling, auto-scaling workers and live WebSocket monitoring.",
-                    IsFeatured = true
-                },
-                new Project
-                {
                     Title = "This Website (mkkai.dev)",
                     Description = "My portfolio, built in .NET 10 with Blazor. Pages are rendered on the server, the homepage has an interactive 3D workshop made with three.js, and there is an AI assistant plus an MCP server that AI agents can query. Tested with xUnit and Playwright and deployed on Render.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",

@@ -250,7 +250,7 @@ Returns array of all projects with full details.
 
 #### Get Project by URL
 ```http
-GET /api/projects/by-url?url=/projects/taskflow
+GET /api/projects/by-url?url=/projects/synergy
 ```
 Returns specific project matching the URL path.
 
