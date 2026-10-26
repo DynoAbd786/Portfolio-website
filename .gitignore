@@ -338,3 +338,7 @@ website/wwwroot/css/tailwind.css
 
 # Brainstorming mockups (local only)
 .superpowers/
+
+# Browser tests
+tests/browser/.pytest_cache/
+__pycache__/
