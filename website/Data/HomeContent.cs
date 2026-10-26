@@ -75,7 +75,7 @@ namespace website.Data
                 {
                     "Parses 8 languages with tree-sitter into one graph of modules, symbols and dependencies",
                     "Keeps a history of every analysis and shows what changed between versions, biggest impact first",
-                    "An MCP server with 17 tools that coding agents can ask instead of searching the code",
+                    "An MCP server with 21 tools that coding agents can ask instead of searching the code",
                 },
                 new[] { "Python", "React", "TypeScript", "SQLite", "MCP" },
                 "/projects/synergy", "Read about Synergy →", "link", 45.67, 25.55),

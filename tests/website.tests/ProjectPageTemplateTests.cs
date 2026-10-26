@@ -52,14 +52,20 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
-    public async Task Synergy_page_leads_with_current_status()
+    public async Task Synergy_page_describes_it_as_it_is_today()
     {
         var doc = await Html.GetAsync(_client, "/projects/synergy");
-        var first = doc.QuerySelector("main section.project-section h2");
-        Assert.Equal("Current status", first?.TextContent.Trim());
+        var sections = doc.QuerySelectorAll("main section.project-section > div h2").Select(h => h.TextContent.Trim()).ToList();
+        Assert.Equal(new[] { "What it does", "Using it with AI coding agents", "How it works", "Where it's at" }, sections.Take(4));
+        // the original design is kept, folded away at the end
+        var history = doc.QuerySelector("main details.synergy-history");
+        Assert.NotNull(history);
+        Assert.Contains("How it started", history!.QuerySelector("summary")!.TextContent);
+        Assert.Null(history.GetAttribute("open"));
         var text = doc.QuerySelector("main")!.TextContent;
-        Assert.Contains("How it started", text);
+        Assert.Contains("21 tools", text);
         Assert.DoesNotContain("pricing", text, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("C# to Python", text);
+        Assert.DoesNotContain("\u2014", doc.QuerySelector("main header")!.TextContent + string.Join("", sections));
     }
 }

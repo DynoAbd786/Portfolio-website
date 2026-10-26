@@ -68,7 +68,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Synergy: Code Intelligence Platform",
-                    Description = "A local-first code intelligence platform that parses codebases in 8 languages into a typed, queryable graph, with revision history, structural diffs and blast-radius ranking. An MCP server exposes 17 tools so AI agents can work from the architecture. Python backend, React and TypeScript explorer.",
+                    Description = "Builds a graph of a codebase in any of 8 languages and lets you query it from a web dashboard or an AI coding agent. It keeps snapshots over time, shows what changed between them, and gives agents 21 MCP tools to ask about the code directly. Python backend, React and TypeScript dashboard.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Synergy",
                     ProjectUrl = "/projects/synergy",
                     Tags = new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },

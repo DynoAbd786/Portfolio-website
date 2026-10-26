@@ -2,46 +2,80 @@
 @using website.Data
 
 <ProjectPage Url="/projects/synergy" Kicker="Personal Project">
-                <ProjectSection Title="Current status" Subtitle="In development · local-first: it runs on your own machine, against your own code" Icon="fas fa-circle-half-stroke">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Synergy reads a codebase and builds a graph of it: every module, class and function, and how they call, import and inherit from each other.
+                    You can then ask that graph questions, in a web dashboard or through an AI coding agent. It runs entirely on your own machine.
+                </p>
+
+                <ProjectSection Title="What it does" Icon="fas fa-diagram-project">
+                    <ul class="space-y-3 text-slate-300">
+                        <li>• Parses Python, C#, Java, Go, C++, Rust, JavaScript and TypeScript into one typed graph.</li>
+                        <li>• Only re-parses files that changed. An incremental run gives exactly the same graph as a full one, and the tests check that.</li>
+                        <li>• Saves a snapshot every time you analyse, or of any git commit or tag, and shows what changed between two snapshots, with the changes that affect the most code first.</li>
+                        <li>• Draws call-flow diagrams from any entry point.</li>
+                        <li>• Runs your tests under a tracer and compares the calls it saw with the graph, which catches dynamic calls that static analysis can't see.</li>
+                        <li>• Analyses a released PyPI package straight from its wheel, without installing it.</li>
+                    </ul>
+                </ProjectSection>
+
+                <ProjectSection Title="Using it with AI coding agents" Icon="fas fa-robot">
+                    <p class="mb-4 leading-relaxed text-slate-300">
+                        Coding agents usually find their way around a codebase by searching text. Synergy gives them an MCP server with 21 tools to ask the graph directly:
+                        who calls this, what breaks if I change it, how do these two parts connect, what code is never used.
+                    </p>
+                    <p class="leading-relaxed text-slate-300">
+                        One command, <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">synergy claude install</code>, sets it up for Claude Code: the server, a skill,
+                        and hooks that remind the agent the graph exists when it starts searching with grep. Other agents get the same guidance in an AGENTS.md file.
+                        Uninstalling puts every file back exactly as it was.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="How it works" Icon="fas fa-gears">
+                    <p class="mb-5 leading-relaxed text-slate-300">
+                        Files are read and hashed, then parsed: Python with its own syntax tree, the other languages with tree-sitter. A linking step resolves imports across files,
+                        so every reference points at a real definition. The result is stored in SQLite, and three things read it: a command-line tool, a web dashboard, and the MCP server.
+                    </p>
+                    <p class="mb-5 flex flex-wrap items-center gap-2 font-mono text-xs text-slate-400">
+                        <span class="chip">read</span><span>→</span><span class="chip">parse</span><span>→</span><span class="chip">link</span><span>→</span><span class="chip">SQLite</span><span>→</span><span class="chip">CLI · dashboard · MCP</span>
+                    </p>
+                    <p class="leading-relaxed text-slate-300">
+                        The backend is seven Python packages with a strict dependency order, from the core data model up to the API and the MCP server. The dashboard is a React and TypeScript app
+                        with a graph explorer, history diffs, UML diagrams and a view of exactly what an agent is shown.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Where it's at" Subtitle="In active development. It runs locally for one user and installs from source (version 0.1.0)." Icon="fas fa-circle-half-stroke">
                     <div class="grid gap-6 md:grid-cols-2">
                         <div>
-                            <h3 class="mb-3 font-bold text-slate-100">What works today</h3>
+                            <h3 class="mb-3 font-bold text-slate-100">Next</h3>
                             <ul class="space-y-2 text-sm text-slate-300">
-                                <li>• Parses Python, C#, Java, Go, C++, Rust, JavaScript and TypeScript into one typed graph of modules, symbols and dependencies</li>
-                                <li>• Incremental analysis: unchanged files are skipped, and the result matches a full re-analysis</li>
-                                <li>• Revision history, snapshots of any git commit, and structural diffs ranked by blast radius</li>
-                                <li>• Call-flow diagrams from any entry point, and runtime traces that check the static graph against a real run</li>
-                                <li>• An MCP server with 17 tools, so coding agents ask about structure instead of grepping text</li>
-                                <li>• One command wires it into Claude Code (hooks, a skill and the server config), with an AGENTS.md for other agents</li>
-                                <li>• A web dashboard: graph explorer, history diffs, UML and an agent's-eye view</li>
+                                <li>• Measuring whether an agent that has never been told about Synergy actually uses it</li>
+                                <li>• Making call flows more complete, including the calls Python makes implicitly</li>
+                                <li>• Packaging it so it installs with one command</li>
                             </ul>
                         </div>
-                        <div class="space-y-6">
-                            <div>
-                                <h3 class="mb-3 font-bold text-slate-100">Built with</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="chip">Python</span>
-                                    <span class="chip">FastAPI</span>
-                                    <span class="chip">tree-sitter</span>
-                                    <span class="chip">SQLite</span>
-                                    <span class="chip">React</span>
-                                    <span class="chip">TypeScript</span>
-                                    <span class="chip">MCP</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="mb-3 font-bold text-slate-100">Next</h3>
-                                <ul class="space-y-2 text-sm text-slate-300">
-                                    <li>• Agent setup: measuring whether an agent that was never told about Synergy actually reaches for the graph</li>
-                                    <li>• Call-flow precision: the calls Python makes implicitly, and flows that show only the interfaces they pass through</li>
-                                    <li>• Packaging: a release that installs with one command instead of from source</li>
-                                </ul>
+                        <div>
+                            <h3 class="mb-3 font-bold text-slate-100">Built with</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="chip">Python</span>
+                                <span class="chip">FastAPI</span>
+                                <span class="chip">tree-sitter</span>
+                                <span class="chip">SQLite</span>
+                                <span class="chip">React</span>
+                                <span class="chip">TypeScript</span>
+                                <span class="chip">MCP</span>
                             </div>
                         </div>
                     </div>
                 </ProjectSection>
 
-                <h2 class="pt-4 text-3xl font-bold text-white">How it started</h2>
+                <details class="synergy-history surface group p-6 sm:p-8">
+                    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-xl font-bold text-white">
+                        <span>How it started <span class="ml-2 text-sm font-normal text-slate-400">the original 2025 design</span></span>
+                        <i class="fas fa-chevron-down text-sm text-slate-400 transition-transform group-open:rotate-180" aria-hidden="true"></i>
+                    </summary>
+                    <div class="mt-8 space-y-8">
+
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
                     Hybrid C#/.NET and Python platform transforming codebases into queryable graphs with architectural intelligence—featuring ASP.NET Core API, Blazor WASM UI, and active "Architectural Linter" capabilities for AI-assisted development
                 </p>
@@ -571,6 +605,6 @@
                         <span class="text-cy">✓ Graph Databases</span>
                     </div>
                 </div>
-
-            
+                    </div>
+                </details>
 </ProjectPage>
