@@ -15,8 +15,8 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         _client = factory.CreateClient();
     }
 
-    // Project pages already on the shared template
-    public static TheoryData<string> MigratedRoutes => new()
+    // Every project page, all on the shared template
+    private static readonly string[] Routes =
     {
         "/projects/machine-learning", "/projects/medical-simulation",
         "/projects/3d-reconstruction", "/projects/pnanolocz", "/projects/distributed-systems",
@@ -24,7 +24,20 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         "/projects/data-mining", "/projects/numerical-computation", "/projects/mental-health-app",
         "/projects/terratracker", "/projects/business-plan", "/vascular-blood-flow",
         "/projects/ai-decision-trees", "/projects/ai-search-algorithms",
+        "/projects/parallel-computing", "/projects/autonomous-robotics", "/projects/opengl-renderer",
+        "/projects/xv6-operating-system", "/projects/quantum-dots", "/projects/c-programming",
+        "/projects/graphics-fundamentals", "/projects/taskflow", "/projects/portfolio",
     };
+
+    public static TheoryData<string> MigratedRoutes => new(Routes);
+
+    [Fact]
+    public async Task All_project_routes_use_template()
+    {
+        using var scope = _factory.Services.CreateScope();
+        var projects = await scope.ServiceProvider.GetRequiredService<ProjectService>().GetProjectsAsync();
+        Assert.Equal(projects.Select(p => p.ProjectUrl).ToHashSet(), Routes.ToHashSet());
+    }
 
     [Theory]
     [MemberData(nameof(MigratedRoutes))]
