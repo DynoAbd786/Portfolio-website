@@ -3,16 +3,15 @@
 
 <ProjectPage Url="/projects/autonomous-robotics" Kicker="Academic Project">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Advanced ROS2-based autonomous robotics project implementing computer vision, motion planning, and intelligent navigation for TurtleBot3 simulation with sophisticated exploration strategies and precision object interaction.
+                    A ROS2 project where a simulated TurtleBot3 explores a space on its own, finds colored objects with computer vision and drives up to them precisely.
                 </p>
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-robot">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        This comprehensive autonomous robotics project demonstrates the integration of multiple AI and robotics technologies
-                        to create an intelligent system capable of exploration, object detection, and precision navigation. Built using ROS2
-                        and deployed in Gazebo simulation, the project showcases advanced concepts including SLAM (Simultaneous Localization
-                        and Mapping), computer vision, and autonomous decision-making.
+                        I built a robot controller that explores, detects objects and navigates to them without human input. It runs
+                        on ROS2 in a Gazebo simulation, and brings together SLAM (Simultaneous Localization and Mapping), computer vision
+                        and a state machine that decides what the robot does next.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                          <div class="grid md:grid-cols-2 gap-8">
@@ -23,15 +22,15 @@
                                 <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>ROS2 Integration:</strong> Modern robotics framework with Nav2 stack</span>
+                                        <span><strong>ROS2:</strong> Built on ROS2 with the Nav2 stack</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Motion Planning:</strong> Autonomous exploration with waypoint navigation</span>
+                                        <span><strong>Motion Planning:</strong> Explores by navigating between waypoints</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>SLAM Integration:</strong> Real-time mapping and localization</span>
+                                        <span><strong>SLAM:</strong> Maps the area and localizes itself as it moves</span>
                                     </li>
                                 </ul>
                             </div>
@@ -42,15 +41,15 @@
                                 <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Real-time RGB Detection:</strong> OpenCV-based color classification</span>
+                                        <span><strong>RGB Detection:</strong> Classifies colors in real time with OpenCV</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>HSV Color Processing:</strong> Robust detection under varying lighting</span>
+                                        <span><strong>HSV Color Space:</strong> Detection holds up as the lighting changes</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Contour Analysis:</strong> Precise object boundary detection</span>
+                                        <span><strong>Contour Analysis:</strong> Finds the edges of each object</span>
                                     </li>
                                 </ul>
                             </div>
@@ -70,7 +69,7 @@
                 
                 <div class="mt-4 p-4 bg-white/[.02] rounded-lg border-l-4 border-line">
                     <p class="text-gray-300 text-sm leading-relaxed">
-                        <strong class="text-white">Demonstration (2x Speed):</strong> Autonomous navigation and object detection in action. The TurtleBot3 successfully identifies targets while mapping the environment and avoiding dynamic obstacles.
+                        <strong class="text-white">Demonstration (2x Speed):</strong> The TurtleBot3 maps the environment, avoids moving obstacles and picks out its targets as it goes.
                     </p>
                 </div>
                 </ProjectSection>
@@ -84,11 +83,11 @@
                              <div class="space-y-4">
                                 <div>
                                     <strong class="text-white block mb-1">robot.py</strong>
-                                    <p class="text-gray-400 text-sm">Main control node managing state coordination, sensor integration, and high-level behavior orchestration.</p>
+                                    <p class="text-gray-400 text-sm">The main control node. It tracks the robot's state, reads the sensors and decides on high-level behavior.</p>
                                 </div>
                                 <div>
                                     <strong class="text-white block mb-1">color_detector.py</strong>
-                                    <p class="text-gray-400 text-sm">Computer vision module implementing HSV color space processing and real-time object tracking.</p>
+                                    <p class="text-gray-400 text-sm">The vision module. It works in HSV color space and tracks objects in real time.</p>
                                 </div>
                             </div>
                         </div>
@@ -97,11 +96,11 @@
                              <div class="space-y-4">
                                 <div>
                                     <strong class="text-white block mb-1">motion_controller.py</strong>
-                                    <p class="text-gray-400 text-sm">Low-level movement control with precise velocity management and smooth trajectory generation.</p>
+                                    <p class="text-gray-400 text-sm">Low-level movement. It sets velocities precisely and keeps trajectories smooth.</p>
                                 </div>
                                 <div>
                                     <strong class="text-white block mb-1">exploration_strategy.py</strong>
-                                    <p class="text-gray-400 text-sm">High-level navigation logic implementing waypoint navigation and intelligent state transitions.</p>
+                                    <p class="text-gray-400 text-sm">High-level navigation. It picks waypoints and decides when to switch between states.</p>
                                 </div>
                             </div>
                         </div>
@@ -114,19 +113,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">1. Navigation Phase</h4>
-                             <p class="text-sm text-gray-400">Autonomous travel to strategic scanning positions using Nav2 framework</p>
+                             <p class="text-sm text-gray-400">The robot drives itself to chosen scanning positions using Nav2</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">2. Exploration Phase</h4>
-                             <p class="text-sm text-gray-400">Systematic 360-degree environmental scanning with detection</p>
+                             <p class="text-sm text-gray-400">It turns a full 360 degrees, running detection as it scans</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">3. Target Acquisition</h4>
-                             <p class="text-sm text-gray-400">Object identification and localization using CV algorithms</p>
+                             <p class="text-sm text-gray-400">Computer vision identifies the object and works out where it is</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">4. Precision Approach</h4>
-                             <p class="text-sm text-gray-400">Visual servoing approach with sub-meter accuracy</p>
+                             <p class="text-sm text-gray-400">Visual servoing brings the robot in close, with sub-meter accuracy</p>
                         </div>
                     </div>
                 </ProjectSection>

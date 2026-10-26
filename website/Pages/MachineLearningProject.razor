@@ -4,7 +4,7 @@
 
 <ProjectPage Url="/projects/machine-learning" Kicker="Academic Project · Year 3">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Comprehensive machine learning coursework implementing sophisticated linear regression with custom basis functions and Principal Component Analysis for 3D medical data visualization
+                    Machine learning coursework in which I implemented linear regression with custom basis functions, then used Principal Component Analysis to visualize 3D medical data.
                 </p>
                 <!-- Course Information & Project Overview -->
                 <ProjectSection Title="Course Information & Assignment Structure" Subtitle="COMP3611 - Machine Learning, University of Leeds" Icon="fas fa-university">
@@ -16,7 +16,7 @@
                                 <p><strong>Institution:</strong> University of Leeds</p>
                                 <p><strong>Year:</strong> 2024/25 (Year 3)</p>
                                 <p><strong>Instructor:</strong> Marc de Kamps</p>
-                                <p><strong>Format:</strong> Jupyter Notebook Implementation</p>
+                                <p><strong>Format:</strong> Jupyter Notebook</p>
                             </div>
                         </div>
                         <div>
@@ -24,31 +24,31 @@
                             <div class="space-y-2 text-gray-300">
                                 <p><strong>Question 1:</strong> Linear Regression with Basis Functions</p>
                                 <p><strong>Question 2:</strong> PCA and Dimensionality Reduction</p>
-                                <p><strong>Implementation:</strong> Custom algorithms + scikit-learn validation</p>
-                                <p><strong>Data:</strong> Trajectory data & 3D medical blood vessel shapes</p>
-                                <p><strong>Focus:</strong> Mathematical rigor and practical implementation</p>
+                                <p><strong>Implementation:</strong> My own algorithms, checked against scikit-learn</p>
+                                <p><strong>Data:</strong> Trajectory data and 3D blood vessel shapes</p>
+                                <p><strong>Focus:</strong> Getting the maths right and implementing it</p>
                             </div>
                         </div>
                     </div>
                 </ProjectSection>
 
                 <!-- Linear Regression & Basis Functions -->
-                <ProjectSection Title="Advanced Linear Regression with Custom Basis Functions" Subtitle="Sophisticated trajectory modeling and comparative analysis" Icon="fas fa-chart-line">
+                <ProjectSection Title="Advanced Linear Regression with Custom Basis Functions" Subtitle="Modeling a trajectory and comparing basis functions" Icon="fas fa-chart-line">
                     <div class="grid lg:grid-cols-2 gap-8">
                         <div>
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Question 1: Trajectory Analysis</h3>
                             <div class="space-y-3">
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Data Visualization</h4>
-                                    <p class="text-sm text-gray-300">3D trajectory plotting (t-x, t-y, x-y), time series analysis, 2D spatial visualization</p>
+                                    <p class="text-sm text-gray-300">Plotted the trajectory as t-x, t-y and x-y, as a time series and in 2D space.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Exponential Basis Functions</h4>
-                                    <p class="text-sm text-gray-300">Gaussian-like exponential functions with 50 basis elements, normalized predictions</p>
+                                    <p class="text-sm text-gray-300">Gaussian-like exponential functions with 50 basis elements and normalized predictions.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Polynomial Basis Functions</h4>
-                                    <p class="text-sm text-gray-300">Custom polynomial implementation up to degree n-1, comparative performance analysis</p>
+                                    <p class="text-sm text-gray-300">My own polynomial implementation up to degree n-1, compared against the exponential basis.</p>
                                 </div>
                             </div>
                         </div>
@@ -57,19 +57,19 @@
                             <div class="bg-white/[.02] rounded-lg p-4 mb-4">
                                 <h4 class="font-bold text-slate-100 mb-2">Performance Analysis</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
-                                    <li>• Testing across 2, 5, 10, and 50 basis functions</li>
-                                    <li>• Exponential basis functions show superior performance</li>
-                                    <li>• Polynomial overfitting at higher basis numbers</li>
-                                    <li>• Qualitative and quantitative evaluation methods</li>
+                                    <li>• Tested with 2, 5, 10 and 50 basis functions</li>
+                                    <li>• Exponential basis functions performed best</li>
+                                    <li>• Polynomials overfit as the number of basis functions grew</li>
+                                    <li>• Evaluated both qualitatively and quantitatively</li>
                                 </ul>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4">
                                 <h4 class="font-bold text-slate-100 mb-2">Advanced Basis Functions</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
-                                    <li>• Sine/Cosine trigonometric basis functions</li>
+                                    <li>• Sine and cosine basis functions</li>
                                     <li>• Gaussian basis with configurable centers and widths</li>
                                     <li>• Sigmoid basis functions for nonlinear modeling</li>
-                                    <li>• Optimal basis selection for periodic data patterns</li>
+                                    <li>• Choosing the best basis for periodic data</li>
                                 </ul>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                 </ProjectSection>
 
                 <!-- PCA & Dimensionality Reduction -->
-                <ProjectSection Title="Principal Component Analysis & 3D Medical Data" Subtitle="Advanced dimensionality reduction for blood vessel shape analysis" Icon="fas fa-cube">
+                <ProjectSection Title="Principal Component Analysis & 3D Medical Data" Subtitle="Reducing the dimensions of blood vessel shape data" Icon="fas fa-cube">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Question 2a: 3D Visualization</h3>
@@ -85,18 +85,18 @@
                                 <h4 class="font-bold text-slate-100 mb-2">Blood Vessel Data Analysis</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
                                     <li>• 7 blood vessel samples in high-dimensional space</li>
-                                    <li>• 3D point cloud extraction (x, y, z coordinates)</li>
-                                    <li>• Individual and comparative shape visualization</li>
-                                    <li>• Medical imaging data processing techniques</li>
+                                    <li>• Extracted each one as a 3D point cloud (x, y, z)</li>
+                                    <li>• Plotted the shapes individually and side by side</li>
+                                    <li>• Processing medical imaging data</li>
                                 </ul>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4">
                                 <h4 class="font-bold text-slate-100 mb-2">Data Structure</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
                                     <li>• Format: [x₁, y₁, z₁, x₂, y₂, z₂, ..., xₙ, yₙ, zₙ]</li>
-                                    <li>• Column-wise sample organization</li>
-                                    <li>• 3D scatter plot generation and analysis</li>
-                                    <li>• Shape similarity assessment methods</li>
+                                    <li>• One sample per column</li>
+                                    <li>• 3D scatter plots of each shape</li>
+                                    <li>• Comparing how similar the shapes are</li>
                                 </ul>
                             </div>
                         </div>
@@ -105,15 +105,15 @@
                             <div class="space-y-3">
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Eigendecomposition</h4>
-                                    <p class="text-sm text-gray-300">Data centering, covariance matrix estimation, eigenvalue/eigenvector computation</p>
+                                    <p class="text-sm text-gray-300">Centered the data, estimated the covariance matrix and computed its eigenvalues and eigenvectors.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Dimensionality Reduction</h4>
-                                    <p class="text-sm text-gray-300">1845D → 3D projection, 615× data reduction, reconstruction analysis</p>
+                                    <p class="text-sm text-gray-300">Projected the data from 1845D down to 3D, a 615× reduction, then analyzed the reconstruction.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Performance Validation</h4>
-                                    <p class="text-sm text-gray-300">Original vs reconstructed shape comparison, quality assessment metrics</p>
+                                    <p class="text-sm text-gray-300">Compared the original and reconstructed shapes and measured the quality of the reconstruction.</p>
                                 </div>
                             </div>
                         </div>
@@ -121,43 +121,43 @@
                 </ProjectSection>
 
                 <!-- Advanced Implementation & Validation -->
-                <ProjectSection Title="Scikit-learn Validation & Implementation Comparison" Subtitle="Professional ML library integration and custom algorithm validation" Icon="fas fa-flask">
+                <ProjectSection Title="Scikit-learn Validation & Implementation Comparison" Subtitle="Checking my own PCA against scikit-learn's" Icon="fas fa-flask">
                     <div class="grid lg:grid-cols-2 gap-6">
                         <div>
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Question 2c: Scikit-learn Integration</h3>
                             <div class="bg-white/[.02] rounded-lg p-4 mb-4">
-                                <h4 class="font-bold text-slate-100 mb-2">Professional Library Usage</h4>
+                                <h4 class="font-bold text-slate-100 mb-2">Library Usage</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
-                                    <li>• PCA class implementation and configuration</li>
-                                    <li>• fit_transform() and inverse_transform() methods</li>
-                                    <li>• explained_variance_ and components_ analysis</li>
-                                    <li>• Industry-standard ML pipeline integration</li>
+                                    <li>• Setting up and configuring the PCA class</li>
+                                    <li>• fit_transform() and inverse_transform()</li>
+                                    <li>• Analyzing explained_variance_ and components_</li>
+                                    <li>• Using PCA the way a standard ML pipeline does</li>
                                 </ul>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4">
                                 <h4 class="font-bold text-slate-100 mb-2">Validation & Comparison</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
-                                    <li>• Eigenvalue accuracy comparison (numerical precision)</li>
-                                    <li>• Eigenvector orientation and sign consistency</li>
+                                    <li>• Compared eigenvalues for numerical precision</li>
+                                    <li>• Checked eigenvector orientation and sign</li>
                                     <li>• Reconstruction error analysis (0.829375 difference)</li>
-                                    <li>• Visual validation of blood vessel shape preservation</li>
+                                    <li>• Checked visually that the blood vessel shapes were preserved</li>
                                 </ul>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-slate-100 mb-4">Technical Excellence</h3>
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Technical Highlights</h3>
                             <div class="space-y-3">
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Mathematical Rigor</h4>
-                                    <p class="text-sm text-gray-300">Custom covariance matrix computation, eigendecomposition implementation, linear algebra mastery</p>
+                                    <p class="text-sm text-gray-300">Wrote the covariance matrix computation and eigendecomposition myself, working directly with the linear algebra.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
                                     <h4 class="font-bold text-slate-100">Data Processing Pipeline</h4>
-                                    <p class="text-sm text-gray-300">Data centering, normalization, projection, reconstruction workflow automation</p>
+                                    <p class="text-sm text-gray-300">An automated workflow that centers, normalizes, projects and reconstructs the data.</p>
                                 </div>
                                 <div class="border-l-4 border-line pl-4">
-                                    <h4 class="font-bold text-slate-100">Professional Standards</h4>
-                                    <p class="text-sm text-gray-300">NumPy optimization, Matplotlib visualization, modular code architecture</p>
+                                    <h4 class="font-bold text-slate-100">Engineering Practices</h4>
+                                    <p class="text-sm text-gray-300">Optimized NumPy code, Matplotlib plots and modular code.</p>
                                 </div>
                             </div>
                         </div>
@@ -165,33 +165,33 @@
                 </ProjectSection>
 
                 <!-- Technical Stack & Innovation -->
-                <ProjectSection Title="Technical Implementation & Innovation" Subtitle="Advanced Python ecosystem and mathematical computing" Icon="fas fa-code">
+                <ProjectSection Title="Technical Implementation" Subtitle="The Python libraries and maths behind the work" Icon="fas fa-code">
                     <div class="grid md:grid-cols-3 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h3 class="font-bold text-slate-100 mb-3">Core Libraries</h3>
                             <ul class="text-sm text-gray-300 space-y-1">
-                                <li>• <strong>NumPy:</strong> Linear algebra, matrix operations</li>
-                                <li>• <strong>Matplotlib:</strong> 3D visualization, subplot management</li>
-                                <li>• <strong>Scikit-learn:</strong> PCA validation, professional ML</li>
-                                <li>• <strong>CSV/NPY:</strong> Data loading and serialization</li>
+                                <li>• <strong>NumPy:</strong> linear algebra and matrix operations</li>
+                                <li>• <strong>Matplotlib:</strong> 3D plots and subplots</li>
+                                <li>• <strong>Scikit-learn:</strong> validating the PCA</li>
+                                <li>• <strong>CSV/NPY:</strong> loading and saving data</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h3 class="font-bold text-slate-100 mb-3">Mathematical Concepts</h3>
                             <ul class="text-sm text-gray-300 space-y-1">
-                                <li>• <strong>Linear Regression:</strong> Least squares optimization</li>
-                                <li>• <strong>Basis Functions:</strong> Exponential, polynomial, trigonometric</li>
-                                <li>• <strong>PCA:</strong> Eigendecomposition, covariance analysis</li>
-                                <li>• <strong>Dimensionality Reduction:</strong> Feature extraction</li>
+                                <li>• <strong>Linear regression:</strong> least squares</li>
+                                <li>• <strong>Basis functions:</strong> exponential, polynomial, trigonometric</li>
+                                <li>• <strong>PCA:</strong> eigendecomposition and covariance</li>
+                                <li>• <strong>Dimensionality reduction:</strong> feature extraction</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h3 class="font-bold text-slate-100 mb-3">Data Science Skills</h3>
                             <ul class="text-sm text-gray-300 space-y-1">
-                                <li>• <strong>Medical Data:</strong> Blood vessel shape analysis</li>
-                                <li>• <strong>3D Visualization:</strong> Point cloud processing</li>
-                                <li>• <strong>Performance Analysis:</strong> Comparative evaluation</li>
-                                <li>• <strong>Statistical Validation:</strong> Error measurement</li>
+                                <li>• <strong>Medical data:</strong> blood vessel shapes</li>
+                                <li>• <strong>3D visualization:</strong> point clouds</li>
+                                <li>• <strong>Comparison:</strong> evaluating methods against each other</li>
+                                <li>• <strong>Validation:</strong> measuring error</li>
                             </ul>
                         </div>
                     </div>
@@ -200,11 +200,11 @@
 
                 <!-- Academic Excellence Note -->
                 <div class="rounded-lg p-8 text-center border border-line bg-white/[.02]">
-                    <h3 class="text-2xl font-bold text-white mb-3">Academic Excellence in Machine Learning</h3>
+                    <h3 class="text-2xl font-bold text-white mb-3">Takeaways</h3>
                     <p class="text-slate-300 mb-4">
-                        This advanced coursework demonstrates comprehensive understanding of machine learning algorithms, mathematical rigor,
-                        and practical implementation skills. The combination of custom algorithm development and professional library validation
-                        showcases the theoretical depth and practical expertise essential for data science and machine learning engineering careers.
+                        I implemented these algorithms myself, working through the maths behind each one,
+                        and then checked my results against scikit-learn. That mix of theory and hands-on implementation
+                        is what data science and machine learning work needs.
                     </p>
                     <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
                         <span class="text-cy">✓ Custom ML Algorithms</span>
@@ -228,5 +228,5 @@
                     </div>
                 </ProjectSection>
 
-            
+
 </ProjectPage>

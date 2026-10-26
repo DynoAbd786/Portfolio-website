@@ -4,34 +4,34 @@
 
 <ProjectPage Url="/projects/3d-reconstruction" Kicker="Academic Project · MEng">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Cutting-edge MEng group project developing production-ready 3D reconstruction framework for industrial applications including VR simulation, live room tracking, and medical imaging
+                    My MEng group project: a 3D reconstruction framework built with industrial use in mind, such as VR simulation, live room tracking and medical imaging.
                 </p>
             <!-- Project Overview -->
             <ProjectSection Title="Project Overview" Icon="fas fa-cube">
                 <p class="text-gray-300 mb-6 leading-relaxed">
-                    This MEng group project addresses fundamental challenges in 3D reconstruction by developing a novel hybrid framework
-                    that fuses two complementary approaches: feed-forward neural networks for accurate depth estimation and optimization-based
-                    models for globally-consistent pose tracking. The project aims to create production-ready pipelines capable of deployment
-                    in industrial settings, moving beyond academic prototypes to real-world applications.
+                    We built a hybrid 3D reconstruction framework that combined two approaches. Feed-forward neural networks gave us
+                    accurate depth, and optimization-based models gave us globally consistent pose tracking. Each one covers a weakness
+                    of the other. The aim was a pipeline that could be deployed in an industrial setting, rather than a research
+                    prototype that only runs in the lab.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Project Context</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• <strong>Team Size:</strong> 5-person collaborative engineering team</li>
+                            <li>• <strong>Team Size:</strong> 5 engineers</li>
                             <li>• <strong>Supervisor:</strong> Dr. Sharib Ali</li>
                             <li>• <strong>Duration:</strong> Full academic year (2024/2025)</li>
-                            <li>• <strong>Current Phase:</strong> Background research & literature review</li>
+                            <li>• <strong>First Phase:</strong> Background research & literature review</li>
                         </ul>
                     </div>
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Development Timeline</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• <strong>Semester 1:</strong> Framework R&D and validation</li>
-                            <li>• <strong>Semester 2:</strong> Pipeline optimization and deployment</li>
-                            <li>• <strong>Focus:</strong> Industrial-grade implementation</li>
-                            <li>• <strong>Output:</strong> Production-ready 3D capture system</li>
+                            <li>• <strong>Semester 1:</strong> Research and validation of the framework</li>
+                            <li>• <strong>Semester 2:</strong> Optimizing and deploying the pipeline</li>
+                            <li>• <strong>Focus:</strong> An implementation fit for industrial use</li>
+                            <li>• <strong>Target Output:</strong> A deployable 3D capture system</li>
                         </ul>
                     </div>
                 </div>
@@ -43,9 +43,8 @@
                 <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                     <h3 class="text-xl font-bold text-slate-100 mb-4">Fundamental Trade-Off in 3D Reconstruction</h3>
                     <p class="text-gray-300 leading-relaxed">
-                        Current 3D reconstruction approaches face a critical limitation: methods that excel at depth estimation
-                        struggle with pose tracking consistency, while methods that provide robust pose tracking produce ambiguous
-                        depth information. This project aims to solve this fundamental trade-off through intelligent fusion.
+                        Methods that are good at depth estimation tend to drift in pose tracking. Methods that track pose
+                        reliably tend to give ambiguous depth. The project set out to get around this trade-off by fusing the two.
                     </p>
                 </div>
 
@@ -55,11 +54,11 @@
                         <div class="space-y-3">
                             <div class="border-l-4 border-line pl-4">
                                 <h4 class="font-semibold text-white">Strength: Depth Estimation</h4>
-                                <p class="text-gray-300 text-sm">Produce clean, metrically-accurate depth maps with absolute scale from single images</p>
+                                <p class="text-gray-300 text-sm">Produce clean, metrically accurate depth maps with absolute scale from a single image</p>
                             </div>
                             <div class="border-l-4 border-line pl-4">
                                 <h4 class="font-semibold text-white">Weakness: Pose Drift</h4>
-                                <p class="text-gray-300 text-sm">Small pose errors accumulate over video sequences, causing 3D model drift</p>
+                                <p class="text-gray-300 text-sm">Small pose errors build up over a video sequence, so the 3D model drifts</p>
                             </div>
                         </div>
                     </div>
@@ -69,11 +68,11 @@
                         <div class="space-y-3">
                             <div class="border-l-4 border-line pl-4">
                                 <h4 class="font-semibold text-white">Strength: Pose Tracking</h4>
-                                <p class="text-gray-300 text-sm">Globally-consistent pose estimation that doesn't drift over time</p>
+                                <p class="text-gray-300 text-sm">Globally consistent pose estimates that don't drift over time</p>
                             </div>
                             <div class="border-l-4 border-line pl-4">
                                 <h4 class="font-semibold text-white">Weakness: Depth Ambiguity</h4>
-                                <p class="text-gray-300 text-sm">Produces pseudo-depth with relative ordering only, lacking absolute scale</p>
+                                <p class="text-gray-300 text-sm">Pseudo-depth only gives relative ordering, with no absolute scale</p>
                             </div>
                         </div>
                     </div>
@@ -86,17 +85,17 @@
                 <div class="bg-cyan-900/20 rounded-lg p-6 border border-line mb-6">
                     <h3 class="text-xl font-bold text-slate-100 mb-4">The "Best of Both Worlds" Approach</h3>
                     <p class="text-gray-300 leading-relaxed mb-4">
-                        Our hypothesis: By intelligently fusing feed-forward depth estimation with optimization-based pose tracking,
-                        we can create a system that leverages the strengths of both approaches while mitigating their individual weaknesses.
+                        Our hypothesis was that combining feed-forward depth estimation with optimization-based pose tracking would give
+                        a system with the strengths of both, where each method makes up for the other's weakness.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">✓ FF Network fixes optimization depth ambiguity</p>
-                            <p class="text-gray-300 text-sm">Use clean, absolute-scale depth maps to resolve pseudo-depth artifacts</p>
+                            <p class="text-gray-300 text-sm">Clean, absolute-scale depth maps remove the pseudo-depth artifacts</p>
                         </div>
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">✓ Optimization fixes FF pose drift</p>
-                            <p class="text-gray-300 text-sm">Use globally-consistent pose tracking to prevent cumulative errors</p>
+                            <p class="text-gray-300 text-sm">Globally consistent pose tracking stops errors from building up</p>
                         </div>
                     </div>
                 </div>
@@ -105,20 +104,20 @@
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Research Phase (Semester 1)</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• Validate fusion methodology through experiments</li>
-                            <li>• HPC-accelerated benchmarking against state-of-the-art</li>
-                            <li>• Prove accuracy improvements and speed optimization</li>
-                            <li>• Compare against competitive fusion approaches</li>
+                            <li>• Experiments to validate the fusion method</li>
+                            <li>• Benchmarking against state-of-the-art methods on HPC</li>
+                            <li>• Measuring gains in accuracy and speed</li>
+                            <li>• Comparison with other fusion approaches</li>
                         </ul>
                     </div>
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Deployment Phase (Semester 2)</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• Pipeline optimization for production deployment</li>
-                            <li>• Comprehensive documentation and workflow design</li>
-                            <li>• Real-time 3D scene capture implementation</li>
-                            <li>• Industrial application demonstrations</li>
+                            <li>• Optimizing the pipeline for deployment</li>
+                            <li>• Documentation and workflow design</li>
+                            <li>• Real-time 3D scene capture</li>
+                            <li>• Demonstrations aimed at industrial applications</li>
                         </ul>
                     </div>
                 </div>
@@ -128,9 +127,8 @@
             <ProjectSection Title="Industrial Applications" Icon="fas fa-industry">
 
                 <p class="text-gray-300 mb-6 leading-relaxed">
-                    The framework targets deployment in real-world industrial settings, emphasizing production-ready pipelines
-                    beyond academic prototypes. Potential applications span multiple high-value domains requiring accurate,
-                    real-time 3D reconstruction capabilities.
+                    We designed the framework for use outside the lab, in industrial settings. These were the areas we had in mind,
+                    each of which needs accurate 3D reconstruction in real time.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -138,8 +136,8 @@
                         <div class="text-4xl mb-3">🥽</div>
                         <h3 class="text-xl font-bold text-slate-100 mb-3">VR/AR Simulation</h3>
                         <p class="text-gray-300 text-sm">
-                            Real-time 3D scene capture for virtual reality applications, enabling immersive digital twin
-                            experiences and interactive simulations
+                            Capturing 3D scenes in real time for virtual reality, for digital twins and interactive
+                            simulations
                         </p>
                     </div>
 
@@ -147,8 +145,8 @@
                         <div class="text-4xl mb-3">🏠</div>
                         <h3 class="text-xl font-bold text-slate-100 mb-3">Live Room Tracking</h3>
                         <p class="text-gray-300 text-sm">
-                            Dynamic environment reconstruction for spatial computing, motion capture, and augmented reality
-                            applications requiring real-time updates
+                            Rebuilding a changing environment as it changes, for spatial computing, motion capture and
+                            augmented reality
                         </p>
                     </div>
 
@@ -156,8 +154,8 @@
                         <div class="text-4xl mb-3">🏥</div>
                         <h3 class="text-xl font-bold text-slate-100 mb-3">Medical Imaging</h3>
                         <p class="text-gray-300 text-sm">
-                            Surgical tool tracking and anatomical reconstruction for computer-assisted interventions and
-                            medical visualization systems
+                            Tracking surgical tools and reconstructing anatomy for computer-assisted interventions and
+                            medical visualization
                         </p>
                     </div>
                 </div>
@@ -170,20 +168,20 @@
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Core Technologies</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• <strong>Language:</strong> Python (primary development)</li>
+                            <li>• <strong>Language:</strong> Python (main language)</li>
                             <li>• <strong>Deep Learning:</strong> Neural network frameworks</li>
-                            <li>• <strong>Computer Vision:</strong> OpenCV, image processing</li>
-                            <li>• <strong>Optimization:</strong> Mathematical modeling libraries</li>
+                            <li>• <strong>Computer Vision:</strong> OpenCV and image processing</li>
+                            <li>• <strong>Optimization:</strong> Libraries for mathematical modeling</li>
                         </ul>
                     </div>
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Computing Resources</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• <strong>HPC Access:</strong> University high-performance computing</li>
-                            <li>• <strong>GPU Acceleration:</strong> Large-scale model training</li>
-                            <li>• <strong>Benchmarking:</strong> Performance validation at scale</li>
-                            <li>• <strong>Optimization:</strong> Speed and accuracy testing</li>
+                            <li>• <strong>HPC Access:</strong> The university's high-performance computing cluster</li>
+                            <li>• <strong>GPU Acceleration:</strong> Training large models</li>
+                            <li>• <strong>Benchmarking:</strong> Checking performance at scale</li>
+                            <li>• <strong>Testing:</strong> Speed and accuracy</li>
                         </ul>
                     </div>
 
@@ -192,8 +190,8 @@
                         <ul class="space-y-2 text-gray-300 text-sm">
                             <li>• Feed-forward neural networks</li>
                             <li>• Optimization-based pose estimation</li>
-                            <li>• Transformer architectures (potential)</li>
-                            <li>• State-of-the-art benchmarking</li>
+                            <li>• Transformer architectures (considered)</li>
+                            <li>• Benchmarks against state-of-the-art methods</li>
                         </ul>
                     </div>
                 </div>
@@ -203,9 +201,8 @@
             <ProjectSection Title="Project Management & Agile Methodology" Icon="fas fa-tasks">
 
                 <p class="text-gray-300 mb-6 leading-relaxed">
-                    The project follows professional agile software development practices with sprint-based workflows, ensuring
-                    systematic progress tracking, team coordination, and adaptability throughout the development lifecycle.
-                    Currently in the background research phase, focusing on literature review and methodology validation.
+                    We ran the project in agile sprints, which kept progress visible and let us change course when we needed to.
+                    It started with a background research phase of literature review and validating the method.
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -213,21 +210,21 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4"><i class="fas fa-sync-alt mr-2"></i>Agile Sprint Methodology</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
                             <li>• <strong>Sprint Duration:</strong> 2-week development cycles</li>
-                            <li>• <strong>Sprint Planning:</strong> Task breakdown and estimation sessions</li>
-                            <li>• <strong>Daily Standups:</strong> Team coordination and blockers discussion</li>
-                            <li>• <strong>Sprint Reviews:</strong> Progress demonstration to supervisor</li>
-                            <li>• <strong>Retrospectives:</strong> Continuous process improvement</li>
+                            <li>• <strong>Sprint Planning:</strong> Breaking work into tasks and estimating them</li>
+                            <li>• <strong>Daily Standups:</strong> Short check-ins on progress and blockers</li>
+                            <li>• <strong>Sprint Reviews:</strong> Showing progress to our supervisor</li>
+                            <li>• <strong>Retrospectives:</strong> What to change for the next sprint</li>
                         </ul>
                     </div>
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4"><i class="fas fa-columns mr-2"></i>Kanban Board Management</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>• <strong>Backlog:</strong> Prioritized feature and research tasks</li>
-                            <li>• <strong>In Progress:</strong> Active development and experimentation</li>
-                            <li>• <strong>Review:</strong> Code review and validation phase</li>
+                            <li>• <strong>Backlog:</strong> Feature and research tasks in priority order</li>
+                            <li>• <strong>In Progress:</strong> Development and experiments under way</li>
+                            <li>• <strong>Review:</strong> Code review and validation</li>
                             <li>• <strong>Done:</strong> Completed and documented work</li>
-                            <li>• <strong>Blocked:</strong> Tracking dependencies and impediments</li>
+                            <li>• <strong>Blocked:</strong> Work waiting on a dependency</li>
                         </ul>
                     </div>
                 </div>
@@ -235,35 +232,35 @@
                 <div class="from-teal-900/30 to-cyan-900/30 rounded-lg p-6 border border-line mb-6 bg-white/[.02]">
                     <h3 class="text-xl font-bold text-slate-100 mb-4"><i class="fas fa-chart-gantt mr-2"></i>Gantt Chart Timeline Planning</h3>
                     <p class="text-gray-300 mb-4 leading-relaxed">
-                        Comprehensive Gantt chart tracks project milestones, dependencies, and critical path across both semesters.
-                        Visualizes parallel workstreams including background research, algorithm development, benchmarking experiments,
-                        pipeline optimization, and deployment preparation.
+                        A Gantt chart tracked milestones, dependencies and the critical path across both semesters. It laid out the
+                        parallel workstreams: background research, algorithm development, benchmarking experiments, pipeline optimization
+                        and deployment preparation.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">📚 Research Phase (Weeks 1-12)</p>
-                            <p class="text-gray-300 text-sm">Literature review, methodology design, initial experiments</p>
+                            <p class="text-gray-300 text-sm">Literature review, method design and first experiments</p>
                         </div>
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">🔬 Development Phase (Weeks 13-24)</p>
-                            <p class="text-gray-300 text-sm">Implementation, benchmarking, optimization</p>
+                            <p class="text-gray-300 text-sm">Implementation, benchmarking and optimization</p>
                         </div>
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">🚀 Deployment Phase (Weeks 25-32)</p>
-                            <p class="text-gray-300 text-sm">Production pipeline, live demos, documentation</p>
+                            <p class="text-gray-300 text-sm">Deployable pipeline, live demos and documentation</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
-                        <h3 class="text-xl font-bold text-slate-100 mb-4">Current Phase: Background Research</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">First Phase: Background Research</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
                             <li>• Literature review on feed-forward depth estimation</li>
-                            <li>• Analysis of optimization-based pose tracking methods</li>
-                            <li>• Survey of existing fusion approaches and techniques</li>
+                            <li>• Analysis of optimization-based pose tracking</li>
+                            <li>• Survey of existing fusion approaches</li>
                             <li>• Benchmarking dataset selection and preparation</li>
-                            <li>• Technical feasibility assessment and risk analysis</li>
+                            <li>• Feasibility and risk analysis</li>
                         </ul>
                     </div>
 
@@ -271,9 +268,9 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Team Collaboration Tools</h3>
                         <ul class="space-y-2 text-gray-300 text-sm">
                             <li>• <strong>Version Control:</strong> Git for code collaboration</li>
-                            <li>• <strong>Documentation:</strong> Shared research wiki and notebooks</li>
-                            <li>• <strong>Communication:</strong> Regular team meetings and channels</li>
-                            <li>• <strong>Task Tracking:</strong> Integrated sprint and Kanban boards</li>
+                            <li>• <strong>Documentation:</strong> A shared research wiki and notebooks</li>
+                            <li>• <strong>Communication:</strong> Regular meetings and team channels</li>
+                            <li>• <strong>Task Tracking:</strong> Sprint and Kanban boards</li>
                             <li>• <strong>Timeline:</strong> Gantt chart for milestone tracking</li>
                         </ul>
                     </div>
@@ -282,22 +279,22 @@
                 <div class="from-indigo-900/30 to-purple-900/30 rounded-lg p-6 border border-line bg-white/[.02]">
                     <h3 class="text-xl font-bold text-slate-100 mb-4"><i class="fas fa-users mr-2"></i>Team Leadership & Coordination</h3>
                     <p class="text-gray-300 mb-4 leading-relaxed">
-                        Effective team management through strength-based task allocation and collaborative decision-making. Leadership approach
-                        emphasizes active listening, understanding individual capabilities, and creating an environment where each team member
-                        can contribute most effectively to parallel workstreams.
+                        Work was split by strength, and decisions were made together. The approach to leading the team was to listen,
+                        learn what each person was good at, and set things up so everyone could do their best work on the parallel
+                        workstreams.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">🎯 Strength-Based Allocation</p>
-                            <p class="text-gray-300 text-sm">Assign tasks matching individual expertise and interests for maximum productivity</p>
+                            <p class="text-gray-300 text-sm">Tasks went to whoever had the right expertise and interest</p>
                         </div>
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">👂 Active Listening</p>
-                            <p class="text-gray-300 text-sm">Foster open communication and incorporate team feedback into planning decisions</p>
+                            <p class="text-gray-300 text-sm">Team feedback fed straight into planning</p>
                         </div>
                         <div class="bg-white/[.02] rounded p-4">
                             <p class="text-cy font-semibold mb-2">🤝 Collaborative Decision-Making</p>
-                            <p class="text-gray-300 text-sm">Ensure team consensus on technical approaches and milestone priorities</p>
+                            <p class="text-gray-300 text-sm">The team agreed technical approaches and milestone priorities together</p>
                         </div>
                     </div>
                 </div>
@@ -312,15 +309,15 @@
                         <ul class="space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Depth Accuracy:</strong> Metrically-accurate 3D reconstruction free of pseudo-depth artifacts</span>
+                                <span><strong>Depth Accuracy:</strong> Metrically accurate 3D reconstruction without pseudo-depth artifacts</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Pipeline Speed:</strong> Significant performance improvement over baseline optimization</span>
+                                <span><strong>Pipeline Speed:</strong> A clear speed-up over the baseline optimization</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Competitiveness:</strong> Novel or superior approach compared to state-of-the-art methods</span>
+                                <span><strong>Competitiveness:</strong> A new approach, or one that beats state-of-the-art methods</span>
                             </li>
                         </ul>
                     </div>
@@ -330,15 +327,15 @@
                         <ul class="space-y-3 text-gray-300 text-sm">
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Workflow Robustness:</strong> Optimized, well-documented, production-ready pipeline</span>
+                                <span><strong>Workflow:</strong> An optimized, well-documented pipeline ready to deploy</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Live Demo:</strong> Reliable real-time demonstration in VR or room-tracking scenario</span>
+                                <span><strong>Live Demo:</strong> A reliable real-time demo in VR or room tracking</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-2">✓</span>
-                                <span><strong>Technical Communication:</strong> Clear presentation effectively communicating novelty</span>
+                                <span><strong>Technical Communication:</strong> A clear presentation of what was new</span>
                             </li>
                         </ul>
                     </div>
@@ -347,18 +344,17 @@
 
             <!-- Learning Outcomes -->
             <div class="rounded-lg p-8 text-center border border-line bg-white/[.02]">
-                <h3 class="text-2xl font-bold text-white mb-3">Cutting-Edge Computer Vision Research</h3>
+                <h3 class="text-2xl font-bold text-white mb-3">Computer Vision Research</h3>
                 <p class="text-slate-300 mb-4">
-                    This MEng group project demonstrates advanced computer vision research capabilities, collaborative engineering
-                    in cutting-edge domains, and emphasis on production-ready implementation beyond academic prototypes. The project
-                    addresses fundamental challenges in 3D reconstruction with novel fusion methodology, targeting real-world industrial
-                    applications in VR, medical imaging, and spatial computing.
+                    This MEng project was computer vision research done as a team. We fused two families of 3D reconstruction methods
+                    to get past a known trade-off, and we built it with deployment in mind, aiming at real uses in VR, medical imaging
+                    and spatial computing.
                 </p>
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm flex-wrap gap-y-2">
-                    <span class="text-cy">✓ Novel Research</span>
+                    <span class="text-cy">✓ Original Research</span>
                     <span class="text-cy">✓ Industrial Applications</span>
                     <span class="text-cy">✓ Team Collaboration</span>
-                    <span class="text-cy">✓ Production-Ready Systems</span>
+                    <span class="text-cy">✓ Built for Deployment</span>
                 </div>
             </div>
 

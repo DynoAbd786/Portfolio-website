@@ -4,13 +4,13 @@
 
 <ProjectPage Url="/projects/medical-simulation" Kicker="Professional Experience">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Advanced biomedical research platform for simulating flow diverter stent deployment in patient-specific vascular geometries
+                    A research tool that simulates how a flow diverter stent deploys inside a patient's own blood vessel geometry.
                 </p>
                 
                 <!-- Project Overview & Scope -->
                 <ProjectSection Title="Project Overview & Scope" Icon="fas fa-heartbeat">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        This modern research platform combines 3D vascular mesh visualization, VMTK-based vessel analysis, and physics-driven stent expansion algorithms to support aneurysm treatment planning, medical device research and development, and biomedical engineering education. The project extends upon the foundational 2016 Paliwal Virtual Stenting Workflow (VSW) algorithm, bringing cutting-edge computational methods to contemporary medical simulation.
+                        The platform brings together 3D vessel mesh visualization, vessel analysis with VMTK, and a physics-based stent expansion algorithm. It is meant to support aneurysm treatment planning, medical device R&D and biomedical engineering teaching. It extends Paliwal's 2016 Virtual Stenting Workflow (VSW) algorithm using current computational methods.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Research Applications</h3>
@@ -20,21 +20,21 @@
                                     <i class="fas fa-user-md text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Clinical Planning</h4>
-                                <p class="text-gray-400 text-sm">Aneurysm treatment planning and surgical decision support</p>
+                                <p class="text-gray-400 text-sm">Helping plan aneurysm treatment and inform surgical decisions</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-flask text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Device R&D</h4>
-                                <p class="text-gray-400 text-sm">Medical device research and development workflows</p>
+                                <p class="text-gray-400 text-sm">Testing stent designs during device research and development</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-graduation-cap text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Education</h4>
-                                <p class="text-gray-400 text-sm">Biomedical engineering education and training</p>
+                                <p class="text-gray-400 text-sm">Teaching and training in biomedical engineering</p>
                             </div>
                         </div>
                     </div>
@@ -50,10 +50,10 @@
                                 <i class="fas fa-cube mr-3"></i>Physics Engine
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Joint-Level Expansion:</strong> Realistic stent deployment mechanics</li>
-                                <li><strong>Force Simulation:</strong> Physics-based wire expansion modeling</li>
-                                <li><strong>Collision Detection:</strong> Vessel wall interaction systems</li>
-                                <li><strong>Conformity Analysis:</strong> Stent-to-vessel adaptation algorithms</li>
+                                <li><strong>Joint-level expansion:</strong> forces applied at each wire joint, so the stent opens the way a real one does</li>
+                                <li><strong>Forces:</strong> the wires expand according to a physics model</li>
+                                <li><strong>Collision detection:</strong> the stent stops where it meets the vessel wall</li>
+                                <li><strong>Conformity:</strong> algorithms that adapt the stent to the vessel's shape</li>
                             </ul>
                         </div>
                         
@@ -62,10 +62,10 @@
                                 <i class="fas fa-eye mr-3"></i>Visualization Pipeline
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>GPU Acceleration:</strong> NVIDIA CUDA-optimized rendering</li>
-                                <li><strong>PyVista/VTK:</strong> Advanced 3D visualization capabilities</li>
-                                <li><strong>Interactive Meshes:</strong> Real-time vessel manipulation</li>
-                                <li><strong>Multi-Scale View:</strong> Macro to microscopic detail levels</li>
+                                <li><strong>GPU:</strong> rendering runs on NVIDIA CUDA</li>
+                                <li><strong>PyVista/VTK:</strong> used for all the 3D views</li>
+                                <li><strong>Interactive meshes:</strong> vessels can be moved and inspected in real time</li>
+                                <li><strong>Multi-scale view:</strong> from the whole vessel down to microscopic detail</li>
                             </ul>
                         </div>
                         
@@ -74,10 +74,10 @@
                                 <i class="fas fa-heartbeat mr-3"></i>Medical Imaging
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>VMTK Integration:</strong> Vessel analysis and reconstruction</li>
-                                <li><strong>Centerline Extraction:</strong> Automated vessel path detection</li>
-                                <li><strong>Geometry Processing:</strong> Patient-specific mesh generation</li>
-                                <li><strong>Multi-Format Support:</strong> DICOM, STL, VTK compatibility</li>
+                                <li><strong>VMTK:</strong> analyses and reconstructs the vessel</li>
+                                <li><strong>Centerlines:</strong> the path through each vessel is found automatically</li>
+                                <li><strong>Geometry:</strong> builds patient-specific meshes</li>
+                                <li><strong>File formats:</strong> reads DICOM, STL and VTK</li>
                             </ul>
                         </div>
                         
@@ -86,40 +86,40 @@
                                 <i class="fas fa-desktop mr-3"></i>User Interface
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>PyQt6 Framework:</strong> Professional desktop application</li>
-                                <li><strong>Layered Architecture:</strong> Separation of concerns design</li>
-                                <li><strong>Scientific I/O:</strong> HDF5 export and data management</li>
-                                <li><strong>Cross-Platform:</strong> Linux/Windows deployment support</li>
+                                <li><strong>PyQt6:</strong> a desktop application</li>
+                                <li><strong>Layers:</strong> each layer handles one concern</li>
+                                <li><strong>Data:</strong> results are managed and exported as HDF5</li>
+                                <li><strong>Platforms:</strong> runs on Linux and Windows</li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Device Repository -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
-                        <h3 class="text-xl font-bold text-slate-100 mb-4">Comprehensive Device Repository</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Device Repository</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Enterprise Stents</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• Codman Enterprise VRD</li>
-                                    <li>• Realistic wire mechanics</li>
-                                    <li>• Variable porosity modeling</li>
+                                    <li>• Wires that behave like the real device</li>
+                                    <li>• Porosity that varies along the stent</li>
                                 </ul>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Pipeline Devices</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• Pipeline Embolization Device</li>
-                                    <li>• Flow diversion characteristics</li>
-                                    <li>• Braided structure simulation</li>
+                                    <li>• Models how it diverts flow</li>
+                                    <li>• Simulates the braided structure</li>
                                 </ul>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Silk Stents</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• Silk Vista Baby FD</li>
-                                    <li>• Ultra-fine wire modeling</li>
-                                    <li>• Deployment force analysis</li>
+                                    <li>• Models its very fine wires</li>
+                                    <li>• Analyses deployment forces</li>
                                 </ul>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <h3 class="text-xl font-bold text-slate-100">Internship Timeline</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
-                            During the intensive 8-week internship period, significant progress was made across all major system components, establishing a solid foundation for advanced biomedical simulation research and clinical applications.
+                            I had 8 weeks for this internship. In that time I moved every major part of the system forward, so later simulation research and clinical work have a base to start from.
                         </p>
                     </div>
                     
@@ -152,28 +152,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Physics-Based Stent Expansion:</strong>
-                                        <span class="text-gray-400"> Joint-level expansion forces with realistic deployment mechanics</span>
+                                        <span class="text-gray-400"> expansion forces applied at each joint, so deployment behaves like a real stent</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Device Repository:</strong>
-                                        <span class="text-gray-400"> Multiple stent models with realistic wire mechanics</span>
+                                        <span class="text-gray-400"> several stent models with realistic wire mechanics</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Visualization Pipeline:</strong>
-                                        <span class="text-gray-400"> GPU-accelerated 3D rendering with interactive meshes</span>
+                                        <span class="text-gray-400"> 3D rendering on the GPU, with meshes you can interact with</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Professional Architecture:</strong>
-                                        <span class="text-gray-400"> Layered design with separated concerns</span>
+                                        <span class="text-gray-400"> a layered design that keeps each part separate</span>
                                     </div>
                                 </li>
                             </ul>
@@ -185,28 +185,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Complete Expansion Workflows:</strong>
-                                        <span class="text-gray-400"> Full stent deployment and vessel conformity analysis</span>
+                                        <span class="text-gray-400"> finish full stent deployment and the vessel conformity analysis</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">CFD Integration:</strong>
-                                        <span class="text-gray-400"> Post-deployment hemodynamic studies</span>
+                                        <span class="text-gray-400"> study blood flow after the stent is deployed</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Clinical Automation:</strong>
-                                        <span class="text-gray-400"> Workflow automation for clinical usability</span>
+                                        <span class="text-gray-400"> automate the workflow so clinicians can use it</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Research Pipeline:</strong>
-                                        <span class="text-gray-400"> Enhanced export for academic studies</span>
+                                        <span class="text-gray-400"> better data export for academic studies</span>
                                     </div>
                                 </li>
                             </ul>
@@ -221,7 +221,7 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Advanced biomedical software engineering</span>
+                                <span class="text-gray-300">Writing software for biomedical research</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -229,7 +229,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Computational geometry and physics algorithms</span>
+                                <span class="text-gray-300">Computational geometry and physics simulation</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -237,7 +237,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Professional software design patterns</span>
+                                <span class="text-gray-300">Structuring a codebase with established design patterns</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -247,31 +247,31 @@
                 </ProjectSection>
 
                     <!-- Professional Impact -->
-                    <ProjectSection Title="Professional Impact" Icon="fas fa-award">
+                    <ProjectSection Title="Impact" Icon="fas fa-award">
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Advanced medical device simulation capabilities</span>
+                                <span class="text-gray-300">Simulating medical devices</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Computational research methodology expertise</span>
+                                <span class="text-gray-300">Running computational research</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Interdisciplinary collaboration experience</span>
+                                <span class="text-gray-300">Working across engineering and medicine</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Open-source medical simulation platform foundation</span>
+                                <span class="text-gray-300">A starting point for an open-source simulation platform</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Clinical translation potential</span>
+                                <span class="text-gray-300">Potential for clinical use later</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Academic research publication readiness</span>
+                                <span class="text-gray-300">Work that could feed into an academic paper</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -279,7 +279,7 @@
 
                 <!-- Technology Stack & Implementation -->
                 <ProjectSection Title="Technology Stack" Icon="fas fa-tools">
-                    <p class="text-gray-400 mb-6">Professional-grade biomedical software development toolkit</p>
+                    <p class="text-gray-400 mb-6">What the platform is built with</p>
                     <div class="flex flex-wrap justify-center gap-3">
                         <span class="chip">Python 3.10</span>
                         <span class="chip">NumPy/SciPy</span>
@@ -303,31 +303,31 @@
         { 
             ImagePath = "images/medical-simulation/vessel-with-io.png", 
             Title = "1. Initial Vessel Processing", 
-            Description = "The raw sample vessel geometry is loaded into the pipeline, where the input and output boundaries are automatically detected and capped. This topology-preservation step is crucial for defining valid boundary conditions for subsequent fluid simulations."
+            Description = "The sample vessel is loaded and its inlet and outlet are found and capped automatically. This keeps the mesh topology intact, which later fluid simulations need to set valid boundary conditions."
         },
         new GalleryItem 
         { 
             ImagePath = "images/medical-simulation/vessel-centerlines.png", 
             Title = "2. Centerline Computation", 
-            Description = "Vascular centerlines are computationally calculated using wave-propagation from a user-defined seed point. The <span class=\"text-blue-400 font-bold\">blue line</span> explicitly identifies the aneurysm sac, distinguishing it from the main arterial flow path."
+            Description = "Centerlines are computed by wave propagation from a seed point the user picks. The <span class=\"text-blue-400 font-bold\">blue line</span> marks the aneurysm sac, separate from the main path of the artery."
         },
         new GalleryItem 
         { 
             ImagePath = "images/medical-simulation/parent-vessel-extraction.png", 
             Title = "3. Parent Vessel Extraction", 
-            Description = "The parent vessel geometry is mathematically isolated by tracing along the computed centerline. This effectively separates the healthy artery from the pathology, defining the precise \"landing zone\" required for the flow diverter."
+            Description = "Tracing along the centerline isolates the parent vessel. This separates the healthy artery from the aneurysm and gives the exact \"landing zone\" where the flow diverter has to sit."
         },
         new GalleryItem 
         { 
             ImagePath = "images/medical-simulation/mock-stent.png", 
             Title = "4. Mock Device Generation", 
-            Description = "An experimental \"mock stent\" lattice generated to validate the deployment logic. Designed to be fitted across the parent vessel, this parametric model tests the algorithm's ability to adapt rigid mesh structures to biological curvature."
+            Description = "A test \"mock stent\" lattice, generated to check the deployment logic. It is fitted across the parent vessel to see whether the algorithm can bend a rigid mesh to follow the vessel's curves."
         },
         new GalleryItem 
         { 
             ImagePath = "images/medical-simulation/failed-stent-fitting.png", 
             Title = "5. Deployment Simulation Status", 
-            Description = "Current state of the stent fitting algorithm (implementing the Paliwal VSW method). The incomplete deployment highlights the immense computational complexity of simulating physics-based wall apposition and collision detection within the project's timeframe."
+            Description = "Where the stent fitting algorithm (Paliwal's VSW method) stood at the end. The deployment is incomplete: simulating physics-based wall apposition and collision detection proved too computationally complex to finish in the time available."
         }
     };
 }

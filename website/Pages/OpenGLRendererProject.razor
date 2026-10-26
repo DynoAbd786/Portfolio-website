@@ -3,16 +3,16 @@
 
 <ProjectPage Url="/projects/opengl-renderer" Kicker="Academic Project">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Computer Graphics Coursework 2 - Advanced 3D rendering application implementing the complete projective graphics pipeline with modern OpenGL, featuring terrain visualization, lighting models, and interactive space launch simulation.
+                    Computer Graphics Coursework 2. A 3D renderer in modern OpenGL that implements the full projective graphics pipeline. It renders real terrain with lighting, and includes a space launch you can control.
                 </p>
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-cube">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        This advanced computer graphics coursework involved developing a comprehensive 3D rendering application using modern OpenGL.
-                        Built as a collaborative project, the application implements the complete projective graphics pipeline to create an
-                        interactive visualization of a space launch platform near the Finnish archipelago, combining real-world elevation data
-                        with sophisticated rendering techniques.
+                        We built this 3D renderer in modern OpenGL as a team project for computer graphics coursework.
+                        It implements the complete projective graphics pipeline and uses it to show a space launch platform
+                        near the Finnish archipelago, built on real elevation data. You can move around the scene
+                        and watch the launch interactively.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                          <div class="grid md:grid-cols-2 gap-8">
@@ -23,19 +23,19 @@
                                 <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Matrix Operations:</strong> 4x4 transformations and projections</span>
+                                        <span><strong>Matrices:</strong> 4x4 transformations and projections</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Camera Systems:</strong> First-person and tracking cameras</span>
+                                        <span><strong>Cameras:</strong> a first-person camera and a tracking camera</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Coordinate Transforms:</strong> World, view, projection spaces</span>
+                                        <span><strong>Coordinate spaces:</strong> world, view and projection</span>
                                     </li>
                                      <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Modern OpenGL:</strong> Shader-based rendering pipeline</span>
+                                        <span><strong>Modern OpenGL:</strong> everything is drawn through shaders</span>
                                     </li>
                                 </ul>
                             </div>
@@ -46,19 +46,19 @@
                                  <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Blinn-Phong Shading:</strong> Full specular reflection model</span>
+                                        <span><strong>Blinn-Phong shading:</strong> the full model, specular highlights included</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Point Lights:</strong> Multiple colored lights with attenuation</span>
+                                        <span><strong>Point lights:</strong> several coloured lights that fade with distance</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Material Properties:</strong> Per-object color and texture support</span>
+                                        <span><strong>Materials:</strong> each object has its own colour and texture</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cy mt-1 mr-3"></i>
-                                        <span><strong>Texture Mapping:</strong> Orthophoto terrain texturing</span>
+                                        <span><strong>Textures:</strong> orthophotos draped over the terrain</span>
                                     </li>
                                 </ul>
                             </div>
@@ -72,29 +72,29 @@
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Terrain & Instancing</h4>
                              <p class="text-gray-300 text-sm">
-                                 Rendered real Finnish elevation data (6km x 6km) with orthophoto textures.
-                                 Used instanced rendering for placing multiple launchpads efficiently without data duplication.
+                                 The terrain is real Finnish elevation data covering 6km x 6km, textured with orthophotos.
+                                 Several launchpads are drawn with instanced rendering, so their mesh data is stored only once.
                              </p>
                          </div>
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Procedural Models</h4>
                              <p class="text-gray-300 text-sm">
-                                 Programmatically generated space vehicles using geometric primitives with proper normal generation
-                                 for realistic lighting interactions and procedural modeling.
+                                 The space vehicles are built in code from geometric primitives.
+                                 Each one gets correct normals, so lighting falls on it realistically.
                              </p>
                          </div>
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Animation System</h4>
                              <p class="text-gray-300 text-sm">
-                                 Keyframe-based vehicle animation with curved flight paths, gradual acceleration, and rotation alignment. 
-                                 Interactive controls for play, pause, and reset.
+                                 The vehicle is animated with keyframes. It follows a curved flight path, speeds up gradually and turns to face the way it is going.
+                                 You can play, pause and reset the launch.
                              </p>
                          </div>
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Particles & Split-Screen</h4>
                              <p class="text-gray-300 text-sm">
-                                 Exhaust particle system with textured point sprites and additive blending.
-                                 Dual viewport split-screen rendering with independent camera control.
+                                 Exhaust is a particle system of textured point sprites with additive blending.
+                                 The screen can split into two viewports, each with its own camera.
                              </p>
                          </div>
                     </div>
@@ -103,30 +103,30 @@
                 <!-- Performance Analysis -->
                 <ProjectSection Title="Performance & Optimization" Icon="fas fa-tachometer-alt">
                     <p class="text-gray-300 leading-relaxed mb-6">
-                        Implemented comprehensive GPU profiling using OpenGL timestamp queries to measure per-frame rendering time and individual component performance.
-                        Optimized rendering efficiency through batching, minimized state changes, and efficient memory management.
+                        We profiled the GPU with OpenGL timestamp queries, timing each frame and each part of the scene separately.
+                        Batching draws, cutting down state changes and managing memory carefully made rendering faster.
                     </p>
                      <div class="grid md:grid-cols-3 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">GPU Profiling</h4>
                              <ul class="text-gray-300 space-y-2 text-sm">
                                  <li>• GL_TIMESTAMP queries</li>
-                                 <li>• Per-frame timing</li>
-                                 <li>• Non-blocking retrieval</li>
+                                 <li>• Timing for every frame</li>
+                                 <li>• Results read without stalling</li>
                              </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Resource Mgmt</h4>
                              <ul class="text-gray-300 space-y-2 text-sm">
-                                 <li>• Efficient allocation</li>
-                                 <li>• Resource cleanup</li>
-                                 <li>• No runtime allocs</li>
+                                 <li>• Careful allocation</li>
+                                 <li>• Resources cleaned up properly</li>
+                                 <li>• No allocations while running</li>
                              </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Efficiency</h4>
                              <ul class="text-gray-300 space-y-2 text-sm">
-                                 <li>• Minimized draw calls</li>
+                                 <li>• Fewer draw calls</li>
                                  <li>• Uniform buffers</li>
                                  <li>• Viewport culling</li>
                              </ul>
@@ -153,9 +153,9 @@
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">UI & Interaction</h4>
                                 <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
                                     <li>• Custom 2D UI elements</li>
-                                    <li>• Real-time altitude display</li>
-                                    <li>• Interactive camera controls</li>
-                                    <li>• WASD + Mouse navigation</li>
+                                    <li>• Live altitude readout</li>
+                                    <li>• Camera controls</li>
+                                    <li>• WASD and mouse to move around</li>
                                 </ul>
                             </div>
                         </div>
@@ -167,18 +167,18 @@
                             <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Core Tech</h4>
                                 <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
-                                    <li>• C++17 Standards</li>
-                                    <li>• OpenGL 4.0+ API</li>
-                                    <li>• GLFW Windowing</li>
-                                    <li>• Premake5 Build</li>
+                                    <li>• C++17</li>
+                                    <li>• OpenGL 4.0+</li>
+                                    <li>• GLFW for windowing</li>
+                                    <li>• Premake5 for the build</li>
                                 </ul>
                             </div>
                              <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Collaboration</h4>
                                 <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
-                                    <li>• Pair programming execution</li>
-                                    <li>• Modular architecture design</li>
-                                    <li>• Git version control flow</li>
+                                    <li>• Written through pair programming</li>
+                                    <li>• Split into modules</li>
+                                    <li>• Shared through Git</li>
                                 </ul>
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white mb-1">Source Code Repository</h3>
-                                <p class="text-gray-400">Complete 3D renderer implementation with advanced features</p>
+                                <p class="text-gray-400">The full source of the 3D renderer</p>
                             </div>
                         </div>
                         <a href="https://github.com/DynoAbd786/graphics-cw2" target="_blank"

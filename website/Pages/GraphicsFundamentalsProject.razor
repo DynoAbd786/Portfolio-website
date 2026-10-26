@@ -3,16 +3,15 @@
 
 <ProjectPage Url="/projects/graphics-fundamentals" Kicker="Academic Project">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Computer Graphics Coursework 1 - Implementing fundamental 2D graphics algorithms including line drawing, triangle rasterization, and image processing with comprehensive performance analysis and testing frameworks.
+                    Computer Graphics Coursework 1. I implemented the core 2D graphics algorithms in C++, including line drawing, triangle rasterization and image blitting, then tested and benchmarked them.
                 </p>
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-palette">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        This comprehensive computer graphics coursework focused on implementing fundamental 2D graphics operations including
-                        pixel manipulation, line drawing algorithms, triangle rasterization, and image blitting. The project required
-                        building graphics primitives from scratch in C++, implementing mathematical algorithms for geometric rendering,
-                        and developing comprehensive testing and benchmarking frameworks.
+                        The coursework covered the basic 2D operations: setting pixels, drawing lines, rasterizing triangles and blitting
+                        images. I built each primitive from scratch in C++ and worked through the geometry behind it. I also wrote the
+                        tests and benchmarks used to check correctness and speed.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                          <div class="grid md:grid-cols-2 gap-8">
@@ -23,15 +22,15 @@
                                 <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Line Drawing:</strong> Bresenham's algorithm and DDA implementation</span>
+                                        <span><strong>Line Drawing:</strong> Bresenham's algorithm and DDA</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Triangle Rasterization:</strong> Barycentric coordinate interpolation</span>
+                                        <span><strong>Triangle Rasterization:</strong> Interpolation with barycentric coordinates</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Pixel Manipulation:</strong> Surface class with RGBA handling</span>
+                                        <span><strong>Pixel Manipulation:</strong> A Surface class that handles RGBA pixels</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
@@ -46,19 +45,19 @@
                                 <ul class="space-y-3 text-gray-300">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Benchmarking:</strong> Google Benchmark integration</span>
+                                        <span><strong>Benchmarking:</strong> Google Benchmark</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Testing Framework:</strong> Catch2 automated testing</span>
+                                        <span><strong>Testing Framework:</strong> Automated tests in Catch2</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Memory Optimization:</strong> Zero dynamic allocation constraints</span>
+                                        <span><strong>Memory Optimization:</strong> No dynamic allocation</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
-                                        <span><strong>Edge Case Handling:</strong> Comprehensive clipping tests</span>
+                                        <span><strong>Edge Case Handling:</strong> Tests for clipping at the edges</span>
                                     </li>
                                 </ul>
                             </div>
@@ -72,22 +71,22 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Line Drawing</h4>
                             <p class="text-gray-300 text-sm">
-                                Implemented both Bresenham's and DDA algorithms with comprehensive performance
-                                comparison. Ensured pixel-perfect rendering with proper clipping and no gaps.
+                                I implemented both Bresenham's and DDA and compared their performance.
+                                Lines are pixel-perfect, clip correctly and have no gaps.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Rasterization</h4>
                             <p class="text-gray-300 text-sm">
-                                Built triangle rendering with barycentric coordinate interpolation for smooth
-                                color gradients. Handled edge cases and optimized for different sizes.
+                                Triangles are filled using barycentric coordinates, which gives smooth color
+                                gradients across each one. I handled the edge cases and tuned it for triangles of different sizes.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Optimization</h4>
                             <p class="text-gray-300 text-sm">
-                                Achieved O(N) complexity for all algorithms, avoided dynamic allocations,
-                                and implemented comprehensive benchmarking to validate performance.
+                                Every algorithm runs in O(N) with no dynamic allocations.
+                                Benchmarks confirm the performance.
                             </p>
                         </div>
                     </div>
@@ -100,23 +99,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Pixel-level RGBx surface manipulation</span>
+                                <span class="text-gray-300">Direct pixel access on an RGBx surface</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Anti-aliased line rendering</span>
+                                <span class="text-gray-300">Anti-aliased lines</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Color interpolation rasterization</span>
+                                <span class="text-gray-300">Triangles filled with interpolated color</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Alpha-masked image blitting</span>
+                                <span class="text-gray-300">Image blitting with an alpha mask</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Viewport clipping & boundaries</span>
+                                <span class="text-gray-300">Clipping to the viewport</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -161,7 +160,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white mb-1">Source Code Repository</h3>
-                                <p class="text-gray-400">Complete implementation with documentation</p>
+                                <p class="text-gray-400">Full implementation and documentation</p>
                             </div>
                         </div>
                         <a href="https://github.com/DynoAbd786/graphics-cw1" target="_blank"

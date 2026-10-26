@@ -4,12 +4,12 @@
 
 <ProjectPage Url="/projects/pnanolocz" Kicker="Professional Experience">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Initial development phase of converting the acclaimed NanoLocz MATLAB application into a modern Python-based AFM (Atomic Force Microscopy) analysis platform
+                    The first phase of porting NanoLocz, a MATLAB application for AFM (Atomic Force Microscopy) analysis, to Python.
                 </p>
                 <!-- Project Overview & Scope -->
                 <ProjectSection Title="Project Overview & Scope" Icon="fas fa-microscope">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        pNanoLocz represents the foundational phase of converting the acclaimed NanoLocz MATLAB application into a modern Python-based platform for AFM (Atomic Force Microscopy) analysis. This project involved comprehensive codebase analysis, architectural design, and implementation of core components for a research-grade scientific application used by AFM researchers worldwide.
+                        pNanoLocz is the start of a Python version of NanoLocz, a MATLAB application that AFM researchers around the world use to analyse their data. I worked through the existing MATLAB code, designed the structure of the new Python application and built its core components.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Scientific Applications</h3>
@@ -19,21 +19,21 @@
                                     <i class="fas fa-atom text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Nanoscale Research</h4>
-                                <p class="text-gray-400 text-sm">Advanced AFM data analysis for nanomaterial characterization</p>
+                                <p class="text-gray-400 text-sm">Analysing AFM data to characterise nanomaterials</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-chart-line text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Data Visualization</h4>
-                                <p class="text-gray-400 text-sm">Multi-format AFM data processing and visualization workflows</p>
+                                <p class="text-gray-400 text-sm">Loading, processing and viewing AFM data from many file formats</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-university text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Research Platform</h4>
-                                <p class="text-gray-400 text-sm">Cross-platform scientific computing and analysis tools</p>
+                                <p class="text-gray-400 text-sm">Analysis tools that run on any desktop platform</p>
                             </div>
                         </div>
                     </div>
@@ -49,10 +49,10 @@
                                 <i class="fas fa-layer-group mr-3"></i>Modular Architecture
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>PyQt6 Framework:</strong> Modern GUI application structure</li>
-                                <li><strong>Separation of Concerns:</strong> Clear UI, logic, and utility modules</li>
-                                <li><strong>Extensible Design:</strong> Plugin-ready architecture patterns</li>
-                                <li><strong>Component-Based:</strong> Reusable and maintainable code structure</li>
+                                <li><strong>PyQt6:</strong> the GUI is built on PyQt6</li>
+                                <li><strong>Separate modules:</strong> UI, logic and utilities each live in their own package</li>
+                                <li><strong>Extensible:</strong> laid out so plugins can be added later</li>
+                                <li><strong>Components:</strong> small, reusable pieces that are easy to maintain</li>
                             </ul>
                         </div>
 
@@ -61,10 +61,10 @@
                                 <i class="fas fa-file-import mr-3"></i>Multi-Format File Reader
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>8+ AFM Formats:</strong> Comprehensive format support system</li>
-                                <li><strong>Extensible Framework:</strong> Easy addition of new file types</li>
-                                <li><strong>Metadata Preservation:</strong> Complete data integrity maintenance</li>
-                                <li><strong>Error Handling:</strong> Robust file parsing and validation</li>
+                                <li><strong>8+ AFM formats:</strong> one reader interface covers them all</li>
+                                <li><strong>New formats:</strong> adding a file type means adding one reader</li>
+                                <li><strong>Metadata:</strong> kept intact alongside the image data</li>
+                                <li><strong>Error handling:</strong> files are validated as they are parsed</li>
                             </ul>
                         </div>
 
@@ -73,10 +73,10 @@
                                 <i class="fas fa-database mr-3"></i>Data Management
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Image Storage:</strong> Efficient AFM image data handling</li>
-                                <li><strong>Metadata Systems:</strong> Comprehensive data tracking</li>
-                                <li><strong>Memory Optimization:</strong> Large dataset processing capabilities</li>
-                                <li><strong>Data Integrity:</strong> Validation and error checking systems</li>
+                                <li><strong>Image storage:</strong> AFM image data held efficiently in memory</li>
+                                <li><strong>Metadata:</strong> tracked for every loaded file</li>
+                                <li><strong>Memory use:</strong> tuned so large datasets can be processed</li>
+                                <li><strong>Data checks:</strong> validation and error checking on load</li>
                             </ul>
                         </div>
 
@@ -85,17 +85,17 @@
                                 <i class="fas fa-desktop mr-3"></i>GUI Foundation
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Responsive Layout:</strong> Left/right panel design system</li>
-                                <li><strong>Professional Interface:</strong> Research-grade user experience</li>
-                                <li><strong>Video Playback:</strong> AFM data visualization components</li>
-                                <li><strong>Cross-Platform:</strong> Windows, Linux, macOS compatibility</li>
+                                <li><strong>Layout:</strong> a responsive window with left and right panels</li>
+                                <li><strong>Interface:</strong> built for day-to-day research use</li>
+                                <li><strong>Video playback:</strong> AFM frames can be played back as video</li>
+                                <li><strong>Cross-platform:</strong> runs on Windows, Linux and macOS</li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Supported AFM File Formats -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
-                        <h3 class="text-xl font-bold text-slate-100 mb-4">Comprehensive AFM Format Support</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">AFM Format Support</h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-lg p-3 mb-2">
@@ -161,7 +161,7 @@
                     
                     <div class="mt-4 p-4 bg-white/[.02] rounded-lg border-l-4 border-line">
                         <p class="text-gray-300 text-sm leading-relaxed">
-                            <strong class="text-white">In Action:</strong> Real-time demonstration of the pNanoLocz platform analyzing complex AFM data. The video showcases the modern PyQt6 interface, multi-format file loading capabilities, and the responsive data visualization pipeline in action.
+                            <strong class="text-white">In Action:</strong> pNanoLocz analysing AFM data in real time. The video shows the PyQt6 interface, files in different formats being loaded, and the data being displayed as it plays.
                         </p>
                     </div>
                 </ProjectSection>
@@ -174,7 +174,7 @@
                             <h3 class="text-xl font-bold text-slate-100">Foundation Established</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
-                            Successfully established the foundational architecture and core components for a complete MATLAB-to-Python migration of a research-grade scientific application, creating a solid foundation for the full-featured AFM analysis platform.
+                            I set up the architecture and core components for the full MATLAB-to-Python migration. The rest of the AFM analysis platform is built on top of them.
                         </p>
                     </div>
 
@@ -186,28 +186,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Application Architecture:</strong>
-                                        <span class="text-gray-400"> Modular PyQt6-based structure with clear separation</span>
+                                        <span class="text-gray-400"> a modular PyQt6 app with UI and logic kept apart</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">File Reader Framework:</strong>
-                                        <span class="text-gray-400"> Extensible system supporting 8+ AFM formats</span>
+                                        <span class="text-gray-400"> reads 8+ AFM formats, with room for more</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">GUI Foundation:</strong>
-                                        <span class="text-gray-400"> Responsive main window with panel layout</span>
+                                        <span class="text-gray-400"> the main window and its panel layout</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Video Player Infrastructure:</strong>
-                                        <span class="text-gray-400"> AFM data visualization components</span>
+                                        <span class="text-gray-400"> components for playing back AFM data</span>
                                     </div>
                                 </li>
                             </ul>
@@ -219,28 +219,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">MATLAB Analysis:</strong>
-                                        <span class="text-gray-400"> Comprehensive source codebase evaluation</span>
+                                        <span class="text-gray-400"> working through the original MATLAB source</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Python Architecture:</strong>
-                                        <span class="text-gray-400"> Scalable modern application design</span>
+                                        <span class="text-gray-400"> designing the structure of the new app</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Research-Grade Platform:</strong>
-                                        <span class="text-gray-400"> Foundation for worldwide AFM research use</span>
+                                        <span class="text-gray-400"> a base for the AFM researchers worldwide who use NanoLocz</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Core Implementation:</strong>
-                                        <span class="text-gray-400"> Critical components and systems established</span>
+                                        <span class="text-gray-400"> the core components needed first</span>
                                     </div>
                                 </li>
                             </ul>
@@ -285,7 +285,7 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Large-scale software migration experience</span>
+                                <span class="text-gray-300">Migrating a large codebase between languages</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -293,7 +293,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Research-grade software standards</span>
+                                <span class="text-gray-300">Writing software that researchers rely on</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -301,7 +301,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Professional development methodology</span>
+                                <span class="text-gray-300">Working in a professional development process</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
@@ -313,7 +313,7 @@
 
                 <!-- Technology Stack & Implementation -->
                 <ProjectSection Title="Technology Stack" Icon="fas fa-tools">
-                    <p class="text-gray-400 mb-6">Modern scientific computing and application development toolkit</p>
+                    <p class="text-gray-400 mb-6">What the app is built with</p>
                     <div class="flex flex-wrap justify-center gap-3">
                         <span class="chip">Python</span>
                         <span class="chip">PyQt6</span>
@@ -327,14 +327,14 @@
                 </ProjectSection>
 
                 <!-- Project Documentation -->
-                <ProjectSection Title="Source Code & Documentation" Subtitle="Python AFM analysis platform development" Icon="fas fa-code-branch">
+                <ProjectSection Title="Source Code & Documentation" Subtitle="The Python AFM analysis platform" Icon="fas fa-code-branch">
                     <div class="grid md:grid-cols-1 gap-4">
                         <a href="https://github.com/Heath-AFM-Lab/pNanoLocz" target="_blank"
                            class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div>
                                 <div class="font-bold">GitHub Repository</div>
-                                <div class="text-sm opacity-90">Heath AFM Lab collaborative development</div>
+                                <div class="text-sm opacity-90">Developed with the Heath AFM Lab</div>
                             </div>
                         </a>
                     </div>

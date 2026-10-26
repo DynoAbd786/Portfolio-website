@@ -3,7 +3,7 @@
 
 <ProjectPage Url="/vascular-blood-flow" Kicker="Academic Dissertation">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    A comprehensive Lattice Boltzmann Method (LBM) framework for simulating pulsatile blood flow in arterial geometries, designed to bridge the gap between research simulations and clinical aneurysm risk assessment.
+                    For my dissertation I built a Lattice Boltzmann Method (LBM) framework that simulates pulsing blood flow through arteries. The aim was to move research-style simulation closer to something clinicians could use to assess aneurysm risk.
                 </p>
                 
                 <!-- Project Overview -->
@@ -16,7 +16,7 @@
                             <div>
                                 <h4 class="text-slate-100 font-bold mb-2">Project Context</h4>
                                 <p class="text-yellow-200/90 text-sm leading-relaxed">
-                                    This dissertation was completed under challenging personal circumstances including long-term illness. Despite this, the core technical objectives were successfully achieved, demonstrating the viability of GPU-accelerated LBM for clinical blood flow simulation.
+                                    I completed this dissertation during a long-term illness. I still met the core technical objectives, and the results suggest GPU-accelerated LBM is a workable approach to clinical blood flow simulation.
                                 </p>
                             </div>
                         </div>
@@ -26,13 +26,13 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-3">Clinical Challenge</h4>
                             <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                                Current aneurysm risk assessment relies on computationally expensive finite element methods (FEM) that limit real-time clinical decision-making. With 1.4% annual rupture rates, faster tools are critical.
+                                Aneurysm risk is currently assessed with finite element methods (FEM), which are too slow to support decisions in real time. Aneurysms rupture at a rate of 1.4% a year, so faster tools matter.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
-                            <h4 class="text-lg font-semibold text-slate-100 mb-3">Technical Innovation</h4>
+                            <h4 class="text-lg font-semibold text-slate-100 mb-3">Technical Approach</h4>
                             <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                                Extends XLB with custom BCs, non-Newtonian fluid modeling, and wall shear stress computation to create a GPU-accelerated environment achieving 2,340+ MLUPS.
+                                I extended XLB with custom boundary conditions, non-Newtonian fluid modeling and wall shear stress calculation. The result runs on the GPU at over 2,340 MLUPS.
                             </p>
                         </div>
                     </div>
@@ -46,10 +46,10 @@
                                 <i class="fas fa-calculator text-cy mr-2"></i>LBM Core
                             </h3>
                             <ul class="space-y-2 text-sm text-gray-400">
-                                <li>• Mesoscopic fluid simulation approach</li>
-                                <li>• D2Q9 velocity model implementation</li>
-                                <li>• GPU-optimized parallel computation</li>
-                                <li>• Superior scalability vs traditional CFD</li>
+                                <li>• Simulates fluid at the mesoscopic scale</li>
+                                <li>• D2Q9 velocity model</li>
+                                <li>• Runs in parallel on the GPU</li>
+                                <li>• Scales better than traditional CFD</li>
                             </ul>
                         </div>
                          <div class="bg-white/[.02] rounded-xl p-6 border border-line">
@@ -58,9 +58,9 @@
                             </h3>
                             <ul class="space-y-2 text-sm text-gray-400">
                                 <li>• Non-Newtonian Carreau-Yasuda rheology</li>
-                                <li>• Time-dependent pulsatile flow</li>
-                                <li>• Realistic cardiac cycle profiles</li>
-                                <li>• Wall shear stress computation</li>
+                                <li>• Pulsatile flow that changes over time</li>
+                                <li>• Inflow follows a realistic cardiac cycle</li>
+                                <li>• Calculates wall shear stress</li>
                             </ul>
                         </div>
                     </div>
@@ -72,17 +72,17 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-2">Custom Boundary Conditions</h4>
                             <ul class="space-y-2 text-sm text-gray-300">
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Time-dependent Zou-He inlet BC with 64-point cardiac cycle interpolation</li>
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Fullway bounce-back wall conditions for stability</li>
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Extrapolation outflow BC to prevent artificial reflections</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Zou-He inlet that varies over time, interpolated from 64 points across the cardiac cycle</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Fullway bounce-back at the walls, for stability</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Extrapolation at the outlet to stop artificial reflections</li>
                             </ul>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-2">Non-Newtonian Physics</h4>
                             <ul class="space-y-2 text-sm text-gray-300">
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Carreau-Yasuda viscosity model implementation</li>
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Spatially varying relaxation time computation</li>
-                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Shear-thinning behavior near vessel walls</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Carreau-Yasuda viscosity model</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Relaxation time calculated per cell, so it varies across the domain</li>
+                                <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Models shear-thinning near the vessel walls</li>
                             </ul>
                         </div>
                     </div>
@@ -117,15 +117,15 @@
                         <ul class="space-y-4">
                             <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">3D anatomically accurate models from STL</span>
+                                <span class="text-gray-300">Move to anatomically accurate 3D models built from STL files</span>
                             </li>
                              <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">ML rupture risk prediction integration</span>
+                                <span class="text-gray-300">Feed the results into ML models that predict rupture risk</span>
                             </li>
                              <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">NHS radiologist workflow integration</span>
+                                <span class="text-gray-300">Fit the tool into the workflow of NHS radiologists</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -140,7 +140,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white mb-1">Project Resources</h3>
-                                <p class="text-gray-400">Access source code and full technical report</p>
+                                <p class="text-gray-400">The source code and the full technical report</p>
                             </div>
                         </div>
                         <div class="flex gap-4">

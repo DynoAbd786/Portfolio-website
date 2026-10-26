@@ -3,22 +3,22 @@
 
 <ProjectPage Url="/projects/parallel-computing" Kicker="Academic Project">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    OpenMP, MPI & OpenCL: Mastering the Complete Parallel Programming Ecosystem. A specialization demonstrating mastery across shared memory, distributed message passing, and GPU acceleration paradigms.
+                    Three pieces of coursework in OpenMP, MPI and OpenCL, covering shared memory, distributed message passing and GPU programming.
                 </p>
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-microchip">
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        This comprehensive parallel computing specialization demonstrates mastery across three fundamental paradigms of high-performance computing through the COMP3221 Parallel Computation module at the University of Leeds.
+                        I did this work for COMP3221 Parallel Computation at the University of Leeds. The module covers three main approaches to high-performance computing, with one piece of coursework for each.
                     </p>
                     <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                        Each coursework builds upon previous concepts, creating a complete understanding of parallel programming from shared memory systems to distributed clusters and GPU acceleration.
+                        Each one builds on the last. It starts with threads sharing memory on one machine, moves to processes passing messages across a cluster, and ends on the GPU.
                     </p>
                     <div class="bg-white/[.02] border border-line rounded-lg p-4">
                         <p class="text-slate-300 text-sm flex items-start">
                             <i class="fas fa-info-circle mt-1 mr-2"></i>
                             <span>
-                                <strong>Academic Context:</strong> Due to a long-term illness during this period, the implementations represent focused effort on core parallel computing concepts rather than extensive feature development.
+                                <strong>Academic Context:</strong> I had a long-term illness during this module, so I focused on getting the core parallel concepts right rather than adding extra features.
                             </span>
                         </p>
                     </div>
@@ -30,12 +30,12 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Game of Life</h4>
                             <p class="text-gray-300 text-sm mb-4">
-                                Parallelized the classic cellular automaton using OpenMP directives, implementing four key parallel functions with proper handling of data dependencies and race conditions.
+                                I parallelized the Game of Life with OpenMP directives. That meant four parallel functions, each written so threads respect the data dependencies and don't race.
                             </p>
                             <ul class="space-y-2 text-sm text-gray-400">
-                                <li>• 283 lines of optimized C code</li>
-                                <li>• Red-black pattern for modified rules</li>
-                                <li>• Thread-safe random generation</li>
+                                <li>• 283 lines of optimized C</li>
+                                <li>• Red-black ordering for the modified rules</li>
+                                <li>• Thread-safe random number generation</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
@@ -56,12 +56,12 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Distributed Computing</h4>
                             <p class="text-gray-300 text-sm mb-4">
-                                Developed MPI applications with comprehensive performance analysis across multiple machines, demonstrating understanding of distributed computing challenges.
+                                I wrote MPI programs that ran across several machines, then measured how their performance changed as I added processes.
                             </p>
                             <ul class="space-y-2 text-sm text-gray-400">
-                                <li>• 199 lines of MPI C implementation</li>
-                                <li>• Multi-machine cluster deployment</li>
-                                <li>• Scalability analysis up to 32 processes</li>
+                                <li>• 199 lines of C with MPI</li>
+                                <li>• Run on a multi-machine cluster</li>
+                                <li>• Scaling measured up to 32 processes</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
@@ -82,12 +82,12 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Heat Equation Solver</h4>
                             <p class="text-gray-300 text-sm mb-4">
-                                Implemented OpenCL kernels for solving the heat equation on 2D grids, demonstrating mastery of GPU programming concepts including memory management and kernel optimization.
+                                I wrote OpenCL kernels that solve the heat equation on a 2D grid. The work covered moving memory between host and GPU and optimizing the kernels.
                             </p>
                             <ul class="space-y-2 text-sm text-gray-400">
                                 <li>• 184 lines of C + OpenCL kernels</li>
                                 <li>• Optimized GPU memory transfers</li>
-                                <li>• Massively parallel execution</li>
+                                <li>• Highly parallel execution on the GPU</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
@@ -127,7 +127,7 @@
                                 <h4 class="font-semibold text-slate-100 mb-2">Optimization</h4>
                                 <ul class="text-sm text-gray-300 space-y-1">
                                     <li>• Load balancing</li>
-                                    <li>• Comm overhead analysis</li>
+                                    <li>• Communication overhead analysis</li>
                                     <li>• Scalability benchmarking</li>
                                 </ul>
                             </div>
@@ -162,9 +162,9 @@
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Key Wins</h4>
                                 <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
                                     <li>• Parallel Game of Life (OpenMP)</li>
-                                    <li>• 3.09x Speedup with MPI</li>
-                                    <li>• GPU Heat Solver (OpenCL)</li>
-                                    <li>• Race Condition Handling</li>
+                                    <li>• 3.09x speedup on 8 processes (MPI)</li>
+                                    <li>• GPU heat equation solver (OpenCL)</li>
+                                    <li>• Handling race conditions</li>
                                 </ul>
                             </div>
                         </div>

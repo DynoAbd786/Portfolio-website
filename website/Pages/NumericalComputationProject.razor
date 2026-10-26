@@ -4,7 +4,7 @@
 
 <ProjectPage Url="/projects/numerical-computation" Kicker="Academic Project · Year 2">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    Advanced numerical analysis coursework implementing multiple differential equation solvers for predator-prey ecological models with comprehensive error analysis and performance benchmarking
+                    Numerical analysis coursework where I implemented and compared differential equation solvers on a predator-prey model, then measured their error and running time.
                 </p>
                 <!-- Project Overview & Mathematical Foundation -->
                 <ProjectSection Title="Mathematical Foundation" Icon="fas fa-calculator">
@@ -14,28 +14,28 @@
                             <h3 class="text-xl font-bold text-slate-100">COMP/XJCO2421 Numerical Computation Coursework</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
-                            Advanced numerical analysis project implementing and comparing multiple differential equation solvers for predator-prey ecological systems.
-                            Built to evaluate computational accuracy, efficiency, and stability of numerical methods for solving Lotka-Volterra equations
-                            with external forcing functions representing migration patterns.
+                            I implemented several differential equation solvers and compared them on a predator-prey system.
+                            The model is the Lotka-Volterra equations, with external forcing functions that stand in for migration.
+                            For each method I measured accuracy, speed and stability.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Problem Domain</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
-                                <li>• Predator-prey ecosystem modeling</li>
+                                <li>• Modeling a predator-prey ecosystem</li>
                                 <li>• Lotka-Volterra differential equations</li>
-                                <li>• External migration forcing functions</li>
-                                <li>• Two mathematical test scenarios</li>
+                                <li>• Forcing functions for migration in and out</li>
+                                <li>• Two test scenarios</li>
                             </ul>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Technical Implementation</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
-                                <li>• Custom Euler method implementation</li>
-                                <li>• 7 comparative numerical solvers</li>
-                                <li>• Performance benchmarking suite</li>
-                                <li>• Statistical error analysis framework</li>
+                                <li>• Euler's method, written by me</li>
+                                <li>• 7 numerical solvers compared</li>
+                                <li>• Timing benchmarks</li>
+                                <li>• Statistical error analysis</li>
                             </ul>
                         </div>
                     </div>
@@ -106,10 +106,10 @@
                                 <div>
                                     <strong class="text-white">Expected Behavior:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• Periodic oscillating populations</li>
-                                        <li>• Consistent peak heights over time</li>
-                                        <li>• Stable long-term dynamics</li>
-                                        <li>• No analytical solution available</li>
+                                        <li>• Populations oscillate periodically</li>
+                                        <li>• Peaks stay the same height over time</li>
+                                        <li>• Stable over long runs</li>
+                                        <li>• No analytical solution to compare against</li>
                                     </ul>
                                 </div>
                             </div>
@@ -125,15 +125,15 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Custom Implementation</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Euler Method:</strong> O(h) first-order accuracy</div>
-                                <div><strong>Implementation:</strong> Built from scratch following solver patterns</div>
-                                <div><strong>Purpose:</strong> Baseline comparison method</div>
+                                <div><strong>Implementation:</strong> Written from scratch to match the provided solvers</div>
+                                <div><strong>Purpose:</strong> Baseline to compare the others against</div>
                                 <div>
                                     <strong>Features:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
                                         <li>• Butcher tableau structure</li>
-                                        <li>• Identical timing framework</li>
-                                        <li>• Type-safe implementation</li>
-                                        <li>• Memory-efficient processing</li>
+                                        <li>• Timed the same way as the other solvers</li>
+                                        <li>• Type-safe</li>
+                                        <li>• Light on memory</li>
                                     </ul>
                                 </div>
                             </div>
@@ -142,16 +142,16 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Third-Order Methods</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
-                                <div><strong>SSPRK3:</strong> Strong Stability Preserving</div>
+                                <div><strong>SSPRK3:</strong> Strong stability preserving</div>
                                 <div><strong>Van der Houwen:</strong> Optimized coefficients</div>
                                 <div><strong>Accuracy:</strong> O(h³) convergence rate</div>
                                 <div>
                                     <strong>Applications:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• Stability-critical simulations</li>
-                                        <li>• Medium-precision requirements</li>
-                                        <li>• Balanced performance/accuracy</li>
-                                        <li>• Oscillatory system preservation</li>
+                                        <li>• Simulations where stability matters most</li>
+                                        <li>• Medium precision</li>
+                                        <li>• A balance of speed and accuracy</li>
+                                        <li>• Keeping oscillations intact</li>
                                     </ul>
                                 </div>
                             </div>
@@ -162,14 +162,14 @@
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Runge-Kutta:</strong> Classical RK4</div>
                                 <div><strong>3/8-rule:</strong> Alternative RK4 variant</div>
-                                <div><strong>Ralston-4:</strong> Optimized stability</div>
+                                <div><strong>Ralston-4:</strong> Tuned for stability</div>
                                 <div>
                                     <strong>Performance:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• O(h⁴) high-order accuracy</li>
-                                        <li>• Superior error characteristics</li>
-                                        <li>• Industry-standard reliability</li>
-                                        <li>• Computational cost vs accuracy</li>
+                                        <li>• O(h⁴) accuracy</li>
+                                        <li>• Lowest errors of the group</li>
+                                        <li>• The standard choice in practice</li>
+                                        <li>• More work per step in exchange for accuracy</li>
                                     </ul>
                                 </div>
                             </div>
@@ -198,27 +198,27 @@
                 </ProjectSection>
 
                 <!-- Advanced Analysis & Performance -->
-                <ProjectSection Title="Comprehensive Error & Performance Analysis" Icon="fas fa-chart-line">
+                <ProjectSection Title="Error & Performance Analysis" Icon="fas fa-chart-line">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Error Analysis</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Absolute Error:</strong> |computed - true| calculations</li>
-                                <li><strong>Average Error:</strong> Mean deviation over time domain</li>
-                                <li><strong>Maximum Error:</strong> Peak deviation identification</li>
-                                <li><strong>Euclidean Norm:</strong> L2 norm error measurement</li>
-                                <li><strong>Convergence Study:</strong> Order verification analysis</li>
+                                <li><strong>Absolute Error:</strong> |computed - true|</li>
+                                <li><strong>Average Error:</strong> Mean deviation across the time range</li>
+                                <li><strong>Maximum Error:</strong> The largest deviation</li>
+                                <li><strong>Euclidean Norm:</strong> Error measured with the L2 norm</li>
+                                <li><strong>Convergence Study:</strong> Checking each method's order</li>
                             </ul>
                         </div>
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Performance Benchmarking</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>CPU Core Isolation:</strong> Single-core execution for stability</li>
+                                <li><strong>CPU Core Isolation:</strong> Pinned to one core for consistent timings</li>
                                 <li><strong>Multiple Runs:</strong> 5 iterations per measurement</li>
-                                <li><strong>Statistical Analysis:</strong> Average timing calculations</li>
-                                <li><strong>Gradient Analysis:</strong> Big-O complexity verification</li>
+                                <li><strong>Statistical Analysis:</strong> Averaged timings</li>
+                                <li><strong>Gradient Analysis:</strong> Checking Big-O complexity</li>
                                 <li><strong>Scaling Studies:</strong> 8 different time step sizes</li>
                             </ul>
                         </div>
@@ -226,11 +226,11 @@
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Advanced Features</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Peak Detection:</strong> Oscillation stability analysis</li>
-                                <li><strong>Data Visualization:</strong> Professional matplotlib graphs</li>
-                                <li><strong>Stability Assessment:</strong> Long-term behavior evaluation</li>
-                                <li><strong>Method Comparison:</strong> Systematic performance ranking</li>
-                                <li><strong>Business Recommendations:</strong> Practical solver selection</li>
+                                <li><strong>Peak Detection:</strong> Checks whether oscillations stay stable</li>
+                                <li><strong>Data Visualization:</strong> Graphs in matplotlib</li>
+                                <li><strong>Stability Assessment:</strong> Behavior over long runs</li>
+                                <li><strong>Method Comparison:</strong> Ranked the methods on performance</li>
+                                <li><strong>Business Recommendations:</strong> Which solver to use when</li>
                             </ul>
                         </div>
                     </div>
@@ -244,17 +244,17 @@
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• <strong>Range:</strong> dt from T/100 to T/1600 (8 values)</li>
                                     <li>• <strong>Test Case A:</strong> T = 2.5π (validation)</li>
-                                    <li>• <strong>Test Case B:</strong> T = 30 (realistic simulation)</li>
-                                    <li>• <strong>Convergence:</strong> Order verification through gradients</li>
+                                    <li>• <strong>Test Case B:</strong> T = 30 (realistic case)</li>
+                                    <li>• <strong>Convergence:</strong> Order checked from the gradients</li>
                                 </ul>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-3">Statistical Framework</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• <strong>Error = C × h^p:</strong> Theoretical order validation</li>
-                                    <li>• <strong>log(error) vs log(h):</strong> Gradient-based analysis</li>
-                                    <li>• <strong>Multiplicative Factors:</strong> Relative performance</li>
-                                    <li>• <strong>Stability Thresholds:</strong> Breakdown identification</li>
+                                    <li>• <strong>Error = C × h^p:</strong> Checks against the theoretical order</li>
+                                    <li>• <strong>log(error) vs log(h):</strong> The slope gives the order</li>
+                                    <li>• <strong>Multiplicative Factors:</strong> How much faster or slower each method is</li>
+                                    <li>• <strong>Stability Thresholds:</strong> Where each method breaks down</li>
                                 </ul>
                             </div>
                         </div>
@@ -262,7 +262,7 @@
                 </ProjectSection>
 
                 <!-- Results & Technical Achievements -->
-                <ProjectSection Title="Research Findings & Technical Excellence" Icon="fas fa-trophy">
+                <ProjectSection Title="Research Findings" Icon="fas fa-trophy">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -271,23 +271,23 @@
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>Runge-Kutta (RK4):</strong> Best accuracy at dt=800 with ~10⁻¹⁰ error</li>
                                     <li><strong>SSPRK3:</strong> Good stability, ~10⁻⁹ error at dt=6400</li>
-                                    <li><strong>Euler Method:</strong> Baseline performance, increasing peaks in Test B</li>
-                                    <li><strong>Order Verification:</strong> Confirmed 1st, 3rd, 4th order convergence</li>
-                                    <li><strong>Stability Analysis:</strong> Peak consistency crucial for long simulations</li>
-                                    <li><strong>Performance Scaling:</strong> Time ∝ Order × timesteps relationship</li>
+                                    <li><strong>Euler Method:</strong> The baseline; its peaks grow over time in Test B</li>
+                                    <li><strong>Order Verification:</strong> Confirmed 1st, 3rd and 4th order convergence</li>
+                                    <li><strong>Stability Analysis:</strong> Steady peak heights matter most in long simulations</li>
+                                    <li><strong>Performance Scaling:</strong> Time ∝ Order × timesteps</li>
                                 </ul>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Technical Sophistication</h3>
+                            <h3 class="text-xl font-bold text-white mb-4">Technical Depth</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
-                                    <li><strong>Mathematical Rigor:</strong> Multiple test scenarios with analytical validation</li>
-                                    <li><strong>Software Engineering:</strong> Object-oriented design with data encapsulation</li>
-                                    <li><strong>Performance Optimization:</strong> CPU affinity and statistical averaging</li>
-                                    <li><strong>Scientific Visualization:</strong> Professional multi-panel plotting</li>
-                                    <li><strong>Error Theory Application:</strong> Convergence rate mathematical analysis</li>
-                                    <li><strong>Business Context:</strong> Practical recommendations for industry use</li>
+                                    <li><strong>Mathematical Rigor:</strong> Two test scenarios, one checked against an exact solution</li>
+                                    <li><strong>Software Engineering:</strong> Object-oriented design with encapsulated data</li>
+                                    <li><strong>Performance Optimization:</strong> CPU affinity and averaged runs</li>
+                                    <li><strong>Scientific Visualization:</strong> Multi-panel plots</li>
+                                    <li><strong>Error Theory Application:</strong> Working out convergence rates</li>
+                                    <li><strong>Business Context:</strong> Recommendations on which solver to use in practice</li>
                                 </ul>
                             </div>
                         </div>
@@ -295,23 +295,22 @@
 
                     <!-- Academic Excellence Context -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
-                        <h3 class="text-xl font-bold text-slate-100 mb-4">Academic Excellence & Industry Relevance</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Takeaways & Industry Relevance</h3>
                         <p class="text-gray-300 text-sm mb-3">
-                            This numerical computation project demonstrates exceptional mathematical programming sophistication for undergraduate coursework,
-                            implementing concepts typically found in graduate-level computational science programs:
+                            The project draws on three areas:
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Mathematical Depth</h4>
-                                <p class="text-gray-400 text-sm">Advanced differential equation theory, convergence analysis, and numerical stability assessment.</p>
+                                <p class="text-gray-400 text-sm">Differential equation theory, convergence analysis and numerical stability.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Scientific Computing</h4>
-                                <p class="text-gray-400 text-sm">Professional-grade implementation with performance optimization and error quantification.</p>
+                                <p class="text-gray-400 text-sm">Careful implementations, with timings and measured errors for each.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Research Methodology</h4>
-                                <p class="text-gray-400 text-sm">Systematic comparison study with statistical analysis and business recommendations.</p>
+                                <p class="text-gray-400 text-sm">A structured comparison with statistics and practical recommendations.</p>
                             </div>
                         </div>
                     </div>
@@ -320,7 +319,7 @@
                 <!-- GitHub Repository Links -->
                 <ProjectSection Title="Source Code & Documentation" Icon="fab fa-github">
                     <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
-                        Explore the complete numerical methods implementation with comprehensive analysis, professional documentation, and research findings.
+                        The repository has all the solver code, the analysis and the written report.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <a href="https://github.com/DynoAbd786/numerical-computation-coursework"
@@ -329,12 +328,12 @@
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">Numerical Computation Analysis</div>
-                                <div class="text-sm text-gray-400">Complete Implementation with Research Report & Analysis</div>
+                                <div class="text-sm text-gray-400">Code, report and analysis</div>
                             </div>
                         </a>
                     </div>
                     <p class="text-gray-400 text-sm mt-4">
-                        Features Jupyter notebook, solver implementations, comprehensive analysis, and professional documentation
+                        Includes a Jupyter notebook, the solver implementations, the analysis and documentation
                     </p>
                 </ProjectSection>
 
@@ -345,23 +344,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Advanced numerical methods understanding for predator-prey systems</span>
+                                <span class="text-gray-300">How different numerical methods behave on a predator-prey system</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Comprehensive error analysis and convergence theory application</span>
+                                <span class="text-gray-300">Measuring error and applying convergence theory</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Performance optimization through CPU isolation and statistical analysis</span>
+                                <span class="text-gray-300">Getting reliable timings with CPU isolation and repeated runs</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Mathematical rigor in differential equation solver implementation</span>
+                                <span class="text-gray-300">Implementing differential equation solvers carefully and correctly</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Business-oriented analysis with practical solver recommendations</span>
+                                <span class="text-gray-300">Turning the results into practical advice on which solver to pick</span>
                             </li>
                         </ul>
                 </ProjectSection>

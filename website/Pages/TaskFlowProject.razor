@@ -4,9 +4,9 @@
 
 <ProjectPage Url="/projects/taskflow" Kicker="Personal Project">
                 <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
-                    A 10,000+ line enterprise-grade Python framework exploring the limits of agentic AI in complex software engineering
+                    A Python framework of more than 10,000 lines that I used to test how far agentic AI tools can go on a large, complex software project.
                 </p>
-                
+
                 <!-- Project Origin & Motivation -->
                 <ProjectSection Title="Project Origin" Icon="fas fa-lightbulb">
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
@@ -19,14 +19,14 @@
                         </p>
                     </div>
                     <p class="text-gray-300 text-lg leading-relaxed">
-                        What began as a simple challenge to an AI agent evolved into a comprehensive exploration of agentic AI capabilities in enterprise software development. Originally conceived as a component for another project under construction, TaskFlow was repurposed as a personal research initiative to systematically test AI models against complex, real-world software engineering challenges. The goal: push agentic AI to its limits with a production-ready system that would reveal each model's strengths, weaknesses, and practical applications in modern software development.
+                        It started as a simple prompt to an AI agent. TaskFlow was first meant to be a component of another project I was building, but I turned it into a personal research project: a way to test AI models against a large, realistic software engineering task in a consistent way. I wanted to push agentic AI hard enough to see where each model held up, where it broke down, and how useful it is in day-to-day development.
                     </p>
                 </ProjectSection>
 
                 <!-- System Architecture Deep Dive -->
-                <ProjectSection Title="Enterprise Architecture" Icon="fas fa-sitemap">
-                    <p class="text-gray-300 mb-6">TaskFlow represents a sophisticated, production-ready distributed task processing system spanning 34 Python modules with enterprise-grade capabilities:</p>
-                    
+                <ProjectSection Title="Architecture" Icon="fas fa-sitemap">
+                    <p class="text-gray-300 mb-6">TaskFlow is a distributed task processing system made up of 34 Python modules. These are its main parts:</p>
+
                     <!-- Core Components -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
@@ -34,61 +34,61 @@
                                 <i class="fas fa-engine mr-3"></i>Task Engine Core
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>TaskRegistry:</strong> Automatic task function registration via decorators</li>
-                                <li><strong>TaskExecutor:</strong> Async/sync task execution with timeout handling</li>
-                                <li><strong>TaskEngine:</strong> Main orchestrator for submission, cancellation, retry logic</li>
-                                <li><strong>Health Monitoring:</strong> Comprehensive system health checks</li>
+                                <li><strong>TaskRegistry:</strong> registers task functions automatically through decorators</li>
+                                <li><strong>TaskExecutor:</strong> runs async and sync tasks, with timeouts</li>
+                                <li><strong>TaskEngine:</strong> the main orchestrator for submitting, cancelling and retrying tasks</li>
+                                <li><strong>Health monitoring:</strong> system health checks</li>
                             </ul>
                         </div>
-                        
+
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-database mr-3"></i>Queue Management
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Priority Queues:</strong> Critical, High, Normal, Low priority levels</li>
-                                <li><strong>Delayed Execution:</strong> Scheduled/cron-like task processing</li>
-                                <li><strong>Connection Handling:</strong> Auto-reconnection with exponential backoff</li>
-                                <li><strong>Real-time Statistics:</strong> Performance metrics and monitoring</li>
+                                <li><strong>Priority queues:</strong> Critical, High, Normal and Low</li>
+                                <li><strong>Delayed execution:</strong> scheduled, cron-like tasks</li>
+                                <li><strong>Connections:</strong> reconnects automatically with exponential backoff</li>
+                                <li><strong>Live statistics:</strong> performance metrics and monitoring</li>
                             </ul>
                         </div>
-                        
+
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-users mr-3"></i>Worker System
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Distributed Processing:</strong> Multi-worker task execution</li>
-                                <li><strong>Configurable Concurrency:</strong> Adjustable worker pool sizes</li>
-                                <li><strong>Queue Specialization:</strong> Workers for specific queue types</li>
-                                <li><strong>Auto Recovery:</strong> Health monitoring and automatic restart</li>
+                                <li><strong>Distributed processing:</strong> several workers run tasks in parallel</li>
+                                <li><strong>Concurrency:</strong> worker pool sizes are configurable</li>
+                                <li><strong>Queue specialization:</strong> workers can be tied to specific queues</li>
+                                <li><strong>Recovery:</strong> workers are monitored and restarted automatically</li>
                             </ul>
                         </div>
-                        
+
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-globe mr-3"></i>API & Web Interface
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>FastAPI Backend:</strong> RESTful API with comprehensive endpoints</li>
-                                <li><strong>WebSocket Support:</strong> Real-time updates and notifications</li>
-                                <li><strong>Web Dashboard:</strong> Live monitoring and management interface</li>
-                                <li><strong>Health Endpoints:</strong> System status and diagnostics</li>
+                                <li><strong>FastAPI backend:</strong> a REST API for the whole system</li>
+                                <li><strong>WebSockets:</strong> live updates and notifications</li>
+                                <li><strong>Web dashboard:</strong> watch and manage tasks as they run</li>
+                                <li><strong>Health endpoints:</strong> system status and diagnostics</li>
                             </ul>
                         </div>
                     </div>
-                    
+
                     <!-- Advanced Features -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
-                        <h3 class="text-xl font-bold text-slate-100 mb-4">Enterprise Features</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Features</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Reliability & Recovery</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• Automatic retry with exponential backoff</li>
-                                    <li>• Circuit breakers for failure isolation</li>
+                                    <li>• Circuit breakers to isolate failures</li>
                                     <li>• Task dependency management</li>
-                                    <li>• Robust error handling</li>
+                                    <li>• Error handling throughout</li>
                                 </ul>
                             </div>
                             <div>
@@ -97,16 +97,16 @@
                                     <li>• Prometheus metrics on port 8001</li>
                                     <li>• Structured JSON logging</li>
                                     <li>• Correlation ID tracking</li>
-                                    <li>• Real-time WebSocket updates</li>
+                                    <li>• Live WebSocket updates</li>
                                 </ul>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Management & Operations</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• CLI with 20+ administration commands</li>
-                                    <li>• Environment-based configuration</li>
-                                    <li>• Database migrations & schema management</li>
-                                    <li>• Horizontal scaling capabilities</li>
+                                    <li>• A CLI with 20+ admin commands</li>
+                                    <li>• Configuration through environment variables</li>
+                                    <li>• Database migrations and schema management</li>
+                                    <li>• Horizontal scaling</li>
                                 </ul>
                             </div>
                         </div>
@@ -119,31 +119,31 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Configuration Management</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <p class="text-gray-300 text-sm mb-3">60+ configurable parameters including:</p>
+                                <p class="text-gray-300 text-sm mb-3">More than 60 settings, including:</p>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• Database connection pooling optimization</li>
-                                    <li>• Redis clustering and persistence settings</li>
-                                    <li>• Worker concurrency and timeout configurations</li>
-                                    <li>• Security settings (JWT, API keys, CORS)</li>
-                                    <li>• Monitoring and logging preferences</li>
+                                    <li>• Database connection pool tuning</li>
+                                    <li>• Redis clustering and persistence</li>
+                                    <li>• Worker concurrency and timeouts</li>
+                                    <li>• Security (JWT, API keys, CORS)</li>
+                                    <li>• Monitoring and logging</li>
                                 </ul>
                             </div>
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Deployment & Scaling</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <p class="text-gray-300 text-sm mb-3">Production-ready deployment options:</p>
+                                <p class="text-gray-300 text-sm mb-3">Ways to deploy it:</p>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• Docker containerization support</li>
-                                    <li>• Kubernetes manifests provided</li>
-                                    <li>• Docker Compose multi-service orchestration</li>
-                                    <li>• Horizontal scaling capabilities</li>
+                                    <li>• Docker containers</li>
+                                    <li>• Kubernetes manifests included</li>
+                                    <li>• Docker Compose for running all the services together</li>
+                                    <li>• Horizontal scaling</li>
                                     <li>• Load balancing and service discovery</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Code Examples -->
                     <div class="mt-6">
                         <h3 class="text-xl font-bold text-white mb-4">Usage Patterns</h3>
@@ -171,10 +171,10 @@
                             <h3 class="text-xl font-bold text-slate-100">Research Findings</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
-                            Through systematic evaluation across complex software engineering tasks, <strong>Claude Code Pro</strong> demonstrated significantly superior performance compared to Gemini CLI in architectural reasoning, code quality, and system design consistency. The Pro version's advanced reasoning capabilities proved invaluable for enterprise-level software patterns, async programming paradigms, and distributed system design. Qwen Code evaluation remains ongoing, with preliminary tests showing promise in optimization and performance tuning scenarios.
+                            I gave the models the same set of complex engineering tasks. <strong>Claude Code Pro</strong> did clearly better than Gemini CLI at architectural reasoning, code quality and keeping the system design consistent. Its reasoning held up well on enterprise-style patterns, async code and distributed system design. I'm still evaluating Qwen Code; early tests look promising for optimization and performance tuning.
                         </p>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <div class="flex items-center mb-4">
@@ -193,7 +193,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-gray-400 text-sm">Exceptional system architecture design, async programming patterns, comprehensive documentation, and enterprise-level code organization.</p>
+                            <p class="text-gray-400 text-sm">Very strong at system architecture and async patterns. It also wrote thorough documentation and kept a large codebase well organized.</p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <div class="flex items-center mb-4">
@@ -212,7 +212,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-gray-400 text-sm">Competent in database schema design and API endpoint creation, but less consistent in complex architectural decisions.</p>
+                            <p class="text-gray-400 text-sm">Good at database schema design and building API endpoints, but less consistent on bigger architectural decisions.</p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <div class="flex items-center mb-4">
@@ -227,7 +227,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-gray-400 text-sm">Initial testing shows potential in performance optimization and monitoring systems. Comprehensive evaluation in progress.</p>
+                            <p class="text-gray-400 text-sm">Early tests show potential in performance optimization and monitoring. The full evaluation is still in progress.</p>
                         </div>
                     </div>
                 </ProjectSection>
@@ -239,23 +239,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Claude Code Pro's superior architectural reasoning capabilities</span>
+                                <span class="text-gray-300">Claude Code Pro was the strongest at architectural reasoning</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">AI-assisted enterprise software development patterns</span>
+                                <span class="text-gray-300">What works when building larger software with AI assistance</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Scalable distributed systems design and implementation</span>
+                                <span class="text-gray-300">Designing and building a distributed system that scales</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Modern Python development practices and tooling</span>
+                                <span class="text-gray-300">Modern Python practices and tooling</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Production-ready monitoring and observability</span>
+                                <span class="text-gray-300">Monitoring and observability built into the system</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -278,17 +278,17 @@
                 </div>
 
                 <!-- Project Documentation -->
-                <ProjectSection Title="Source Code & Documentation" Subtitle="Complete implementation and project details" Icon="fas fa-code-branch">
+                <ProjectSection Title="Source Code & Documentation" Subtitle="The full implementation and project details" Icon="fas fa-code-branch">
                     <div class="grid md:grid-cols-1 gap-4">
                         <a href="https://github.com/DynoAbd786/Taskflow" target="_blank"
                            class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div>
                                 <div class="font-bold">GitHub Repository</div>
-                                <div class="text-sm opacity-90">Full enterprise-grade Python codebase</div>
+                                <div class="text-sm opacity-90">The full Python codebase</div>
                             </div>
                         </a>
                     </div>
                 </ProjectSection>
-            
+
 </ProjectPage>
