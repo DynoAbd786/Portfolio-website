@@ -94,3 +94,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // blazor.web.js loads after this file, so Blazor exists by DOMContentLoaded
     if (window.Blazor) window.Blazor.addEventListener('enhancedload', mkReveal);
 });
+
+// The homepage's 3D workshop (js/workshop). Mounted when #workshop appears and disposed when
+// enhanced navigation removes it, so only one scene (and one WebGL context) ever exists.
+window.mkWorkshop = {
+    active: false,
+    mounts: 0,
+    disposes: 0,
+    _instance: null,
+    _root: null,
+    _pending: null,
+
+    async sync() {
+        // a mount still loading finishes first, so it can be disposed below if we've left the page
+        while (this._pending) await this._pending;
+
+        if (this._instance && !this._root.isConnected) {
+            this._instance.dispose();
+            this._instance = this._root = null;
+            this.active = false;
+            this.disposes++;
+        }
+
+        const root = document.getElementById('workshop');
+        if (!root || this._instance || root.dataset.state === 'failed') return;
+
+        this._pending = (async () => {
+            try {
+                const data = JSON.parse(root.querySelector('#workshop-data').textContent);
+                const { mount } = await import('/js/workshop/workshop.js');
+                this._instance = await mount(root, data);
+                this._root = root;
+                this.active = true;
+                this.mounts++;
+            } catch (e) {
+                // no WebGL, a failed download or a bug: the still image and its links stay
+                root.dataset.state = 'failed';
+                console.warn('[workshop]', e && e.message);
+            }
+        })();
+        await this._pending;
+        this._pending = null;
+        // we may have navigated away while it loaded
+        if (this._instance && !this._root.isConnected) await this.sync();
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    mkWorkshop.sync();
+    if (window.Blazor) window.Blazor.addEventListener('enhancedload', () => mkWorkshop.sync());
+});

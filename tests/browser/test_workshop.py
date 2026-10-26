@@ -1,0 +1,156 @@
+"""The homepage's 3D workshop (website/wwwroot/js/workshop)."""
+
+LIVE = "#workshop[data-state=live]"
+
+
+def wait_live(page, settle=3500):
+    page.wait_for_selector(LIVE, timeout=30000)
+    page.wait_for_timeout(settle)  # the intro flight and pop-in
+
+
+def pin(page, key):
+    """Page coordinates of a point that hovers/clicks the given object."""
+    found = page.evaluate(
+        """key => { const root = document.getElementById('workshop');
+                    const p = root.__workshop.pins().find(p => p.key === key);
+                    const r = root.getBoundingClientRect();
+                    return p && { x: r.left + p.x / 100 * r.width, y: r.top + p.y / 100 * r.height }; }""",
+        key,
+    )
+    assert found, f"no pin for {key}"
+    return found["x"], found["y"]
+
+
+def open_card(page, key):
+    x, y = pin(page, key)
+    page.mouse.move(x, y)
+    page.wait_for_timeout(300)
+    page.mouse.click(x, y)
+    page.wait_for_selector(".ws-card.open", timeout=3000)
+
+
+def test_scene_goes_live_without_errors(page, page_errors, site_url):
+    page.goto(site_url + "/", wait_until="load")
+    wait_live(page, settle=1000)
+    # Until Task 9 the still image does not exist yet, so its 404 is expected
+    assert [e for e in page_errors if not e.startswith("Failed to load resource")] == []
+
+
+def test_hover_shows_tag_and_click_opens_card(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    x, y = pin(page, "thesis")
+    page.mouse.move(x - 4, y)
+    page.mouse.move(x, y)
+    page.wait_for_selector(".ws-tag.on .ws-tag-in", timeout=3000)
+    assert "MEng thesis" in page.inner_text(".ws-tag")
+    page.mouse.click(x, y)
+    page.wait_for_selector(".ws-card.open", timeout=3000)
+    assert page.is_visible(".ws-card-title")
+    assert page.inner_text(".ws-card-title") == "Hybrid 3D/4D reconstruction"
+    page.keyboard.press("Escape")
+    page.wait_for_selector(".ws-card:not(.open)", state="attached", timeout=3000)
+
+
+def test_robot_opens_chat(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    open_card(page, "robot")
+    page.click(".ws-card-cta")
+    page.wait_for_function("!document.getElementById('chat-panel').classList.contains('translate-x-full')", timeout=3000)
+
+
+def test_workshop_survives_repeated_navigation(page, site_url):
+    warnings = []
+    page.on("console", lambda m: warnings.append(m.text))
+    page.goto(site_url + "/", wait_until="load")
+    page.wait_for_selector(LIVE, timeout=30000)
+    for _ in range(20):
+        page.click("header nav a[href='/projects']")
+        page.wait_for_url("**/projects")
+        page.click("header nav a[href='/']")
+        page.wait_for_url(site_url + "/")
+        page.wait_for_selector(LIVE, timeout=30000)
+    counts = page.evaluate("[mkWorkshop.mounts, mkWorkshop.disposes]")
+    assert counts[0] - counts[1] == 1
+    assert not [w for w in warnings if "Too many active WebGL contexts" in w]
+
+
+def test_workshop_resizes_to_phone(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/", wait_until="load")
+    page.wait_for_selector(LIVE, timeout=30000)
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.wait_for_timeout(800)
+    canvas = page.locator(".workshop-canvas").bounding_box()
+    stage = page.locator("#workshop").bounding_box()
+    for k in ("x", "y", "width", "height"):
+        assert abs(canvas[k] - stage[k]) <= 2, (k, canvas, stage)
+    h1 = page.locator("h1").bounding_box()
+    assert canvas["y"] >= h1["y"] + h1["height"]
+    # the drawing buffer follows the element, so the frame is not stretched
+    ratio = page.evaluate("(() => { const c = document.querySelector('.workshop-canvas'); return (c.width / c.height) / (c.clientWidth / c.clientHeight); })()")
+    assert abs(ratio - 1) < 0.02
+
+
+def test_workshop_ignores_keys_in_inputs(page, site_url):
+    page.set_viewport_size({"width": 1440, "height": 900})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    open_card(page, "thesis")
+    page.focus("#message")
+    page.keyboard.press("ArrowRight")
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(300)
+    assert page.is_visible(".ws-card.open")
+    assert page.inner_text(".ws-card-title") == "Hybrid 3D/4D reconstruction"
+
+
+def test_reduced_motion_opens_card_without_flight(browser, site_url):
+    context = browser.new_context(reduced_motion="reduce", viewport={"width": 1440, "height": 900})
+    page = context.new_page()
+    try:
+        page.goto(site_url + "/?debug=workshop", wait_until="load")
+        wait_live(page, settle=800)
+        x, y = pin(page, "thesis")
+        page.mouse.move(x, y)
+        page.mouse.click(x, y)
+        page.wait_for_selector(".ws-card.open", timeout=300)
+    finally:
+        context.close()
+
+
+def test_other_pages_do_not_load_three(page, site_url):
+    urls = []
+    page.on("request", lambda r: urls.append(r.url))
+    for path in ("/projects", "/projects/home-lab"):
+        page.goto(site_url + path, wait_until="networkidle")
+    assert not [u for u in urls if "/lib/three/" in u or "/js/workshop/" in u]
+
+
+def test_tour_buttons_reach_every_hotspot(page, site_url):
+    page.goto(site_url + "/", wait_until="load")
+    page.wait_for_selector(LIVE, timeout=30000)
+    buttons = page.locator(".ws-tour button")
+    assert buttons.count() == 11
+    page.focus("main a[href='#work']")
+    for _ in range(40):
+        page.keyboard.press("Tab")
+        if page.evaluate("!!document.activeElement.closest('.ws-tour')"):
+            break
+    assert page.evaluate("!!document.activeElement.closest('.ws-tour')")
+    page.keyboard.press("Enter")
+    page.wait_for_selector(".ws-card.open", timeout=3000)
+
+
+def test_hover_tag_does_not_widen_the_page(page, site_url):
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    for key in ("robot", "bookcase"):
+        x, y = pin(page, key)
+        page.mouse.move(x, y)
+        page.wait_for_timeout(600)
+        assert page.evaluate("document.documentElement.scrollWidth") <= 390, key
