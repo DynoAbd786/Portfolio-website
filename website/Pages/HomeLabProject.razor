@@ -1,8 +1,5 @@
-@rendermode InteractiveWebAssembly
 @page "/projects/home-lab"
 @using website.Data
-@using System.Text.Json
-@inject HttpClient Http
 
 <section class="py-20">
     <div class="container mx-auto px-4">
@@ -81,11 +78,6 @@
                 <div class="flex flex-col items-center group">
                     <div class="w-24 h-32 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shadow-xl backdrop-blur-sm group-hover:bg-white/10 transition-all duration-500 relative">
                         <i class="fas fa-server text-4xl text-purple-200"></i>
-                         <!-- Live Pulse -->
-                         @if (IsOnline) {
-                            <div class="absolute inset-0 bg-purple-400/10 animate-pulse rounded-lg pointer-events-none"></div>
-                            <div class="absolute top-3 right-3 w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]"></div>
-                         }
                     </div>
                     <div class="mt-4 text-center">
                         <div class="text-white font-bold text-lg">Core</div>
@@ -106,36 +98,7 @@
                     <h2 class="text-3xl font-bold text-green-400">System Status</h2>
                 </div>
                 
-                <div class="bg-black rounded-lg p-6 border border-gray-800 flex items-center justify-between">
-                     <div class="flex items-center gap-4">
-                        <div class="relative flex h-4 w-4">
-                          @if (IsOnline)
-                          {
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
-                          }
-                          else
-                          {
-                              <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
-                          }
-                        </div>
-                        <div>
-                            <div class="text-white font-bold text-lg">@(IsOnline ? "ONLINE" : "OFFLINE")</div>
-                            <div class="text-gray-500 text-sm">Bridge Connection</div>
-                        </div>
-                     </div>
-                     
-                     <div class="text-right hidden sm:block">
-                         <div class="text-gray-400 text-sm">Uptime</div>
-                         <div class="text-white font-mono">99.98%</div>
-                     </div>
-                </div>
-                
-                 <div class="mt-4 p-4 bg-gray-800 rounded-lg border-l-4 border-green-500">
-                    <p class="text-gray-300 text-sm leading-relaxed">
-                        <strong class="text-white">Live Monitoring:</strong> This indicator polls the backend API (Server-Sent Events Bridge) to verify if the local home lab agent is currently reachable for AI inference tasks.
-                    </p>
-                </div>
+                <BridgeStatus />
             </div>
 
             <!-- Main Content Grid -->
@@ -276,43 +239,3 @@
     </div>
 </section>
 
-@implements IDisposable
-
-@code {
-    private bool IsOnline = false;
-    private System.Threading.Timer? _timer;
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        // Only poll once running in the browser, not while prerendering on the server
-        if (!firstRender) return;
-
-        // Poll every 3 seconds to update status
-        _timer = new System.Threading.Timer(async _ =>
-        {
-            await CheckStatus();
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 3000);
-    }
-
-    private async Task CheckStatus()
-    {
-        try
-        {
-            var response = await Http.GetFromJsonAsync<JsonElement>("api/mcp/status/bridge");
-            if (response.TryGetProperty("isConnected", out var connected))
-            {
-                IsOnline = connected.GetBoolean();
-            }
-        }
-        catch
-        {
-            IsOnline = false;
-        }
-    }
-
-    public void Dispose()
-    {
-        _timer?.Dispose();
-    }
-}
