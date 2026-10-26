@@ -1,10 +1,22 @@
 """The homepage's 3D workshop (website/wwwroot/js/workshop)."""
+import pytest
 
 LIVE = "#workshop[data-state=live]"
 
 
+@pytest.fixture(autouse=True)
+def _workshop_log(page):
+    """Keeps the page's [workshop] warnings, so a scene that fails to start says why."""
+    page.workshop_log = []
+    page.on("console", lambda m: page.workshop_log.append(m.text) if "[workshop]" in m.text else None)
+
+
 def wait_live(page, settle=3500):
-    page.wait_for_selector(LIVE, timeout=30000)
+    try:
+        page.wait_for_selector(LIVE, timeout=30000)
+    except Exception:
+        state = page.evaluate("[document.getElementById('workshop')?.dataset.state, mkWorkshop.active, mkWorkshop.mounts]")
+        raise AssertionError(f"the scene never went live: [state, active, mounts] = {state}, log = {getattr(page, 'workshop_log', None)}")
     page.wait_for_timeout(settle)  # the intro flight and pop-in
 
 
