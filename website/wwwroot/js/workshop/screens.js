@@ -177,7 +177,7 @@ function createSession(base, more) {
     ctx.restore();
     ctx.fillStyle = '#111727'; ctx.fillRect(0, 0, SW, 28);
     ['#f87171', '#fbbf24', '#34d399'].forEach((c, i) => { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(14 + i * 13, 14, 4, 0, 7); ctx.fill(); });
-    ctx.font = `700 12px ${MONO}`; ctx.fillStyle = '#e4ebf7'; ctx.fillText('hireforge', 60, 18.5); ctx.font = `500 11px ${MONO}`; ctx.fillStyle = '#6c7891'; ctx.fillText('— session://demo', 134, 18.5);
+    ctx.font = `700 12px ${MONO}`; ctx.fillStyle = '#e4ebf7'; ctx.fillText('hireforge', 60, 18.5); ctx.font = `500 11px ${MONO}`; ctx.fillStyle = '#6c7891'; ctx.fillText('· session://demo', 134, 18.5);
     ctx.textAlign = 'right'; ctx.fillStyle = '#a78bfa'; ctx.fillText('zsh', SW - 12, 18.5); ctx.textAlign = 'left';
     // scorecard ring: fills as the review completes
     const sk = fin ? 1 : clamp((tt - (ext ? scoreAt + .5 : doneA) + .3) / .8, 0, 1);

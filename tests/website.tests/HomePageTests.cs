@@ -79,6 +79,6 @@ public class HomePageTests : IClassFixture<SiteFactory>
         var hireforge = cards.Single(c => c.TextContent.Contains("HireForge"));
         Assert.Empty(hireforge.QuerySelectorAll("a"));
         var synergy = cards.Single(c => c.TextContent.Contains("Synergy"));
-        Assert.NotNull(synergy.QuerySelector("a[href=\"/projects/workflow-graph-platform\"]"));
+        Assert.NotNull(synergy.QuerySelector("a[href=\"/projects/synergy\"]"));
     }
 }

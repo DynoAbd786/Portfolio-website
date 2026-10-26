@@ -33,11 +33,11 @@ public class ProjectDataTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
-    public async Task Synergy_is_renamed_and_keeps_its_url()
+    public async Task Synergy_is_renamed_and_lives_at_its_own_url()
     {
         using var scope = _factory.Services.CreateScope();
         var project = await scope.ServiceProvider.GetRequiredService<ProjectService>()
-            .GetProjectByUrlAsync("/projects/workflow-graph-platform");
+            .GetProjectByUrlAsync("/projects/synergy");
         Assert.NotNull(project);
         Assert.StartsWith("Synergy", project.Title);
     }

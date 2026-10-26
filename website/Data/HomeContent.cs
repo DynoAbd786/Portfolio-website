@@ -28,9 +28,9 @@ namespace website.Data
         public static IReadOnlyList<ProofFact> Proof { get; } = new[]
         {
             new ProofFact("First-Class", "MEng CS & AI, Leeds"),
-            new ProofFact("50% faster", "than the MATLAB original (pNanoLocz)"),
-            new ProofFact("2", "research internships"),
-            new ProofFact("cm-accurate", "3D/4D reconstruction"),
+            new ProofFact("50% faster", "pNanoLocz vs the MATLAB original, 2024 internship"),
+            new ProofFact("Stent simulation", "flow diverters in patient vessel geometry, 2025 internship"),
+            new ProofFact("cm-accurate", "3D/4D reconstruction, my master's thesis"),
         };
 
         public static IReadOnlyList<SelectedWorkItem> SelectedWork { get; } = new[]
@@ -45,11 +45,11 @@ namespace website.Data
         public static IReadOnlyList<ProductItem> Products { get; } = new[]
         {
             new ProductItem("Synergy",
-                "A local-first code intelligence platform that turns a codebase into a queryable graph for developers and coding agents.",
+                "Turns a codebase into a graph you can query: what calls what, what a change will break, how two versions differ. It runs on your own machine, and coding agents can use it over MCP.",
                 new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },
-                "/projects/workflow-graph-platform"),
+                "/projects/synergy"),
             new ProductItem("HireForge",
-                "Technical hiring assessments run by LLM agents: one generates a codebase with a seeded defect, the candidate works on it, and an independent agent reviews the work and writes a scorecard.",
+                "Coding assessments run by AI agents. One agent builds a small codebase with a planted bug, the candidate fixes it, and a separate agent reviews their work and writes the scorecard.",
                 new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
                 null),
         };
@@ -57,11 +57,11 @@ namespace website.Data
         public static IReadOnlyList<ExperienceItem> Experience { get; } = new[]
         {
             new ExperienceItem("2022 – 2026", "MEng Computer Science with AI", "University of Leeds",
-                "First-Class Honours. Master's thesis on a modular 3D/4D computer vision reconstruction pipeline."),
+                "First-Class Honours. My master's thesis built a 3D/4D reconstruction pipeline for computer vision."),
             new ExperienceItem("Jun – Aug 2025", "Summer internship: stent deployment simulation", "University of Leeds",
-                "A GPU-accelerated simulation of flow-diverter stents deploying in vessel geometries, with collision and force models."),
+                "Built a GPU-accelerated simulation of flow-diverter stents opening inside blood vessels, with collision and force models."),
             new ExperienceItem("Jun – Aug 2024", "Summer internship: pNanoLocz", "University of Leeds",
-                "A Python microscopy analysis platform about 50% faster than the MATLAB original. Led the team and mentored a junior intern."),
+                "Rebuilt a MATLAB microscopy analysis tool in Python, about 50% faster than the original. I led the team and mentored a junior intern."),
             new ExperienceItem("At university", "Core Executive Leadership Team", "Leeds Artificial Intelligence Society",
                 "Organised and led technical workshops and helped run the society."),
         };
@@ -70,84 +70,83 @@ namespace website.Data
         {
             new WorkshopHotspot("synergy", "Synergy", "code intelligence platform",
                 "something I'm building · developer tools", "Synergy",
-                "A local-first code intelligence platform that turns a codebase into a queryable graph, for developers and for AI coding agents.",
+                "Turns a codebase into a graph you can query, for developers and for AI coding agents. It runs on your own machine.",
                 new[]
                 {
-                    "tree-sitter parsing of 8 languages into one typed graph of modules, symbols and dependencies",
-                    "Revision history and structural diffs that rank changes by blast radius",
-                    "An MCP server with 17 tools, so agents reason about structure instead of grepping text",
+                    "Parses 8 languages with tree-sitter into one graph of modules, symbols and dependencies",
+                    "Keeps a history of every analysis and shows what changed between versions, biggest impact first",
+                    "An MCP server with 17 tools that coding agents can ask instead of searching the code",
                 },
                 new[] { "Python", "React", "TypeScript", "SQLite", "MCP" },
-                "/projects/workflow-graph-platform", "Read about Synergy →", "link", 45.67, 25.55),
+                "/projects/synergy", "Read about Synergy →", "link", 45.67, 25.55),
             new WorkshopHotspot("hireforge", "HireForge", "AI-run coding assessments",
                 "something I'm building · AI systems", "HireForge",
-                "Technical hiring assessments run end to end by LLM agents.",
+                "Coding assessments run end to end by AI agents.",
                 new[]
                 {
-                    "One agent generates a codebase with a single seeded defect",
-                    "The candidate works a realistic scenario against it",
-                    "A second, independent agent reviews the work and writes a scorecard",
+                    "One agent builds a codebase with a single planted bug",
+                    "The candidate works through a realistic task on it",
+                    "A separate agent reviews the work and writes the scorecard",
                 },
                 new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
                 "#building", "More on what I'm building →", "link", 58.64, 27.87),
             new WorkshopHotspot("thesis", "MEng thesis", "3D / 4D reconstruction",
                 "master's thesis · computer vision", "Hybrid 3D/4D reconstruction",
-                "A modular pipeline that rebuilds scenes in 3D and over time, benchmarked to centimetre accuracy.",
+                "My master's thesis: a pipeline that reconstructs scenes in 3D and over time, accurate to the centimetre.",
                 new[]
                 {
-                    "Iterative 2D point tracking gives accurate coordinate trajectories across frames",
-                    "Dense depth estimation fills in the geometry between the tracked points",
-                    "Benchmarked across standard test scenes, with centimetre-accurate error",
+                    "Tracks 2D points across frames to get accurate trajectories",
+                    "Fills in the geometry between those points with dense depth estimation",
+                    "Benchmarked on standard test scenes to centimetre-level error",
                 },
                 new[] { "Python", "computer vision", "point tracking", "dense depth" },
                 "/projects/3d-reconstruction", "Read the case study →", "link", 28.43, 64.43),
             new WorkshopHotspot("stent", "Stent simulation", "internship · 2025",
                 "research internship · biomedical", "Flow diverter stent deployment",
-                "A physics-driven simulation of flow-diverter stents deploying inside vessel geometries, built at the University of Leeds.",
+                "A physics simulation of flow-diverter stents opening inside blood vessels, built during my 2025 internship at the University of Leeds.",
                 new[]
                 {
-                    "GPU-accelerated 3D visualisation pipeline with PyVista, VTK and VMTK",
-                    "Joint-level deployment mechanics, collision detection and force simulation for the wire",
-                    "A scalable foundation for medical device R&D",
+                    "GPU-accelerated 3D visualisation with PyVista, VTK and VMTK",
+                    "Models how the wire's joints move, collide and take force as the stent deploys",
                 },
                 new[] { "Python", "VMTK", "PyVista", "GPU" },
                 "/projects/medical-simulation", "Read the case study →", "link", 38.35, 34.4),
             new WorkshopHotspot("afm", "pNanoLocz", "internship · 2024",
                 "research internship · scientific software", "pNanoLocz",
-                "An analysis platform for atomic force microscope data, rebuilt in Python and about 50% faster than the legacy MATLAB code.",
+                "Software for analysing atomic force microscope data. We rebuilt it from MATLAB in Python and made it about 50% faster.",
                 new[]
                 {
-                    "PyQt6 desktop app with a modular plugin architecture",
-                    "Parallel computing for the heavy processing steps",
-                    "Led the development team and mentored a junior intern",
+                    "A PyQt6 desktop app built around plugins",
+                    "Parallel processing for the heavy steps",
+                    "I led the development team and mentored a junior intern",
                 },
                 new[] { "Python", "PyQt6", "parallel computing" },
                 "/projects/pnanolocz", "Read the case study →", "link", 72.92, 54.43),
             new WorkshopHotspot("homelab", "Home lab", "local LLMs · agents",
                 "infrastructure", "Home lab & local LLMs",
-                "Local LLM inference and autonomous coding agents, running on my own hardware.",
+                "I run local LLMs and coding agents on my own hardware.",
                 new[]
                 {
-                    "Llama.cpp, Hermes and containerised services across an Ubuntu server and a Raspberry Pi",
-                    "An encrypted Tailscale mesh for remote access from anywhere",
-                    "Tuned for sustained inference on an RTX 5090",
+                    "Llama.cpp, Hermes and containerised services on an Ubuntu server and a Raspberry Pi",
+                    "Reachable from anywhere over an encrypted Tailscale network",
+                    "Tuned for long inference runs on an RTX 5090",
                 },
                 new[] { "Llama.cpp", "Docker", "Tailscale", "Linux" },
                 "/projects/home-lab", "Read the case study →", "link", 25.19, 55.38),
             new WorkshopHotspot("azure", "Azure inventory", "serverless · cloud",
                 "cloud · distributed systems", "Azure serverless inventory",
-                "An event-driven inventory system built on Azure serverless.",
+                "An inventory system on Azure's serverless services that reacts to stock changes as they happen.",
                 new[]
                 {
-                    "Azure Functions and Cosmos DB, with change feeds for real-time stock tracking",
-                    "Automated, API-based alert workflows",
-                    "Benchmarked to cut cold-start latency and verify high-throughput concurrent invocation",
+                    "Azure Functions and Cosmos DB, with change feeds tracking stock in real time",
+                    "Automatic stock alerts through API workflows",
+                    "Benchmarked to cut cold-start time and to handle many calls at once",
                 },
                 new[] { "Azure Functions", "Cosmos DB", "Event Grid" },
                 "/projects/distributed-systems", "Read the case study →", "link", 24.55, 37.82),
             new WorkshopHotspot("whiteboard", "Internships", "2024 · 2025",
-                "experience", "Two research internships",
-                "Two summers at the University of Leeds, both making research software fast and usable.",
+                "experience", "Experience",
+                "Two summer research internships at the University of Leeds.",
                 new[]
                 {
                     "2025: stent deployment simulation for flow-diverter devices",
@@ -169,7 +168,7 @@ namespace website.Data
                 "/about", "More about me →", "link", 14.55, 44.26),
             new WorkshopHotspot("bookcase", "All projects", "projects & coursework",
                 "the bookcase", "Everything else",
-                "Coursework and side projects across AI, graphics, systems, scientific computing and the cloud.",
+                "The rest of my coursework and side projects.",
                 new[]
                 {
                     "Robot navigation with ROS2, SLAM and YOLOv8",

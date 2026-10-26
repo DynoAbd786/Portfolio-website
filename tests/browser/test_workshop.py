@@ -257,15 +257,31 @@ def test_phone_room_comes_first_and_fills_the_width(page, site_url):
     assert stage["y"] < links["y"] < copy["y"]
 
 
-def test_phone_card_sits_between_room_and_text(page, site_url):
+def test_phone_card_is_a_sheet_with_the_room_in_view(page, site_url):
+    """On phones the card slides up over the page with the whole room above it, so tapping object
+    after object needs no scrolling."""
     page.set_viewport_size({"width": 390, "height": 844})
     page.goto(site_url + "/?debug=workshop", wait_until="load")
     wait_live(page)
+    page.evaluate("scrollTo(0, 400)")  # visitor has scrolled a little past the room
+    page.wait_for_timeout(300)
+    page.evaluate("document.getElementById('workshop').scrollIntoView({block: 'end'})")
+    page.wait_for_timeout(300)
     open_card(page, "thesis")
-    card = page.locator(".ws-card").bounding_box()
+    page.wait_for_timeout(1200)
+    assert page.evaluate("getComputedStyle(document.querySelector('.ws-card')).position") == "fixed"
     stage = page.locator("#workshop").bounding_box()
-    copy = page.locator(".hero-copy").bounding_box()
-    assert stage["y"] + stage["height"] <= card["y"] < copy["y"]
+    card = page.locator(".ws-card").bounding_box()
+    assert stage["y"] >= 0 and stage["y"] + stage["height"] <= card["y"] + 1, (stage, card)
+    assert card["y"] + card["height"] <= 844
+    scrolled = page.evaluate("scrollY")
+    page.click(".ws-card-back")
+    page.wait_for_timeout(1500)  # camera back home
+    open_card(page, "robot")
+    page.wait_for_timeout(800)
+    assert page.inner_text(".ws-card-title") == "Ask the assistant"
+    assert page.evaluate("scrollY") == scrolled
+
 
 
 def test_phone_tap_just_beside_a_small_object_opens_it(browser, site_url):

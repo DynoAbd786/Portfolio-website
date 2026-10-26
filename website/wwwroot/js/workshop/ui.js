@@ -61,8 +61,13 @@ export function createUI({ root, section, data, onOpen, onClose }) {
     card.inert = false; card.classList.add('open'); section.classList.add('ws-focused');
     if (heroCopy && wide.matches) heroCopy.inert = true;
     title.focus({ preventScroll: true });
-    // narrow screens put the card below the room, so bring it into view
-    if (!wide.matches) card.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    // narrow screens: the card is a sheet over the bottom of the screen, so line the room up just under
+    // the header once; tapping more objects then needs no scrolling
+    if (!wide.matches) {
+      const header = document.querySelector('body > header, header')?.getBoundingClientRect().bottom || 0;
+      const off = root.getBoundingClientRect().top - header - 8;
+      if (Math.abs(off) > 4) scrollBy({ top: off, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
     onOpen(k);
   }
   function closeCard(keepFocus) {

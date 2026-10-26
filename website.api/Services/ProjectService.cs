@@ -35,7 +35,7 @@ namespace website.api.Services
                     Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
                     Category = ProjectCategory.Personal,
                     Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.AiMl },
-                    Result = "Built this site: .NET 10 pages rendered on the server, an AI assistant, and an MCP server AI agents can query.",
+                    Result = "Built this site in .NET 10, with an AI assistant and an MCP server that AI agents can query.",
                     IsFeatured = true
                 },
                 new Project
@@ -61,20 +61,20 @@ namespace website.api.Services
                     Tags = new[] { "3D Reconstruction", "Computer Vision", "Deep Learning", "Python", "Team Project", "Agile Methodology", "Project Management", "Research & Development", "VR/AR", "Medical Imaging", "Industrial Applications", "HPC Computing", "Neural Networks", "Optimization" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.VisionGraphics, ProjectField.AiMl },
-                    Result = "Built a hybrid 3D/4D reconstruction pipeline fusing point tracking with dense depth, benchmarked to centimetre accuracy.",
+                    Result = "Built a 3D/4D reconstruction pipeline that combines point tracking with dense depth, accurate to the centimetre.",
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
                 new Project
                 {
-                    Title = "Synergy — Code Intelligence Platform",
+                    Title = "Synergy: Code Intelligence Platform",
                     Description = "A local-first code intelligence platform that parses codebases in 8 languages into a typed, queryable graph, with revision history, structural diffs and blast-radius ranking. An MCP server exposes 17 tools so AI agents can work from the architecture. Python backend, React and TypeScript explorer.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Synergy",
-                    ProjectUrl = "/projects/workflow-graph-platform",
+                    ProjectUrl = "/projects/synergy",
                     Tags = new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },
                     Category = ProjectCategory.Personal,
                     Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
-                    Result = "Built a local-first platform that turns codebases in 8 languages into a queryable graph for developers and AI agents.",
+                    Result = "Building a tool that turns a codebase in any of 8 languages into a graph that developers and AI agents can query.",
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
@@ -87,7 +87,7 @@ namespace website.api.Services
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
                     Category = ProjectCategory.Professional,
                     Fields = new[] { ProjectField.ScientificBiomedical, ProjectField.VisionGraphics },
-                    Result = "Built a GPU-accelerated simulation of flow-diverter stent deployment in vessel geometries, with collision and force models.",
+                    Result = "Built a GPU-accelerated simulation of flow-diverter stents opening inside blood vessels, with collision and force models.",
                     IsFeatured = true
                 },
                 new Project
@@ -99,7 +99,7 @@ namespace website.api.Services
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
                     Category = ProjectCategory.Professional,
                     Fields = new[] { ProjectField.ScientificBiomedical },
-                    Result = "Rebuilt a MATLAB microscopy analysis tool in Python and PyQt6, about 50% faster, while leading the team and mentoring an intern.",
+                    Result = "Led the rebuild of a MATLAB microscopy tool in Python, making it about 50% faster, and mentored an intern.",
                     IsFeatured = true
                 },
                 new Project
@@ -111,7 +111,7 @@ namespace website.api.Services
                     Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.AiMl, ProjectField.ScientificBiomedical },
-                    Result = "Designed a research framework applying GPT-4 to NHS clinical data mining, with GDPR compliance and cost-benefit modelling.",
+                    Result = "Designed a framework for using GPT-4 to mine NHS clinical data, with a GDPR plan and a cost-benefit model.",
                     IsFeatured = true
                 },
                 new Project
@@ -135,7 +135,7 @@ namespace website.api.Services
                     Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
-                    Result = "Designed a secure, AI-assisted mental health platform for university students, from architecture to privacy controls.",
+                    Result = "Designed an AI-assisted mental health app for university students, including how their data is kept private.",
                     IsFeatured = true
                 },
                 new Project
@@ -159,7 +159,7 @@ namespace website.api.Services
                     Tags = new[] { "Business Planning", "Healthcare Technology", "AI Documentation", "NHS Integration", "Market Research", "Blue Ocean Strategy", "Entrepreneurship", "Speech-to-Text" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
-                    Result = "Wrote a business plan for an AI speech-to-text documentation product for the NHS, covering market and financials.",
+                    Result = "Wrote a business plan for an AI tool that turns NHS consultations into notes, with market research and financials.",
                     IsFeatured = false
                 },
                 new Project
@@ -279,7 +279,7 @@ namespace website.api.Services
                     Tags = new[] { "Nanotechnology", "Quantum Computing", "Business Analysis", "Investment Strategy", "Market Research", "Photonic Computing", "Quantum Dots", "Technology Assessment" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.ProductBusiness },
-                    Result = "Wrote an investment case for quantum dot manufacturing, weighing photonics and display markets.",
+                    Result = "Wrote an investment case for a quantum dot spin-out, aimed at photonic quantum computing.",
                     IsFeatured = false
                 },
                 new Project

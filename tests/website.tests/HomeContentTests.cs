@@ -78,4 +78,24 @@ public class HomeContentTests : IClassFixture<SiteFactory>
         Assert.Contains("\"key\":\"synergy\"", json);
         Assert.Contains("\"pinX\":", json);
     }
+
+    [Fact]
+    public void Proof_counts_each_piece_of_work_once()
+    {
+        // pNanoLocz has its own fact, so no fact also counts it among "internships"
+        Assert.DoesNotContain(HomeContent.Proof, p => (p.Value + " " + p.Label).Contains("internships"));
+        Assert.Contains(HomeContent.Proof, p => p.Value == "Stent simulation");
+    }
+
+    [Fact]
+    public async Task Homepage_and_project_copy_has_no_em_dashes()
+    {
+        Assert.All(AllCopy(), text => Assert.DoesNotContain("\u2014", text));
+        using var scope = _factory.Services.CreateScope();
+        var projects = await scope.ServiceProvider.GetRequiredService<ProjectService>().GetProjectsAsync();
+        Assert.All(projects, p => Assert.DoesNotContain("\u2014", p.Title + p.Description + p.Result));
+        var html = await _factory.CreateClient().GetStringAsync("/");
+        var doc = await Html.ParseAsync(html);
+        Assert.DoesNotContain("\u2014", doc.QuerySelector("main")!.TextContent);
+    }
 }

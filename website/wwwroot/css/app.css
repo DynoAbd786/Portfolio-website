@@ -293,12 +293,22 @@
     backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
 }
 .ws-card.open { display: block; }
+/* stacked layout: a sheet over the bottom of the screen, with the room in view above it, so a
+   visitor can tap object after object without scrolling */
+@media (max-width: 899px) {
+    .ws-card.open {
+        position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom));
+        z-index: 45; max-height: 46svh; overflow-y: auto; overscroll-behavior: contain;
+        padding: 16px 20px 20px; border-radius: 18px;
+    }
+}
 .ws-card-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .ws-card-back {
     display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; color: #9aa3b6;
     font: 500 13px Inter, sans-serif; cursor: pointer; padding: 6px 0;
 }
 .ws-card-back:hover { color: #e8ebf2; }
+@media (hover: none) { .ws-card kbd { display: none; } } /* no keyboard to press it on */
 .ws-card kbd { font: 600 10px "JetBrains Mono", monospace; color: #8a93a6; border: 1px solid rgba(255, 255, 255, .14); border-radius: 5px; padding: 1px 5px; }
 .ws-card-stepper { display: flex; align-items: center; gap: 6px; font: 500 12px "JetBrains Mono", monospace; color: #94a3b8; }
 .ws-card-stepper button {
