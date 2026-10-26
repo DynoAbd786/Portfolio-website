@@ -20,7 +20,9 @@ const INTRO_DUR = 2.2;
 export async function mount(root, data) {
   const canvas = root.querySelector('canvas.workshop-canvas');
   const section = root.closest('section') || root.parentElement;
-  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // ?still=1 (tools/render-workshop-still.py): no motion and the home pose, for rendering the still image
+  const STILL = new URLSearchParams(location.search).get('still') === '1';
+  const REDUCED = STILL || matchMedia('(prefers-reduced-motion: reduce)').matches;
   const TOUCH = matchMedia('(hover: none)').matches;
   let MOBILE = innerWidth < 900;
   let W = Math.max(1, root.clientWidth), H = Math.max(1, root.clientHeight);
@@ -126,7 +128,7 @@ export async function mount(root, data) {
     if (hasPointer && (pointerDirty || (onCanvas && now - lastPick > .15))) { hit = hs.pick(ndc, camera); pointerDirty = false; lastPick = now; }
     const hk = hit && onCanvas && !TOUCH ? hit.object.userData.hs || null : null;
     if (hk) userHovered = true;
-    const demo = !REDUCED && !userHovered && !focusKey && intro > 2.7 && intro < 5.4;
+    const demo = !REDUCED && !STILL && !userHovered && !focusKey && intro > 2.7 && intro < 5.4;
     const showKey = hk || (demo ? 'synergy' : null);
     if (showKey !== hoverKey) { hoverKey = showKey; canvas.style.cursor = hk ? 'pointer' : 'default'; }
     const visibleTag = hoverKey && hoverKey !== focusKey ? hoverKey : null;
@@ -244,11 +246,22 @@ export async function mount(root, data) {
     const need = !REDUCED || dirty || moving || intro < 3 || frameNo < 4;
     if (need) { if (REDUCED) lights.moon.shadow.needsUpdate = true; dirty = false; }
     if (!REDUCED && intro > 2.6) quality.adapt(raw, now);
+    if (!STILL && intro > 2.6 && quality.tooSlow(raw, now)) giveUp();
     return need;
   }
 
+  // hand the stage back to the still image (site.js disposes us on this event)
+  function giveUp() {
+    if (disposed) return;
+    renderer.setAnimationLoop(null); running = false;
+    root.dispatchEvent(new CustomEvent('workshop-still'));
+  }
+  on(canvas, 'webglcontextlost', (e) => { e.preventDefault(); giveUp(); });
+
   function loop() {
-    if (frame(clock.getDelta())) post.render();
+    const need = frame(clock.getDelta());
+    if (disposed) return; // gave up during the frame
+    if (need) post.render();
     if (root.dataset.state !== 'live') root.dataset.state = 'live';
   }
 
@@ -277,6 +290,16 @@ export async function mount(root, data) {
       pins: () => hs.pins(camera),
       forceFps: (n) => quality.forceFps(n),
       tier: () => quality.level,
+      // renders the current frame at width x height and returns it as a data URL (for the still image)
+      snapshot(width, height, type = 'image/webp', q = .8) {
+        quality.set(0);
+        renderer.setPixelRatio(1); renderer.setSize(width, height, false); post.setSize(width, height, 1);
+        room.cloudMat.uniforms.uPx.value = height * .5;
+        frame(1 / 60); post.render();
+        const url = canvas.toDataURL(type, q);
+        layout(); sizeAll();
+        return url;
+      },
     };
   }
 
@@ -293,7 +316,7 @@ export async function mount(root, data) {
         disposeScene(scene);
         kit.ENV.dispose();
         renderer.dispose();
-        renderer.forceContextLoss();
+        if (!renderer.getContext().isContextLost()) renderer.forceContextLoss();
         delete root.__workshop;
         if (root.dataset.state !== 'failed') root.dataset.state = 'still';
       },

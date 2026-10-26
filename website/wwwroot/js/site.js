@@ -117,7 +117,7 @@ window.mkWorkshop = {
         }
 
         const root = document.getElementById('workshop');
-        if (!root || this._instance || root.dataset.state === 'failed') return;
+        if (!root || this._instance || root.dataset.state === 'failed' || this._tooSlow()) return;
 
         this._pending = (async () => {
             try {
@@ -125,6 +125,8 @@ window.mkWorkshop = {
                 const { mount } = await import('/js/workshop/workshop.js');
                 this._instance = await mount(root, data);
                 this._root = root;
+                // the scene gives up on devices too slow for it (or a lost GPU context)
+                root.addEventListener('workshop-still', () => this._giveUp(root), { once: true });
                 this.active = true;
                 this.mounts++;
             } catch (e) {
@@ -137,6 +139,21 @@ window.mkWorkshop = {
         this._pending = null;
         // we may have navigated away while it loaded
         if (this._instance && !this._root.isConnected) await this.sync();
+    },
+
+    _giveUp(root) {
+        if (this._root !== root) return;
+        this._instance.dispose();
+        this._instance = this._root = null;
+        this.active = false;
+        this.disposes++;
+        root.dataset.state = 'still';
+        try { sessionStorage.setItem('mk-workshop-slow', '1'); } catch { }
+    },
+
+    // a device that was too slow once this session gets the still image straight away
+    _tooSlow() {
+        try { return sessionStorage.getItem('mk-workshop-slow') === '1'; } catch { return false; }
     }
 };
 

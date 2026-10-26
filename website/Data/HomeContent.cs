@@ -12,7 +12,8 @@ namespace website.Data
     public record ExperienceItem(string When, string Title, string Org, string Detail);
 
     // One clickable object in the workshop scene. Action is "link" or "assistant" (opens the chat).
-    // PinX/PinY place its link over the still image, as percentages of the stage.
+    // PinX/PinY place its link over the still image, as percentages of the stage
+    // (printed by tools/render-workshop-still.py).
     public record WorkshopHotspot(
         string Key, string Name, string Sub, string Kicker, string Title, string Desc,
         string[] Points, string[] Chips, string Href, string Cta, string Action,
@@ -77,7 +78,7 @@ namespace website.Data
                     "An MCP server with 17 tools, so agents reason about structure instead of grepping text",
                 },
                 new[] { "Python", "React", "TypeScript", "SQLite", "MCP" },
-                "/projects/workflow-graph-platform", "Read about Synergy →", "link", 0, 0),
+                "/projects/workflow-graph-platform", "Read about Synergy →", "link", 45.67, 25.55),
             new WorkshopHotspot("hireforge", "HireForge", "AI-run coding assessments",
                 "something I'm building · AI systems", "HireForge",
                 "Technical hiring assessments run end to end by LLM agents.",
@@ -88,7 +89,7 @@ namespace website.Data
                     "A second, independent agent reviews the work and writes a scorecard",
                 },
                 new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
-                "#building", "More on what I'm building →", "link", 0, 0),
+                "#building", "More on what I'm building →", "link", 58.64, 27.87),
             new WorkshopHotspot("thesis", "MEng thesis", "3D / 4D reconstruction",
                 "master's thesis · computer vision", "Hybrid 3D/4D reconstruction",
                 "A modular pipeline that rebuilds scenes in 3D and over time, benchmarked to centimetre accuracy.",
@@ -99,7 +100,7 @@ namespace website.Data
                     "Benchmarked across standard test scenes, with centimetre-accurate error",
                 },
                 new[] { "Python", "computer vision", "point tracking", "dense depth" },
-                "/projects/3d-reconstruction", "Read the case study →", "link", 0, 0),
+                "/projects/3d-reconstruction", "Read the case study →", "link", 28.43, 64.43),
             new WorkshopHotspot("stent", "Stent simulation", "internship · 2025",
                 "research internship · biomedical", "Flow diverter stent deployment",
                 "A physics-driven simulation of flow-diverter stents deploying inside vessel geometries, built at the University of Leeds.",
@@ -110,7 +111,7 @@ namespace website.Data
                     "A scalable foundation for medical device R&D",
                 },
                 new[] { "Python", "VMTK", "PyVista", "GPU" },
-                "/projects/medical-simulation", "Read the case study →", "link", 0, 0),
+                "/projects/medical-simulation", "Read the case study →", "link", 38.35, 34.4),
             new WorkshopHotspot("afm", "pNanoLocz", "internship · 2024",
                 "research internship · scientific software", "pNanoLocz",
                 "An analysis platform for atomic force microscope data, rebuilt in Python and about 50% faster than the legacy MATLAB code.",
@@ -121,7 +122,7 @@ namespace website.Data
                     "Led the development team and mentored a junior intern",
                 },
                 new[] { "Python", "PyQt6", "parallel computing" },
-                "/projects/pnanolocz", "Read the case study →", "link", 0, 0),
+                "/projects/pnanolocz", "Read the case study →", "link", 72.92, 54.43),
             new WorkshopHotspot("homelab", "Home lab", "local LLMs · agents",
                 "infrastructure", "Home lab & local LLMs",
                 "Local LLM inference and autonomous coding agents, running on my own hardware.",
@@ -132,7 +133,7 @@ namespace website.Data
                     "Tuned for sustained inference on an RTX 5090",
                 },
                 new[] { "Llama.cpp", "Docker", "Tailscale", "Linux" },
-                "/projects/home-lab", "Read the case study →", "link", 0, 0),
+                "/projects/home-lab", "Read the case study →", "link", 25.19, 55.38),
             new WorkshopHotspot("azure", "Azure inventory", "serverless · cloud",
                 "cloud · distributed systems", "Azure serverless inventory",
                 "An event-driven inventory system built on Azure serverless.",
@@ -143,7 +144,7 @@ namespace website.Data
                     "Benchmarked to cut cold-start latency and verify high-throughput concurrent invocation",
                 },
                 new[] { "Azure Functions", "Cosmos DB", "Event Grid" },
-                "/projects/distributed-systems", "Read the case study →", "link", 0, 0),
+                "/projects/distributed-systems", "Read the case study →", "link", 24.55, 37.82),
             new WorkshopHotspot("whiteboard", "Internships", "2024 · 2025",
                 "experience", "Two research internships",
                 "Two summers at the University of Leeds, both making research software fast and usable.",
@@ -154,7 +155,7 @@ namespace website.Data
                     "Team lead and mentor on pNanoLocz",
                 },
                 new[] { "research software", "Python", "GPU" },
-                "#experience", "See my experience →", "link", 0, 0),
+                "#experience", "See my experience →", "link", 62.06, 74.81),
             new WorkshopHotspot("certificate", "Education", "MEng CS & AI · Leeds",
                 "education", "First-Class MEng",
                 "MEng Computer Science with Artificial Intelligence at the University of Leeds, 2022–2026, First-Class Honours.",
@@ -165,7 +166,7 @@ namespace website.Data
                     "Core executive team of the Leeds AI Society",
                 },
                 new[] { "First-Class Honours", "AI", "software engineering" },
-                "/about", "More about me →", "link", 0, 0),
+                "/about", "More about me →", "link", 14.55, 44.26),
             new WorkshopHotspot("bookcase", "All projects", "projects & coursework",
                 "the bookcase", "Everything else",
                 "Coursework and side projects across AI, graphics, systems, scientific computing and the cloud.",
@@ -176,7 +177,7 @@ namespace website.Data
                     "GPU blood-flow simulation, parallel computing and an xv6 kernel",
                 },
                 new[] { "C++", "CUDA", "ROS2", "OpenGL" },
-                "/projects", "Browse all projects →", "link", 0, 0),
+                "/projects", "Browse all projects →", "link", 74.38, 41.34),
             new WorkshopHotspot("robot", "Assistant", "ask me about my work",
                 "this website · AI", "Ask the assistant",
                 "This site has an AI assistant that answers questions about my work, and an MCP server that AI agents can query. Try asking:",
@@ -187,7 +188,7 @@ namespace website.Data
                     "What did your thesis reconstruct?",
                 },
                 new[] { ".NET 10", "MCP", "AI agents" },
-                "#", "Open the chat →", "assistant", 0, 0),
+                "#", "Open the chat →", "assistant", 65.22, 36.72),
         };
 
         private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);

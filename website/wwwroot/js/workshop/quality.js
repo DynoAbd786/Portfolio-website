@@ -9,6 +9,21 @@ export function createQuality(apply, refreshHz) {
 
   function set(level) { QS.level = level; apply(level); }
 
+  // Too slow even at the lightest tier: 5 s of frames at a median under 20 fps. The page then
+  // shows the still image instead of a stuttering scene.
+  const slow = { samples: [], since: null };
+  function tooSlow(raw, now) {
+    if (forced) raw = 1 / forced;
+    if (QS.level < MAX_TIER) { slow.samples.length = 0; slow.since = null; return false; }
+    if (slow.since === null) slow.since = now;
+    if (raw > .25 && !forced) return false; // a hitch or a tab switch, not the device
+    slow.samples.push([now, raw]);
+    while (slow.samples.length && now - slow.samples[0][0] > 5) slow.samples.shift();
+    if (now - slow.since < 5) return false;
+    const d = slow.samples.map((x) => x[1]).sort((a, b) => a - b);
+    return d.length > 5 && 1 / d[d.length >> 1] < 20;
+  }
+
   function adapt(raw, now) {
     if (forced) raw = 1 / forced;
     else if (raw > .25) { QS.win.length = 0; QS.winStart = now; return; } // tab switch / hitch: start a fresh window
@@ -30,6 +45,7 @@ export function createQuality(apply, refreshHz) {
     set refreshHz(v) { hz = v; },
     set,
     adapt,
+    tooSlow,
     // after a pause, start measuring afresh
     reset(now) { QS.win.length = 0; QS.winStart = now; },
     forceFps(n) { forced = n || null; },

@@ -32,8 +32,7 @@ def open_card(page, key):
 def test_scene_goes_live_without_errors(page, page_errors, site_url):
     page.goto(site_url + "/", wait_until="load")
     wait_live(page, settle=1000)
-    # Until Task 9 the still image does not exist yet, so its 404 is expected
-    assert [e for e in page_errors if not e.startswith("Failed to load resource")] == []
+    assert page_errors == []
 
 
 def test_hover_shows_tag_and_click_opens_card(page, site_url):

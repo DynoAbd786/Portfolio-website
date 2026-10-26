@@ -130,11 +130,12 @@
     transition: opacity .6s ease, visibility 0s .6s;
 }
 
-/* Pins label each object on the still image */
+/* Pins label each object on the still image; shown only while the still is (no JS, no WebGL,
+   too slow, or before the scene starts) */
 .workshop-pin {
+    display: none;
     position: absolute;
     transform: translate(-50%, -50%);
-    display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 4px 10px 4px 8px;
@@ -146,6 +147,28 @@
     white-space: nowrap;
     cursor: pointer;
     transition: border-color .2s, background .2s;
+}
+
+.workshop[data-state=still] .workshop-pin,
+.workshop[data-state=failed] .workshop-pin {
+    display: inline-flex;
+}
+
+.workshop-links {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+@media (max-width: 639px) {
+    .workshop[data-state] .workshop-pin {
+        display: none;
+    }
+
+    .workshop[data-state=still] + .workshop-links,
+    .workshop[data-state=failed] + .workshop-links {
+        display: flex;
+    }
 }
 
 .workshop-pin::before {
