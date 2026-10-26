@@ -47,7 +47,7 @@ export function createQuality(apply, refreshHz) {
     adapt,
     tooSlow,
     // after a pause, start measuring afresh
-    reset(now) { QS.win.length = 0; QS.winStart = now; },
+    reset(now) { QS.win.length = 0; QS.winStart = now; slow.samples.length = 0; slow.since = null; },
     forceFps(n) { forced = n || null; },
   };
 }

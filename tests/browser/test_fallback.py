@@ -91,3 +91,19 @@ def test_links_list_hidden_when_scene_runs_or_on_desktop(page, site_url):
     page.goto(site_url + "/", wait_until="load")
     page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
     assert page.locator(".workshop-links:visible").count() == 0
+
+def test_slow_check_starts_afresh_after_a_pause(page, site_url):
+    """A pause (scrolled away, tab hidden) must not let the slow-device check judge on a handful of frames."""
+    page.goto(site_url + "/", wait_until="load")
+    result = page.evaluate("""async () => {
+        const { createQuality, MAX_TIER } = await import('/js/workshop/quality.js');
+        const q = createQuality(() => {}, 60);
+        q.set(MAX_TIER);
+        let t = 0;
+        for (; t < 1; t += 1 / 60) q.tooSlow(1 / 60, t);   // a second of smooth frames
+        t = 100; q.reset(t);                                // paused, then resumed
+        let slow = false;
+        for (let i = 0; i < 12; i++, t += .1) slow = q.tooSlow(.1, t) || slow;  // 1.2 s of 10 fps
+        return slow;
+    }""")
+    assert result is False
