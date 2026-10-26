@@ -67,4 +67,17 @@ public class ProjectPageBaselineTests : IClassFixture<SiteFactory>
         Assert.All(expected.Pdfs, p => Assert.Contains(p, actual.Pdfs));
         Assert.All(expected.Images, i => Assert.Contains(i, actual.Images));
     }
+
+    private static string IntrosPath([System.Runtime.CompilerServices.CallerFilePath] string here = "") =>
+        Path.Combine(Path.GetDirectoryName(here)!, "ProjectPageIntros.json");
+
+    // The paragraph each page's old header had under its title, recorded from the pre-template pages
+    [Theory]
+    [MemberData(nameof(ProjectRoutes))]
+    public async Task Intro_paragraph_is_preserved(string route)
+    {
+        var intro = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(IntrosPath()))![route];
+        var doc = await Html.GetAsync(_client, route);
+        Assert.Contains(Norm(intro), Norm(doc.QuerySelector("main")!.TextContent));
+    }
 }
