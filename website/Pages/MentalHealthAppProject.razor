@@ -1,63 +1,14 @@
 @page "/projects/mental-health-app"
 @using website.Data
 
-<PageTitle>Mental Health App Design Brief - AI-Powered Student Wellbeing Platform</PageTitle>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">Mental Health App Design</span>
-            </div>
-        </nav>
-
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Academic Project - Year 2 • COMP2912 • Software Design Brief
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">AI-Powered Mental Health App</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">Software Design Brief for University Student Wellbeing Platform</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Comprehensive software engineering design brief for a £100,000 mental health app targeting university students globally. Features advanced ChatGPT-4 Turbo API integration, multi-stakeholder analysis, and sophisticated system architecture with university system integration, crisis intervention protocols, and comprehensive privacy controls
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">£100K Budget</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">ChatGPT-4 Turbo</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">System Design</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">UML Modeling</span>
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Requirements Engineering</span>
-                <span class="bg-pink-600 text-white px-4 py-2 rounded-full text-sm">Ethics & Privacy</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-purple-900 via-pink-900 to-red-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">🧠</div>
-            <p class="text-white/75 text-lg">Mental Health Charity Brief • Global University Deployment • AI-Driven Interventions</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-
+<ProjectPage Url="/projects/mental-health-app" Kicker="Academic Project · Year 2 · COMP2912 · Software Design Brief">
                 <!-- Project Context & Business Requirements -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-briefcase text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">Business Context & Requirements</h2>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-500/25 mb-6">
+                <ProjectSection Title="Business Context & Requirements" Icon="fas fa-briefcase">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-purple-500 rounded-full w-2 h-2 mr-3"></div>
-                            <h3 class="text-xl font-bold text-purple-400">COMP2912 Software Engineering Principles</h3>
+                            <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-slate-100">COMP2912 Software Engineering Principles</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
                             Professional software design brief commissioned by a mental health charity with £100,000 development budget.
@@ -67,7 +18,7 @@
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Business Requirements</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• £100,000 development budget constraint</li>
@@ -76,7 +27,7 @@
                                 <li>• Professional 6-page design specification</li>
                             </ul>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Core Focus Areas</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Mental health support for university students</li>
@@ -86,21 +37,15 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Stakeholder Analysis & Requirements Engineering -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-users text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Stakeholder Analysis & Requirements Engineering</h2>
-                    </div>
+                <ProjectSection Title="Stakeholder Analysis & Requirements Engineering" Icon="fas fa-users">
 
                     <!-- Stakeholder Groups -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                            <h3 class="text-xl font-bold text-cyan-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-graduation-cap mr-3"></i>Primary Users
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -125,8 +70,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-building mr-3"></i>Institutional Stakeholders
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -151,8 +96,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-shield-alt mr-3"></i>Regulatory & Ethics
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -176,8 +121,8 @@
                     </div>
 
                     <!-- Use Case Analysis -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Use Case Analysis & Value Propositions</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Use Case Analysis & Value Propositions</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Primary Use Cases</h4>
@@ -199,20 +144,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- AI Architecture & Technical Innovation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-brain text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">AI Architecture & Technical Innovation</h2>
-                    </div>
+                <ProjectSection Title="AI Architecture & Technical Innovation" Icon="fas fa-brain">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">ChatGPT-4 Turbo Integration</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">ChatGPT-4 Turbo Integration</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Core Concept:</strong> "Friend with no judgment"</div>
                                 <div><strong>Training Data:</strong> Psychology research and real-life events</div>
@@ -229,8 +168,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4">Smart Interventions</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Smart Interventions</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>AI-Driven Nudges:</strong> Behavioral pattern analysis</div>
                                 <div><strong>Personalization:</strong> Individual adaptation algorithms</div>
@@ -249,16 +188,16 @@
                     </div>
 
                     <!-- System Architecture -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">System Architecture & Implementation</h3>
-                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm mb-4">
-                            <div class="text-green-400 mb-2">// Multi-platform client-server architecture</div>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">System Architecture & Implementation</h3>
+                        <div class="bg-ink rounded-lg p-4 font-mono text-sm mb-4">
+                            <div class="text-cy mb-2">// Multi-platform client-server architecture</div>
                             <div class="text-gray-300">
-                                <span class="text-cyan-400">Client Apps:</span> Android (Kotlin) + iOS (Swift)<br/>
-                                <span class="text-cyan-400">API Integration:</span> ChatGPT-4 Turbo + University Gateways<br/>
-                                <span class="text-cyan-400">Data Storage:</span> Local encryption + secure transmission<br/>
-                                <span class="text-cyan-400">Healthcare APIs:</span> BetterHelp, NHS Crisis Line, 999<br/>
-                                <span class="text-cyan-400">Security:</span> 2FA + GDPR compliance + data anonymization
+                                <span class="text-cy">Client Apps:</span> Android (Kotlin) + iOS (Swift)<br/>
+                                <span class="text-cy">API Integration:</span> ChatGPT-4 Turbo + University Gateways<br/>
+                                <span class="text-cy">Data Storage:</span> Local encryption + secure transmission<br/>
+                                <span class="text-cy">Healthcare APIs:</span> BetterHelp, NHS Crisis Line, 999<br/>
+                                <span class="text-cy">Security:</span> 2FA + GDPR compliance + data anonymization
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -276,20 +215,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Software Engineering Excellence -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-cogs text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-indigo-400">Software Engineering Excellence</h2>
-                    </div>
+                <ProjectSection Title="Software Engineering Excellence" Icon="fas fa-cogs">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Methodology</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Methodology</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Agile Development:</strong> Incremental delivery approach</li>
                                 <li><strong>User Involvement:</strong> Continuous stakeholder feedback</li>
@@ -299,8 +232,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">UML & Design</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">UML & Design</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Use Case Diagrams:</strong> Complete system actor mapping</li>
                                 <li><strong>Implementation Diagrams:</strong> Deployment and component views</li>
@@ -310,8 +243,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Professional Standards</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Professional Standards</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Requirements Engineering:</strong> Systematic elicitation process</li>
                                 <li><strong>Risk Assessment:</strong> Technical and business risk analysis</li>
@@ -323,8 +256,8 @@
                     </div>
 
                     <!-- Ethics & Legal Compliance -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Ethics & Legal Compliance Framework</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Ethics & Legal Compliance Framework</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Ethical Considerations</h4>
@@ -346,21 +279,15 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Design Brief Download & Academic Achievement -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-download text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-yellow-400">Complete Design Brief & Academic Excellence</h2>
-                    </div>
+                <ProjectSection Title="Complete Design Brief & Academic Excellence" Icon="fas fa-download">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Professional Documentation</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>6-Page Design Brief:</strong> Professional client-ready specification</li>
                                     <li><strong>Comprehensive Requirements:</strong> Functional and non-functional analysis</li>
@@ -373,7 +300,7 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Academic Achievement</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>Industry-Standard Brief:</strong> Professional tender document quality</li>
                                     <li><strong>Multi-Stakeholder Analysis:</strong> Comprehensive requirement engineering</li>
@@ -387,15 +314,15 @@
                     </div>
 
                     <!-- Download Section -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 text-center">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Download Complete Design Brief</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line text-center">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Download Complete Design Brief</h3>
                         <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
                             Access the full 6-page professional design brief submitted for the COMP2912 Software Engineering Principles coursework.
                             This document demonstrates industry-standard software engineering practices and comprehensive system design methodology.
                         </p>
                         <div class="grid md:grid-cols-2 gap-4">
                             <a href="/docs/mental-health-app-design-brief.pdf" target="_blank"
-                               class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
+                               class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                                 <i class="fas fa-file-pdf mr-3 text-xl"></i>
                                 <div>
                                     <div class="font-bold">Design Brief (PDF)</div>
@@ -403,7 +330,7 @@
                                 </div>
                             </a>
                             <a href="/docs/software-engineering-principles-assessment-brief.pdf" target="_blank"
-                               class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
+                               class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                                 <i class="fas fa-file-pdf mr-3 text-xl"></i>
                                 <div>
                                     <div class="font-bold">Assessment Brief</div>
@@ -415,74 +342,53 @@
                             Professional software engineering documentation showcasing comprehensive design methodology
                         </p>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Key Insights & Technologies Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Key Insights -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-lightbulb text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
-                        </div>
+                    <ProjectSection Title="Key Insights" Icon="fas fa-lightbulb">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Professional software engineering methodology with real-world constraints</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Advanced AI integration planning for healthcare applications</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Comprehensive stakeholder analysis and requirements engineering</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Ethical software development with privacy and security focus</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Global scalability planning for enterprise deployment</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
 
                     <!-- Technologies -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                                <i class="fas fa-code text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
-                        </div>
+                    <ProjectSection Title="Technologies & Concepts" Icon="fas fa-code">
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Software Engineering</span>
-                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">ChatGPT-4 Turbo</span>
-                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">System Design</span>
-                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">UML Modeling</span>
-                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Agile Development</span>
-                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Requirements Engineering</span>
-                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Stakeholder Analysis</span>
-                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">API Integration</span>
-                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">Ethics & Privacy</span>
-                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Healthcare Technology</span>
-                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">Mobile Development</span>
-                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm">GDPR Compliance</span>
+                            <span class="chip">Software Engineering</span>
+                            <span class="chip">ChatGPT-4 Turbo</span>
+                            <span class="chip">System Design</span>
+                            <span class="chip">UML Modeling</span>
+                            <span class="chip">Agile Development</span>
+                            <span class="chip">Requirements Engineering</span>
+                            <span class="chip">Stakeholder Analysis</span>
+                            <span class="chip">API Integration</span>
+                            <span class="chip">Ethics & Privacy</span>
+                            <span class="chip">Healthcare Technology</span>
+                            <span class="chip">Mobile Development</span>
+                            <span class="chip">GDPR Compliance</span>
                         </div>
-                    </div>
+                </ProjectSection>
                 </div>
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+            
+</ProjectPage>

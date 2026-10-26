@@ -1,62 +1,14 @@
 @page "/projects/business-plan"
 @using website.Data
 
-<PageTitle>Project Synapse - AI Healthcare Documentation System</PageTitle>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">Business Plan</span>
-            </div>
-        </nav>
-
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Academic Project - Year 2
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">Project Synapse</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">AI Healthcare Documentation System</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Comprehensive business plan for revolutionizing NHS healthcare documentation through advanced AI technology, targeting 1.8 million healthcare professionals with £2 billion government digitalization support
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Business Planning</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Healthcare Technology</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">AI Documentation</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">NHS Integration</span>
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Market Research</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">🏥</div>
-            <p class="text-gray-400 text-lg">1.8M Healthcare Workers • £2B Government Investment • NHS Crisis Solution</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-
+<ProjectPage Url="/projects/business-plan" Kicker="Academic Project · Year 2">
                 <!-- Business Context & Problem Analysis -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-hospital text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">NHS Crisis & Market Opportunity</h2>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg p-6 border border-green-500/25 mb-6">
+                <ProjectSection Title="NHS Crisis & Market Opportunity" Icon="fas fa-hospital">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-red-500 rounded-full w-2 h-2 mr-3"></div>
-                            <h3 class="text-xl font-bold text-red-400">Critical Healthcare Challenge</h3>
+                            <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-slate-100">Critical Healthcare Challenge</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
                             The COVID-19 pandemic exposed critical flaws in NHS operations, particularly the overwhelming burden of non-clinical
@@ -65,7 +17,7 @@
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Market Scale</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• <strong>1.8 million</strong> healthcare professionals in UK</li>
@@ -74,7 +26,7 @@
                                 <li>• <strong>£2 billion</strong> government digitalization investment</li>
                             </ul>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Current Problems</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Excessive time spent on documentation</li>
@@ -84,28 +36,22 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Business Solution & Value Proposition -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-lightbulb text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Project Synapse Solution</h2>
-                    </div>
+                <ProjectSection Title="Project Synapse Solution" Icon="fas fa-lightbulb">
 
                     <!-- Core Solution -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25 mb-8">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">"Advanced AI Interfacing System for Healthcare Documentation"</h3>
-                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm mb-4">
-                            <div class="text-green-400 mb-2">// Revolutionary healthcare documentation solution</div>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25 mb-8">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">"Advanced AI Interfacing System for Healthcare Documentation"</h3>
+                        <div class="bg-ink rounded-lg p-4 font-mono text-sm mb-4">
+                            <div class="text-cy mb-2">// Revolutionary healthcare documentation solution</div>
                             <div class="text-gray-300">
-                                <span class="text-cyan-400">Core Function:</span> Listen to patient-doctor interactions<br/>
-                                <span class="text-cyan-400">AI Processing:</span> Automatic documentation generation<br/>
-                                <span class="text-cyan-400">NHS Integration:</span> Seamless electronic patient records<br/>
-                                <span class="text-cyan-400">Smart Features:</span> Referrals, tests, follow-ups automation<br/>
-                                <span class="text-cyan-400">Value Proposition:</span> More patient care, less paperwork
+                                <span class="text-cy">Core Function:</span> Listen to patient-doctor interactions<br/>
+                                <span class="text-cy">AI Processing:</span> Automatic documentation generation<br/>
+                                <span class="text-cy">NHS Integration:</span> Seamless electronic patient records<br/>
+                                <span class="text-cy">Smart Features:</span> Referrals, tests, follow-ups automation<br/>
+                                <span class="text-cy">Value Proposition:</span> More patient care, less paperwork
                             </div>
                         </div>
                         <p class="text-gray-300 text-sm">
@@ -115,8 +61,8 @@
 
                     <!-- Feature Matrix -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-microphone mr-3"></i>Smart Listening
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -135,8 +81,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-file-medical mr-3"></i>Auto Documentation
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -155,8 +101,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-network-wired mr-3"></i>System Integration
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -175,20 +121,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Market Research & Feasibility Analysis -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-chart-line text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">Market Research & Business Intelligence</h2>
-                    </div>
+                <ProjectSection Title="Market Research & Business Intelligence" Icon="fas fa-chart-line">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Target Market Analysis</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Target Market Analysis</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Primary Market:</strong> NHS doctors and healthcare professionals</div>
                                 <div><strong>Market Size:</strong> 1.8 million healthcare workers</div>
@@ -206,8 +146,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Industry Research Sources</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Industry Research Sources</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>IBISWorld:</strong> Electronic patient records industry analysis</div>
                                 <div><strong>NHS Digital:</strong> Transaction volumes and system data</div>
@@ -227,8 +167,8 @@
                     </div>
 
                     <!-- Competitive Landscape -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Competitive Analysis & Market Gap</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Competitive Analysis & Market Gap</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Current Solutions (Limited)</h4>
@@ -250,20 +190,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Blue Ocean Strategy & Competitive Analysis -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-chess text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-indigo-400">Blue Ocean Strategy Analysis</h2>
-                    </div>
+                <ProjectSection Title="Blue Ocean Strategy Analysis" Icon="fas fa-chess">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Create (New Value)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Create (New Value)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>NHS System Integration:</strong> Seamless existing infrastructure compatibility</li>
                                 <li><strong>Full Documentation Automation:</strong> Complete workflow coverage</li>
@@ -273,8 +207,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Raise (Above Industry)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Raise (Above Industry)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>System Reliability:</strong> Iterative design and robust testing</li>
                                 <li><strong>Integration Capability:</strong> Nationwide NHS deployment</li>
@@ -286,8 +220,8 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Reduce (Industry Norms)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Reduce (Industry Norms)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Training Requirements:</strong> AI-guided onboarding</li>
                                 <li><strong>System Complexity:</strong> Simplified user experience</li>
@@ -297,8 +231,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4">Eliminate (Industry Standards)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Eliminate (Industry Standards)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Paper Documentation:</strong> Fully digital workflow</li>
                                 <li><strong>Manual Transcription:</strong> AI-powered automation</li>
@@ -308,20 +242,14 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Entrepreneur Profile & Implementation Strategy -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-user-tie text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-orange-400">Entrepreneur Profile & Implementation</h2>
-                    </div>
+                <ProjectSection Title="Entrepreneur Profile & Implementation" Icon="fas fa-user-tie">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Founder Qualifications</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Founder Qualifications</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Education:</strong> Computer Science with AI (Integrated Masters)</div>
                                 <div><strong>Technical Skills:</strong> AI systems, data science, project management</div>
@@ -339,8 +267,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Technical Implementation</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Technical Implementation</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Core Technology:</strong> ChatGPT-4 API integration</div>
                                 <div><strong>Speech Processing:</strong> Google Cloud Speech-to-Text</div>
@@ -360,8 +288,8 @@
                     </div>
 
                     <!-- Business Model & Financial Viability -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Business Model & Financial Viability</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Business Model & Financial Viability</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Revenue Model</h4>
@@ -377,21 +305,15 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Business Plan Downloads & Academic Achievement -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-download text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-yellow-400">Complete Business Plan & Academic Excellence</h2>
-                    </div>
+                <ProjectSection Title="Complete Business Plan & Academic Excellence" Icon="fas fa-download">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Professional Business Documentation</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>2,500-Word Report:</strong> Comprehensive feasibility analysis</li>
                                     <li><strong>Market Research:</strong> IBISWorld data and NHS statistics</li>
@@ -404,7 +326,7 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Academic Achievement</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>LUBS1890 Excellence:</strong> Starting Your Own Business coursework</li>
                                     <li><strong>Real-World Impact:</strong> Addresses critical NHS challenges</li>
@@ -418,8 +340,8 @@
                     </div>
 
                     <!-- Download Section -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 text-center">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Download Complete Business Plan</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line text-center">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Download Complete Business Plan</h3>
                         <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
                             Access the full business plan and assignment brief for the LUBS1890 Starting Your Own Business coursework.
                             This comprehensive documentation demonstrates professional business planning methodology and market analysis.
@@ -427,16 +349,16 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <a href="/docs/project-synapse-business-plan.pdf"
                                download="Project-Synapse-Business-Plan.pdf"
-                               class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                               class="hover:from-purple-500 hover:to-purple-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
                                 <i class="fas fa-file-pdf mr-3 text-xl"></i>
                                 <div class="text-left">
                                     <div class="text-lg">Business Plan (PDF)</div>
-                                    <div class="text-sm text-purple-200">Complete Project Synapse Report</div>
+                                    <div class="text-sm text-slate-300">Complete Project Synapse Report</div>
                                 </div>
                             </a>
                             <a href="/docs/business-assignment-brief.pdf"
                                download="Business-Assignment-Brief.pdf"
-                               class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                               class="hover:from-gray-500 hover:to-gray-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
                                 <i class="fas fa-file-alt mr-3 text-xl"></i>
                                 <div class="text-left">
                                     <div class="text-lg">Assignment Brief (PDF)</div>
@@ -448,74 +370,53 @@
                             Professional business planning documentation with market research and financial analysis
                         </p>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Key Insights & Technologies Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Key Insights -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-lightbulb text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
-                        </div>
+                    <ProjectSection Title="Key Insights" Icon="fas fa-lightbulb">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Professional business planning for real-world healthcare challenges</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Comprehensive market research using industry-standard sources</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Advanced AI technology application in healthcare domain</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Blue Ocean Strategy methodology for competitive analysis</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Social impact entrepreneurship addressing national healthcare crisis</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
 
                     <!-- Technologies -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                                <i class="fas fa-code text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
-                        </div>
+                    <ProjectSection Title="Technologies & Concepts" Icon="fas fa-code">
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Business Planning</span>
-                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">Healthcare Technology</span>
-                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">AI Documentation</span>
-                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">NHS Integration</span>
-                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Market Research</span>
-                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Blue Ocean Strategy</span>
-                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Speech-to-Text</span>
-                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Entrepreneurship</span>
-                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">IBISWorld Research</span>
-                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Financial Analysis</span>
-                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">ChatGPT-4 API</span>
-                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm">EPR Systems</span>
+                            <span class="chip">Business Planning</span>
+                            <span class="chip">Healthcare Technology</span>
+                            <span class="chip">AI Documentation</span>
+                            <span class="chip">NHS Integration</span>
+                            <span class="chip">Market Research</span>
+                            <span class="chip">Blue Ocean Strategy</span>
+                            <span class="chip">Speech-to-Text</span>
+                            <span class="chip">Entrepreneurship</span>
+                            <span class="chip">IBISWorld Research</span>
+                            <span class="chip">Financial Analysis</span>
+                            <span class="chip">ChatGPT-4 API</span>
+                            <span class="chip">EPR Systems</span>
                         </div>
-                    </div>
+                </ProjectSection>
                 </div>
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+            
+</ProjectPage>

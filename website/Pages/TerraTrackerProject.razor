@@ -1,70 +1,21 @@
 @page "/projects/terratracker"
 @using website.Data
 
-<PageTitle>TerraTracker - Collaborative GPS Route Tracking Application</PageTitle>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">TerraTracker</span>
-            </div>
-        </nav>
-
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Academic Project - Year 2 • COMP2913 • Team Collaboration
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">TerraTracker</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">Collaborative GPS Route Tracking & Sharing Platform</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Full-stack GPS route tracking and sharing application developed by a 6-person agile team using professional software engineering methodologies, featuring extensive sprint documentation, collaborative development practices, and industry-standard version control workflows
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">6-Person Team</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Flask</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Python</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Docker</span>
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Agile/Scrum</span>
-                <span class="bg-pink-600 text-white px-4 py-2 rounded-full text-sm">CI/CD</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">🗺️</div>
-            <p class="text-white/75 text-lg">Team Collaboration • Sprint Planning • Professional Git Workflow • Route Sharing</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-
+<ProjectPage Url="/projects/terratracker" Kicker="Academic Project · Year 2 · COMP2913 · Team Collaboration">
                 <!-- Project Overview & Context -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-project-diagram text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">Project Overview & Academic Context</h2>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-500/25 mb-6">
+                <ProjectSection Title="Project Overview & Academic Context" Icon="fas fa-project-diagram">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-purple-500 rounded-full w-2 h-2 mr-3"></div>
-                            <h3 class="text-xl font-bold text-purple-400">COMP2913 Software Engineering Project</h3>
+                            <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-slate-100">COMP2913 Software Engineering Project</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
                             Professional software engineering team project developed over multiple sprints using agile methodologies. TerraTracker is a GPS route tracking and sharing platform that allows users to record, visualize, and share their outdoor activities. The project demonstrates end-to-end software development lifecycle from requirements gathering through deployment, emphasizing collaborative development practices and professional software engineering principles.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Team Structure</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• 6-person collaborative development team</li>
@@ -73,7 +24,7 @@
                                 <li>• Weekly stand-ups and retrospectives</li>
                             </ul>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Project Deliverables</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• GitHub repository with complete commit history</li>
@@ -83,20 +34,14 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Core Features & Functionality -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-map-marked-alt text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Core Features & Functionality</h2>
-                    </div>
+                <ProjectSection Title="Core Features & Functionality" Icon="fas fa-map-marked-alt">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-route mr-3"></i>Route Tracking
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -107,8 +52,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-share-alt mr-3"></i>Social Sharing
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -119,8 +64,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                            <h3 class="text-xl font-bold text-purple-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-chart-line mr-3"></i>Analytics
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -131,20 +76,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Technical Stack & Architecture -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-cogs text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">Technical Stack & Architecture</h2>
-                    </div>
+                <ProjectSection Title="Technical Stack & Architecture" Icon="fas fa-cogs">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Backend Stack</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Backend Stack</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Flask Framework:</strong> Python web framework for API development</li>
                                 <li><strong>PostgreSQL:</strong> Relational database for data persistence</li>
@@ -154,8 +93,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Frontend Stack</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Frontend Stack</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>HTML/CSS/JavaScript:</strong> Core web technologies</li>
                                 <li><strong>Leaflet.js:</strong> Interactive mapping library</li>
@@ -166,8 +105,8 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">DevOps & Deployment</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">DevOps & Deployment</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Containerization</h4>
@@ -183,20 +122,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Agile Development Process -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-tasks text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-indigo-400">Agile Development Process</h2>
-                    </div>
+                <ProjectSection Title="Agile Development Process" Icon="fas fa-tasks">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Sprint Planning</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Sprint Planning</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>2-Week Sprints:</strong> Regular development cycles</li>
                                 <li><strong>Sprint Goals:</strong> Clear objectives for each iteration</li>
@@ -205,8 +138,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Collaboration Tools</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Collaboration Tools</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>GitHub Projects:</strong> Kanban board for task management</li>
                                 <li><strong>Issue Tracking:</strong> Bug reports and feature requests</li>
@@ -215,8 +148,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Quality Assurance</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Quality Assurance</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li><strong>Unit Testing:</strong> Automated test coverage</li>
                                 <li><strong>Code Standards:</strong> Consistent coding style</li>
@@ -226,8 +159,8 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Team Collaboration Highlights</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Team Collaboration Highlights</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Development Practices</h4>
@@ -249,100 +182,82 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Learning Outcomes & Reflections -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Skills Demonstrated -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-graduation-cap text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-blue-400">Skills Demonstrated</h2>
-                        </div>
+                    <ProjectSection Title="Skills Demonstrated" Icon="fas fa-graduation-cap">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Team collaboration and agile development methodologies</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Professional version control with Git workflows</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Full-stack web development with Flask and JavaScript</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Database design and ORM implementation</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">RESTful API design and documentation</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-blue-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Containerization and deployment with Docker</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
 
                     <!-- Academic Excellence -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-star text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Academic Excellence</h2>
-                        </div>
+                    <ProjectSection Title="Academic Excellence" Icon="fas fa-star">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Professional-grade software engineering practices</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Comprehensive project documentation and wiki</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Successful live product demonstration</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Reflective practice on team dynamics and processes</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Industry-standard development workflow</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Ethical and professional software development</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
                 </div>
 
                 <!-- Project Resources -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-400 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-folder-open text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">Project Resources & Documentation</h2>
-                    </div>
+                <ProjectSection Title="Project Resources & Documentation" Icon="fas fa-folder-open">
 
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25 text-center">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Access Project Repository & Documentation</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line text-center">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Access Project Repository & Documentation</h3>
                         <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
                             Explore the complete GitHub repository with source code, project wiki, sprint documentation, and team reflections from the COMP2913 Software Engineering Project coursework.
                         </p>
                         <div class="grid md:grid-cols-2 gap-4">
                             <a href="https://github.com/uol-feps-soc-comp2913-2324s2-classroom/team-project-team-8" target="_blank"
-                               class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
+                               class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                                 <i class="fab fa-github mr-3 text-xl"></i>
                                 <div>
                                     <div class="font-bold">GitHub Repository</div>
@@ -350,7 +265,7 @@
                                 </div>
                             </a>
                             <a href="/docs/terratracker-team-project-brief.pdf" target="_blank"
-                               class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
+                               class="px-6 py-4 rounded-lg flex items-center justify-center transition-colors group border border-line bg-white/[.03] hover:border-cy/60 text-slate-100">
                                 <i class="fas fa-file-pdf mr-3 text-xl"></i>
                                 <div>
                                     <div class="font-bold">Assessment Brief</div>
@@ -362,40 +277,25 @@
                             Professional team project showcasing collaborative software engineering practices
                         </p>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Technologies Grid -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
-                    <div class="flex items-center justify-center mb-6">
-                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                            <i class="fas fa-code text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-gray-300">Technologies & Tools</h2>
-                    </div>
+                <ProjectSection Title="Technologies & Tools" Icon="fas fa-code">
                     <p class="text-gray-400 mb-6">Professional software development toolkit for collaborative team project</p>
                     <div class="flex flex-wrap justify-center gap-3">
-                        <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Python</span>
-                        <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Flask</span>
-                        <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">PostgreSQL</span>
-                        <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">SQLAlchemy</span>
-                        <span class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm">HTML/CSS/JS</span>
-                        <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Leaflet.js</span>
-                        <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Bootstrap</span>
-                        <span class="bg-pink-600 text-white px-4 py-2 rounded-full text-sm">Docker</span>
-                        <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Git/GitHub</span>
-                        <span class="bg-teal-600 text-white px-4 py-2 rounded-full text-sm">Agile/Scrum</span>
-                        <span class="bg-lime-600 text-white px-4 py-2 rounded-full text-sm">CI/CD</span>
-                        <span class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm">REST API</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Flask</span>
+                        <span class="chip">PostgreSQL</span>
+                        <span class="chip">SQLAlchemy</span>
+                        <span class="chip">HTML/CSS/JS</span>
+                        <span class="chip">Leaflet.js</span>
+                        <span class="chip">Bootstrap</span>
+                        <span class="chip">Docker</span>
+                        <span class="chip">Git/GitHub</span>
+                        <span class="chip">Agile/Scrum</span>
+                        <span class="chip">CI/CD</span>
+                        <span class="chip">REST API</span>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+                </ProjectSection>
+            
+</ProjectPage>

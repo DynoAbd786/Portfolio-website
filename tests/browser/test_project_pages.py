@@ -24,7 +24,7 @@ def test_homelab_status_renders(page, site_url):
 
 
 # Pages that still scroll sideways on a phone until their batch moves them onto the template
-NOT_YET_MIGRATED_OVERFLOW = {"/projects/numerical-computation", "/projects/terratracker", "/projects/c-programming"}
+NOT_YET_MIGRATED_OVERFLOW = {"/projects/c-programming"}
 
 
 def test_project_pages_fit_a_phone(page, site_url):
