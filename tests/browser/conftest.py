@@ -22,6 +22,9 @@ def _healthy():
 @pytest.fixture(scope="session")
 def site_url():
     """Builds once and runs the real site on port 5199 for the whole session."""
+    if _healthy():
+        # Another server would answer the health check and the tests would hit stale files
+        raise RuntimeError(f"something is already serving {URL}; stop it first")
     # No launch profile: its applicationUrl would override ASPNETCORE_URLS
     env = {**os.environ, "ASPNETCORE_URLS": URL, "ASPNETCORE_ENVIRONMENT": "Development", "DOTNET_NOLOGO": "1"}
     subprocess.run(["dotnet", "build", "website.api", "-v", "q", "-nologo"], cwd=ROOT, env=env, check=True)
