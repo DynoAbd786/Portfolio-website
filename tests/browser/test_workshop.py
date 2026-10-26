@@ -198,3 +198,16 @@ def test_every_hotspot_opens_its_card_when_clicked(page, site_url):
         page.keyboard.press("Escape")
         page.wait_for_selector(".ws-card:not(.open)", state="attached", timeout=3000)
         page.wait_for_timeout(1500)  # camera back home before the next pin
+
+
+def test_phone_card_scrolls_into_view(page, site_url):
+    """On narrow screens the card sits below the room; opening it from the bottom of the screen must bring it into view."""
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/?debug=workshop", wait_until="load")
+    wait_live(page)
+    page.evaluate("(() => { const r = document.getElementById('workshop').getBoundingClientRect(); scrollTo(0, scrollY + r.bottom - innerHeight); })()")
+    page.wait_for_timeout(300)
+    open_card(page, "thesis")
+    page.wait_for_timeout(1000)
+    top = page.evaluate("document.querySelector('.ws-card').getBoundingClientRect().top")
+    assert 0 <= top < page.viewport_size["height"] - 100, top

@@ -61,6 +61,8 @@ export function createUI({ root, section, data, onOpen, onClose }) {
     card.inert = false; card.classList.add('open'); section.classList.add('ws-focused');
     if (heroCopy && wide.matches) heroCopy.inert = true;
     title.focus({ preventScroll: true });
+    // narrow screens put the card below the room, so bring it into view
+    if (!wide.matches) card.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     onOpen(k);
   }
   function closeCard(keepFocus) {
