@@ -19,6 +19,8 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
     public static TheoryData<string> MigratedRoutes => new()
     {
         "/projects/machine-learning", "/projects/medical-simulation",
+        "/projects/3d-reconstruction", "/projects/pnanolocz", "/projects/distributed-systems",
+        "/projects/home-lab", "/projects/workflow-graph-platform", "/projects/formula-student-ai",
     };
 
     [Theory]
@@ -31,5 +33,17 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         Assert.NotNull(doc.QuerySelector("main a.next-project"));
         Assert.Equal(project!.Title, Regex.Replace(doc.QuerySelector("main h1")!.TextContent, @"\s+", " ").Trim());
         Assert.Single(doc.QuerySelectorAll("main h1"));
+    }
+
+    [Fact]
+    public async Task Synergy_page_leads_with_current_status()
+    {
+        var doc = await Html.GetAsync(_client, "/projects/workflow-graph-platform");
+        var first = doc.QuerySelector("main section.project-section h2");
+        Assert.Equal("Current status", first?.TextContent.Trim());
+        var text = doc.QuerySelector("main")!.TextContent;
+        Assert.Contains("How it started", text);
+        Assert.DoesNotContain("pricing", text, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("C# to Python", text);
     }
 }

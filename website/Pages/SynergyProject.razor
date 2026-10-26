@@ -1,71 +1,61 @@
 @page "/projects/synergy"
 @using website.Data
 
-<PageTitle>Workflow-Centric Graph Construction & Architectural Intelligence Platform</PageTitle>
+<ProjectPage Url="/projects/workflow-graph-platform" Kicker="Personal Project">
+                <ProjectSection Title="Current status" Subtitle="In development · local-first: it runs on your own machine, against your own code" Icon="fas fa-circle-half-stroke">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <h3 class="mb-3 font-bold text-slate-100">What works today</h3>
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li>• Parses Python, C#, Java, Go, C++, Rust, JavaScript and TypeScript into one typed graph of modules, symbols and dependencies</li>
+                                <li>• Incremental analysis: unchanged files are skipped, and the result matches a full re-analysis</li>
+                                <li>• Revision history, snapshots of any git commit, and structural diffs ranked by blast radius</li>
+                                <li>• Call-flow diagrams from any entry point, and runtime traces that check the static graph against a real run</li>
+                                <li>• An MCP server with 17 tools, so coding agents ask about structure instead of grepping text</li>
+                                <li>• One command wires it into Claude Code (hooks, a skill and the server config), with an AGENTS.md for other agents</li>
+                                <li>• A web dashboard: graph explorer, history diffs, UML and an agent's-eye view</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="mb-3 font-bold text-slate-100">Built with</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="chip">Python</span>
+                                    <span class="chip">FastAPI</span>
+                                    <span class="chip">tree-sitter</span>
+                                    <span class="chip">SQLite</span>
+                                    <span class="chip">React</span>
+                                    <span class="chip">TypeScript</span>
+                                    <span class="chip">MCP</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="mb-3 font-bold text-slate-100">Next</h3>
+                                <ul class="space-y-2 text-sm text-slate-300">
+                                    <li>• Agent setup: measuring whether an agent that was never told about Synergy actually reaches for the graph</li>
+                                    <li>• Call-flow precision: the calls Python makes implicitly, and flows that show only the interfaces they pass through</li>
+                                    <li>• Packaging: a release that installs with one command instead of from source</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </ProjectSection>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">Workflow-Centric Graph Platform</span>
-            </div>
-        </nav>
-
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Personal Projects • Independent Research (In Development)
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">Workflow-Centric Graph Construction &amp; Architectural Intelligence Platform</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">C#/.NET Hybrid Architecture with Python Analysis Engine</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Hybrid C#/.NET and Python platform transforming codebases into queryable graphs with architectural intelligence—featuring ASP.NET Core API, Blazor WASM UI, and active "Architectural Linter" capabilities for AI-assisted development
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">C# / .NET 8</span>
-                <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">ASP.NET Core</span>
-                <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">Blazor WASM</span>
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Python Analysis</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Neo4j</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">MCP Protocol</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Architectural Linter</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">🏗️</div>
-            <p class="text-gray-400 text-lg">Hybrid C#/.NET + Python • ASP.NET Core API • Blazor WASM UI • Architectural Intelligence</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                <h2 class="pt-4 text-3xl font-bold text-white">How it started</h2>
 
                 <!-- Project Status & Research Context -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-info-circle text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-yellow-400">Project Status & Context</h2>
-                    </div>
-                    <div class="bg-yellow-900/20 rounded-lg p-6 border border-yellow-500/25 mb-6">
+                <ProjectSection Title="Project Status & Context" Icon="fas fa-info-circle">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-yellow-500 rounded-full w-2 h-2 mr-3"></div>
-                            <h3 class="text-xl font-bold text-yellow-400">Current Stage: Active Personal Research</h3>
+                            <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-slate-100">Current Stage: Active Personal Research</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
                             This is an independent technical research initiative exploring graph-based code analysis and LLM knowledge enhancement. Originally conceived for academic collaboration, the project has been refocused as a personal research endeavor with potential for future publication and open-source contribution. The work explores innovative approaches to bridging the gap between static code organization and dynamic workflow understanding, with particular emphasis on version-specific package analysis and token-efficient AI assistance.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Development Timeline</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• <strong>Conceptualization:</strong> October 2025</li>
@@ -74,7 +64,7 @@
                                 <li>• <strong>Approach:</strong> Modular, iterative research</li>
                             </ul>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Research Focus</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Open-source package/library analysis</li>
@@ -84,21 +74,15 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- The Problem: Code Understanding Challenges -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-red-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-exclamation-triangle text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-red-400">The Problem</h2>
-                    </div>
+                <ProjectSection Title="The Problem" Icon="fas fa-exclamation-triangle">
                     <p class="text-gray-300 mb-6">Developers and AI assistants struggle with unfamiliar codebases. Existing tools show directory structures ("where code lives") but fail to capture behavior ("how code works").</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-folder-tree mr-3"></i>Current Tool Limitations
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
@@ -109,8 +93,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-orange-600/25">
-                            <h3 class="text-xl font-bold text-orange-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-robot mr-3"></i>AI Assistant Challenges
                             </h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
@@ -122,28 +106,22 @@
                         </div>
                     </div>
 
-                    <div class="bg-red-900/20 rounded-lg p-6 border border-red-500/25">
-                        <h3 class="text-xl font-bold text-red-400 mb-4">Critical Impact</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Critical Impact</h3>
                         <p class="text-gray-300">
                             AI assistants lack Architectural Context: they don't know if your team prefers composition over inheritance, whether you use dependency injection patterns, or which design principles guide your codebase. This leads to syntactically correct code that violates team culture and architectural philosophy, requiring extensive manual refactoring.
                         </p>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Proposed Solution: Hybrid C#/.NET Architecture -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-green-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-lightbulb text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">The Solution: Hybrid C#/.NET + Python Architecture</h2>
-                    </div>
+                <ProjectSection Title="The Solution: Hybrid C#/.NET + Python Architecture" Icon="fas fa-lightbulb">
 
                     <p class="text-gray-300 mb-6">A hybrid platform that transforms codebases into queryable graphs, combining Python's data science ecosystem for deep analysis with C#/.NET's enterprise-grade infrastructure for robust APIs and UI:</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Deep Analysis (Python Microservice)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Deep Analysis (Python Microservice)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li>• <strong>Doxygen + AST Pipeline:</strong> Extract entities (classes, functions) and relationships</li>
                                 <li>• <strong>Structural & Behavioral Graphs:</strong> UML-inspired dual-level analysis</li>
@@ -152,8 +130,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                            <h3 class="text-xl font-bold text-cyan-400 mb-4">Architectural Intelligence (C# ASP.NET Core)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Architectural Intelligence (C# ASP.NET Core)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li>• <strong>API Gateway:</strong> Enterprise-grade REST endpoints for graph queries</li>
                                 <li>• <strong>MCP Host (McpController):</strong> JSON-RPC 2.0 protocol for AI agents</li>
@@ -163,29 +141,23 @@
                         </div>
                     </div>
 
-                    <div class="bg-green-900/20 rounded-lg p-6 border border-green-500/25">
-                        <h3 class="text-xl font-bold text-green-400 mb-4">Core Innovation: The "Architectural Linter"</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Core Innovation: The "Architectural Linter"</h3>
                         <p class="text-gray-300">
                             Moving beyond simple code mapping to <strong>Architectural Linter capabilities</strong>. The C# RefactoringService doesn't just show the graph—it critiques it based on complexity metrics (Cyclomatic Complexity, Fan-Out) and defined project philosophies, accessible directly by LLMs via MCP. AI agents can ask: "Where are the God Classes?" and receive data-backed RefactoringCandidate objects with specific architectural violations.
                         </p>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- System Architecture: Hybrid C#/.NET + Python -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-server text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">System Architecture: Hybrid Microservices</h2>
-                    </div>
+                <ProjectSection Title="System Architecture: Hybrid Microservices" Icon="fas fa-server">
                     <p class="text-gray-300 mb-6">Multi-container architecture separating analysis concerns (Python) from application infrastructure (C#/.NET), communicating via REST APIs and shared Neo4j database:</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg p-6 border border-cyan-600/50">
+                        <div class="rounded-lg p-6 border border-cyan-600/50 bg-white/[.02]">
                             <div class="flex items-center mb-3">
-                                <i class="fas fa-layer-group text-cyan-400 text-2xl mr-3"></i>
-                                <h3 class="text-xl font-bold text-cyan-400">Frontend: Blazor WebAssembly (C#)</h3>
+                                <i class="fas fa-layer-group text-cy text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-slate-100">Frontend: Blazor WebAssembly (C#)</h3>
                             </div>
                             <ul class="text-gray-300 text-sm space-y-1">
                                 <li>• Interactive graph visualization (D3.js/Cytoscape interop)</li>
@@ -195,10 +167,10 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gradient-to-br from-cyan-900 to-cyan-800 rounded-lg p-6 border border-blue-600/50">
+                        <div class="rounded-lg p-6 border border-line bg-white/[.02]">
                             <div class="flex items-center mb-3">
-                                <i class="fas fa-server text-blue-400 text-2xl mr-3"></i>
-                                <h3 class="text-xl font-bold text-blue-400">Application Layer: ASP.NET Core API (C#)</h3>
+                                <i class="fas fa-server text-cy text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-slate-100">Application Layer: ASP.NET Core API (C#)</h3>
                             </div>
                             <ul class="text-gray-300 text-sm space-y-1">
                                 <li>• <strong>API Gateway:</strong> REST endpoints for graph queries</li>
@@ -208,10 +180,10 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gradient-to-br from-purple-900 to-purple-800 rounded-lg p-6 border border-purple-600/50">
+                        <div class="rounded-lg p-6 border border-line bg-white/[.02]">
                             <div class="flex items-center mb-3">
-                                <i class="fas fa-code text-purple-400 text-2xl mr-3"></i>
-                                <h3 class="text-xl font-bold text-purple-400">Analysis Layer: Python Microservice</h3>
+                                <i class="fas fa-code text-cy text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-slate-100">Analysis Layer: Python Microservice</h3>
                             </div>
                             <ul class="text-gray-300 text-sm space-y-1">
                                 <li>• <strong>Doxygen + AST:</strong> Entity/relationship extraction</li>
@@ -221,10 +193,10 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gradient-to-br from-green-900 to-green-800 rounded-lg p-6 border border-green-600/50">
+                        <div class="rounded-lg p-6 border border-line bg-white/[.02]">
                             <div class="flex items-center mb-3">
-                                <i class="fas fa-database text-green-400 text-2xl mr-3"></i>
-                                <h3 class="text-xl font-bold text-green-400">Data Layer: Neo4j + Redis</h3>
+                                <i class="fas fa-database text-cy text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-slate-100">Data Layer: Neo4j + Redis</h3>
                             </div>
                             <ul class="text-gray-300 text-sm space-y-1">
                                 <li>• <strong>Neo4j:</strong> Graph database with package:version namespacing</li>
@@ -235,8 +207,8 @@
                         </div>
                     </div>
 
-                    <div class="bg-purple-900/20 rounded-lg p-6 border border-purple-500/25 mt-6">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Architecture Benefits</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mt-6">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Architecture Benefits</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Separation of Concerns</h4>
@@ -252,20 +224,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Primary Use Case: Open-Source Package Analysis -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-box-open text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Primary Use Case: Open-Source Package Analysis</h2>
-                    </div>
+                <ProjectSection Title="Primary Use Case: Open-Source Package Analysis" Icon="fas fa-box-open">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">For Human Developers</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">For Human Developers</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li>• Understand package/library APIs before integration</li>
                                 <li>• Learn capabilities and features</li>
@@ -274,8 +240,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                            <h3 class="text-xl font-bold text-purple-400 mb-4">For AI Systems (via MCP)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">For AI Systems (via MCP)</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li>• Query package capabilities by name and version</li>
                                 <li>• Retrieve structured API documentation</li>
@@ -285,65 +251,59 @@
                         </div>
                     </div>
 
-                    <div class="bg-cyan-900/20 rounded-lg p-6 border border-cyan-500/25">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Package-Centric Workflow</h3>
+                    <div class="bg-cyan-900/20 rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Package-Centric Workflow</h3>
                         <div class="space-y-3 text-gray-300 text-sm">
                             <div class="flex items-start">
-                                <span class="text-cyan-400 font-bold mr-3">1.</span>
+                                <span class="text-cy font-bold mr-3">1.</span>
                                 <span>User submits GitHub repository link and specifies version/tag via web interface</span>
                             </div>
                             <div class="flex items-start">
-                                <span class="text-cyan-400 font-bold mr-3">2.</span>
+                                <span class="text-cy font-bold mr-3">2.</span>
                                 <span>Backend clones repository at specified version and runs analysis pipeline</span>
                             </div>
                             <div class="flex items-start">
-                                <span class="text-cyan-400 font-bold mr-3">3.</span>
+                                <span class="text-cy font-bold mr-3">3.</span>
                                 <span>Structural and behavioral graphs generated with version metadata (e.g., numpy:1.24.0)</span>
                             </div>
                             <div class="flex items-start">
-                                <span class="text-cyan-400 font-bold mr-3">4.</span>
+                                <span class="text-cy font-bold mr-3">4.</span>
                                 <span>Human users explore via web visualization, AI systems query via MCP API</span>
                             </div>
                             <div class="flex items-start">
-                                <span class="text-cyan-400 font-bold mr-3">5.</span>
+                                <span class="text-cy font-bold mr-3">5.</span>
                                 <span>Version-specific analysis enables cross-version comparisons and debugging</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Implementation Phases -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-blue-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-tasks text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-blue-400">Implementation Phases</h2>
-                    </div>
+                <ProjectSection Title="Implementation Phases" Icon="fas fa-tasks">
 
                     <div class="mb-8">
-                        <h3 class="text-2xl font-bold text-green-400 mb-4">Phase 1: The "Market-Ready" Prototype</h3>
+                        <h3 class="text-2xl font-bold text-slate-100 mb-4">Phase 1: The "Market-Ready" Prototype</h3>
                         <p class="text-gray-300 mb-4">Goal: A functional system capable of ingesting a repo, detecting architectural flaws (God Classes), and exposing the graph to AI agents via MCP</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-gray-800 rounded-lg p-4 border border-purple-600/25">
-                                <h4 class="font-bold text-purple-400 mb-2">Stage 1: Python Backend</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Stage 1: Python Backend</h4>
                                 <ul class="text-gray-300 text-sm space-y-1">
                                     <li>• Doxygen + AST pipeline</li>
                                     <li>• Entity/relationship extraction</li>
                                     <li>• Philosophy metadata tagging</li>
                                 </ul>
                             </div>
-                            <div class="bg-gray-800 rounded-lg p-4 border border-cyan-600/25">
-                                <h4 class="font-bold text-cyan-400 mb-2">Stage 2: C# Bridge & MCP</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-cyan-600/25">
+                                <h4 class="font-bold text-slate-100 mb-2">Stage 2: C# Bridge & MCP</h4>
                                 <ul class="text-gray-300 text-sm space-y-1">
                                     <li>• IGraphProvider + PythonBridgeService</li>
                                     <li>• McpController (get_workflow, explain_structure)</li>
                                     <li>• RefactoringService with God Class detection</li>
                                 </ul>
                             </div>
-                            <div class="bg-gray-800 rounded-lg p-4 border border-indigo-600/25">
-                                <h4 class="font-bold text-indigo-400 mb-2">Stage 3: Blazor UI</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Stage 3: Blazor UI</h4>
                                 <ul class="text-gray-300 text-sm space-y-1">
                                     <li>• Interactive graph rendering (D3.js interop)</li>
                                     <li>• "Audit View" for RefactoringCandidates</li>
@@ -352,60 +312,54 @@
                             </div>
                         </div>
 
-                        <div class="bg-green-900/20 rounded-lg p-4 border border-green-500/25 mt-4">
+                        <div class="bg-white/[.02] rounded-lg p-4 border border-line mt-4">
                             <p class="text-gray-300 text-sm">
-                                <strong class="text-green-400">Phase 1 Deliverable:</strong> Deployable Docker container where users upload a package (e.g., numpy), visualize the graph in Blazor, and AI agents query "Where are the God Classes?" via MCP for data-backed answers
+                                <strong class="text-cy">Phase 1 Deliverable:</strong> Deployable Docker container where users upload a package (e.g., numpy), visualize the graph in Blazor, and AI agents query "Where are the God Classes?" via MCP for data-backed answers
                             </p>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-2xl font-bold text-yellow-400 mb-4">Phase 2: Individual Research Tracks</h3>
+                        <h3 class="text-2xl font-bold text-slate-100 mb-4">Phase 2: Individual Research Tracks</h3>
                         <p class="text-gray-300 mb-4">Building on the C#/.NET + Python foundation with specialized research directions:</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-gray-800 rounded-lg p-4 border border-blue-600/25">
-                                <h4 class="font-bold text-blue-400 mb-2">Track 1: Big Data ML + Cross-Language</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Track 1: Big Data ML + Cross-Language</h4>
                                 <p class="text-gray-300 text-sm">Train GNNs on graph data, map Python AST to C# structures, predict missing edges</p>
                             </div>
-                            <div class="bg-gray-800 rounded-lg p-4 border border-red-600/25">
-                                <h4 class="font-bold text-red-400 mb-2">Track 2: Cybersecurity Threat Modeling</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Track 2: Cybersecurity Threat Modeling</h4>
                                 <p class="text-gray-300 text-sm">SecurityScanner extension, CVE mapping, vulnerability heatmap in Blazor UI</p>
                             </div>
-                            <div class="bg-gray-800 rounded-lg p-4 border border-green-600/25">
-                                <h4 class="font-bold text-green-400 mb-2">Track 3: Enterprise Scaling + Hierarchical Agents</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Track 3: Enterprise Scaling + Hierarchical Agents</h4>
                                 <p class="text-gray-300 text-sm">Scale ASP.NET Core for concurrent MCP, Redis caching, sub-linear latency benchmarks</p>
                             </div>
-                            <div class="bg-gray-800 rounded-lg p-4 border border-purple-600/25">
-                                <h4 class="font-bold text-purple-400 mb-2">Track 4: Consultancy + Automated Auditing</h4>
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
+                                <h4 class="font-bold text-slate-100 mb-2">Track 4: Consultancy + Automated Auditing</h4>
                                 <p class="text-gray-300 text-sm">ReviewController for PDF reports, user validation studies, "State of OSS Architecture" report</p>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Validation Framework: LLM Before/After Evaluation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-yellow-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-chart-line text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-yellow-400">Validation Framework</h2>
-                    </div>
+                <ProjectSection Title="Validation Framework" Icon="fas fa-chart-line">
 
                     <p class="text-gray-300 mb-6"><strong>Primary Evaluation:</strong> Three-condition LLM experiment using Manim v0.17.3 as test codebase</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-3">Condition A: Baseline</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3">Condition A: Baseline</h3>
                             <p class="text-gray-300 text-sm">LLM with Manim documentation only, no codebase access</p>
                             <div class="mt-3 text-sm text-gray-400">
                                 <strong>Expected Error Rate:</strong> ~50%
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-3">Condition B: Full Codebase</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3">Condition B: Full Codebase</h3>
                             <p class="text-gray-300 text-sm">Claude Code / Agentic Tool with entire repository access</p>
                             <div class="mt-3 text-sm text-gray-400">
                                 <strong>Expected Error Rate:</strong> ~28%<br/>
@@ -413,19 +367,19 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-3">Condition C: MCP Tool (Our System)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3">Condition C: MCP Tool (Our System)</h3>
                             <p class="text-gray-300 text-sm">Access to MCP API for structured queries</p>
                             <div class="mt-3 text-sm text-gray-400">
                                 <strong>Target Error Rate:</strong> &lt;18%<br/>
                                 <strong>Avg Input Tokens:</strong> 4,300<br/>
-                                <strong class="text-green-400">⚡ 75-80% Token Reduction</strong>
+                                <strong class="text-cy">⚡ 75-80% Token Reduction</strong>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-yellow-900/20 rounded-lg p-6 border border-yellow-500/25">
-                        <h3 class="text-xl font-bold text-yellow-400 mb-4">Key Validation Metrics</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Key Validation Metrics</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Error Rate (Primary)</h4>
@@ -441,20 +395,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Novel Contributions -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-orange-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-orange-500 to-red-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-star text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-orange-400">Novel Contributions</h2>
-                    </div>
+                <ProjectSection Title="Novel Contributions" Icon="fas fa-star">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                            <h3 class="text-xl font-bold text-cyan-400 mb-3 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-code-branch mr-2"></i>Hybrid Architecture
                             </h3>
                             <p class="text-gray-300 text-sm">
@@ -462,8 +410,8 @@
                             </p>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-3 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-search text-white mr-2"></i>The "Architectural Linter"
                             </h3>
                             <p class="text-gray-300 text-sm">
@@ -471,8 +419,8 @@
                             </p>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-indigo-600/25">
-                            <h3 class="text-xl font-bold text-indigo-400 mb-3 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-robot mr-2"></i>MCP-First Design
                             </h3>
                             <p class="text-gray-300 text-sm">
@@ -480,8 +428,8 @@
                             </p>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                            <h3 class="text-xl font-bold text-purple-400 mb-3 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-book mr-2"></i>Context-Aware Graphs
                             </h3>
                             <p class="text-gray-300 text-sm">
@@ -489,20 +437,14 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Future Research Directions & Extensions -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-indigo-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-rocket text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-indigo-400">Future Research Directions</h2>
-                    </div>
+                <ProjectSection Title="Future Research Directions" Icon="fas fa-rocket">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Hierarchical LLM Architecture (Potential Pivot)</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Hierarchical LLM Architecture (Potential Pivot)</h3>
                             <p class="text-gray-300 text-sm mb-3">Multi-level AI agents for enterprise systems:</p>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Deployment-level agents (distributed topology)</li>
@@ -512,8 +454,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Big Data: Large-Scale Analysis</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Big Data: Large-Scale Analysis</h3>
                             <p class="text-gray-300 text-sm mb-3">Mass repository analysis and pattern discovery:</p>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Thousands of high-quality open-source projects</li>
@@ -523,8 +465,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                            <h3 class="text-xl font-bold text-purple-400 mb-4">Cross-Language Generalization</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Cross-Language Generalization</h3>
                             <p class="text-gray-300 text-sm mb-3">Language-agnostic architecture mapping:</p>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Canonical UML representations across languages</li>
@@ -534,8 +476,8 @@
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4">Cybersecurity Threat Modeling</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Cybersecurity Threat Modeling</h3>
                             <p class="text-gray-300 text-sm mb-3">Security analysis via graph topology:</p>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Attack surface mapping and privilege escalation paths</li>
@@ -545,108 +487,87 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Key Insights & Technologies Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Key Insights -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-lightbulb text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
-                        </div>
+                    <ProjectSection Title="Key Insights" Icon="fas fa-lightbulb">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Workflow-centric organization prioritizes how code works together</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Package-version namespacing enables precise LLM knowledge</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Target 75-80% token reduction for sustainable LLM usage</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">Microservices architecture enables parallel development</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
                                 <span class="text-gray-300">MCP protocol provides standardized AI-system interface</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
 
                     <!-- Technologies -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                                <i class="fas fa-tools text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-300">Technology Stack</h2>
-                        </div>
+                    <ProjectSection Title="Technology Stack" Icon="fas fa-tools">
                         <div class="mb-4">
-                            <h4 class="text-sm font-bold text-cyan-400 mb-2">Frontend & Application Layer (C#/.NET)</h4>
+                            <h4 class="text-sm font-bold text-slate-100 mb-2">Frontend & Application Layer (C#/.NET)</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">C# / .NET 8</span>
-                                <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">ASP.NET Core</span>
-                                <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Blazor WASM</span>
-                                <span class="bg-sky-600 text-white px-3 py-1 rounded-full text-sm">Dependency Injection</span>
-                                <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">MCP Protocol</span>
+                                <span class="chip">C# / .NET 8</span>
+                                <span class="chip">ASP.NET Core</span>
+                                <span class="chip">Blazor WASM</span>
+                                <span class="chip">Dependency Injection</span>
+                                <span class="chip">MCP Protocol</span>
                             </div>
                         </div>
                         <div class="mb-4">
-                            <h4 class="text-sm font-bold text-purple-400 mb-2">Analysis Layer (Python)</h4>
+                            <h4 class="text-sm font-bold text-slate-100 mb-2">Analysis Layer (Python)</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Python</span>
-                                <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">Doxygen</span>
-                                <span class="bg-violet-600 text-white px-3 py-1 rounded-full text-sm">AST Parsing</span>
-                                <span class="bg-fuchsia-600 text-white px-3 py-1 rounded-full text-sm">OpenAI API</span>
+                                <span class="chip">Python</span>
+                                <span class="chip">Doxygen</span>
+                                <span class="chip">AST Parsing</span>
+                                <span class="chip">OpenAI API</span>
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-green-400 mb-2">Infrastructure & Data</h4>
+                            <h4 class="text-sm font-bold text-slate-100 mb-2">Infrastructure & Data</h4>
                             <div class="flex flex-wrap gap-2">
-                                <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Neo4j</span>
-                                <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Redis</span>
-                                <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Docker</span>
-                                <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">D3.js / Cytoscape</span>
-                                <span class="bg-amber-600 text-white px-3 py-1 rounded-full text-sm">Graphviz</span>
+                                <span class="chip">Neo4j</span>
+                                <span class="chip">Redis</span>
+                                <span class="chip">Docker</span>
+                                <span class="chip">D3.js / Cytoscape</span>
+                                <span class="chip">Graphviz</span>
                             </div>
                         </div>
-                    </div>
+                </ProjectSection>
                 </div>
 
                 <!-- Project Development Note -->
-                <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-8 text-center border border-gray-700">
+                <div class="rounded-lg p-8 text-center border border-line bg-white/[.02]">
                     <h3 class="text-2xl font-bold text-white mb-3">Independent Research Initiative</h3>
-                    <p class="text-blue-200 mb-4">
+                    <p class="text-slate-300 mb-4">
                         This project represents a comprehensive personal exploration of graph-based code analysis, LLM integration, and software architecture understanding.
                         Developed as an independent technical research initiative with potential applications in AI-assisted development,
                         open-source package comprehension, and enterprise codebase navigation. The project demonstrates advanced software engineering principles,
                         research methodology, and technical innovation at the intersection of AI and software development, with aspirations for future
                         publication and open-source contribution to the developer tools ecosystem.
                     </p>
-                    <div class="flex justify-center space-x-6 text-sm">
-                        <span class="text-green-400">✓ Independent Research</span>
-                        <span class="text-blue-400">✓ Microservices Architecture</span>
-                        <span class="text-purple-400">✓ AI Integration</span>
-                        <span class="text-yellow-400">✓ Graph Databases</span>
+                    <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+                        <span class="text-cy">✓ Independent Research</span>
+                        <span class="text-cy">✓ Microservices Architecture</span>
+                        <span class="text-cy">✓ AI Integration</span>
+                        <span class="text-cy">✓ Graph Databases</span>
                     </div>
                 </div>
 
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+            
+</ProjectPage>
