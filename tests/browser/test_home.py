@@ -42,10 +42,9 @@ def test_phone_sections_do_not_move_when_the_scene_starts(page, site_url):
     assert _top(page, "#work") == before
 
 
-def test_phone_anchor_stays_on_section_after_the_scene_starts(page, site_url):
+def test_phone_anchor_stays_on_section_while_the_scene_loads(page, site_url):
     page.set_viewport_size({"width": 390, "height": 844})
     for anchor in ("#work", "#contact"):
         page.goto(site_url + "/" + anchor, wait_until="load")
-        page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
-        page.wait_for_timeout(500)
+        page.wait_for_timeout(4000)  # the scene loads (or waits, off screen) above the section
         assert abs(page.evaluate("s => document.querySelector(s).getBoundingClientRect().top", anchor)) < 120, anchor
