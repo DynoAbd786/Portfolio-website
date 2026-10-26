@@ -241,11 +241,11 @@ public class McpService : IMcpService
                 Text = JsonSerializer.Serialize(new
                 {
                     name = "Muhammad Kashif-Khan",
-                    title = "4th Year CS & AI Student | Aspiring AI/ML Engineer",
+                    title = "Software Engineer | MEng CS & AI (First-Class), University of Leeds",
                     university = "University of Leeds",
                     degree = "MEng/BSc Computer Science with Artificial Intelligence",
                     graduationYear = "2026",
-                    expectedGrade = "First-Class Honours",
+                    grade = "First-Class Honours",
                     skills = new[]
                     {
                         "Python", "C", "Java", "SQL", "Bash",
@@ -269,7 +269,7 @@ public class McpService : IMcpService
                     email = "contact@mkkai.dev",
                     linkedin = "https://linkedin.com/in/dynoabd786",
                     github = "https://github.com/DynoAbd786",
-                    portfolio = "https://your-portfolio-url.com",
+                    portfolio = "https://mkkai.dev",
                     responseTime = "24-48 hours"
                 }, new JsonSerializerOptions { WriteIndented = true })
             },
@@ -279,8 +279,8 @@ public class McpService : IMcpService
                 MimeType = "application/json",
                 Text = JsonSerializer.Serialize(new
                 {
-                    background = "Computer Science student at University of Leeds with strong focus on AI, medical technology, and multidisciplinary problem-solving",
-                    education = "BSc Computer Science, University of Leeds (2022-2025)",
+                    background = "First-Class MEng Computer Science with AI graduate (University of Leeds, 2026) with a focus on AI, medical technology and multidisciplinary problem-solving",
+                    education = "MEng Computer Science with Artificial Intelligence, University of Leeds (2022-2026), First-Class Honours",
                     specializations = new[] { "AI & Machine Learning", "Medical Technology", "Scientific Computing", "Distributed Systems", "Graphics Programming" },
                     technicalStrengths = new[] { "Python", "C/C++", "C#", "CUDA", "OpenMP", "MPI", "OpenCL", "GPT-4 API", "ROS2", "OpenGL" },
                     domains = new[] { "Healthcare AI", "Medical Imaging", "Robotics", "CFD Simulation", "Computer Vision", "High Performance Computing" },

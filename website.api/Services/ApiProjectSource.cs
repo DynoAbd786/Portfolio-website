@@ -26,7 +26,9 @@ namespace website.api.Services
                 Tags = p.Tags,
                 Category = (ClientData.ProjectCategory)p.Category,
                 IsFeatured = p.IsFeatured,
-                IsInDevelopment = p.IsInDevelopment
+                IsInDevelopment = p.IsInDevelopment,
+                Fields = p.Fields.Select(f => (ClientData.ProjectField)f).ToArray(),
+                Result = p.Result
             }).ToList();
         }
     }

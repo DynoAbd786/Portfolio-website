@@ -24,6 +24,19 @@ namespace website.Data
             }
         }
 
+        public async Task<Project?> GetProjectByUrlAsync(string url)
+        {
+            var projects = await GetProjectsAsync();
+            return projects.FirstOrDefault(p => p.ProjectUrl == url);
+        }
+
+        // The project after this one in data order, wrapping round to the first
+        public static Project GetNextProject(IReadOnlyList<Project> all, string url)
+        {
+            var index = all.ToList().FindIndex(p => p.ProjectUrl == url);
+            return all[(index + 1) % all.Count];
+        }
+
         public async Task<List<Project>> GetFeaturedProjectsAsync()
         {
             var allProjects = await GetProjectsAsync();

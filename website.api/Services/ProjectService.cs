@@ -22,6 +22,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/taskflow",
                     Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" },
                     Category = ProjectCategory.Personal,
+                    Fields = new[] { ProjectField.CloudDistributed, ProjectField.SystemsInfrastructure },
+                    Result = "Built a distributed task queue with priority scheduling, auto-scaling workers and live WebSocket monitoring.",
                     IsFeatured = true
                 },
                 new Project
@@ -32,6 +34,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/portfolio",
                     Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
                     Category = ProjectCategory.Personal,
+                    Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.AiMl },
+                    Result = "Built this site: .NET 10 pages rendered on the server, an AI assistant, and an MCP server AI agents can query.",
                     IsFeatured = true
                 },
                 new Project
@@ -42,7 +46,9 @@ namespace website.api.Services
                     ProjectUrl = "/projects/formula-student-ai",
                     Tags = new[] { "Formula Student AI", "ROS2", "C++", "Python", "Autonomous Vehicles", "Simulation", "SLAM", "Ubuntu 24.04", "Docker", "Nvidia DGX Orin", "Team Project", "Localization", "Perception", "Path Planning", "Vehicle Control" },
                     Category = ProjectCategory.Personal,
-                    IsFeatured = true,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.SystemsInfrastructure },
+                    Result = "Joined a team building an autonomous race car, working with ROS2, SLAM and path planning.",
+                    IsFeatured = false,
                     IsInDevelopment = true
                 },
                 new Project
@@ -54,17 +60,21 @@ namespace website.api.Services
                     GitHubUrl = "",
                     Tags = new[] { "3D Reconstruction", "Computer Vision", "Deep Learning", "Python", "Team Project", "Agile Methodology", "Project Management", "Research & Development", "VR/AR", "Medical Imaging", "Industrial Applications", "HPC Computing", "Neural Networks", "Optimization" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.VisionGraphics, ProjectField.AiMl },
+                    Result = "Built a hybrid 3D/4D reconstruction pipeline fusing point tracking with dense depth, benchmarked to centimetre accuracy.",
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
                 new Project
                 {
-                    Title = "Workflow-Centric Graph Code Analysis Platform",
-                    Description = "An intelligent architectural analysis platform transforming codebases into queryable graphs. Combines C#/.NET for enterprise APIs and Python for AST analysis to detect architectural violations. enhancing LLM code comprehension by reducing token usage by up to 80%.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Graph+Analysis",
+                    Title = "Synergy — Code Intelligence Platform",
+                    Description = "A local-first code intelligence platform that parses codebases in 8 languages into a typed, queryable graph, with revision history, structural diffs and blast-radius ranking. An MCP server exposes 17 tools so AI agents can work from the architecture. Python backend, React and TypeScript explorer.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Synergy",
                     ProjectUrl = "/projects/workflow-graph-platform",
-                    Tags = new[] { "Research Project", "C#", ".NET 8", "ASP.NET Core", "Blazor WASM", "Python", "Neo4j", "Graph Databases", "Doxygen", "LLM Integration", "MCP", "Redis", "Software Architecture", "Architectural Linter", "AI Documentation", "Microservices" },
+                    Tags = new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },
                     Category = ProjectCategory.Personal,
+                    Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
+                    Result = "Built a local-first platform that turns codebases in 8 languages into a queryable graph for developers and AI agents.",
                     IsFeatured = true,
                     IsInDevelopment = true
                 },
@@ -76,6 +86,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/medical-simulation",
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
                     Category = ProjectCategory.Professional,
+                    Fields = new[] { ProjectField.ScientificBiomedical, ProjectField.VisionGraphics },
+                    Result = "Built a GPU-accelerated simulation of flow-diverter stent deployment in vessel geometries, with collision and force models.",
                     IsFeatured = true
                 },
                 new Project
@@ -86,6 +98,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/pnanolocz",
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
                     Category = ProjectCategory.Professional,
+                    Fields = new[] { ProjectField.ScientificBiomedical },
+                    Result = "Rebuilt a MATLAB microscopy analysis tool in Python and PyQt6, about 50% faster, while leading the team and mentoring an intern.",
                     IsFeatured = true
                 },
                 new Project
@@ -96,6 +110,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/data-mining",
                     Tags = new[] { "Data Mining", "Text Analytics", "GPT-4 API", "Healthcare AI", "NHS Integration", "SpaCy NER", "CRISP-DM", "GDPR Compliance", "Speech-to-Text", "Medical Documentation" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.ScientificBiomedical },
+                    Result = "Designed a research framework applying GPT-4 to NHS clinical data mining, with GDPR compliance and cost-benefit modelling.",
                     IsFeatured = true
                 },
                 new Project
@@ -106,6 +122,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/numerical-computation",
                     Tags = new[] { "Python", "NumPy", "Matplotlib", "Numerical Analysis", "Differential Equations", "Scientific Computing", "Performance Analysis", "Mathematical Modeling" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.ScientificBiomedical },
+                    Result = "Implemented Euler and Runge-Kutta solvers in Python and analysed their error and stability on predator-prey models.",
                     IsFeatured = false
                 },
                 new Project
@@ -116,6 +134,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/mental-health-app",
                     Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
+                    Result = "Designed a secure, AI-assisted mental health platform for university students, from architecture to privacy controls.",
                     IsFeatured = true
                 },
                 new Project
@@ -126,6 +146,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/terratracker",
                     Tags = new[] { "Team Project", "Flask", "Python", "PostgreSQL", "Agile", "Git Workflow", "Docker", "CI/CD", "Leaflet.js", "RESTful API" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.CloudDistributed },
+                    Result = "Shipped a GPS route-tracking web app in a 6-person agile team, with Flask, PostgreSQL, CI/CD and Docker.",
                     IsFeatured = false
                 },
                 new Project
@@ -136,6 +158,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/business-plan",
                     Tags = new[] { "Business Planning", "Healthcare Technology", "AI Documentation", "NHS Integration", "Market Research", "Blue Ocean Strategy", "Entrepreneurship", "Speech-to-Text" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.ProductBusiness, ProjectField.AiMl },
+                    Result = "Wrote a business plan for an AI speech-to-text documentation product for the NHS, covering market and financials.",
                     IsFeatured = false
                 },
                 new Project
@@ -146,6 +170,8 @@ namespace website.api.Services
                     ProjectUrl = "/vascular-blood-flow",
                     Tags = new[] { "Python", "XLB Framework", "CUDA", "CFD", "Lattice Boltzmann Method", "GPU Computing", "Medical Simulation", "Blood Flow", "Aneurysm Risk Assessment", "ParaView", "Docker" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.ScientificBiomedical },
+                    Result = "Extended the XLB GPU fluid solver to simulate blood flow in aneurysms at over 2,340 MLUPS.",
                     IsFeatured = false
                 },
                 new Project
@@ -156,6 +182,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/machine-learning",
                     Tags = new[] { "Python", "Machine Learning", "Regression Analysis", "PCA", "ICA", "Statistical Modeling", "Data Science", "NumPy", "Scikit-learn", "Dimensionality Reduction" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl },
+                    Result = "Implemented regression with custom basis functions and PCA from scratch, applied to 3D medical data.",
                     IsFeatured = true
                 },
                 new Project
@@ -166,6 +194,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/distributed-systems",
                     Tags = new[] { "Azure", "Serverless", "Distributed Systems", "Cloud Computing", "Microservices", "Event-Driven Architecture", "DevOps", "API Management", "Cosmos DB", "Azure Functions" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.CloudDistributed },
+                    Result = "Built an event-driven serverless inventory system on Azure Functions and Cosmos DB, benchmarked for cold starts and throughput.",
                     IsFeatured = true
                 },
                 new Project
@@ -176,6 +206,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/ai-search-algorithms",
                     Tags = new[] { "Python", "Artificial Intelligence", "Search Algorithms", "A* Algorithm", "Heuristics", "Problem Solving", "State Space Search", "Algorithm Analysis", "BFS", "DFS" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl },
+                    Result = "Compared A*, BFS and DFS on sliding-block puzzles and designed heuristics to shrink the search space.",
                     IsFeatured = false
                 },
                 new Project
@@ -186,6 +218,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/ai-decision-trees",
                     Tags = new[] { "Python", "Machine Learning", "Decision Trees", "Fraud Detection", "Classification", "ID3 Algorithm", "Data Mining", "Financial Security", "Supervised Learning", "Feature Selection" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl },
+                    Result = "Implemented ID3 decision trees from scratch to classify fraudulent financial transactions.",
                     IsFeatured = false
                 },
                 new Project
@@ -196,6 +230,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/parallel-computing",
                     Tags = new[] { "OpenMP", "MPI", "OpenCL", "C Programming", "Parallel Computing", "GPU Programming", "Distributed Systems", "Performance Analysis", "High Performance Computing", "CUDA" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.CloudDistributed },
+                    Result = "Parallelised solvers with MPI, OpenMP and OpenCL, reaching a near-linear 3.09x speedup on distributed runs.",
                     IsFeatured = false
                 },
                 new Project
@@ -206,6 +242,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/autonomous-robotics",
                     Tags = new[] { "ROS2", "Python", "Computer Vision", "SLAM", "YOLOv8", "OpenCV", "TurtleBot3", "Gazebo", "Motion Planning", "Autonomous Systems" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.VisionGraphics },
+                    Result = "Built a ROS2 robot that maps its surroundings with SLAM and finds objects with YOLOv8.",
                     IsFeatured = true
                 },
                 new Project
@@ -216,6 +254,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/opengl-renderer",
                     Tags = new[] { "OpenGL", "C++", "Computer Graphics", "3D Rendering", "Shader Programming", "Terrain Visualization", "Real-time Rendering", "Collaborative Project" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.VisionGraphics },
+                    Result = "Built a real-time C++ OpenGL renderer with custom shaders, terrain generation and lighting.",
                     IsFeatured = false
                 },
                 new Project
@@ -226,6 +266,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/xv6-operating-system",
                     Tags = new[] { "C Programming", "Operating Systems", "Unix Shell", "Kernel Development", "System Calls", "Process Management", "Memory Management", "xv6" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.SystemsInfrastructure },
+                    Result = "Extended the xv6 kernel with new system calls and process management, and wrote a Unix-style shell.",
                     IsFeatured = false
                 },
                 new Project
@@ -236,6 +278,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/quantum-dots",
                     Tags = new[] { "Nanotechnology", "Quantum Computing", "Business Analysis", "Investment Strategy", "Market Research", "Photonic Computing", "Quantum Dots", "Technology Assessment" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.ProductBusiness },
+                    Result = "Wrote an investment case for quantum dot manufacturing, weighing photonics and display markets.",
                     IsFeatured = false
                 },
                 new Project
@@ -246,6 +290,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/c-programming",
                     Tags = new[] { "C Programming", "Image Processing", "Compression Algorithms", "File Formats", "Memory Management", "Systems Programming", "Bit Manipulation", "Algorithm Optimization" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.VisionGraphics },
+                    Result = "Wrote a custom binary image format and compression system in plain C.",
                     IsFeatured = false
                 },
                 new Project
@@ -256,6 +302,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/graphics-fundamentals",
                     Tags = new[] { "C++", "Computer Graphics", "2D Rendering", "Rasterization", "Algorithm Implementation", "Performance Analysis", "Graphics Primitives", "Mathematical Modeling" },
                     Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.VisionGraphics },
+                    Result = "Built a 2D rasterisation engine from scratch in C++, drawing lines and primitives pixel by pixel.",
                     IsFeatured = false
                 },
                 new Project
@@ -266,6 +314,8 @@ namespace website.api.Services
                     ProjectUrl = "/projects/home-lab",
                     Tags = new[] { "Tailscale", "Linux", "Self-Hosting", "n8n", "Termux", "Ollama", "Wake-on-LAN", "Networking", "Home Automation" },
                     Category = ProjectCategory.Personal,
+                    Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.AiMl },
+                    Result = "Set up local LLMs and coding agents on a home GPU server, reachable anywhere over an encrypted Tailscale mesh.",
                     IsFeatured = true
                 }
             };
