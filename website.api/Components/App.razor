@@ -32,6 +32,8 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="@CanonicalUrl" />
     <base href="/" />
+    @* Lets .reveal sections start hidden and fade in (site.js); without JS they just show *@
+    <script>if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal-ready');</script>
     <link rel="icon" type="image/svg+xml" href="@Assets["favicon.svg"]" />
     <link rel="stylesheet" href="@Assets["css/app.css"]" />
     <ImportMap />

@@ -569,7 +569,8 @@
         cursor: not-allowed;
     }
 
-    input {
+    /* Scoped: these styles are global, and a bare input rule restyled every form on the site */
+    .input-area input {
         flex: 1;
         background: transparent;
         border: none;
@@ -579,7 +580,7 @@
         outline: none;
     }
 
-    input::placeholder {
+    .input-area input::placeholder {
         color: #64748b;
     }
 

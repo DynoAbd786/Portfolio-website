@@ -50,16 +50,12 @@
         background-size: 40px 40px;
     }
 
-    /* Fades up when scrolled into view (site.js adds .is-in) */
+    /* Fades up when scrolled into view. Only hidden once App.razor's head script has marked
+       the page .reveal-ready, so without JavaScript everything stays visible; site.js adds .is-in */
     .reveal {
-        @apply opacity-0 translate-y-4 transition duration-700 ease-out;
+        @apply transition duration-700 ease-out;
     }
-    .reveal.is-in {
-        @apply opacity-100 translate-y-0;
-    }
-    @media (prefers-reduced-motion: reduce) {
-        .reveal {
-            @apply opacity-100 translate-y-0 transition-none;
-        }
+    .reveal-ready .reveal:not(.is-in) {
+        @apply opacity-0 translate-y-4;
     }
 }
