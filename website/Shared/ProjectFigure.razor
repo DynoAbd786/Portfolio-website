@@ -1,0 +1,16 @@
+@* An image on a project page, with a caption. Width and height stop the layout jumping as it loads *@
+<figure class="overflow-hidden rounded-lg border border-line bg-white/[.02]">
+    <img src="@Src" alt="@Alt" width="@Width" height="@Height" loading="lazy" decoding="async" class="h-auto w-full bg-white" />
+    @if (!string.IsNullOrEmpty(Caption))
+    {
+        <figcaption class="border-t border-line px-4 py-3 text-sm leading-relaxed text-slate-400">@Caption</figcaption>
+    }
+</figure>
+
+@code {
+    [Parameter, EditorRequired] public string Src { get; set; } = "";
+    [Parameter, EditorRequired] public string Alt { get; set; } = "";
+    [Parameter] public string? Caption { get; set; }
+    [Parameter] public int Width { get; set; }
+    [Parameter] public int Height { get; set; }
+}

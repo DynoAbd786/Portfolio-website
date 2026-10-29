@@ -41,17 +41,89 @@ namespace website.api.Services
                 },
                 new Project
                 {
-                    Title = "Advanced 3D Reconstruction System",
-                    Description = "Innovative hybrid framework fusing neural networks (depth) with optimization models (pose) for industrial 3D capture. Leverages Python and HPC resources to solve fundamental computer vision trade-offs. Targeted for VR and medical imaging applications with a focus on production-ready deployment.",
+                    Title = "3D Reconstruction from a Single Video",
+                    Description = "My master's group project: a pipeline that turns one video from an ordinary camera into a 3D mesh at real-world scale. It combines Depth Anything V3 and CoTracker3 with bundle adjustment and TSDF fusion, and needs no depth sensor or per-scene training. I led the team of five and built the integration stage.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=3D+Recon",
                     ProjectUrl = "/projects/3d-reconstruction",
                     GitHubUrl = "",
-                    Tags = new[] { "3D Reconstruction", "Computer Vision", "Deep Learning", "Python", "Team Project", "Agile Methodology", "Project Management", "Research & Development", "VR/AR", "Medical Imaging", "Industrial Applications", "HPC Computing", "Neural Networks", "Optimization" },
+                    Tags = new[] { "Python", "PyTorch", "Open3D", "Computer Vision", "3D Reconstruction", "Bundle Adjustment", "Depth Estimation", "Point Tracking", "HPC", "Team Lead" },
                     Category = ProjectCategory.Academic,
                     Fields = new[] { ProjectField.VisionGraphics, ProjectField.AiMl },
-                    Result = "Built a 3D/4D reconstruction pipeline that combines point tracking with dense depth, accurate to the centimetre.",
+                    Result = "Led a team of five building a 3D reconstruction pipeline from phone video, with 1.56 cm camera error on Replica.",
                     IsFeatured = true,
                     IsInDevelopment = false
+                },
+                new Project
+                {
+                    Title = "Advanced Software Engineering: Refactoring a Vehicle Simulator",
+                    Description = "Coursework on VSim, a multithreaded Java simulator of autonomous vehicles. I wrote a JUnit test suite for its path logic, refactored its route finding with the Strategy pattern so it follows SOLID, and mapped the whole architecture in UML.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Software+Engineering",
+                    ProjectUrl = "/projects/advanced-software-engineering",
+                    Tags = new[] { "Java", "JUnit", "Maven", "Design Patterns", "SOLID", "UML", "Concurrency", "Refactoring" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.SystemsInfrastructure },
+                    Result = "Refactored a multithreaded Java simulator with the Strategy pattern and backed it with 16 new unit tests.",
+                    IsFeatured = false
+                },
+                new Project
+                {
+                    Title = "Deep Learning: Image Classification and Captioning",
+                    Description = "PyTorch coursework covering CNNs built and tuned from scratch, transfer learning with AlexNet, and image captioning with a ResNet50 encoder and a recurrent decoder, plus a comparison of CLIP-based captioning models.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Deep+Learning",
+                    ProjectUrl = "/projects/deep-learning",
+                    Tags = new[] { "Python", "PyTorch", "CNNs", "Transfer Learning", "RNNs", "Image Captioning", "CLIP", "Kaggle" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.VisionGraphics },
+                    Result = "Took a CNN from 45.8% to 77.3% accuracy on 30-class TinyImageNet, and built an image captioning model.",
+                    IsFeatured = true
+                },
+                new Project
+                {
+                    Title = "Coevolutionary Boids: Predators and Prey on the GPU",
+                    Description = "A 3D flocking simulation where 1,000 prey and 50 predators evolve against each other through a genetic algorithm. GPU physics with CuPy, rendering with ModernGL, and a headless pipeline for 520-generation runs. A group project of three.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Boids",
+                    ProjectUrl = "/projects/coevolutionary-boids",
+                    Tags = new[] { "Python", "NumPy", "CuPy", "ModernGL", "Genetic Algorithms", "Swarm Intelligence", "Simulation", "Team Project" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.ScientificBiomedical },
+                    Result = "Evolved 1,000 flocking prey against 50 predators on the GPU, and found prey spread out rather than bunch up.",
+                    IsFeatured = true
+                },
+                new Project
+                {
+                    Title = "Evolving Foraging Agents with BEAST",
+                    Description = "Individual coursework in BEAST, a C++ framework for evolving simulated creatures. I added new sensors, deeper neural networks and alternative fitness functions, and ran predator-prey co-evolution, with 5,000-generation experiments across five seeds.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=BEAST",
+                    ProjectUrl = "/projects/evolutionary-agents",
+                    Tags = new[] { "C++", "Genetic Algorithms", "Neural Networks", "Co-evolution", "Python", "Bash" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.ScientificBiomedical },
+                    Result = "Extended a C++ evolution framework with new sensors and deeper networks, tested over 5,000 generations.",
+                    IsFeatured = false
+                },
+                new Project
+                {
+                    Title = "Kubernetes at the Edge: Cloud vs Edge Benchmarking",
+                    Description = "Deployed the same NGINX network function on Minikube and on a K3s edge node with one CPU, then load-tested both up to 500 concurrent users with ApacheBench while recording resource use.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Kubernetes",
+                    ProjectUrl = "/projects/kubernetes-cloud-edge",
+                    Tags = new[] { "Kubernetes", "K3s", "Minikube", "NGINX", "Python", "Bash", "ApacheBench", "Edge Computing" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.CloudDistributed },
+                    Result = "Benchmarked Kubernetes on cloud and edge up to 500 users: the edge node served 18% fewer requests at peak.",
+                    IsFeatured = false
+                },
+                new Project
+                {
+                    Title = "Data Science: What Drives Public Support for Climate Action?",
+                    Description = "Group coursework on the UNDP Peoples' Climate Vote 2024 survey: an analysis of age gaps in climate urgency, regression models predicting support for stronger commitments, and a clustering of 62 countries by their attitudes.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Data+Science",
+                    ProjectUrl = "/projects/climate-data-science",
+                    Tags = new[] { "Python", "pandas", "scikit-learn", "Random Forests", "k-means", "PCA", "Team Project" },
+                    Category = ProjectCategory.Academic,
+                    Fields = new[] { ProjectField.AiMl },
+                    Result = "Modelled support for climate action across 62 countries and found trust in institutions, not worry, divides them.",
+                    IsFeatured = false
                 },
                 new Project
                 {

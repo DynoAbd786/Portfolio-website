@@ -11,6 +11,8 @@ ROUTES = ["/", "/projects", "/projects?field=zzz&category=personal", "/about", "
     "/projects/ai-search-algorithms", "/projects/parallel-computing", "/projects/autonomous-robotics",
     "/projects/opengl-renderer", "/projects/xv6-operating-system", "/projects/quantum-dots",
     "/projects/c-programming", "/projects/graphics-fundamentals", "/projects/portfolio",
+    "/projects/advanced-software-engineering", "/projects/deep-learning", "/projects/coevolutionary-boids",
+    "/projects/evolutionary-agents", "/projects/kubernetes-cloud-edge", "/projects/climate-data-science",
 ]
 
 CHECK = """() => {

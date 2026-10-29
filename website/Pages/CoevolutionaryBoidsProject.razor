@@ -1,0 +1,75 @@
+@page "/projects/coevolutionary-boids"
+@using website.Data
+
+<ProjectPage Url="/projects/coevolutionary-boids" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    A group project for Bio-Inspired Computation. We built a 3D flocking simulation on the GPU where 1,000 prey and 50 predators evolve against each other,
+                    to see how simple flocking rules adapt when something is hunting the flock. I wrote most of the code. The prey didn't do what theory predicted.
+                </p>
+
+                <ProjectSection Title="The question" Icon="fas fa-dove">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5400 Bio-Inspired Computation"), ("Year", "2025/26 · Year 4"), ("Team", "3 students"), ("Weighting", "60% of the module") })" />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        Reynolds' boids model (1987) gets lifelike flocking from three local rules: keep your distance, match your neighbours' heading, and move towards the group.
+                        The weights on those rules are normally fixed. Real prey adapt to their predators, so we asked: what happens to those rules when they evolve under a predator that is evolving too?
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="How it works" Icon="fas fa-dna">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <h3 class="mb-3 text-lg font-bold text-white">Evolution</h3>
+                            <ul class="space-y-2 text-sm leading-relaxed text-slate-300">
+                                <li>• Prey evolve their three flocking weights and how far they can see.</li>
+                                <li>• Predators evolve how sharply they can turn and how far they can see. They are 1.5 times faster than the prey, so the prey can't simply outrun them.</li>
+                                <li>• Prey that survive breed. Predators are picked by kill count in tournaments of three.</li>
+                                <li>• Children mix their parents' traits, with an 8% chance of a random mutation per trait.</li>
+                                <li>• 20 generations without predators set a baseline, then 500 generations of predators and prey evolving together.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="mb-3 text-lg font-bold text-white">Engineering</h3>
+                            <ul class="space-y-2 text-sm leading-relaxed text-slate-300">
+                                <li>• Physics in NumPy, with a CuPy path that computes every pairwise interaction on the GPU. It ran at about 60 ticks a second with 1,050 agents on an RTX 5090.</li>
+                                <li>• On the CPU, a spatial grid limits each boid's neighbour search.</li>
+                                <li>• 3D rendering with ModernGL and GLSL shaders, with a 2D Pygame fallback and a sidebar for tuning live.</li>
+                                <li>• A headless mode for the long runs, saving a checkpoint every generation and producing all the plots automatically.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </ProjectSection>
+
+                <ProjectSection Title="What evolved" Icon="fas fa-chart-line">
+                    <p class="leading-relaxed text-slate-300">
+                        When the predators arrived, prey survival crashed to about 30% by generation 50. The prey recovered to around 48% by generation 100 and then held between 45% and 50% for the remaining 400 generations,
+                        while both sides kept evolving. Neither side pulled ahead. That fits the Red Queen hypothesis: species have to keep adapting just to stay where they are.
+                    </p>
+                    <div class="mt-6">
+                        <ProjectFigure Src="images/projects/coevolutionary-boids/arms-race.webp" Width="1500" Height="900"
+                                       Alt="Chart of prey survival over 520 generations: 100% in the baseline phase, a crash to about 30% when predators arrive, then a plateau between 45% and 50%."
+                                       Caption="Prey survival across the run, smoothed over 20 generations." />
+                    </div>
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        The surprise was how the prey survived. Hamilton's selfish herd theory predicts prey should pack tighter, each trying to get to the middle.
+                        Ours spread out instead. The pull towards the group fell from 1.0 to 0.35, alignment fell from 1.0 to 0.5, and the average distance to a prey's nearest neighbour grew from 52 to 80 units.
+                        At the same time, how far prey could see more than doubled, from 170 to about 390, and then stopped growing: past that point, seeing further gave no extra protection.
+                        A dense flock gave fast predators lots of targets. A loose, less predictable flock that sees them coming early left each predator pass with at most one kill.
+                    </p>
+                    <p class="mt-4 leading-relaxed text-slate-300">
+                        The predators' vision told a story too. It grew quickly at first, from 300 to around 800, then shrank back towards 400 once the flock was too sparse to be worth tracking from far away.
+                    </p>
+                    <div class="mt-6">
+                        <ProjectFigure Src="images/projects/coevolutionary-boids/gen520-flock.webp" Width="1600" Height="900"
+                                       Alt="3D render of the evolved flock at generation 520: prey drawn as small coloured arrows spread through the space, with predators marked as red circles among them."
+                                       Caption="Generation 520 with predators on. Prey are the arrows, predators the red circles." />
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">Python</span>
+                        <span class="chip">NumPy</span>
+                        <span class="chip">CuPy</span>
+                        <span class="chip">ModernGL</span>
+                        <span class="chip">Genetic algorithms</span>
+                        <span class="chip">Swarm intelligence</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

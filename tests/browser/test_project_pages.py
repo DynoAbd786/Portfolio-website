@@ -30,7 +30,7 @@ NOT_YET_MIGRATED_OVERFLOW = set()
 def test_project_pages_fit_a_phone(page, site_url):
     page.set_viewport_size({"width": 390, "height": 844})
     routes = [p["projectUrl"] for p in page.request.get(site_url + "/api/projects").json()]
-    assert len(routes) == 24
+    assert len(routes) == 30
     wide = {}
     for route in routes:
         page.goto(site_url + route, wait_until="load")

@@ -30,7 +30,7 @@ namespace website.Data
             new ProofFact("First-Class", "MEng CS & AI, Leeds"),
             new ProofFact("50% faster", "pNanoLocz vs the MATLAB original, 2024 internship"),
             new ProofFact("Stent simulation", "flow diverters in patient vessel geometry, 2025 internship"),
-            new ProofFact("cm-accurate", "3D/4D reconstruction, my master's thesis"),
+            new ProofFact("1.56 cm", "camera error in 3D from one video, master's group project"),
         };
 
         public static IReadOnlyList<SelectedWorkItem> SelectedWork { get; } = new[]
@@ -57,7 +57,7 @@ namespace website.Data
         public static IReadOnlyList<ExperienceItem> Experience { get; } = new[]
         {
             new ExperienceItem("2022 – 2026", "MEng Computer Science with AI", "University of Leeds",
-                "First-Class Honours. My master's thesis built a 3D/4D reconstruction pipeline for computer vision."),
+                "First-Class Honours. I led my master's group project, a pipeline that reconstructs 3D scenes from a single video."),
             new ExperienceItem("Jun – Aug 2025", "Summer internship: stent deployment simulation", "University of Leeds",
                 "Built a GPU-accelerated simulation of flow-diverter stents opening inside blood vessels, with collision and force models."),
             new ExperienceItem("Jun – Aug 2024", "Summer internship: pNanoLocz", "University of Leeds",
@@ -90,14 +90,14 @@ namespace website.Data
                 },
                 new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
                 "#building", "More on what I'm building →", "link", 58.64, 27.87),
-            new WorkshopHotspot("thesis", "MEng thesis", "3D / 4D reconstruction",
-                "master's thesis · computer vision", "Hybrid 3D/4D reconstruction",
-                "My master's thesis: a pipeline that reconstructs scenes in 3D and over time, accurate to the centimetre.",
+            new WorkshopHotspot("thesis", "MEng project", "3D reconstruction",
+                "master's group project · computer vision", "3D from a single video",
+                "My master's group project: a pipeline that turns one ordinary video into a 3D mesh at real-world scale. I led the team of five.",
                 new[]
                 {
-                    "Tracks 2D points across frames to get accurate trajectories",
-                    "Fills in the geometry between those points with dense depth estimation",
-                    "Benchmarked on standard test scenes to centimetre-level error",
+                    "Dense depth from Depth Anything V3, point tracks from CoTracker3",
+                    "Bundle adjustment makes the two agree, then TSDF fusion builds the mesh",
+                    "1.56 cm camera error on the Replica benchmark, from colour video alone",
                 },
                 new[] { "Python", "computer vision", "point tracking", "dense depth" },
                 "/projects/3d-reconstruction", "Read the case study →", "link", 28.43, 64.43),
@@ -161,7 +161,7 @@ namespace website.Data
                 new[]
                 {
                     "Final-year modules at 80–88%: Deep Learning, Data Science, Advanced Software Engineering, Cloud Computing",
-                    "Master's thesis in hybrid 3D/4D computer vision reconstruction",
+                    "Led the master's group project: 3D reconstruction from a single video",
                     "Core executive team of the Leeds AI Society",
                 },
                 new[] { "First-Class Honours", "AI", "software engineering" },
@@ -184,7 +184,7 @@ namespace website.Data
                 {
                     "What does Synergy do?",
                     "What did you build as an intern?",
-                    "What did your thesis reconstruct?",
+                    "What did your master's project reconstruct?",
                 },
                 new[] { ".NET 10", "MCP", "AI agents" },
                 "#", "Open the chat →", "assistant", 65.22, 36.72),

@@ -1,0 +1,70 @@
+@page "/projects/climate-data-science"
+@using website.Data
+
+<ProjectPage Url="/projects/climate-data-science" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Group coursework for Data Science, using the UN Development Programme's Peoples' Climate Vote 2024, a survey of public opinion on climate change around the world.
+                    We looked at whether age changes how urgently people want to move to renewable energy, modelled what predicts support for stronger climate commitments, and grouped countries by their attitudes.
+                </p>
+
+                <ProjectSection Title="Overview" Icon="fas fa-earth-europe">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5122M Data Science"), ("Year", "2025/26 · Year 4"), ("Team", "4 students"), ("Weighting", "Two reports, 18% and 32%") })" />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        Both parts used Python with pandas, scikit-learn, matplotlib and seaborn, and each ended in a short written report.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Is there an age gap?" Subtitle="Part 1: exploratory analysis" Icon="fas fa-people-group">
+                    <p class="leading-relaxed text-slate-300">
+                        The survey asked how quickly each country should replace coal, oil and gas with renewables. We turned the answers into a 1 to 5 urgency score, weighted by the survey's own weights,
+                        and compared age groups country by country across 45,784 records.
+                    </p>
+                    <ul class="mt-4 space-y-2 leading-relaxed text-slate-300">
+                        <li>• People aged 18 to 35 and 36 to 59 ranked countries almost identically (a correlation of 0.92 across 62 countries).</li>
+                        <li>• People over 60 were a little less urgent, by about 0.2 points, but the survey only had data for them in 15 to 17 countries, so that gap is the least certain finding.</li>
+                        <li>• The biggest age gaps were in the USA (0.45) and the UK (0.27). In the USA, people aged 36 to 59 scored far lower than the global pattern predicts.</li>
+                    </ul>
+                </ProjectSection>
+
+                <ProjectSection Title="What predicts support" Subtitle="Part 2: supervised learning" Icon="fas fa-chart-line">
+                    <p class="leading-relaxed text-slate-300">
+                        We built a dataset of 124 country and age-group combinations across 62 countries, with 21 features from the survey, and predicted a weighted score for support for stronger climate commitments.
+                        We chose regression over the suggested classification, to keep the detail in the score.
+                    </p>
+                    <ul class="mt-4 space-y-2 leading-relaxed text-slate-300">
+                        <li>• A random forest explained 64% of the variance on the test set (R² 0.642), slightly ahead of linear regression (0.624). With so few rows, cross-validated scores were lower, 0.50 for the random forest.</li>
+                        <li>• Wanting rich countries to help poorer ones was the strongest predictor in the linear model. In the random forest, wanting protection from extreme weather mattered most, at 19% of feature importance.</li>
+                    </ul>
+                    <div class="mt-6 max-w-2xl">
+                        <ProjectFigure Src="images/projects/climate-data-science/feature-importance.webp" Width="1600" Height="1077"
+                                       Alt="Bar chart of random forest feature importance, led by protection from extreme weather."
+                                       Caption="Which survey answers the random forest relied on most." />
+                    </div>
+                </ProjectSection>
+
+                <ProjectSection Title="Grouping countries" Subtitle="Part 2: clustering" Icon="fas fa-circle-nodes">
+                    <p class="leading-relaxed text-slate-300">
+                        We clustered the 62 countries with k-means into four groups and checked the grouping with hierarchical clustering. Two principal components captured 58% of the variation, enough to plot the groups.
+                        Worry about climate change was high in every group. What split them was trust in the institutions meant to act on it:
+                    </p>
+                    <ul class="mt-4 space-y-2 leading-relaxed text-slate-300">
+                        <li>• <span class="font-semibold text-white">Emerging giants</span> (China, India, Indonesia) had the highest trust in government and business.</li>
+                        <li>• <span class="font-semibold text-white">The sceptical West</span> (the USA, UK, Germany, Australia and others) had the lowest trust in government and the weakest support for stronger commitments.</li>
+                        <li>• <span class="font-semibold text-white">The engaged Global South</span>, mostly Latin America, was the most worried, but shared the West's low trust.</li>
+                        <li>• <span class="font-semibold text-white">Developing climate advocates</span>, mainly in Sub-Saharan Africa and South Asia, gave the strongest support for moving to renewables.</li>
+                    </ul>
+                    <div class="mt-6 max-w-2xl">
+                        <ProjectFigure Src="images/projects/climate-data-science/country-clusters.webp" Width="1600" Height="1232"
+                                       Alt="Scatter plot of countries on the first two principal components, coloured by cluster, with China, India, the USA, Germany, Australia, France, Brazil and South Africa labelled."
+                                       Caption="The four country clusters on the first two principal components." />
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">Python</span>
+                        <span class="chip">pandas</span>
+                        <span class="chip">scikit-learn</span>
+                        <span class="chip">Random forests</span>
+                        <span class="chip">k-means</span>
+                        <span class="chip">PCA</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

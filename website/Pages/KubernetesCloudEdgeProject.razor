@@ -1,0 +1,73 @@
+@page "/projects/kubernetes-cloud-edge"
+@using website.Data
+
+<ProjectPage Url="/projects/kubernetes-cloud-edge" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Coursework for Cloud Computing. I deployed the same network function, an NGINX load balancer, on a cloud-style Kubernetes cluster and on a small edge node,
+                    then load-tested both from 10 up to 500 concurrent users to see where the edge node falls behind.
+                </p>
+
+                <ProjectSection Title="The setup" Icon="fas fa-server">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5123M Cloud Computing"), ("Year", "2025/26 · Year 4"), ("Team", "Individual"), ("Focus", "Kubernetes performance, cloud vs edge") })" />
+                    <ul class="mt-6 space-y-3 leading-relaxed text-slate-300">
+                        <li>• <span class="font-semibold text-white">Cloud:</span> Minikube.</li>
+                        <li>• <span class="font-semibold text-white">Edge:</span> K3s, the lightweight Kubernetes distribution, on a virtual machine with 1 CPU and 2 GB of RAM.</li>
+                        <li>• <span class="font-semibold text-white">The service:</span> NGINX as a Deployment behind a NodePort Service, identical on both, with CPU and memory requests and limits (100m to 500m CPU, 64 to 256 MiB).</li>
+                    </ul>
+                </ProjectSection>
+
+                <ProjectSection Title="Measuring it" Icon="fas fa-gauge-high">
+                    <p class="leading-relaxed text-slate-300">
+                        A Python script runs ApacheBench against the service for three minutes while polling <code class="text-cy">kubectl top</code> every second, and saves the load results and resource use together.
+                        A Bash script runs that at 10, 50, 100, 200, 300, 400 and 500 concurrent users, with a cool-down between runs, and a final script draws the charts.
+                    </p>
+                    <p class="mt-4 leading-relaxed text-slate-300">
+                        I first set up Prometheus and Grafana for monitoring, but on the edge node they took so much of its single CPU that they skewed the results. I switched to the lighter Metrics Server.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Results" Icon="fas fa-chart-line">
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[32rem] text-left text-sm text-slate-300">
+                            <thead class="border-b border-line text-slate-400">
+                                <tr>
+                                    <th class="py-2 pr-4 font-medium">Users</th>
+                                    <th class="py-2 pr-4 font-medium">Cloud requests/s</th>
+                                    <th class="py-2 pr-4 font-medium">Cloud latency</th>
+                                    <th class="py-2 pr-4 font-medium">Edge requests/s</th>
+                                    <th class="py-2 font-medium">Edge latency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-line/60">
+                                    <td class="py-2 pr-4">10</td><td class="py-2 pr-4">11,171</td><td class="py-2 pr-4">0.90 ms</td><td class="py-2 pr-4">10,375</td><td class="py-2">0.96 ms</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 pr-4">500</td><td class="py-2 pr-4">14,428</td><td class="py-2 pr-4">34.7 ms</td><td class="py-2 pr-4">11,871</td><td class="py-2">42.1 ms</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        At low load the two were almost the same. At 500 users the edge node handled about 18% fewer requests a second, with about 22% higher latency.
+                        Neither failed a single request at any load. At peak, the cloud pod hit its 500m CPU limit while the edge pod used about 347m.
+                    </p>
+                    <div class="mt-6 grid gap-4 md:grid-cols-2">
+                        <ProjectFigure Src="images/projects/kubernetes-cloud-edge/throughput.webp" Width="1000" Height="600"
+                                       Alt="Line chart of throughput against concurrent users for cloud and edge. Both start near 11,000 requests a second, and cloud pulls ahead as load grows."
+                                       Caption="Throughput as load increases." />
+                        <ProjectFigure Src="images/projects/kubernetes-cloud-edge/latency.webp" Width="1000" Height="600"
+                                       Alt="Line chart of mean latency against concurrent users for cloud and edge. Latency rises with load, faster on the edge node."
+                                       Caption="Mean latency as load increases." />
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">Kubernetes</span>
+                        <span class="chip">K3s</span>
+                        <span class="chip">Minikube</span>
+                        <span class="chip">NGINX</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Bash</span>
+                        <span class="chip">ApacheBench</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

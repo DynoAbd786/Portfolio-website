@@ -57,11 +57,11 @@ def test_hover_shows_tag_and_click_opens_card(page, site_url):
     page.mouse.move(x - 4, y)
     page.mouse.move(x, y)
     page.wait_for_selector(".ws-tag.on .ws-tag-in", timeout=3000)
-    assert "MEng thesis" in page.inner_text(".ws-tag")
+    assert "MEng project" in page.inner_text(".ws-tag")
     page.mouse.click(x, y)
     page.wait_for_selector(".ws-card.open", timeout=3000)
     assert page.is_visible(".ws-card-title")
-    assert page.inner_text(".ws-card-title") == "Hybrid 3D/4D reconstruction"
+    assert page.inner_text(".ws-card-title") == "3D from a single video"
     page.keyboard.press("Escape")
     page.wait_for_selector(".ws-card:not(.open)", state="attached", timeout=3000)
 
@@ -118,7 +118,7 @@ def test_workshop_ignores_keys_in_inputs(page, site_url):
     page.keyboard.press("Escape")
     page.wait_for_timeout(300)
     assert page.is_visible(".ws-card.open")
-    assert page.inner_text(".ws-card-title") == "Hybrid 3D/4D reconstruction"
+    assert page.inner_text(".ws-card-title") == "3D from a single video"
 
 
 def test_reduced_motion_opens_card_without_flight(browser, site_url):
@@ -170,7 +170,7 @@ def test_hover_tag_does_not_widen_the_page(page, site_url):
 
 
 HOTSPOT_NAMES = {
-    "synergy": "Synergy", "hireforge": "HireForge", "thesis": "MEng thesis", "stent": "Stent simulation",
+    "synergy": "Synergy", "hireforge": "HireForge", "thesis": "MEng project", "stent": "Stent simulation",
     "afm": "pNanoLocz", "homelab": "Home lab", "azure": "Azure inventory", "whiteboard": "Internships",
     "certificate": "Education", "bookcase": "All projects", "robot": "Assistant",
 }

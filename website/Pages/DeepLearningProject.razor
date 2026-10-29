@@ -1,0 +1,74 @@
+@page "/projects/deep-learning"
+@using website.Data
+
+<ProjectPage Url="/projects/deep-learning" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Coursework for Deep Learning, all in PyTorch. I built and tuned image classifiers from scratch, fine-tuned a pretrained network, and built a model that writes captions for photos.
+                    My best classifier reached 77.3% accuracy on 30 classes of small 64×64 images.
+                </p>
+
+                <ProjectSection Title="Overview" Icon="fas fa-brain">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5625M Deep Learning"), ("Year", "2025/26 · Year 4"), ("Team", "Individual"), ("Weighting", "50% of the module") })" />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        The first part was image classification on TinyImageNet30, a set of 13,500 images across 30 classes, with a class Kaggle competition at the end.
+                        The second part was image captioning, first with a recurrent network and then by comparing CLIP-based captioning models.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="A CNN from scratch" Icon="fas fa-layer-group">
+                    <p class="leading-relaxed text-slate-300">
+                        My baseline was a five-layer convolutional network with 1.5 million parameters. It reached 45.8% validation accuracy before it started to overfit.
+                        I then worked through the usual fixes one at a time and measured each:
+                    </p>
+                    <ul class="mt-4 space-y-2 leading-relaxed text-slate-300">
+                        <li>• Data augmentation (flips, rotation, translation, colour jitter and greyscale) took it to 50.2%.</li>
+                        <li>• A dropout sweep from 0.1 to 0.7, where 0.5 worked best.</li>
+                        <li>• A learning-rate sweep, where 0.1 made training diverge and smaller rates were stable.</li>
+                    </ul>
+                    <div class="mt-6 max-w-xl">
+                        <ProjectFigure Src="images/projects/deep-learning/confusion-matrix.webp" Width="780" Height="699"
+                                       Alt="Validation confusion matrix for the 30 classes, with a strong diagonal and a few classes often confused with each other."
+                                       Caption="Validation confusion matrix for the baseline model, which showed me which classes it mixed up." />
+                    </div>
+                </ProjectSection>
+
+                <ProjectSection Title="Pushing it for the Kaggle competition" Icon="fas fa-trophy">
+                    <p class="leading-relaxed text-slate-300">
+                        For the competition I designed a wider network with batch normalisation and global average pooling, and trained it for 120 epochs with CutMix, label smoothing,
+                        AdamW and a one-cycle learning-rate schedule. Averaging the weights over the last epochs (stochastic weight averaging) and averaging predictions over flipped copies of each test image
+                        brought validation accuracy to 77.3%, up from 45.8% for the baseline.
+                    </p>
+                    <div class="mt-6">
+                        <ProjectFigure Src="images/projects/deep-learning/kaggle-cnn-training.webp" Width="1189" Height="490"
+                                       Alt="Training and validation accuracy and loss over 120 epochs. Validation accuracy levels off around 75%."
+                                       Caption="Training curves for the competition model over 120 epochs." />
+                    </div>
+                </ProjectSection>
+
+                <ProjectSection Title="Transfer learning" Icon="fas fa-right-left">
+                    <p class="leading-relaxed text-slate-300">
+                        I fine-tuned AlexNet, pretrained on ImageNet, on CIFAR10 in two ways. Training every layer reached 90.5% validation accuracy.
+                        Freezing the convolutional base and training only the classifier reached 87.7%, with 2.5 million fewer weights to train.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Image captioning" Icon="fas fa-closed-captioning">
+                    <p class="leading-relaxed text-slate-300">
+                        I built a captioning model that feeds ResNet50 image features into a recurrent decoder, trained on a subset of COCO with a 2,486-word vocabulary.
+                        Moving to two layers and a 512-wide embedding lowered the validation loss from 3.08 to 2.93. On the test set, its captions scored an average cosine similarity of 0.42
+                        against the human-written ones, producing captions like "a man riding a snowboard down a snow covered hill".
+                    </p>
+                    <p class="mt-4 leading-relaxed text-slate-300">
+                        Finally, I compared ClipCap models, which caption images from CLIP features, on Flickr8k and COCO. The general models made things up on images unlike their training data,
+                        while a version fine-tuned on high-level scene descriptions didn't.
+                    </p>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">PyTorch</span>
+                        <span class="chip">CNNs</span>
+                        <span class="chip">Transfer learning</span>
+                        <span class="chip">RNNs</span>
+                        <span class="chip">CLIP</span>
+                        <span class="chip">scikit-learn</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>
