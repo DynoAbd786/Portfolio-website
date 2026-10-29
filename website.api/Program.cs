@@ -38,6 +38,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddHttpClient<IEmailService, EmailService>(); // typed client, like DeepSeek below
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<ContactLimiter>();
 builder.Services.AddSingleton<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
 builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it
