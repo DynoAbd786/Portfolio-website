@@ -85,6 +85,8 @@ public class McpService : IMcpService
             {
                 "initialize" => HandleInitialize(request),
                 "ping" => new McpResponse { Id = request.Id, Result = new { } },
+                // no log messages are sent, but some clients set a level regardless
+                "logging/setLevel" => new McpResponse { Id = request.Id, Result = new { } },
                 "notifications/initialized" => await HandleInitializedNotification(request),
                 "notifications/cancelled" => HandleNotification(request),
                 "resources/list" => await HandleResourcesList(request),
@@ -122,9 +124,10 @@ public class McpService : IMcpService
         var serverInfo = new
         {
             protocolVersion = "2025-06-18",
+            // only what this server does: clients act on each capability (the Inspector sets a log
+            // level if "logging" is declared, and expects list-changed notifications if promised)
             capabilities = new
             {
-                logging = new { },
                 resources = new
                 {
                     subscribe = false,
@@ -132,10 +135,8 @@ public class McpService : IMcpService
                 },
                 tools = new
                 {
-                    listChanged = true
-                },
-                completion = new { },
-                experimental = new { }
+                    listChanged = false
+                }
             },
             serverInfo = new
             {

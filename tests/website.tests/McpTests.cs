@@ -112,6 +112,26 @@ public class McpTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
+    public async Task Initialize_declares_only_what_the_server_does()
+    {
+        var (client, _) = Client();
+        var caps = (await Rpc(client, "initialize", new { protocolVersion = "2025-06-18", capabilities = new { }, clientInfo = new { name = "test", version = "1" } }))
+            .GetProperty("result").GetProperty("capabilities");
+        var declared = caps.EnumerateObject().Select(p => p.Name).ToHashSet();
+        Assert.Equal(new HashSet<string> { "tools", "resources" }, declared);
+        Assert.False(caps.GetProperty("tools").GetProperty("listChanged").GetBoolean());
+    }
+
+    [Fact]
+    public async Task A_log_level_request_is_accepted()
+    {
+        // some clients (the MCP Inspector) send it straight after connecting
+        var (client, _) = Client();
+        var reply = await Rpc(client, "logging/setLevel", new { level = "info" });
+        Assert.Equal(JsonValueKind.Object, reply.GetProperty("result").ValueKind);
+    }
+
+    [Fact]
     public async Task Notifications_get_no_reply()
     {
         var (client, _) = Client();
