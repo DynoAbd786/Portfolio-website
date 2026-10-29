@@ -145,4 +145,37 @@ public class McpTests : IClassFixture<SiteFactory>
         Assert.DoesNotContain("GPT-4", ai);
         Assert.Contains("DeepSeek", ai);
     }
+
+    // The older SSE transport: GET /api/mcp/sse sends an "endpoint" event; the client POSTs there and
+    // the reply arrives on the stream as a "message" event (where the official SDKs wait for it)
+    [Fact]
+    public async Task Sse_clients_get_their_replies_on_the_stream()
+    {
+        var (client, _) = Client();
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+        var get = new HttpRequestMessage(HttpMethod.Get, "/api/mcp/sse");
+        get.Headers.Add("Accept", "text/event-stream");
+        using var sse = await client.SendAsync(get, HttpCompletionOption.ResponseHeadersRead, cts.Token);
+        using var reader = new StreamReader(await sse.Content.ReadAsStreamAsync(cts.Token));
+
+        async Task<(string Event, string Data)> NextEvent()
+        {
+            string? ev = null, data = null;
+            while (true)
+            {
+                var line = await reader.ReadLineAsync(cts.Token) ?? throw new Exception("the stream ended");
+                if (line.StartsWith("event: ")) ev = line[7..];
+                else if (line.StartsWith("data: ")) data = line[6..];
+                else if (line == "" && ev is not null) return (ev, data!);
+            }
+        }
+
+        var (first, endpoint) = await NextEvent();
+        Assert.Equal("endpoint", first);
+        var post = await client.PostAsJsonAsync(new Uri(endpoint).PathAndQuery, new { jsonrpc = "2.0", id = 7, method = "ping" }, cts.Token);
+        Assert.True(post.IsSuccessStatusCode);
+        var (second, reply) = await NextEvent();
+        Assert.Equal("message", second);
+        Assert.Equal(7, JsonDocument.Parse(reply).RootElement.GetProperty("id").GetInt32());
+    }
 }

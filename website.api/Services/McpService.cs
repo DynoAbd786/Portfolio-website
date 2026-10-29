@@ -15,6 +15,8 @@ public interface IMcpService
     // SSE Bridge Methods
     void RegisterConnection(string sessionId, HttpResponse response, bool isBridge);
     void RemoveConnection(string sessionId);
+    // an event to one SSE client; false if that session isn't connected
+    Task<bool> SendToSessionAsync(string sessionId, string eventType, string data);
     bool IsBridgeConnected();
     Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null);
     void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null, bool toolsDisabled = false);
@@ -635,6 +637,13 @@ public class McpService : IMcpService
     {
         _connectedClients.TryRemove(sessionId, out _);
         _logger.LogInformation("Client removed from McpService. SessionId: {SessionId}", sessionId);
+    }
+
+    public async Task<bool> SendToSessionAsync(string sessionId, string eventType, string data)
+    {
+        if (!_connectedClients.TryGetValue(sessionId, out var client)) return false;
+        await client.SendEventAsync(eventType, data);
+        return true;
     }
 
     public bool IsBridgeConnected()

@@ -34,14 +34,23 @@
             <p class="mb-4 leading-relaxed text-slate-300">Point any MCP client at:</p>
             <pre class="mb-4 overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-cy"><code>https://mkkai.dev/api/mcp</code></pre>
             <p class="mb-4 leading-relaxed text-slate-300">
-                Most clients only need that URL. For clients that still use the older SSE transport, connect to <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">https://mkkai.dev/api/mcp/sse</code> instead.
-                A typical client config:
+                Most clients only need that URL; each has its own way of adding it. For clients that still use the older SSE transport, connect to
+                <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">https://mkkai.dev/api/mcp/sse</code> instead.
             </p>
-            <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>{
-  "mcpServers": {
-    "mkkai": { "url": "https://mkkai.dev/api/mcp" }
-  }
-}</code></pre>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="mono-label mb-2">// claude code</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>claude mcp add --transport http mkkai https://mkkai.dev/api/mcp</code></pre>
+                </div>
+                <div>
+                    <h3 class="mono-label mb-2">// cursor · ~/.cursor/mcp.json</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>{ "mcpServers": { "mkkai": { "url": "https://mkkai.dev/api/mcp" } } }</code></pre>
+                </div>
+                <div>
+                    <h3 class="mono-label mb-2">// vs code · .vscode/mcp.json</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>{ "servers": { "mkkai": { "type": "http", "url": "https://mkkai.dev/api/mcp" } } }</code></pre>
+                </div>
+            </div>
         </ProjectSection>
 
         <ProjectSection Title="What it offers" Icon="fas fa-toolbox">
