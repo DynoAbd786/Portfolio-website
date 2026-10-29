@@ -5,10 +5,12 @@ namespace website.tests;
 
 public class RouteTests : IClassFixture<SiteFactory>
 {
+    private readonly SiteFactory _factory;
     private readonly HttpClient _client;
 
     public RouteTests(SiteFactory factory)
     {
+        _factory = factory;
         _client = factory.CreateClient();
     }
 
@@ -22,7 +24,7 @@ public class RouteTests : IClassFixture<SiteFactory>
         "/projects/medical-simulation", "/projects/mental-health-app", "/projects/numerical-computation",
         "/projects/opengl-renderer", "/projects/parallel-computing", "/projects/pnanolocz",
         "/projects/portfolio", "/projects/quantum-dots", "/projects/taskflow", "/projects/terratracker",
-        "/projects/workflow-graph-platform", "/projects/xv6-operating-system",
+        "/projects/synergy", "/projects/xv6-operating-system",
         "/vascular-blood-flow",
     };
 
@@ -32,6 +34,15 @@ public class RouteTests : IClassFixture<SiteFactory>
     {
         var response = await _client.GetAsync(path);
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Old_synergy_url_redirects_permanently()
+    {
+        var client = _factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var response = await client.GetAsync("/projects/workflow-graph-platform");
+        Assert.Equal(HttpStatusCode.MovedPermanently, response.StatusCode);
+        Assert.Equal("/projects/synergy", response.Headers.Location?.OriginalString);
     }
 
     [Fact]

@@ -32,9 +32,11 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="@CanonicalUrl" />
     <base href="/" />
+    @* Lets .reveal sections start hidden and fade in (site.js); without JS they just show *@
+    <script>if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal-ready');</script>
     <link rel="icon" type="image/svg+xml" href="@Assets["favicon.svg"]" />
     <link rel="stylesheet" href="@Assets["css/app.css"]" />
-    <ImportMap />
+    <ImportMap ImportMapDefinition="ImportMapWithThree" />
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- KaTeX for math rendering -->
@@ -90,6 +92,27 @@
 </html>
 
 @code {
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
     // Each page is its own canonical URL; the query string never is
     private string CanonicalUrl => "https://mkkai.dev" + new Uri(Navigation.Uri).AbsolutePath;
+
+    // Blazor's import map (fingerprinted JS, including js/workshop) plus bare specifiers for three.js,
+    // which only the homepage's workshop scene imports
+    private ImportMapDefinition ImportMapWithThree
+    {
+        get
+        {
+            var three = new ImportMapDefinition(
+                new Dictionary<string, string>
+                {
+                    ["three"] = "/" + Assets["lib/three/0.160.0/three.module.min.js"],
+                    ["three/addons/"] = "/lib/three/0.160.0/addons/",
+                },
+                null, null);
+            var endpointMap = HttpContext.GetEndpoint()?.Metadata.GetMetadata<ImportMapDefinition>();
+            return endpointMap is null ? three : ImportMapDefinition.Combine(endpointMap, three);
+        }
+    }
 }
