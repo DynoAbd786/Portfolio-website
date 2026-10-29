@@ -20,9 +20,22 @@ window.mkChat = {
         if (!panel || !backdrop) return;
 
         const opening = panel.classList.contains('translate-x-full');
+        if (opening) this._load(panel);
         panel.classList.toggle('translate-x-full', !opening);
         panel.classList.toggle('translate-x-0', opening);
         backdrop.classList.toggle('hidden', !opening);
+    },
+    // The assistant runs on .NET WebAssembly (about 3 MB), so it lives on its own page and is only
+    // loaded, in a frame, the first time the panel opens. The panel is data-permanent, so the
+    // frame (and the conversation) survives navigating around the site.
+    _load: function (panel) {
+        const slot = panel.querySelector('#chat-slot');
+        if (!slot || slot.querySelector('iframe')) return;
+        const frame = document.createElement('iframe');
+        frame.src = '/chat-panel';
+        frame.title = 'AI assistant';
+        frame.className = 'absolute inset-0 h-full w-full border-0 bg-transparent';
+        slot.append(frame);
     },
     toggleFullScreen: function () {
         const panel = document.getElementById('chat-panel');

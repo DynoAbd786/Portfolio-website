@@ -25,6 +25,32 @@ public class PageContentTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
+    public async Task Not_found_links_home_and_work()
+    {
+        var response = await _client.GetAsync("/no-such-page");
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+        var doc = await Html.ParseAsync(await response.Content.ReadAsStringAsync());
+        var main = doc.QuerySelector("main")!;
+        Assert.NotNull(main.QuerySelector("h1"));
+        Assert.NotNull(main.QuerySelector("a[href=\"/\"]"));
+        Assert.NotNull(main.QuerySelector("a[href=\"/projects\"]"));
+    }
+
+    [Theory]
+    [InlineData("/ethos", "Responsibility and Sustainability")]
+    [InlineData("/ai-integration", null)]
+    public async Task Ethos_and_ai_integration_render_in_new_layout(string route, string? heading)
+    {
+        var doc = await Html.GetAsync(_client, route);
+        var main = doc.QuerySelector("main")!;
+        Assert.Single(main.QuerySelectorAll("h1"));
+        Assert.NotEmpty(main.QuerySelectorAll(".surface"));
+        Assert.Empty(main.QuerySelectorAll("[class*=\"bg-gradient-to\"]"));
+        if (heading is not null)
+            Assert.Contains(heading, main.QuerySelectorAll("h2").Select(h => h.TextContent.Trim()));
+    }
+
+    [Fact]
     public async Task Home_lab_status_shows_no_made_up_uptime()
     {
         var doc = await Html.GetAsync(_client, "/projects/home-lab");

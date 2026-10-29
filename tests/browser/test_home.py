@@ -23,7 +23,6 @@ def test_see_my_work_scrolls_to_work(page, site_url):
 
 def test_chat_styles_do_not_leak_into_contact_form(page, site_url):
     page.goto(site_url + "/", wait_until="load")
-    page.wait_for_selector(".input-area input", state="attached", timeout=20000)  # chat styles loaded
     box = page.locator("#agree").bounding_box()
     assert box["width"] < 30
     assert page.eval_on_selector("#name", "el => getComputedStyle(el).borderTopWidth") == "1px"
@@ -63,3 +62,32 @@ def test_phone_sections_are_not_padded_like_desktop(page, site_url):
     page.goto(site_url + "/", wait_until="load")
     for section in ("#work", "#building", "#experience", "#contact"):
         assert page.evaluate("s => parseFloat(getComputedStyle(document.querySelector(s)).paddingTop)", section) <= 56, section
+
+
+def test_runtime_loads_only_when_the_chat_opens(page, site_url):
+    """The .NET WebAssembly runtime (about 3 MB) is fetched only once someone opens the assistant."""
+    wasm = []
+    page.on("request", lambda r: wasm.append(r.url) if r.url.endswith(".wasm") else None)
+    page.goto(site_url + "/", wait_until="load")
+    page.wait_for_timeout(2500)
+    assert wasm == []
+    page.click("header button[onclick='mkChat.toggle()']")
+    frame = page.frame_locator("#chat-slot iframe")
+    frame.locator(".input-area input").wait_for(timeout=30000)
+    assert wasm, "opening the chat should load the runtime"
+
+
+def test_contact_form_works_before_any_runtime(page, site_url):
+    page.goto(site_url + "/", wait_until="load")
+    assert page.is_enabled("#contact button[type=submit]")
+    assert "Send Message" in page.inner_text("#contact button[type=submit]")
+
+
+def test_chat_shows_one_model_and_no_choice(page, site_url):
+    page.goto(site_url + "/", wait_until="load")
+    page.click("header button[onclick='mkChat.toggle()']")
+    frame = page.frame_locator("#chat-slot iframe")
+    frame.locator(".input-area input").wait_for(timeout=30000)
+    assert frame.locator(".model-name").inner_text() == "DeepSeek Flash"
+    assert frame.locator("select").count() == 0
+    assert "Powered by DeepSeek" in page.inner_text("#chat-panel")

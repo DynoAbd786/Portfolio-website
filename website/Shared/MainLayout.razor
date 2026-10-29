@@ -84,7 +84,7 @@
                     <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
                     <div>
                         <span class="font-bold text-lg text-white block">AI Assistant</span>
-                        <span class="text-xs text-gray-400">Powered by Gemini & Local LLMs</span>
+                        <span class="text-xs text-slate-400">Powered by DeepSeek</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -97,12 +97,13 @@
                 </div>
             </div>
             <div class="flex-1 overflow-hidden relative">
-                @* Shown until AiTerminal renders beside it (hidden by .chat-loading:not(:only-child) in app.css) *@
-                <div class="chat-loading absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
-                    <i class="fas fa-spinner fa-spin mr-2"></i>Starting assistant...
+                @* site.js loads the assistant (/chat-panel) into this slot the first time the panel opens;
+                   the placeholder hides as soon as the frame is added (.chat-loading:not(:only-child)) *@
+                <div id="chat-slot" class="absolute inset-0">
+                    <div class="chat-loading absolute inset-0 flex items-center justify-center text-sm text-slate-400">
+                        <i class="fas fa-spinner fa-spin mr-2" aria-hidden="true"></i>Starting assistant...
+                    </div>
                 </div>
-                @* Interactive in the browser; not prerendered because it lives in localStorage *@
-                <AiTerminal @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
             </div>
         </div>
 

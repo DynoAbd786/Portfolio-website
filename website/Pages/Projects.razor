@@ -1,123 +1,98 @@
-@using website.Data
-
 @page "/projects"
+@using website.Data
 @inject ProjectService ProjectSvc
 
-<PageTitle>Projects</PageTitle>
+<PageTitle>Work</PageTitle>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <h2 class="text-5xl font-bold text-center mb-6 text-white">My Portfolio</h2>
-        <p class="text-xl text-center text-gray-400 mb-12">Showcasing innovation through AI-assisted development and research</p>
-        
-        @if (projectList == null)
-        {
-            <div class="text-center">
-                <div class="loader mx-auto mb-4"></div>
-                <p class="text-gray-400"><em>Loading projects...</em></p>
-            </div>
-        }
-        else
-        {
-            <!-- Professional Experience Projects Section -->
-            @if (projectList.Any(p => p.Category == ProjectCategory.Professional))
-            {
-                <div class="mb-20">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-briefcase text-white text-xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-green-400 mb-1">Professional Experience</h3>
-                            <p class="text-gray-400">Projects from internships and professional work</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projectList.Where(p => p.Category == ProjectCategory.Professional))
-                        {
-                            <ProjectCard Project="project" />
-                        }
-                    </div>
-                </div>
-            }
+@* Every project in one grid. Filters are plain links (?field=, ?category=), so they work without JavaScript *@
+<section class="mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 lg:px-8">
+    <p class="mono-label mb-3">// work</p>
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Projects</h1>
+    <p class="mb-10 max-w-2xl text-lg text-slate-400">Internships, coursework and things I've built on my own, across six fields.</p>
 
-            <!-- Academic Projects Section -->
-            @if (projectList.Any(p => p.Category == ProjectCategory.Academic))
+    <div class="mb-10 space-y-4">
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="mono-label mr-2 w-20">field</span>
+            <a href="@Href(null, category)" aria-current="@Current(field is null)" class="@ChipClass(field is null)">All</a>
+            @foreach (var f in Enum.GetValues<ProjectField>())
             {
-                <div class="mb-20">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-graduation-cap text-white text-xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-purple-400 mb-1">Academic Projects</h3>
-                            <p class="text-gray-400">University coursework and research projects</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projectList.Where(p => p.Category == ProjectCategory.Academic))
-                        {
-                            <ProjectCard Project="project" />
-                        }
-                    </div>
-                </div>
+                <a href="@Href(f, category)" aria-current="@Current(field == f)" class="@ChipClass(field == f)">@ProjectFields.Label(f)</a>
             }
-            @if (!projectList.Any(p => p.Category == ProjectCategory.Academic))
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="mono-label mr-2 w-20">category</span>
+            <a href="@Href(field, null)" aria-current="@Current(category is null)" class="@ChipClass(category is null)">All</a>
+            @foreach (var c in Categories)
             {
-                <div class="mb-20">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-graduation-cap text-white text-xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-purple-400 mb-1">Academic Projects</h3>
-                            <p class="text-gray-400">University coursework and research projects</p>
-                        </div>
-                    </div>
-                    
-                    <div class="max-w-2xl mx-auto">
-                        <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 text-center">
-                            <div class="text-6xl text-gray-600 mb-4">🎓</div>
-                            <h4 class="text-xl font-bold text-gray-300 mb-3">Coming Soon</h4>
-                            <p class="text-slate-400">Academic projects from university coursework and research will be featured here</p>
-                        </div>
-                    </div>
-                </div>
+                <a href="@Href(field, c)" aria-current="@Current(category == c)" class="@ChipClass(category == c)">@c</a>
             }
-
-            <!-- Personal Projects Section -->
-            @if (projectList.Any(p => p.Category == ProjectCategory.Personal))
-            {
-                <div class="mb-20">
-                    <div class="flex items-center justify-center mb-8">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-rocket text-white text-xl"></i>
-                        </div>
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-cyan-400 mb-1">Personal Projects</h3>
-                            <p class="text-gray-400">Independent research and development initiatives</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                        @foreach (var project in projectList.Where(p => p.Category == ProjectCategory.Personal))
-                        {
-                            <ProjectCard Project="project" />
-                        }
-                    </div>
-                </div>
-            }
-        }
+        </div>
     </div>
+
+    @if (shown.Count == 0)
+    {
+        <div class="projects-empty surface p-10 text-center">
+            <p class="mb-4 text-slate-300">No projects match both filters.</p>
+            <a href="/projects" class="btn-ghost">Show all projects</a>
+        </div>
+    }
+    else
+    {
+        <p class="mono-label mb-6">@shown.Count @(shown.Count == 1 ? "project" : "projects")</p>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @foreach (var project in shown)
+            {
+                <ProjectCard Project="project" Field="field" />
+            }
+        </div>
+    }
 </section>
 
 @code {
-    private List<Project>? projectList;
+    [SupplyParameterFromQuery(Name = "field")] public string? Field { get; set; }
+    [SupplyParameterFromQuery(Name = "category")] public string? Category { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    private static readonly ProjectCategory[] Categories = { ProjectCategory.Professional, ProjectCategory.Academic, ProjectCategory.Personal };
+
+    private ProjectField? field;
+    private ProjectCategory? category;
+    private List<Project> shown = new();
+
+    protected override async Task OnParametersSetAsync()
     {
-        projectList = await ProjectSvc.GetProjectsAsync();
+        // unknown values are ignored rather than showing an empty page
+        field = ProjectFields.FromSlug(Field);
+        category = Categories.Cast<ProjectCategory?>().FirstOrDefault(c => Slug(c!.Value) == Category);
+        var projects = await ProjectSvc.GetProjectsAsync();
+        shown = projects
+            .Where(p => field is null || p.Fields.Contains(field.Value))
+            .Where(p => category is null || p.Category == category)
+            .OrderBy(Rank)
+            .ToList();
     }
+
+    // the homepage's selected work first (in its order), then what I'm building, then featured, then the rest
+    private static int Rank(Project p)
+    {
+        var selected = HomeContent.SelectedWork.Select(w => w.ProjectUrl).ToList().IndexOf(p.ProjectUrl);
+        if (selected >= 0) return selected;
+        if (HomeContent.Products.Any(b => b.Href == p.ProjectUrl)) return 10;
+        return p.IsFeatured ? 20 : 30;
+    }
+
+    private static string Slug(ProjectCategory c) => c.ToString().ToLowerInvariant();
+
+    private static string Href(ProjectField? f, ProjectCategory? c)
+    {
+        var query = new List<string>();
+        if (f is not null) query.Add("field=" + ProjectFields.Slug(f.Value));
+        if (c is not null) query.Add("category=" + Slug(c.Value));
+        return query.Count == 0 ? "/projects" : "/projects?" + string.Join("&", query);
+    }
+
+    // null leaves the attribute off
+    private static string? Current(bool on) => on ? "true" : null;
+
+    private static string ChipClass(bool on) =>
+        on ? "chip border-cy/60 bg-cy/10 text-cy" : "chip transition-colors hover:border-cy/40 hover:text-slate-100";
 }
