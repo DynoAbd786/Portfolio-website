@@ -93,5 +93,6 @@ public class ChatTests : IClassFixture<SiteFactory>
         Assert.Contains("/projects/hireforge", prompt);
         Assert.Contains("/#contact", prompt);
         Assert.Contains("never a bare address", prompt);
+        Assert.Contains("the link is the words that name it", prompt);
     }
 }
