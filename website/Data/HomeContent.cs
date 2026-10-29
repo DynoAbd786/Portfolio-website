@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace website.Data
 {
-    public record ProofFact(string Value, string Label);
+    public record StackGroup(string Label, string[] Items);
 
     // Title, result and tags come from the project data
     public record SelectedWorkItem(string FieldLabel, string ProjectUrl);
@@ -25,12 +25,13 @@ namespace website.Data
     {
         public static bool OpenToWork => true;
 
-        public static IReadOnlyList<ProofFact> Proof { get; } = new[]
+        // The strip under the hero: what I work with, from the CV and the projects
+        public static IReadOnlyList<StackGroup> Stack { get; } = new[]
         {
-            new ProofFact("First-Class", "MEng CS & AI, Leeds"),
-            new ProofFact("50% faster", "pNanoLocz vs the MATLAB original, 2024 internship"),
-            new ProofFact("Stent simulation", "flow diverters in patient vessel geometry, 2025 internship"),
-            new ProofFact("1.56 cm", "camera error in 3D from one video, master's group project"),
+            new StackGroup("languages", new[] { "Python", "C#", "C/C++", "TypeScript", "SQL" }),
+            new StackGroup("ai & vision", new[] { "PyTorch", "OpenCV", "scikit-learn", "LLM agents", "MCP" }),
+            new StackGroup("web & cloud", new[] { "ASP.NET Core", "FastAPI", "React", "PostgreSQL", "Azure" }),
+            new StackGroup("systems & hpc", new[] { "CUDA", "OpenMP", "MPI", "Docker", "Linux" }),
         };
 
         public static IReadOnlyList<SelectedWorkItem> SelectedWork { get; } = new[]
@@ -49,9 +50,9 @@ namespace website.Data
                 new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },
                 "/projects/synergy"),
             new ProductItem("HireForge",
-                "Coding assessments run by AI agents. One agent builds a small codebase with a planted bug, the candidate fixes it, and a separate agent reviews their work and writes the scorecard.",
-                new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
-                null),
+                "Coding assessments run by AI agents. One agent builds a small codebase with planted bugs, the candidate fixes them in a sandbox with an AI assistant, and a separate agent reviews their work and writes the scorecard.",
+                new[] { "Python", "FastAPI", "PostgreSQL", "React", "TypeScript", "Docker" },
+                "/projects/hireforge"),
         };
 
         public static IReadOnlyList<ExperienceItem> Experience { get; } = new[]
@@ -84,12 +85,12 @@ namespace website.Data
                 "Coding assessments run end to end by AI agents.",
                 new[]
                 {
-                    "One agent builds a codebase with a single planted bug",
-                    "The candidate works through a realistic task on it",
+                    "One agent builds a codebase with bugs planted in it",
+                    "The candidate fixes them in a sandbox, with an AI assistant",
                     "A separate agent reviews the work and writes the scorecard",
                 },
-                new[] { "Python", "FastAPI", "PostgreSQL", "TypeScript", "Docker" },
-                "#building", "More on what I'm building →", "link", 62.85, 25.43),
+                new[] { "Python", "FastAPI", "PostgreSQL", "React", "TypeScript", "Docker" },
+                "/projects/hireforge", "Read about HireForge →", "link", 62.85, 25.43),
             new WorkshopHotspot("thesis", "MEng project", "3D reconstruction",
                 "master's group project · computer vision", "3D from a single video",
                 "My master's group project: a pipeline that turns one ordinary video into a 3D mesh at real-world scale. I led the team of five.",

@@ -42,11 +42,21 @@ public class HomePageTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
+    public async Task Stack_strip_shows_four_groups()
+    {
+        var doc = await HomeAsync();
+        var groups = doc.QuerySelectorAll("#stack dl > div");
+        Assert.Equal(new[] { "// languages", "// ai & vision", "// web & cloud", "// systems & hpc" },
+            groups.Select(g => g.QuerySelector("dt")!.TextContent.Trim()));
+        Assert.Contains("Python", groups[0].QuerySelectorAll("li.chip").Select(li => li.TextContent));
+    }
+
+    [Fact]
     public async Task Sections_in_order()
     {
         var doc = await HomeAsync();
         var ids = doc.QuerySelectorAll("main section[id]").Select(s => s.Id).ToList();
-        Assert.Equal(new[] { "proof", "work", "building", "experience", "contact" }, ids);
+        Assert.Equal(new[] { "stack", "work", "building", "experience", "contact" }, ids);
     }
 
     [Fact]
@@ -88,13 +98,13 @@ public class HomePageTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
-    public async Task Hireforge_card_has_no_link()
+    public async Task Building_cards_link_to_their_pages()
     {
         var doc = await HomeAsync();
         var cards = doc.QuerySelectorAll("#building article");
         Assert.Equal(2, cards.Length);
         var hireforge = cards.Single(c => c.TextContent.Contains("HireForge"));
-        Assert.Empty(hireforge.QuerySelectorAll("a"));
+        Assert.NotNull(hireforge.QuerySelector("a[href=\"/projects/hireforge\"]"));
         var synergy = cards.Single(c => c.TextContent.Contains("Synergy"));
         Assert.NotNull(synergy.QuerySelector("a[href=\"/projects/synergy\"]"));
     }

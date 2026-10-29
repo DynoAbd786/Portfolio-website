@@ -29,7 +29,7 @@ public class ProjectsPageTests : IClassFixture<SiteFactory>
     [Fact]
     public async Task All_projects_listed_by_default()
     {
-        Assert.Equal(30, (await CardLinks("/projects")).Count);
+        Assert.Equal(31, (await CardLinks("/projects")).Count);
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class ProjectsPageTests : IClassFixture<SiteFactory>
     [Fact]
     public async Task Unknown_filter_is_ignored()
     {
-        Assert.Equal(30, (await CardLinks("/projects?field=zzz")).Count);
+        Assert.Equal(31, (await CardLinks("/projects?field=zzz")).Count);
     }
 
     [Fact]

@@ -94,13 +94,20 @@
 @* The rest of the page slides up over the hero on desktop *@
 <div class="hero-cover border-t border-line bg-ink">
 
-<section id="proof" class="border-y border-line bg-ink-2/60" aria-label="Highlights">
-    <dl class="mx-auto grid max-w-7xl grid-cols-2 gap-px px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
-        @foreach (var fact in HomeContent.Proof)
+<section id="stack" class="pt-10 sm:pt-14" aria-label="What I work with">
+    <dl class="mx-auto grid max-w-7xl gap-3 px-4 sm:grid-cols-2 sm:gap-4 sm:px-6 lg:grid-cols-4 lg:px-8">
+        @foreach (var group in HomeContent.Stack)
         {
-            <div class="reveal flex flex-col py-5 pr-4 sm:py-8">
-                <dt class="order-2 mt-1 text-sm text-slate-400">@fact.Label</dt>
-                <dd class="order-1 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">@fact.Value</dd>
+            <div class="reveal surface p-4 sm:p-5">
+                <dt class="mono-label mb-4">// @group.Label</dt>
+                <dd>
+                    <ul class="flex flex-wrap gap-2">
+                        @foreach (var item in group.Items)
+                        {
+                            <li class="chip">@item</li>
+                        }
+                    </ul>
+                </dd>
             </div>
         }
     </dl>

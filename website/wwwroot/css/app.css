@@ -40,7 +40,7 @@
 /* --still-room: the room's width as a fraction of the still picture (printed by
    tools/render-workshop-still.py) */
 #hero { --frame-x: .62; --still-room: .6732; position: relative; }
-/* the hero's side margin, which the homepage's header shares */
+/* the hero's side margin, which the header shares on every page */
 :root { --hero-pad: clamp(1.5rem, 5vw, 6rem); }
 
 .hero-cover {
@@ -115,14 +115,6 @@
         max-width: none;
         margin: 0;
         padding: 0 0 0 var(--hero-pad);
-    }
-
-    /* on the homepage the header spans the screen too: the logo over the name, the icons at the
-       right (beats the nav's max-w-7xl/px utilities) */
-    body:has(#hero) header > nav {
-        max-width: none;
-        padding-left: var(--hero-pad);
-        padding-right: var(--hero-pad);
     }
 
     .hero-copy {

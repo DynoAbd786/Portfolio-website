@@ -1,0 +1,86 @@
+@page "/projects/hireforge"
+@using website.Data
+
+<ProjectPage Url="/projects/hireforge" Kicker="Personal Project">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    HireForge is a web app for hiring software engineers. A company describes the role, an AI agent builds a small, realistic codebase with bugs planted in it,
+                    and candidates fix them in a sandboxed workspace in the browser, with an AI assistant of their own. A separate reviewer then scores the work:
+                    the engineering, and how well they directed the AI.
+                </p>
+
+                <ProjectSection Title="How an assessment works" Icon="fas fa-list-ol">
+                    <ol class="space-y-3 text-slate-300">
+                        <li><span class="font-semibold text-slate-100">1. Describe the role.</span> Start from a template or paste a job description. The must-have skills become the criteria candidates are scored on.</li>
+                        <li><span class="font-semibold text-slate-100">2. Generate the codebase.</span> An agent writes the project, its tests and the planted issues in a background job. Each refinement adds a new numbered version instead of overwriting the last.</li>
+                        <li><span class="font-semibold text-slate-100">3. Publish.</span> Checks run first: the tests run, the planted issues really do make them fail, and nothing meant for the company leaks into the candidate's brief. The published version is then locked, so every candidate takes the same test.</li>
+                        <li><span class="font-semibold text-slate-100">4. Take it.</span> The candidate opens a private link and gets a timed workspace: an editor, a terminal, the test runner and an AI assistant.</li>
+                        <li><span class="font-semibold text-slate-100">5. Review.</span> The reviewer reads the diff and everything the candidate did, and writes a scorecard. The company can re-weight the criteria, shortlist and compare candidates, and ask questions about the results.</li>
+                    </ol>
+                </ProjectSection>
+
+                <ProjectSection Title="The candidate's workspace" Icon="fas fa-box">
+                    <p class="mb-4 leading-relaxed text-slate-300">
+                        Candidate code never runs on the host. Each session gets its own container under gVisor, on its own network with the internet off.
+                        If a company needs packages installed, a proxy for that session lets through the package registries and the hosts the company names, and nothing else.
+                    </p>
+                    <p class="leading-relaxed text-slate-300">
+                        The AI assistant runs in a separate container and never holds an API key. Anything an agent can read, a candidate can get by asking it,
+                        so the keys stay in a gateway on the host that works out which session a request belongs to and applies that session's budget.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Scores you can check" Icon="fas fa-scale-balanced">
+                    <p class="mb-4 leading-relaxed text-slate-300">
+                        The model judges; code does the arithmetic. The diff comes from real git, the tests are actually run, and totals, rankings and most red flags are worked out by code,
+                        so a model can't miscount or be talked into a better score. The reviewer gets read-only tools and no shell.
+                    </p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li>• The scorecard gives Engineering, Use of AI and Overall scores, each backed by quotes from what the candidate did.</li>
+                        <li>• A code view shows where every added line came from: typed by the candidate or written by the assistant.</li>
+                        <li>• A replay walks through the key moments of the session.</li>
+                        <li>• "Ask the results" answers questions about the candidates, and code checks every citation in the answer before it is shown.</li>
+                    </ul>
+                </ProjectSection>
+
+                <ProjectSection Title="How it's built" Icon="fas fa-gears">
+                    <p class="mb-5 leading-relaxed text-slate-300">
+                        A FastAPI backend with PostgreSQL, and a job queue in Postgres that a separate worker takes generation and review jobs from. The frontend is React and TypeScript,
+                        with CodeMirror for the editor and xterm.js for the terminal. Every model call goes through one small client of my own for Anthropic and DeepSeek, and a test makes sure nothing else calls a provider.
+                    </p>
+                    <p class="mb-5 flex flex-wrap items-center gap-2 font-mono text-xs text-slate-400">
+                        <span class="chip">spec</span><span>→</span><span class="chip">generate</span><span>→</span><span class="chip">publish</span><span>→</span><span class="chip">sandbox</span><span>→</span><span class="chip">review</span><span>→</span><span class="chip">results</span>
+                    </p>
+                    <ul class="space-y-3 text-slate-300">
+                        <li>• About 1,250 Python tests and 485 frontend tests, all of which run offline against a fake model, so CI never needs a key.</li>
+                        <li>• The data formats are defined once in TypeScript, emitted as JSON Schema and mirrored in Python. CI fails if any of them drift apart.</li>
+                        <li>• The test script lives outside the candidate's repository and is checked by hash, so it can't be swapped for one that always passes.</li>
+                        <li>• Every git command on the host goes through one wrapper, so a hook planted in a candidate's repository never runs.</li>
+                        <li>• Asking for another company's data gets a 404, not a 403, so ids can't be probed. A test tries it on every route.</li>
+                    </ul>
+                </ProjectSection>
+
+                <ProjectSection Title="Where it's at" Subtitle="In development since August 2026. The whole flow works on my machine; it isn't hosted yet." Icon="fas fa-circle-half-stroke">
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div>
+                            <h3 class="mb-3 font-bold text-slate-100">Next</h3>
+                            <ul class="space-y-2 text-sm text-slate-300">
+                                <li>• Real sign-in for companies</li>
+                                <li>• Hosting, with codebases moved into object storage</li>
+                                <li>• Choosing which model generates the codebases</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="mb-3 font-bold text-slate-100">Built with</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="chip">Python</span>
+                                <span class="chip">FastAPI</span>
+                                <span class="chip">PostgreSQL</span>
+                                <span class="chip">React</span>
+                                <span class="chip">TypeScript</span>
+                                <span class="chip">Docker</span>
+                                <span class="chip">gVisor</span>
+                            </div>
+                        </div>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

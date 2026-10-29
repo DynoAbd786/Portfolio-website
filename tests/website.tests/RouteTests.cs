@@ -90,7 +90,7 @@ public class RouteTests : IClassFixture<SiteFactory>
         var projects = await _client.GetAsync("/api/projects");
         Assert.Equal(HttpStatusCode.OK, projects.StatusCode);
         using var json = JsonDocument.Parse(await projects.Content.ReadAsStringAsync());
-        Assert.Equal(30, json.RootElement.GetArrayLength());
+        Assert.Equal(31, json.RootElement.GetArrayLength());
 
         var health = await _client.GetAsync("/health");
         Assert.Equal(HttpStatusCode.OK, health.StatusCode);
