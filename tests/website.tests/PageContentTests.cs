@@ -17,7 +17,10 @@ public class PageContentTests : IClassFixture<SiteFactory>
         var headings = main.QuerySelectorAll("h1, h2, h3").Select(h => h.TextContent.Trim()).ToList();
         Assert.Contains("Driving Innovation Through Code", headings);
         Assert.Contains("Looking Forward", headings);
-        Assert.NotNull(main.QuerySelector("a[href=\"/ethos\"]"));
+        Assert.Empty(main.QuerySelectorAll("a[href=\"/ethos\"]"));
+        var how = main.QuerySelector("#how-i-work")!;
+        Assert.Contains("pull request", how.TextContent);
+        Assert.DoesNotContain("Muslim", main.TextContent);
         Assert.NotNull(main.QuerySelector("a[href=\"/ai-integration\"]"));
         Assert.DoesNotContain("4th year", main.TextContent, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("student", main.TextContent, StringComparison.OrdinalIgnoreCase);
@@ -37,9 +40,8 @@ public class PageContentTests : IClassFixture<SiteFactory>
     }
 
     [Theory]
-    [InlineData("/ethos", "Responsibility and Sustainability")]
     [InlineData("/ai-integration", null)]
-    public async Task Ethos_and_ai_integration_render_in_new_layout(string route, string? heading)
+    public async Task Ai_integration_renders_in_new_layout(string route, string? heading)
     {
         var doc = await Html.GetAsync(_client, route);
         var main = doc.QuerySelector("main")!;

@@ -128,6 +128,7 @@ public class McpTests : IClassFixture<SiteFactory>
             .EnumerateArray().Select(r => r.GetProperty("uri").GetString()).ToList();
         Assert.Contains("portfolio://projects/hireforge", uris);
         Assert.Contains("portfolio://projects/pnanolocz", uris);
+        Assert.DoesNotContain("portfolio://ethos", uris);
         Assert.Contains("HireForge", await Read(client, "portfolio://projects/hireforge"));
     }
 
