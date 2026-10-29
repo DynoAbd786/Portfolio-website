@@ -1,0 +1,62 @@
+@page "/projects/advanced-software-engineering"
+@using website.Data
+
+<ProjectPage Url="/projects/advanced-software-engineering" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Coursework for Advanced Software Engineering. We were given VSim, a multithreaded Java simulator of autonomous vehicles, and asked to test it, fix a design flaw and map its architecture.
+                    Working my way through someone else's codebase like this is what got me thinking about Synergy.
+                </p>
+
+                <ProjectSection Title="The brief" Icon="fas fa-car-side">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5911M Advanced Software Engineering"), ("Year", "2025/26 · Year 4"), ("Team", "Individual"), ("Weighting", "50% of the module") })" />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        VSim moves vehicles around a 2D grid. Each vehicle runs on its own thread and has to get exclusive access to a grid square before it moves into it.
+                        The coursework had three parts: improve the unit tests, fix a design problem in how vehicles choose their routes, and document the whole architecture as a UML class diagram.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Better tests" Icon="fas fa-vial-circle-check">
+                    <p class="leading-relaxed text-slate-300">
+                        The existing checks for <code class="text-cy">PathIntersection</code> ran from a <code class="text-cy">main()</code> method and covered very little.
+                        I moved the project to Maven (Java 11, JUnit 4) and wrote 16 unit tests covering the cases that were missing: empty and null input, identical paths, paths that don't meet,
+                        one path inside another, negative coordinates, integer limits and duplicate points. All 16 pass.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Fixing the design" Subtitle="Applying the Strategy pattern" Icon="fas fa-puzzle-piece">
+                    <p class="leading-relaxed text-slate-300">
+                        Every vehicle was hard-wired to the <code class="text-cy">NorthFirst</code> route finder. The simulator had other route finders, but using one meant editing the classes that created vehicles,
+                        which breaks the open/closed and dependency inversion principles.
+                    </p>
+                    <p class="mt-4 leading-relaxed text-slate-300">
+                        I added a <code class="text-cy">PathFinder</code> interface that every route finder implements, and changed the scenario generator and <code class="text-cy">Vehicle</code> to depend on the interface instead of a concrete class.
+                        To show the change paying off, I added a <code class="text-cy">RandomPathFinder</code> that picks a strategy for each vehicle from a seed, without touching any other class.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Mapping the architecture" Icon="fas fa-sitemap">
+                    <ProjectFigure Src="images/projects/advanced-software-engineering/uml.webp" Width="1600" Height="789"
+                                   Alt="UML class diagram of VSim: Vehicle, Grid, Simulation, GridPanel, Logger, the PathFinder interface with its five implementations, and the test class."
+                                   Caption="My UML class diagram of VSim after the refactor, with the PathFinder interface and its implementations on the right." />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        Drawing this meant tracing every class and dependency through the code by hand. That's what led to <a href="/projects/synergy" class="text-cy hover:underline">Synergy</a>:
+                        a tool that builds that map of a codebase automatically, so a developer or an AI agent can see how the pieces connect without reading every file.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Lab work" Icon="fas fa-flask">
+                    <p class="leading-relaxed text-slate-300">
+                        Alongside the coursework, the labs covered test-driven development and refactoring. One exercise refactored Fowler's video rental example two ways, with subclasses and with a pricing strategy,
+                        and compared the trade-offs.
+                    </p>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">Java</span>
+                        <span class="chip">JUnit</span>
+                        <span class="chip">Maven</span>
+                        <span class="chip">Design patterns</span>
+                        <span class="chip">SOLID</span>
+                        <span class="chip">UML</span>
+                        <span class="chip">Concurrency</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

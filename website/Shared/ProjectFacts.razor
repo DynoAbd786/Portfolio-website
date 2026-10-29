@@ -1,0 +1,14 @@
+@* The module, year, team and weighting of a piece of coursework, as a row of small labelled facts *@
+<dl class="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+    @foreach (var (label, value) in Items)
+    {
+        <div>
+            <dt class="mono-label">@label</dt>
+            <dd class="mt-1 text-sm leading-snug text-slate-200">@value</dd>
+        </div>
+    }
+</dl>
+
+@code {
+    [Parameter, EditorRequired] public (string Label, string Value)[] Items { get; set; } = [];
+}

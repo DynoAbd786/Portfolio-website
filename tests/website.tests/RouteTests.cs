@@ -25,6 +25,8 @@ public class RouteTests : IClassFixture<SiteFactory>
         "/projects/opengl-renderer", "/projects/parallel-computing", "/projects/pnanolocz",
         "/projects/portfolio", "/projects/quantum-dots", "/projects/terratracker",
         "/projects/synergy", "/projects/xv6-operating-system",
+        "/projects/advanced-software-engineering", "/projects/deep-learning", "/projects/coevolutionary-boids",
+        "/projects/evolutionary-agents", "/projects/kubernetes-cloud-edge", "/projects/climate-data-science",
         "/vascular-blood-flow",
     };
 
@@ -42,6 +44,18 @@ public class RouteTests : IClassFixture<SiteFactory>
     {
         var doc = await Html.GetAsync(_client, path);
         Assert.DoesNotContain("\u2014", doc.Body!.TextContent);
+    }
+
+    // The 3D reconstruction work was the master's group project, and it reconstructs static scenes
+    [Theory]
+    [MemberData(nameof(AllPageRoutes))]
+    public async Task Page_does_not_call_the_group_project_a_thesis(string path)
+    {
+        var doc = await Html.GetAsync(_client, path);
+        foreach (var script in doc.QuerySelectorAll("script").ToList()) script.Remove();
+        var text = doc.Body!.TextContent;
+        Assert.DoesNotMatch(@"(?i)\bthesis\b", text);
+        Assert.DoesNotMatch(@"\b4D\b", text);
     }
 
     [Fact]
@@ -76,7 +90,7 @@ public class RouteTests : IClassFixture<SiteFactory>
         var projects = await _client.GetAsync("/api/projects");
         Assert.Equal(HttpStatusCode.OK, projects.StatusCode);
         using var json = JsonDocument.Parse(await projects.Content.ReadAsStringAsync());
-        Assert.Equal(24, json.RootElement.GetArrayLength());
+        Assert.Equal(30, json.RootElement.GetArrayLength());
 
         var health = await _client.GetAsync("/health");
         Assert.Equal(HttpStatusCode.OK, health.StatusCode);

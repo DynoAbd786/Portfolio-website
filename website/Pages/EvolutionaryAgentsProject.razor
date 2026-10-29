@@ -1,0 +1,56 @@
+@page "/projects/evolutionary-agents"
+@using website.Data
+
+<ProjectPage Url="/projects/evolutionary-agents" Kicker="Academic Project · Year 4">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    Individual coursework for Bio-Inspired Computation, using BEAST, a C++ framework for evolving simulated creatures.
+                    Mice with small neural networks for brains evolve to find cheese, and then predators and prey evolve against each other.
+                    I extended the C++ code with new sensors, deeper networks and new fitness functions, and ran each experiment for 5,000 generations.
+                </p>
+
+                <ProjectSection Title="The setup" Icon="fas fa-dna">
+                    <ProjectFacts Items="@(new[] { ("Module", "COMP5400 Bio-Inspired Computation"), ("Year", "2025/26 · Year 4"), ("Team", "Individual"), ("Weighting", "40% of the module") })" />
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        Each mouse is steered by a small neural network that reads its sensors. A genetic algorithm evolves the network weights: mice that find more cheese are more likely to pass their weights on.
+                        The coursework asked how far better sensors, bigger brains and different fitness functions could improve them, and whether a predator-prey version really co-evolves.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Sensors and brains" Icon="fas fa-eye">
+                    <ul class="space-y-3 leading-relaxed text-slate-300">
+                        <li>• I wrote 9 sensor variants in C++, including distance, stereo, range, density and all-round sensors, plus custom sensors that report the angle and distance to the nearest few cheeses or mice.</li>
+                        <li>• I compared networks from no hidden layer up to 50 hidden units, and wrote my own multi-layer network class to test deeper brains, up to five hidden layers.</li>
+                        <li>• To get through all of this, I wrote headless runners and parallel Bash pipelines that ran every configuration with 5 random seeds, and Python scripts that plotted the results.
+                            The biggest networks took up to 3,515 seconds a run, against 227 for the simplest.</li>
+                    </ul>
+                    <div class="mt-6">
+                        <ProjectFigure Src="images/projects/evolutionary-agents/sensor-comparison.webp" Width="1600" Height="622"
+                                       Alt="Two charts over 5,000 generations comparing the baseline, distance, range and stereo sensors: average fitness on the left, average cheeses collected on the right."
+                                       Caption="The distance and stereo sensors scored the highest fitness (left) but collected fewer cheeses than the baseline (right)." />
+                    </div>
+                    <p class="mt-6 leading-relaxed text-slate-300">
+                        That gap was the most useful result. A higher fitness score didn't mean a better forager, so I wrote alternative fitness functions (one rewarding efficiency, one rewarding cheese count alone)
+                        and used the average number of cheeses found as an objective measure to compare them fairly.
+                    </p>
+                </ProjectSection>
+
+                <ProjectSection Title="Predators and prey" Icon="fas fa-cat">
+                    <p class="leading-relaxed text-slate-300">
+                        In the second part, predators that score by catching prey evolve alongside prey that score by not being caught. Over a 2,000-generation run, the predators did well early on,
+                        then the prey caught up: predator meals fell to a handful per generation while prey fitness kept climbing.
+                    </p>
+                    <div class="mt-6">
+                        <ProjectFigure Src="images/projects/evolutionary-agents/chase-arms-race.webp" Width="1600" Height="933"
+                                       Alt="Chart over 2,000 generations: predator fitness spikes early then drops and stays low, while prey fitness rises in steps."
+                                       Caption="Average and best fitness for predators (red) and prey (blue) over 2,000 generations." />
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">C++</span>
+                        <span class="chip">Genetic algorithms</span>
+                        <span class="chip">Neural networks</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Bash</span>
+                        <span class="chip">matplotlib</span>
+                    </div>
+                </ProjectSection>
+</ProjectPage>

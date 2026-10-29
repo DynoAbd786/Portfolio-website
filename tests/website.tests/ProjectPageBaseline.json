@@ -1,39 +1,32 @@
 {
   "/projects/3d-reconstruction": {
     "Headings": [
-      "Project Overview",
-      "Project Context",
-      "Development Timeline",
-      "The Technical Challenge",
-      "Fundamental Trade-Off in 3D Reconstruction",
-      "Feed-Forward Networks (T1)",
-      "Optimization Models (T2)",
-      "Novel Fusion Strategy",
-      "The \"Best of Both Worlds\" Approach",
-      "Research Phase (Semester 1)",
-      "Deployment Phase (Semester 2)",
-      "Industrial Applications",
-      "VR/AR Simulation",
-      "Live Room Tracking",
-      "Medical Imaging",
-      "Technical Infrastructure & Stack",
-      "Core Technologies",
-      "Computing Resources",
-      "Research Components",
-      "Project Management & Agile Methodology",
-      "Agile Sprint Methodology",
-      "Kanban Board Management",
-      "Gantt Chart Timeline Planning",
-      "First Phase: Background Research",
-      "Team Collaboration Tools",
-      "Team Leadership & Coordination",
-      "Success Criteria & Goals",
-      "Research Objectives (Semester 1)",
-      "Deployment Goals (Semester 2)",
-      "Computer Vision Research"
+      "Overview",
+      "How the pipeline works",
+      "My part",
+      "Results",
+      "Changing course",
+      "Poster"
+    ],
+    "Pdfs": [
+      "/docs/3d-reconstruction-poster.pdf"
+    ],
+    "Images": [
+      "images/projects/3d-reconstruction/poster.webp"
+    ]
+  },
+  "/projects/advanced-software-engineering": {
+    "Headings": [
+      "The brief",
+      "Better tests",
+      "Fixing the design",
+      "Mapping the architecture",
+      "Lab work"
     ],
     "Pdfs": [],
-    "Images": []
+    "Images": [
+      "images/projects/advanced-software-engineering/uml.webp"
+    ]
   },
   "/projects/ai-decision-trees": {
     "Headings": [
@@ -43,14 +36,14 @@
       "Machine Learning Implementation",
       "Core Technologies",
       "Fraud Detection Application",
-      "Programming Tasks & Implementation",
+      "Programming Tasks \u0026 Implementation",
       "Data Processing Tasks",
       "Model Development Tasks",
-      "Model Optimization & Performance Evaluation",
+      "Model Optimization \u0026 Performance Evaluation",
       "Pruning Techniques",
       "Cross-Validation",
       "Performance Metrics",
-      "Technical Implementation & Results",
+      "Technical Implementation \u0026 Results",
       "Implementation Highlights",
       "Fraud Detection Results",
       "Project Documentation",
@@ -69,11 +62,11 @@
       "Search Algorithm Implementation",
       "Core Algorithms",
       "Problem Domains",
-      "Performance Analysis & Custom Heuristics",
+      "Performance Analysis \u0026 Custom Heuristics",
       "Complexity Analysis",
       "Heuristic Development",
       "Empirical Testing",
-      "Technical Implementation & Results",
+      "Technical Implementation \u0026 Results",
       "Implementation Highlights",
       "Research Outcomes",
       "Project Documentation",
@@ -101,32 +94,32 @@
   },
   "/projects/business-plan": {
     "Headings": [
-      "NHS Crisis & Market Opportunity",
+      "NHS Crisis \u0026 Market Opportunity",
       "Critical Healthcare Challenge",
       "Project Synapse Solution",
-      "\"Advanced AI Interfacing System for Healthcare Documentation\"",
+      "\u0022Advanced AI Interfacing System for Healthcare Documentation\u0022",
       "Smart Listening",
       "Auto Documentation",
       "System Integration",
-      "Market Research & Business Intelligence",
+      "Market Research \u0026 Business Intelligence",
       "Target Market Analysis",
       "Industry Research Sources",
-      "Competitive Analysis & Market Gap",
+      "Competitive Analysis \u0026 Market Gap",
       "Blue Ocean Strategy Analysis",
       "Create (New Value)",
       "Raise (Above Industry)",
       "Reduce (Industry Norms)",
       "Eliminate (Industry Standards)",
-      "Entrepreneur Profile & Implementation",
+      "Entrepreneur Profile \u0026 Implementation",
       "Founder Qualifications",
       "Technical Implementation",
-      "Business Model & Financial Viability",
-      "Business Plan & Takeaways",
+      "Business Model \u0026 Financial Viability",
+      "Business Plan \u0026 Takeaways",
       "Business Documentation",
       "Academic Achievement",
       "Download Complete Business Plan",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [
       "/docs/project-synapse-business-plan.pdf",
@@ -158,10 +151,37 @@
       "Takeaways",
       "Source Code",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [],
     "Images": []
+  },
+  "/projects/climate-data-science": {
+    "Headings": [
+      "Overview",
+      "Is there an age gap?",
+      "What predicts support",
+      "Grouping countries"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/projects/climate-data-science/feature-importance.webp",
+      "images/projects/climate-data-science/country-clusters.webp"
+    ]
+  },
+  "/projects/coevolutionary-boids": {
+    "Headings": [
+      "The question",
+      "How it works",
+      "Evolution",
+      "Engineering",
+      "What evolved"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/projects/coevolutionary-boids/arms-race.webp",
+      "images/projects/coevolutionary-boids/gen520-flock.webp"
+    ]
   },
   "/projects/data-mining": {
     "Headings": [
@@ -174,7 +194,7 @@
       "CRISP-DM Research Methodology",
       "Business Understanding",
       "Data Preparation",
-      "Modelling & Evaluation",
+      "Modelling \u0026 Evaluation",
       "Pilot Study Implementation",
       "Rheumatoid Arthritis Case Study",
       "Technical Implementation",
@@ -188,20 +208,34 @@
     ],
     "Images": []
   },
+  "/projects/deep-learning": {
+    "Headings": [
+      "Overview",
+      "A CNN from scratch",
+      "Pushing it for the Kaggle competition",
+      "Transfer learning",
+      "Image captioning"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/projects/deep-learning/confusion-matrix.webp",
+      "images/projects/deep-learning/kaggle-cnn-training.webp"
+    ]
+  },
   "/projects/distributed-systems": {
     "Headings": [
-      "Course Information & Project Scope",
+      "Course Information \u0026 Project Scope",
       "Course Details",
       "Learning Outcomes",
       "Project Walkthrough",
-      "Serverless Architecture & Azure Functions",
+      "Serverless Architecture \u0026 Azure Functions",
       "Azure Functions Workflow",
       "ERP Inventory Management",
-      "Cloud Integration & Technical Implementation",
+      "Cloud Integration \u0026 Technical Implementation",
       "Azure Services",
       "External Integration",
       "Development Tools",
-      "Performance Analysis & Scalability Testing",
+      "Performance Analysis \u0026 Scalability Testing",
       "Performance Metrics",
       "Scalability Investigation",
       "Features",
@@ -215,12 +249,24 @@
     ],
     "Images": []
   },
+  "/projects/evolutionary-agents": {
+    "Headings": [
+      "The setup",
+      "Sensors and brains",
+      "Predators and prey"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/projects/evolutionary-agents/sensor-comparison.webp",
+      "images/projects/evolutionary-agents/chase-arms-race.webp"
+    ]
+  },
   "/projects/formula-student-ai": {
     "Headings": [
       "Formula Student AI: The Competition",
       "Competition Challenges",
       "Leeds University FS-AI Team",
-      "My Role: Simulation & Autonomous Systems Exploration",
+      "My Role: Simulation \u0026 Autonomous Systems Exploration",
       "Strategic Position",
       "Primary Responsibility: Simulation",
       "Broader Involvement Strategy",
@@ -228,12 +274,12 @@
       "Technical Infrastructure",
       "Simulation Environment",
       "Hardware Platform",
-      "Development Tools & Workflow",
+      "Development Tools \u0026 Workflow",
       "Autonomous Systems Components",
       "Perception",
-      "Planning & Control",
+      "Planning \u0026 Control",
       "Localization",
-      "Project Timeline & Development Approach",
+      "Project Timeline \u0026 Development Approach",
       "Timeline Structure",
       "Development Philosophy",
       "Progressive Contribution Strategy",
@@ -251,7 +297,7 @@
     "Headings": [
       "Project Overview",
       "Core Algorithms",
-      "Testing & Perf",
+      "Testing \u0026 Perf",
       "Implementation Highlights",
       "Key Features",
       "Technical Specs",
@@ -274,18 +320,30 @@
     "Pdfs": [],
     "Images": []
   },
+  "/projects/kubernetes-cloud-edge": {
+    "Headings": [
+      "The setup",
+      "Measuring it",
+      "Results"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/projects/kubernetes-cloud-edge/throughput.webp",
+      "images/projects/kubernetes-cloud-edge/latency.webp"
+    ]
+  },
   "/projects/machine-learning": {
     "Headings": [
-      "Course Information & Assignment Structure",
+      "Course Information \u0026 Assignment Structure",
       "Course Details",
       "Assignment Structure",
       "Advanced Linear Regression with Custom Basis Functions",
       "Question 1: Trajectory Analysis",
       "Basis Function Comparison",
-      "Principal Component Analysis & 3D Medical Data",
+      "Principal Component Analysis \u0026 3D Medical Data",
       "Question 2a: 3D Visualization",
       "Question 2b: Custom PCA Implementation",
-      "Scikit-learn Validation & Implementation Comparison",
+      "Scikit-learn Validation \u0026 Implementation Comparison",
       "Question 2c: Scikit-learn Integration",
       "Technical Highlights",
       "Technical Implementation",
@@ -302,7 +360,7 @@
   },
   "/projects/medical-simulation": {
     "Headings": [
-      "Project Overview & Scope",
+      "Project Overview \u0026 Scope",
       "Research Applications",
       "Technical Architecture",
       "Physics Engine",
@@ -314,8 +372,8 @@
       "1/5 1. Initial Vessel Processing",
       "8-Week Development Progress",
       "Internship Timeline",
-      "✅ Completed Milestones",
-      "🚀 Future Development",
+      "\u2705 Completed Milestones",
+      "\uD83D\uDE80 Future Development",
       "Skills Demonstrated",
       "Impact",
       "Technology Stack"
@@ -327,28 +385,28 @@
   },
   "/projects/mental-health-app": {
     "Headings": [
-      "Business Context & Requirements",
+      "Business Context \u0026 Requirements",
       "COMP2912 Software Engineering Principles",
-      "Stakeholder Analysis & Requirements Engineering",
+      "Stakeholder Analysis \u0026 Requirements Engineering",
       "Primary Users",
       "Institutional Stakeholders",
-      "Regulatory & Ethics",
-      "Use Case Analysis & Value Propositions",
+      "Regulatory \u0026 Ethics",
+      "Use Case Analysis \u0026 Value Propositions",
       "AI Architecture",
       "ChatGPT-4 Turbo Integration",
       "Smart Interventions",
-      "System Architecture & Implementation",
+      "System Architecture \u0026 Implementation",
       "Software Engineering",
       "Methodology",
-      "UML & Design",
+      "UML \u0026 Design",
       "Engineering Practices",
-      "Ethics & Legal Compliance Framework",
-      "Design Brief & Takeaways",
+      "Ethics \u0026 Legal Compliance Framework",
+      "Design Brief \u0026 Takeaways",
       "Documentation",
       "Academic Achievement",
       "Download Complete Design Brief",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [
       "/docs/mental-health-app-design-brief.pdf",
@@ -369,7 +427,7 @@
       "Third-Order Methods",
       "Fourth-Order Methods",
       "Implementation Architecture",
-      "Error & Performance Analysis",
+      "Error \u0026 Performance Analysis",
       "Error Analysis",
       "Performance Benchmarking",
       "Advanced Features",
@@ -377,10 +435,10 @@
       "Research Findings",
       "Key Research Results",
       "Technical Depth",
-      "Takeaways & Industry Relevance",
-      "Source Code & Documentation",
+      "Takeaways \u0026 Industry Relevance",
+      "Source Code \u0026 Documentation",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [],
     "Images": []
@@ -389,11 +447,11 @@
     "Headings": [
       "Project Overview",
       "Graphics Pipeline",
-      "Lighting & Materials",
+      "Lighting \u0026 Materials",
       "Advanced Rendering Features",
-      "Performance & Optimization",
+      "Performance \u0026 Optimization",
       "Tech Implementation",
-      "Specs & Collaboration",
+      "Specs \u0026 Collaboration",
       "Source Code Repository"
     ],
     "Pdfs": [],
@@ -406,14 +464,14 @@
       "MPI: Distributed Systems",
       "OpenCL: GPU Acceleration",
       "Technical Insights",
-      "Stats & Achievements"
+      "Stats \u0026 Achievements"
     ],
     "Pdfs": [],
     "Images": []
   },
   "/projects/pnanolocz": {
     "Headings": [
-      "Project Overview & Scope",
+      "Project Overview \u0026 Scope",
       "Scientific Applications",
       "Technical Architecture",
       "Modular Architecture",
@@ -424,23 +482,23 @@
       "Live Demonstration",
       "Development Achievements",
       "Foundation Established",
-      "✅ Completed Components",
-      "🎯 Migration Scope",
+      "\u2705 Completed Components",
+      "\uD83C\uDFAF Migration Scope",
       "Skills Demonstrated",
-      "Learning & Growth",
+      "Learning \u0026 Growth",
       "Technology Stack",
-      "Source Code & Documentation"
+      "Source Code \u0026 Documentation"
     ],
     "Pdfs": [],
     "Images": []
   },
   "/projects/portfolio": {
     "Headings": [
-      "How it's built",
+      "How it\u0027s built",
       "The 3D workshop",
       "AI assistant and MCP server",
       "Testing and deployment",
-      "Source Code & Documentation"
+      "Source Code \u0026 Documentation"
     ],
     "Pdfs": [],
     "Images": []
@@ -461,13 +519,13 @@
       "Development Phase",
       "Market Entry",
       "Commercial Scale",
-      "Investment Requirements & Projections",
+      "Investment Requirements \u0026 Projections",
       "Takeaways",
       "Research Depth",
       "Strategic Vision",
       "Full Research Report",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [
       "/docs/quantum-dot-investment-report.pdf"
@@ -479,31 +537,31 @@
       "What it does",
       "Using it with AI coding agents",
       "How it works",
-      "Where it's at",
+      "Where it\u0027s at",
       "Next",
       "Built with",
-      "Project Status & Context",
+      "Project Status \u0026 Context",
       "Current Stage: Active Personal Research",
       "The Problem",
       "Current Tool Limitations",
       "AI Assistant Challenges",
       "Critical Impact",
-      "The Solution: Hybrid C#/.NET + Python Architecture",
+      "The Solution: Hybrid C#/.NET \u002B Python Architecture",
       "Deep Analysis (Python Microservice)",
       "Architectural Intelligence (C# ASP.NET Core)",
-      "Core Innovation: The \"Architectural Linter\"",
+      "Core Innovation: The \u0022Architectural Linter\u0022",
       "System Architecture: Hybrid Microservices",
       "Frontend: Blazor WebAssembly (C#)",
       "Application Layer: ASP.NET Core API (C#)",
       "Analysis Layer: Python Microservice",
-      "Data Layer: Neo4j + Redis",
+      "Data Layer: Neo4j \u002B Redis",
       "Architecture Benefits",
       "Primary Use Case: Open-Source Package Analysis",
       "For Human Developers",
       "For AI Systems (via MCP)",
       "Package-Centric Workflow",
       "Implementation Phases",
-      "Phase 1: The \"Market-Ready\" Prototype",
+      "Phase 1: The \u0022Market-Ready\u0022 Prototype",
       "Phase 2: Individual Research Tracks",
       "Validation Framework",
       "Condition A: Baseline",
@@ -512,7 +570,7 @@
       "Key Validation Metrics",
       "Novel Contributions",
       "Hybrid Architecture",
-      "The \"Architectural Linter\"",
+      "The \u0022Architectural Linter\u0022",
       "MCP-First Design",
       "Context-Aware Graphs",
       "Future Research Directions",
@@ -529,16 +587,16 @@
   },
   "/projects/terratracker": {
     "Headings": [
-      "Project Overview & Academic Context",
+      "Project Overview \u0026 Academic Context",
       "COMP2913 Software Engineering Project",
-      "Core Features & Functionality",
+      "Core Features \u0026 Functionality",
       "Route Tracking",
       "Social Sharing",
       "Analytics",
-      "Technical Stack & Architecture",
+      "Technical Stack \u0026 Architecture",
       "Backend Stack",
       "Frontend Stack",
-      "DevOps & Deployment",
+      "DevOps \u0026 Deployment",
       "Agile Development Process",
       "Sprint Planning",
       "Collaboration Tools",
@@ -546,9 +604,9 @@
       "Team Collaboration Highlights",
       "Skills Demonstrated",
       "Takeaways",
-      "Project Resources & Documentation",
-      "Access Project Repository & Documentation",
-      "Technologies & Tools"
+      "Project Resources \u0026 Documentation",
+      "Access Project Repository \u0026 Documentation",
+      "Technologies \u0026 Tools"
     ],
     "Pdfs": [
       "/docs/terratracker-team-project-brief.pdf"
@@ -563,8 +621,8 @@
       "Pipeline Processing",
       "I/O Redirection",
       "Sequential Commands",
-      "Shell Architecture & Parsing",
-      "System Calls & Kernel Programming",
+      "Shell Architecture \u0026 Parsing",
+      "System Calls \u0026 Kernel Programming",
       "Custom System Calls",
       "User Programs Developed",
       "Advanced Memory Management",
@@ -577,9 +635,9 @@
       "Complexity Indicators",
       "Skills Demonstrated",
       "COMP2211",
-      "Source Code & Documentation",
+      "Source Code \u0026 Documentation",
       "Key Insights",
-      "Technologies & Concepts"
+      "Technologies \u0026 Concepts"
     ],
     "Pdfs": [],
     "Images": []

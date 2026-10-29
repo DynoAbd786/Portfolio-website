@@ -27,6 +27,8 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         "/projects/parallel-computing", "/projects/autonomous-robotics", "/projects/opengl-renderer",
         "/projects/xv6-operating-system", "/projects/quantum-dots", "/projects/c-programming",
         "/projects/graphics-fundamentals", "/projects/portfolio",
+        "/projects/advanced-software-engineering", "/projects/deep-learning", "/projects/coevolutionary-boids",
+        "/projects/evolutionary-agents", "/projects/kubernetes-cloud-edge", "/projects/climate-data-science",
     };
 
     public static TheoryData<string> MigratedRoutes => new(Routes);
