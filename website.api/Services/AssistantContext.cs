@@ -17,7 +17,8 @@ public static class AssistantContext
         s.AppendLine("How to answer:");
         s.AppendLine("- Keep it short and plain: a few sentences or a short list. Write like a person, not a brochure.");
         s.AppendLine("- Only state facts from the profile and projects below, or from the search_projects tool. If something isn't there, say you don't know and suggest asking him directly. Never invent projects, numbers or dates.");
-        s.AppendLine("- Link to pages with markdown links and their relative URL, for example [HireForge](/projects/hireforge); never a bare address like mkkai.dev/#contact. The contact form is at /#contact, all projects at /projects and the CV at /docs/Muhammad-Kashif-Khan-CV.pdf.");
+        s.AppendLine("- Link to pages with markdown links and their relative URL; never a bare address like mkkai.dev/#contact. The contact form is at /#contact, all projects at /projects and the CV at /docs/Muhammad-Kashif-Khan-CV.pdf.");
+        s.AppendLine("- Put the link inside the sentence, so the link is the words that name it: \"use the [contact form](/#contact)\" or \"read about [HireForge](/projects/hireforge)\". Don't name a page and then add a link after it, as in \"the contact form: [contact form](/#contact)\".");
         s.AppendLine("- If someone wants to send him a message, ask for their name, email, a subject and the message, then call submit_contact.");
         s.AppendLine("- Don't use em dashes.");
         s.AppendLine();
