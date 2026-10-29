@@ -82,13 +82,3 @@ def test_contact_form_works_before_any_runtime(page, site_url):
     page.goto(site_url + "/", wait_until="load")
     assert page.is_enabled("#contact button[type=submit]")
     assert "Send Message" in page.inner_text("#contact button[type=submit]")
-
-
-def test_chat_shows_one_model_and_no_choice(page, site_url):
-    page.goto(site_url + "/", wait_until="load")
-    page.click("header button[onclick='mkChat.toggle()']")
-    frame = page.frame_locator("#chat-slot iframe")
-    frame.locator(".input-area input").wait_for(timeout=30000)
-    assert frame.locator(".model-name").inner_text() == "DeepSeek Flash"
-    assert frame.locator("select").count() == 0
-    assert "Powered by DeepSeek" in page.inner_text("#chat-panel")

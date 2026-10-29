@@ -11,6 +11,14 @@ function toggleMobileMenu() {
     menuIcon.classList.toggle('fa-times', opening);
 }
 
+// Inside the chat frame (/chat-panel): the assistant registers here, so the panel's header outside
+// the frame can drive it
+window.mkChatFrame = {
+    target: null,
+    register: function (dotnet) { this.target = dotnet; },
+    run: function (name) { this.target?.invokeMethodAsync('Command', name); }
+};
+
 // The chat side panel opens and closes without waiting for WebAssembly;
 // only the terminal inside it is interactive.
 window.mkChat = {
@@ -36,6 +44,11 @@ window.mkChat = {
         frame.title = 'AI assistant';
         frame.className = 'absolute inset-0 h-full w-full border-0 bg-transparent';
         slot.append(frame);
+    },
+    // the header's past-chats and new-chat buttons: passed to the assistant in the frame (mkChatFrame)
+    command: function (name) {
+        const frame = document.querySelector('#chat-slot iframe');
+        frame?.contentWindow?.mkChatFrame?.run(name);
     },
     toggleFullScreen: function () {
         const panel = document.getElementById('chat-panel');

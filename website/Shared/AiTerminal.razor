@@ -1,103 +1,53 @@
 @using System.Text.Json
 @using Markdig
+@implements IDisposable
 @inject HttpClient Http
 @inject IJSRuntime JS
 
+@* The assistant, in the chat panel's frame. The panel's header (MainLayout) is its only header: its
+   past-chats and new-chat buttons arrive here as Command calls (mkChatFrame in site.js). *@
 <div class="chat-widget">
-    <div class="chat-header">
-        <div class="header-info">
-            <div class="avatar-circle">
-                <i class="fas fa-robot"></i>
-            </div>
-            <div class="header-text">
-                <h3>AI Assistant</h3>
-                <div class="model-selector">
-                    <span class="model-name">DeepSeek Flash</span>
-                </div>
-            </div>
-            <button class="info-btn" @onclick="() => historySidebarOpen = !historySidebarOpen" title="Chat History" style="margin-left: auto; margin-right: 8px;">
-                <i class="fas fa-history"></i>
-            </button>
-            <button class="info-btn" @onclick="StartNewChat" title="Start New Chat" style="margin-right: 8px;">
-                <i class="fas fa-plus"></i>
-            </button>
-            <button class="info-btn" @onclick="ToggleInfo" title="About this assistant">
-                <i class="fas fa-info-circle"></i>
-            </button>
-        </div>
-    </div>
-
     @if (historySidebarOpen)
     {
         <div class="history-sidebar-overlay" @onclick="() => historySidebarOpen = false"></div>
         <div class="history-sidebar">
             <div class="sidebar-header">
-                <h4>Chat History</h4>
-                <button @onclick="() => historySidebarOpen = false"><i class="fas fa-times"></i></button>
+                <h4>Past chats</h4>
+                <button type="button" aria-label="Close past chats" @onclick="() => historySidebarOpen = false"><i class="fas fa-xmark"></i></button>
             </div>
             <div class="sidebar-content">
                 @if (!sessions.Any())
                 {
-                    <div class="empty-history">No past conversations yet.</div>
+                    <div class="empty-history">No past chats yet.</div>
                 }
                 else
                 {
                     @foreach (var session in sessions)
                     {
                         <div class="history-item @(session.Id == currentSessionId ? "active" : "")" @onclick="() => LoadSession(session.Id)">
-                            <div class="item-icon"><i class="fas fa-comment-alt"></i></div>
                             <div class="item-info">
                                 <div class="item-title">@session.Title</div>
-                                <div class="item-meta">@session.LastUpdated.ToString("MMM dd, HH:mm")</div>
+                                <div class="item-meta">@session.LastUpdated.ToString("d MMM, HH:mm")</div>
                             </div>
-                            <button class="delete-session-btn" @onclick:stopPropagation="true" @onclick="() => DeleteSession(session.Id)">
-                                <i class="fas fa-trash-alt"></i>
+                            <button type="button" class="delete-session-btn" aria-label="Delete this chat" @onclick:stopPropagation="true" @onclick="() => DeleteSession(session.Id)">
+                                <i class="fas fa-trash-can"></i>
                             </button>
                         </div>
                     }
                 }
             </div>
             <div class="sidebar-footer">
-                <button class="new-chat-sidebar-btn" @onclick="StartNewChat">
-                    <i class="fas fa-plus"></i> New Chat
+                <button type="button" class="new-chat-sidebar-btn" @onclick="StartNewChat">
+                    <i class="fas fa-plus"></i> New chat
                 </button>
             </div>
         </div>
     }
 
     <div class="chat-body" id="chat-body">
-        @if (showInfo)
+        @foreach (var message in history)
         {
-            <div class="info-panel">
-                <h4>About this Assistant</h4>
-                <p>This assistant runs on DeepSeek Flash and answers questions about my work.</p>
-                
-                <h5>Capabilities:</h5>
-                <ul>
-                    <li>Search projects by skill or detailed query (RAG).</li>
-                    <li>Answer questions about my experience & skills.</li>
-                </ul>
-
-                <h5>Limitations:</h5>
-                <ul>
-                    <li><strong>Context Limit:</strong> Standard token limits apply.</li>
-                    <li><strong>Accuracy:</strong> May occasionally hallucinate details. Verify important info.</li>
-                </ul>
-                
-                <button class="close-info-btn" @onclick="ToggleInfo">Got it</button>
-            </div>
-        }
-        else
-        {
-            @foreach (var message in history)
-            {
-                <div class="message-wrapper @(message.Role == "user" ? "user" : "ai")">
-                @if (message.Role != "user")
-                {
-                    <div class="message-avatar">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                }
+            <div class="message-wrapper @(message.Role == "user" ? "user" : "ai")">
                 <div class="message-content">
                     @if (message.Role == "user")
                     {
@@ -106,13 +56,6 @@
                     else
                     {
                         @((MarkupString)ChatMarkdown.ToHtml(message.Content))
-                        
-                        @if (message.ToolsDisabled && message.Role == "model")
-                        {
-                            <div class="tool-notice">
-                                <i class="fas fa-info-circle"></i> This model doesn't support tools. Results may be less detailed.
-                            </div>
-                        }
                     }
                 </div>
             </div>
@@ -121,614 +64,200 @@
         @if (isTyping)
         {
             <div class="message-wrapper ai">
-                <div class="message-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="message-content typing">
+                <div class="message-content typing" aria-label="Thinking">
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
                     <div class="typing-dot"></div>
                 </div>
             </div>
         }
-    }
     </div>
 
     <div class="chat-footer">
         @if (history.Count < 2)
         {
             <div class="suggestion-chips">
-                <button @onclick='() => SendSuggestion("What are your skills?")'>What are your skills?</button>
-                <button @onclick='() => SendSuggestion("Show me Python projects")'>Show me Python projects</button>
-                <button @onclick='() => SendSuggestion("How can I contact Muhammad?")'>Contact info</button>
+                <button type="button" @onclick='() => SendSuggestion("What is he building right now?")'>What is he building?</button>
+                <button type="button" @onclick='() => SendSuggestion("Show me his AI projects")'>His AI projects</button>
+                <button type="button" @onclick='() => SendSuggestion("How can I contact Muhammad?")'>How do I contact him?</button>
             </div>
         }
-        
+
         <div class="input-area">
-            <input @ref="inputElement" 
-                   type="text" 
-                   placeholder="Ask me anything about the portfolio..." 
-                   @bind="currentInput" 
-                   @bind:event="oninput" 
+            <input @ref="inputElement"
+                   type="text"
+                   aria-label="Your question"
+                   placeholder="Ask about his work..."
+                   @bind="currentInput"
+                   @bind:event="oninput"
                    @onkeydown="HandleKeyDown" />
-            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping)">
-                <i class="fas fa-paper-plane"></i>
+            <button type="button" class="send-btn" aria-label="Send" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping)">
+                <i class="fas fa-arrow-up"></i>
             </button>
         </div>
+        <p class="chat-note">Answers come from this site and can be wrong.</p>
     </div>
 </div>
 
 <style>
-    /* Modern Chat Widget Styles */
+    /* The site's look (tailwind.config.js tokens): ink #0b1020, ink-2 #111a2e, line #1f2a44, cy #22d3ee */
     .chat-widget {
+        position: relative;
         display: flex;
         flex-direction: column;
         height: 100%;
-        max-height: 100%;
         width: 100%;
-        max-width: 100%;
-        background: transparent; /* Background handled by panel */
-        border: none;
-        border-radius: 0;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: #0b1020;
+        color: #e2e8f0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --chat-gutter: max(16px, calc((100% - 760px) / 2)); /* full screen: a readable column */
     }
 
-    /* Header */
-    .chat-header {
-        padding: 1rem;
-        background: rgba(15, 23, 42, 0.8); /* Slate-900 */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .header-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .avatar-circle {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #06b6d4, #3b82f6); /* Cyan to Blue */
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.2rem;
-    }
-
-    .header-text h3 {
-        margin: 0 0 4px 0;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #f8fafc;
-    }
-
-    /* Model Selector Styles */
-    .model-selector {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 0.75rem;
-        color: #94a3b8;
-    }
-
-
-
-    /* Body */
     .chat-body {
         flex: 1;
         overflow-y: auto;
-        padding: 1.5rem;
+        padding: 20px var(--chat-gutter);
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 12px;
         scroll-behavior: smooth;
     }
 
-    .message-wrapper {
-        display: flex;
-        align-items: flex-end;
-        gap: 8px;
-        max-width: 85%;
-        animation: fadeIn 0.3s ease;
-    }
-
-    .message-wrapper.user {
-        align-self: flex-end;
-        flex-direction: row-reverse;
-    }
-
-    .message-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #06b6d4;
-        flex-shrink: 0;
-        font-size: 0.9rem;
-    }
+    .message-wrapper { display: flex; }
+    .message-wrapper.user { justify-content: flex-end; }
 
     .message-content {
-        padding: 10px 16px;
-        border-radius: 12px;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        color: #e2e8f0;
-        background: rgba(30, 41, 59, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        max-width: 88%;
+        padding: 11px 14px;
+        border-radius: 14px;
+        border: 1px solid #1f2a44;
+        background: #111a2e;
+        font-size: 14.5px;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
     }
-
+    .message-wrapper.ai .message-content { border-bottom-left-radius: 4px; }
     .message-wrapper.user .message-content {
-        background: linear-gradient(135deg, #06b6d4, #2563eb);
-        color: white;
-        border: none;
-        box-shadow: 0 2px 10px rgba(6, 182, 212, 0.2);
+        border-color: rgba(34, 211, 238, .35);
+        background: rgba(34, 211, 238, .1);
+        color: #f1f5f9;
+        border-bottom-right-radius: 4px;
+        white-space: pre-wrap;
     }
 
-    /* Markdown Styles in Chat */
-    ::deep .message-content p { margin-bottom: 0.8em; }
-    ::deep .message-content p:last-child { margin-bottom: 0; }
-    ::deep .message-content ul, ::deep .message-content ol { padding-left: 1.5rem; margin-bottom: 1rem; }
-    ::deep .message-content li { margin-bottom: 0.4rem; }
-    ::deep .message-content a { color: #38bdf8; text-decoration: underline; font-weight: 500; }
-    
-    /* Tables */
-    ::deep .message-content table { 
-        width: 100%; 
-        border-collapse: collapse; 
-        margin: 1rem 0; 
-        font-size: 0.85rem;
-        background: rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-        overflow: hidden;
+    .message-content p { margin: 0 0 .6em; }
+    .message-content p:last-child { margin-bottom: 0; }
+    .message-content a { color: #22d3ee; text-decoration: underline; text-underline-offset: 2px; }
+    .message-content strong { color: #fff; font-weight: 600; }
+    .message-content ul, .message-content ol { margin: .4em 0 .6em; padding-left: 1.25em; }
+    .message-content ul { list-style: disc; }
+    .message-content ol { list-style: decimal; }
+    .message-content li { margin: .2em 0; }
+    .message-content h1, .message-content h2, .message-content h3, .message-content h4 {
+        margin: .8em 0 .35em; font-size: 1em; font-weight: 700; color: #fff;
     }
-    ::deep .message-content th, ::deep .message-content td { 
-        padding: 10px 12px; 
-        text-align: left; 
-        border: 1px solid rgba(255, 255, 255, 0.1); 
+    .message-content code {
+        font-family: "JetBrains Mono", monospace; font-size: .85em;
+        background: rgba(255, 255, 255, .06); padding: .1em .35em; border-radius: 4px;
     }
-    ::deep .message-content th { 
-        background: rgba(6, 182, 212, 0.2); 
-        color: #38bdf8; 
-        font-weight: 600; 
+    .message-content pre {
+        margin: .6em 0; padding: 10px 12px; overflow-x: auto;
+        background: #0b1020; border: 1px solid #1f2a44; border-radius: 10px;
     }
-    ::deep .message-content tr:nth-child(even) { background: rgba(255, 255, 255, 0.05); }
+    .message-content pre code { background: none; padding: 0; }
+    .message-content blockquote { margin: .6em 0; padding-left: 10px; border-left: 2px solid #22d3ee; color: #cbd5e1; }
+    .message-content table { border-collapse: collapse; margin: .6em 0; font-size: .92em; }
+    .message-content th, .message-content td { border: 1px solid #1f2a44; padding: 4px 8px; text-align: left; }
 
-    /* Code Blocks */
-    ::deep .message-content pre {
-        background: #0d1117;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1rem 0;
-        overflow-x: auto;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    ::deep .message-content code { 
-        font-family: 'Fira Code', 'Roboto Mono', monospace;
-        font-size: 0.85em;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 2px 4px;
-        border-radius: 4px;
-        color: #e2e8f0;
-    }
-    ::deep .message-content pre code { 
-        background: transparent; 
-        padding: 0; 
-        display: block; 
-    }
+    .message-content.typing { display: flex; align-items: center; gap: 5px; padding: 14px 16px; }
+    .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: #22d3ee; animation: typing-pulse 1.2s infinite ease-in-out both; }
+    .typing-dot:nth-child(2) { animation-delay: .15s; }
+    .typing-dot:nth-child(3) { animation-delay: .3s; }
+    @@keyframes typing-pulse { 0%, 80%, 100% { opacity: .25; transform: scale(.8); } 40% { opacity: 1; transform: scale(1); } }
 
-    /* Blockquotes */
-    ::deep .message-content blockquote {
-        border-left: 4px solid #3b82f6;
-        padding-left: 1rem;
-        margin: 1rem 0;
-        color: #94a3b8;
-        font-style: italic;
-    }
+    .chat-footer { padding: 12px var(--chat-gutter) 12px; border-top: 1px solid #1f2a44; background: #0b1020; }
 
-    /* Math (KaTeX) */
-    ::deep .katex-display { margin: 1rem 0; overflow-x: auto; overflow-y: hidden; }
-
-    /* Typing Indicator */
-    .message-content.typing {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        padding: 12px 16px;
-    }
-
-    .typing-dot {
-        width: 6px;
-        height: 6px;
-        background: #94a3b8;
-        border-radius: 50%;
-        animation: typingBounce 1.4s infinite ease-in-out both;
-    }
-
-    .typing-dot:nth-child(1) { animation-delay: -0.32s; }
-    .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-    /* Footer */
-    .chat-footer {
-        padding: 1.5rem;
-        padding-bottom: 2rem;
-        background: rgba(15, 23, 42, 0.6);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        flex-shrink: 0;
-    }
-
-    .suggestion-chips {
-        display: flex;
-        flex-wrap: wrap; /* Allow wrapping to prevent cutoff */
-        gap: 8px;
-        padding-bottom: 12px;
-    }
-
+    .suggestion-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
     .suggestion-chips button {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #cbd5e1;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: all 0.2s;
+        font: 12px "JetBrains Mono", monospace; color: #cbd5e1; cursor: pointer;
+        background: rgba(255, 255, 255, .03); border: 1px solid #1f2a44; border-radius: 999px; padding: 6px 12px;
+        transition: border-color .2s, color .2s;
     }
-
-    .suggestion-chips button:hover {
-        background: rgba(6, 182, 212, 0.1);
-        border-color: #06b6d4;
-        color: #06b6d4;
-    }
+    .suggestion-chips button:hover { border-color: rgba(34, 211, 238, .5); color: #22d3ee; }
 
     .input-area {
-        display: flex;
-        gap: 8px;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 8px; /* Detailed padding */
-        border-radius: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        align-items: center;
+        display: flex; align-items: center; gap: 8px;
+        padding: 5px 5px 5px 14px; border: 1px solid #1f2a44; border-radius: 12px; background: #111a2e;
+        transition: border-color .2s, box-shadow .2s;
     }
-
-    .input-area:focus-within {
-        border-color: #06b6d4;
-        box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
-    }
-
-    .input-area.disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-        background: rgba(0, 0, 0, 0.4);
-    }
-    
-    .input-area.disabled input {
-        cursor: not-allowed;
-    }
-
-    /* Scoped: these styles are global, and a bare input rule restyled every form on the site */
+    .input-area:focus-within { border-color: rgba(34, 211, 238, .6); box-shadow: 0 0 0 3px rgba(34, 211, 238, .12); }
     .input-area input {
-        flex: 1;
-        background: transparent;
-        border: none;
-        padding: 8px 16px;
-        color: white;
-        font-size: 0.95rem;
-        outline: none;
+        flex: 1; min-width: 0; padding: 7px 0;
+        background: transparent; border: 0; outline: 0; color: #f1f5f9; font-size: 14.5px;
     }
-
-    .input-area input::placeholder {
-        color: #64748b;
-    }
-
+    .input-area input::placeholder { color: #64748b; }
     .send-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #06b6d4, #2563eb);
-        border: none;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: transform 0.2s;
+        display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0;
+        border: 0; border-radius: 9px; background: #22d3ee; color: #03141b; cursor: pointer;
+        transition: opacity .2s, transform .2s;
     }
+    .send-btn:hover:not(:disabled) { transform: translateY(-1px); }
+    .send-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .chat-note { margin: 8px 0 0; font-size: 11.5px; color: #64748b; text-align: center; }
 
-    .send-btn:hover:not(:disabled) {
-        transform: scale(1.05);
-    }
-
-    .send-btn:disabled {
-        background: #334155;
-        cursor: not-allowed;
-        opacity: 0.7;
-    }
-
-    @@keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @@keyframes typingBounce {
-        0%, 80%, 100% { transform: scale(0); }
-        40% { transform: scale(1); }
-    }
-
-    /* Loading Spinner */
-    .loading-spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        border-top: 4px solid #06b6d4;
-        animation: spin 1s linear infinite;
-        margin-bottom: 1.5rem;
-    }
-
-    @@keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* History Sidebar */
-    .history-sidebar-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.4);
-        z-index: 100;
-        backdrop-filter: blur(4px);
-        animation: fadeIn 0.2s ease;
-    }
-
+    /* past chats: a drawer over the conversation */
+    .history-sidebar-overlay { position: absolute; inset: 0; z-index: 10; background: rgba(3, 6, 14, .6); }
     .history-sidebar {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 280px;
-        height: 100%;
-        background: #0f172a; /* Slate-900 */
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 101;
-        display: flex;
-        flex-direction: column;
-        animation: slideIn 0.3s ease-out;
+        position: absolute; top: 0; bottom: 0; left: 0; z-index: 11; width: min(300px, 86%);
+        display: flex; flex-direction: column; background: #111a2e; border-right: 1px solid #1f2a44;
+        animation: drawer-in .25s cubic-bezier(.2, .7, .2, 1);
     }
-
-    @@keyframes slideIn {
-        from { transform: translateX(100%); }
-        to { transform: translateX(0); }
-    }
-
-    .sidebar-header {
-        padding: 1.25rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .sidebar-header h4 { margin: 0; font-size: 1rem; color: #f8fafc; }
-    .sidebar-header button { background: transparent; border: none; color: #94a3b8; cursor: pointer; }
-
-    .sidebar-content {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
+    @@keyframes drawer-in { from { transform: translateX(-16px); opacity: 0; } }
+    .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #1f2a44; }
+    .sidebar-header h4 { margin: 0; font-size: 14px; font-weight: 600; color: #fff; }
+    .sidebar-header button { background: none; border: 0; color: #94a3b8; cursor: pointer; padding: 4px; }
+    .sidebar-header button:hover { color: #fff; }
+    .sidebar-content { flex: 1; overflow-y: auto; padding: 8px; }
     .history-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 10px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.2s;
-        position: relative;
+        display: flex; align-items: center; gap: 8px; padding: 10px 12px; margin-bottom: 4px;
+        border: 1px solid transparent; border-radius: 10px; cursor: pointer; transition: background .15s;
     }
-
-    .history-item:hover { background: rgba(255, 255, 255, 0.05); }
-    .history-item.active { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); }
-
-    .item-icon { color: #64748b; font-size: 0.9rem; }
-    .history-item.active .item-icon { color: #06b6d4; }
-
+    .history-item:hover { background: rgba(255, 255, 255, .04); }
+    .history-item.active { background: rgba(34, 211, 238, .08); border-color: rgba(34, 211, 238, .3); }
     .item-info { flex: 1; min-width: 0; }
-    .item-title { font-size: 0.85rem; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-meta { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
-
-    .delete-session-btn {
-        opacity: 0;
-        background: transparent;
-        border: none;
-        color: #64748b;
-        cursor: pointer;
-        padding: 4px;
-        transition: all 0.2s;
-    }
-
-    .history-item:hover .delete-session-btn { opacity: 1; }
-    .delete-session-btn:hover { color: #ef4444; }
-
-    .sidebar-footer {
-        padding: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
+    .item-title { font-size: 13.5px; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-meta { margin-top: 2px; font: 11px "JetBrains Mono", monospace; color: #64748b; }
+    .delete-session-btn { background: none; border: 0; color: #64748b; cursor: pointer; opacity: 0; transition: opacity .15s, color .15s; padding: 4px; }
+    .history-item:hover .delete-session-btn, .delete-session-btn:focus-visible { opacity: 1; }
+    .delete-session-btn:hover { color: #f87171; }
+    .empty-history { margin-top: 2rem; text-align: center; font-size: 13px; color: #64748b; }
+    .sidebar-footer { padding: 12px; border-top: 1px solid #1f2a44; }
     .new-chat-sidebar-btn {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: white;
-        padding: 8px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        transition: all 0.2s;
+        width: 100%; padding: 9px; display: flex; align-items: center; justify-content: center; gap: 8px;
+        background: transparent; border: 1px solid #1f2a44; border-radius: 10px; color: #cbd5e1; font-size: 13.5px; cursor: pointer;
+        transition: border-color .2s, color .2s;
     }
-
-    .new-chat-sidebar-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #06b6d4; color: #06b6d4; }
-
-    .empty-history { text-align: center; color: #64748b; font-size: 0.85rem; margin-top: 2rem; }
-
-    /* Tool Notice */
-    .tool-notice {
-        margin-top: 8px;
-        font-size: 0.75rem;
-        color: #94a3b8;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 4px 8px;
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border-left: 2px solid #eab308; /* Yellow-500 */
-    }
-    
-    .status-note {
-        font-size: 0.85rem;
-        color: #64748b;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        justify-content: center;
-    }
-
-    /* Access Form Styles */
-    .access-form, .access-success {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        color: #f8fafc;
-        padding: 2rem;
-        text-align: center;
-        animation: fadeIn 0.4s ease;
-    }
-
-    .access-form h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
-    .form-desc { color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem; }
-
-    .form-group { width: 100%; max-width: 100%; margin-bottom: 1.5rem; text-align: left; }
-    .form-group label { display: block; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 8px; font-weight: 500; }
-    .form-group input, .form-group textarea {
-        width: 100%;
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        padding: 12px;
-        font-size: 1rem;
-        color: white;
-        font-family: inherit;
-        outline: none;
-        transition: border-color 0.2s;
-    }
-    .form-group textarea { height: 80px; resize: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: #38bdf8; }
-
-    .submit-btn, .back-btn {
-        background: linear-gradient(135deg, #06b6d4, #3b82f6);
-        border: none;
-        color: white;
-        padding: 10px 24px;
-        border-radius: 20px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s, opacity 0.2s;
-        margin-top: 0.5rem;
-    }
-    .submit-btn:hover, .back-btn:hover { transform: scale(1.05); }
-    .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-
-    /* Success State */
-    .success-icon { font-size: 3rem; color: #22c55e; margin-bottom: 1rem; }
-    .access-success h3 { font-size: 1.5rem; color: #f8fafc; margin: 0 0 0.5rem 0; }
-    .access-success p { color: #94a3b8; max-width: 300px; margin-bottom: 1.5rem; line-height: 1.5; }
-    .back-btn { background: #334155; }
-    .back-btn:hover { background: #475569; }
-
-    .error-message {
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        width: 100%;
-        max-width: 320px;
-    }
-    }
-
-    /* Info Panel Styles */
-    .info-btn {
-        background: transparent;
-        border: none;
-        color: #94a3b8;
-        cursor: pointer;
-        padding: 4px;
-        transition: color 0.2s;
-        margin-left: auto;
-    }
-    .info-btn:hover { color: #38bdf8; }
-
-    .info-panel {
-        background: rgba(30, 41, 59, 0.95);
-        padding: 1.5rem;
-        border-radius: 12px;
-        color: #e2e8f0;
-        animation: fadeIn 0.3s ease;
-        position: absolute;
-        top: 60px;
-        left: 20px;
-        right: 20px;
-        z-index: 10;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-    }
-    .info-panel h4 { color: #38bdf8; margin-bottom: 1rem; font-size: 1.1rem; }
-    .info-panel h5 { color: #f8fafc; margin: 1rem 0 0.5rem 0; font-size: 0.95rem; }
-    .info-panel ul { padding-left: 1.2rem; margin-bottom: 1rem; font-size: 0.9rem; color: #cbd5e1; }
-    .info-panel li { margin-bottom: 4px; }
-    .close-info-btn {
-        background: #334155;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        width: 100%;
-        margin-top: 1rem;
-        transition: background 0.2s;
-    }
-    .close-info-btn:hover { background: #475569; }
+    .new-chat-sidebar-btn:hover { border-color: #22d3ee; color: #22d3ee; }
 </style>
 
 @code {
-    private bool showInfo = false;
-    private void ToggleInfo() => showInfo = !showInfo;
+    private const string Greeting = "Hi, I'm the assistant on Muhammad's site. Ask me about his projects, his experience or what he works with, or I can pass a message on to him.";
+    // the old greeting may still be in a visitor's saved chats
+    private const string OldGreetingStart = "Hi there! 👋";
+
+    private DotNetObjectReference<AiTerminal>? self;
+
+    // from the panel's header, outside the frame (mkChat.command → mkChatFrame.run)
+    [JSInvokable]
+    public async Task Command(string name)
+    {
+        if (name == "history") historySidebarOpen = !historySidebarOpen;
+        else if (name == "new") await StartNewChat();
+        StateHasChanged();
+    }
+
+    public void Dispose() => self?.Dispose();
 
     private ElementReference inputElement;
     private string currentInput = "";
@@ -777,12 +306,16 @@
             }
             catch (Exception ex) { Console.WriteLine("localStorage error: " + ex.Message); }
 
-            // Modern Welcome Message
             if (!history.Any())
             {
-                history.Add(new MessageItem { Role = "model", Content = "Hi there! 👋 I'm **MKKAI's AI Assistant**. \n\nI can help you explore his projects, technical skills, or experience. What would you like to know?" });
+                history.Add(new MessageItem { Role = "model", Content = Greeting });
                 await SaveStateAsync();
             }
+            else if (history[0].Role == "model" && history[0].Content.StartsWith(OldGreetingStart))
+                history[0].Content = Greeting;
+
+            self = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("mkChatFrame.register", self);
             StateHasChanged();
         }
         await ScrollToBottom();
@@ -850,7 +383,7 @@
         currentSessionId = Guid.NewGuid().ToString();
         currentSessionTitle = "New Chat";
         history.Clear();
-        history.Add(new MessageItem { Role = "model", Content = "New chat started! How can I help you explore Muhammad's portfolio today?" });
+        history.Add(new MessageItem { Role = "model", Content = Greeting });
         
         historySidebarOpen = false;
         await SaveStateAsync();
@@ -933,12 +466,12 @@
             }
             else
             {
-                history.Add(new MessageItem { Role = "model", Content = "😔 I'm having trouble connecting to the server. Please try again later." });
+                history.Add(new MessageItem { Role = "model", Content = "I can't reach the server right now. Please try again in a moment." });
             }
         }
         catch (Exception ex)
         {
-            history.Add(new MessageItem { Role = "model", Content = "⚠️ Connection error. Is the backend running?" });
+            history.Add(new MessageItem { Role = "model", Content = "I can't reach the server right now. Please try again in a moment." });
             Console.WriteLine(ex);
         }
         finally

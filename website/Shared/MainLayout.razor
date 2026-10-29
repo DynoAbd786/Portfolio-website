@@ -80,21 +80,18 @@
     <div id="chat-root" data-permanent>
         <!-- AI Assistant Side Panel -->
         <div id="chat-panel" class="fixed inset-y-0 right-0 z-[60] bg-ink border-l border-line shadow-2xl transform transition-transform duration-300 ease-in-out translate-x-full flex flex-col w-full sm:w-[450px]">
-            <div class="bg-ink-2 p-4 flex justify-between items-center border-b border-line">
-                <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                    <div>
-                        <span class="font-bold text-lg text-white block">AI Assistant</span>
-                        <span class="text-xs text-slate-400">Powered by DeepSeek</span>
-                    </div>
+            @* The panel's one header: the assistant's own controls (past chats, new chat) reach into its
+               frame through mkChat.command *@
+            <div class="chat-panel-header flex h-14 shrink-0 items-center justify-between gap-3 border-b border-line bg-ink-2 px-4">
+                <div class="min-w-0">
+                    <p class="font-semibold leading-tight text-white">Ask AI</p>
+                    <p class="font-mono text-[11px] leading-tight text-slate-500">answers from this site · DeepSeek</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button type="button" id="chat-fullscreen" onclick="mkChat.toggleFullScreen()" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700" title="Full Screen">
-                        <i class="fas fa-expand text-lg"></i>
-                    </button>
-                    <button type="button" onclick="mkChat.toggle()" aria-label="Close AI Assistant" class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-700">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
+                <div class="flex items-center gap-1">
+                    <button type="button" onclick="mkChat.command('history')" aria-label="Past chats" title="Past chats" class="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-white/5 hover:text-white"><i class="fas fa-clock-rotate-left" aria-hidden="true"></i></button>
+                    <button type="button" onclick="mkChat.command('new')" aria-label="New chat" title="New chat" class="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-white/5 hover:text-white"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <button type="button" id="chat-fullscreen" onclick="mkChat.toggleFullScreen()" title="Full Screen" class="hidden sm:grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-white/5 hover:text-white"><i class="fas fa-expand" aria-hidden="true"></i></button>
+                    <button type="button" onclick="mkChat.toggle()" aria-label="Close AI Assistant" title="Close" class="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-white/5 hover:text-white"><i class="fas fa-xmark" aria-hidden="true"></i></button>
                 </div>
             </div>
             <div class="flex-1 overflow-hidden relative">
