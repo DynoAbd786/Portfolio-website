@@ -39,10 +39,13 @@ def test_desktop_header_spans_the_hero(page, site_url, width):
     assert abs(page.evaluate("document.documentElement.clientWidth") - links["right"] - h1["left"]) <= 2
 
 
-def test_header_keeps_the_page_column_elsewhere(page, site_url):
+@pytest.mark.parametrize("path", ["/projects", "/projects/hireforge", "/about"])
+def test_header_is_the_same_on_every_page(page, site_url, path):
     page.set_viewport_size({"width": 1920, "height": 900})
-    page.goto(site_url + "/projects", wait_until="load")
-    assert box(page, "header nav")["width"] <= 1280 + 1
+    page.goto(site_url + HOME, wait_until="load")
+    home = box(page, "header nav > a")
+    page.goto(site_url + path, wait_until="load")
+    assert abs(box(page, "header nav > a")["left"] - home["left"]) <= 1
 
 
 @pytest.mark.parametrize("size", [(390, 844), (844, 390)])

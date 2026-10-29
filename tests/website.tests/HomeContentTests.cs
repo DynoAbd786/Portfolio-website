@@ -16,7 +16,7 @@ public class HomeContentTests : IClassFixture<SiteFactory>
     // Every string the homepage shows outside the project data
     private static IEnumerable<string> AllCopy() =>
         new[] { HomeContent.WorkshopJson() }
-            .Concat(HomeContent.Proof.SelectMany(p => new[] { p.Value, p.Label }))
+            .Concat(HomeContent.Stack.SelectMany(g => g.Items.Append(g.Label)))
             .Concat(HomeContent.SelectedWork.Select(w => w.FieldLabel))
             .Concat(HomeContent.Products.SelectMany(p => p.Tags.Append(p.Name).Append(p.Summary)))
             .Concat(HomeContent.Experience.SelectMany(e => new[] { e.When, e.Title, e.Org, e.Detail }));
@@ -77,14 +77,6 @@ public class HomeContentTests : IClassFixture<SiteFactory>
         var json = HomeContent.WorkshopJson();
         Assert.Contains("\"key\":\"synergy\"", json);
         Assert.Contains("\"pinX\":", json);
-    }
-
-    [Fact]
-    public void Proof_counts_each_piece_of_work_once()
-    {
-        // pNanoLocz has its own fact, so no fact also counts it among "internships"
-        Assert.DoesNotContain(HomeContent.Proof, p => (p.Value + " " + p.Label).Contains("internships"));
-        Assert.Contains(HomeContent.Proof, p => p.Value == "Stent simulation");
     }
 
     [Fact]

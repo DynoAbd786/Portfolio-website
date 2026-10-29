@@ -140,6 +140,19 @@ namespace website.api.Services
                 },
                 new Project
                 {
+                    Title = "HireForge: AI-Run Coding Assessments",
+                    Description = "A web app for hiring engineers. An AI agent builds a small codebase with planted bugs from the company's spec, candidates fix them in a sandboxed browser workspace with a terminal, tests and an AI assistant, and a separate reviewer scores the engineering and how well they used the AI. FastAPI and PostgreSQL, React and TypeScript, gVisor sandboxes.",
+                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=HireForge",
+                    ProjectUrl = "/projects/hireforge",
+                    Tags = new[] { "Python", "FastAPI", "PostgreSQL", "React", "TypeScript", "Docker", "gVisor", "LLMs" },
+                    Category = ProjectCategory.Personal,
+                    Fields = new[] { ProjectField.AiMl, ProjectField.ProductBusiness },
+                    Result = "Building a hiring platform where AI writes the coding test, candidates take it in a sandbox, and a separate AI reviewer scores the work.",
+                    IsFeatured = true,
+                    IsInDevelopment = true
+                },
+                new Project
+                {
                     Title = "Flow Diverter Deployment & Medical Simulation Platform",
                     Description = "A biomedical simulation tool, built in a summer internship, for predicting how flow-diverter stents deploy in patient-specific blood vessels. Built with Python, VMTK and GPU-accelerated visualisation. Vessel analysis, stent models and expansion forces work; the full deployment, with collision against the vessel wall, was left unfinished.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Medical+Sim",

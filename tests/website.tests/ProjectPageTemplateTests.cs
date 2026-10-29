@@ -20,7 +20,7 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
     {
         "/projects/machine-learning", "/projects/medical-simulation",
         "/projects/3d-reconstruction", "/projects/pnanolocz", "/projects/distributed-systems",
-        "/projects/home-lab", "/projects/synergy", "/projects/formula-student-ai",
+        "/projects/home-lab", "/projects/synergy", "/projects/hireforge", "/projects/formula-student-ai",
         "/projects/data-mining", "/projects/numerical-computation", "/projects/mental-health-app",
         "/projects/terratracker", "/projects/business-plan", "/vascular-blood-flow",
         "/projects/ai-decision-trees", "/projects/ai-search-algorithms",

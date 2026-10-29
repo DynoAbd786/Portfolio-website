@@ -24,7 +24,7 @@ public class ProjectDataTests : IClassFixture<SiteFactory>
     public async Task Every_project_has_a_field_and_a_result()
     {
         var projects = await ProjectsAsync();
-        Assert.Equal(30, projects.Count);
+        Assert.Equal(31, projects.Count);
         Assert.All(projects, p =>
         {
             Assert.True(p.Fields.Length >= 1, $"{p.Title} has no field");
