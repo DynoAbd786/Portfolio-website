@@ -11,6 +11,7 @@ public class DeepSeekAgentService
 {
     private readonly HttpClient _httpClient;
     private readonly PortfolioTools _tools;
+    private readonly Analytics _analytics;
     private readonly IProjectService _projectService;
     private readonly string _apiKey;
     private readonly ILogger<DeepSeekAgentService> _logger;
@@ -21,12 +22,14 @@ public class DeepSeekAgentService
     public DeepSeekAgentService(
         HttpClient httpClient, 
         PortfolioTools tools,
+        Analytics analytics,
         IProjectService projectService,
         IConfiguration config,
         ILogger<DeepSeekAgentService> logger)
     {
         _httpClient = httpClient;
         _tools = tools;
+        _analytics = analytics;
         _projectService = projectService;
         _apiKey = config["DeepSeek:ApiKey"] ?? ""; // checked per request, so the site runs without it
         _logger = logger;
@@ -180,13 +183,17 @@ public class DeepSeekAgentService
         catch (JsonException) { return "The tool arguments weren't valid JSON."; }
         string? Arg(string key) => args.TryGetValue(key, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
 
+        _analytics.Track("ask-ai-tool", new Dictionary<string, string?>
+        {
+            ["tool"] = name, ["keyword"] = Arg("keyword"), ["category"] = Arg("category"), ["technology"] = Arg("technology"),
+        }, "/chat-panel");
         switch (name)
         {
             case "search_projects":
                 var found = await _tools.SearchAsync(Arg("keyword"), Arg("category"), Arg("technology"));
                 return found.Projects.Count == 0 ? "No projects match that." : JsonSerializer.Serialize(found);
             case "submit_contact":
-                return (await _tools.SubmitContactAsync(Arg("name"), Arg("email"), Arg("subject"), Arg("message"), Arg("company"), Arg("role"))).Message;
+                return (await _tools.SubmitContactAsync("assistant", Arg("name"), Arg("email"), Arg("subject"), Arg("message"), Arg("company"), Arg("role"))).Message;
             default:
                 return $"There's no tool called {name}.";
         }

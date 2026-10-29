@@ -27,9 +27,11 @@ public class PortfolioTools
     private readonly ContactLimiter _limiter;
     private readonly IHttpContextAccessor _http;
     private readonly ILogger<PortfolioTools> _logger;
+    private readonly Analytics _analytics;
 
-    public PortfolioTools(IProjectService projects, IEmailService email, ContactLimiter limiter, IHttpContextAccessor http, ILogger<PortfolioTools> logger)
+    public PortfolioTools(IProjectService projects, IEmailService email, ContactLimiter limiter, IHttpContextAccessor http, Analytics analytics, ILogger<PortfolioTools> logger)
     {
+        _analytics = analytics;
         _projects = projects;
         _email = email;
         _limiter = limiter;
@@ -59,21 +61,29 @@ public class PortfolioTools
         return new ProjectSearchResult(found.Select(Summary).ToList());
     }
 
-    // Sends only a complete message, and only a few an hour per visitor (ContactLimiter)
-    public async Task<ContactOutcome> SubmitContactAsync(string? name, string? email, string? subject, string? message, string? company, string? role)
+    // Sends only a complete message, and only a few an hour per visitor (ContactLimiter). `via` is who
+    // asked (mcp or assistant), for the analytics.
+    public async Task<ContactOutcome> SubmitContactAsync(string via, string? name, string? email, string? subject, string? message, string? company, string? role)
+    {
+        var outcome = await TrySubmitAsync(name, email, subject, message, company, role);
+        _analytics.Track("contact", new Dictionary<string, string?> { ["via"] = via, ["result"] = outcome.Result, ["subject"] = subject, ["company"] = company });
+        return new(outcome.Sent, outcome.Message);
+    }
+
+    private async Task<(bool Sent, string Result, string Message)> TrySubmitAsync(string? name, string? email, string? subject, string? message, string? company, string? role)
     {
         var missing = new[] { ("name", name), ("email", email), ("subject", subject), ("message", message) }
             .Where(f => string.IsNullOrWhiteSpace(f.Item2)).Select(f => f.Item1).ToList();
         if (missing.Count > 0)
-            return new(false, $"Missing: {string.Join(", ", missing)}. Ask for these, then try again.");
+            return (false, "missing", $"Missing: {string.Join(", ", missing)}. Ask for these, then try again.");
         if (!LooksLikeAnEmail(email!))
-            return new(false, "That email address doesn't look right. Ask for it again.");
+            return (false, "bad-email", "That email address doesn't look right. Ask for it again.");
 
         var visitor = _http.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "unknown";
         if (!_limiter.TryTake(visitor))
         {
             _logger.LogWarning("Contact limit reached for {Visitor}", visitor);
-            return new(false, "Too many messages in the last hour. Please try again later, or use the contact form at https://mkkai.dev/#contact.");
+            return (false, "limited", "Too many messages in the last hour. Please try again later, or use the contact form at https://mkkai.dev/#contact.");
         }
 
         var sent = await _email.SendContactEmailAsync(new ContactRequest
@@ -83,7 +93,7 @@ public class PortfolioTools
             Role = string.IsNullOrWhiteSpace(role) ? null : role.Trim(),
         });
         return sent
-            ? new(true, "Message sent. Muhammad will reply by email.")
-            : new(false, "The message couldn't be sent just now. Please try the contact form at https://mkkai.dev/#contact or email contact@mkkai.dev.");
+            ? (true, "sent", "Message sent. Muhammad will reply by email.")
+            : (false, "failed", "The message couldn't be sent just now. Please try the contact form at https://mkkai.dev/#contact or email contact@mkkai.dev.");
     }
 }

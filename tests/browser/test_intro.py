@@ -431,3 +431,26 @@ def test_screen_readers_get_the_name_while_it_builds(desktop, site_url):
     heading = page.get_by_role("heading", level=1)
     assert heading.count() == 1 and "Kashif-Khan" in heading.inner_text()
     assert page.eval_on_selector("#hero h1", "e => getComputedStyle(e).opacity") == "0"  # still hidden on screen
+
+
+RECORD = "window.__events = []; window.umami = { track: (name, data) => window.__events.push([name, data || null]) };"
+
+
+def test_watching_the_intro_is_counted(quiet, site_url):
+    page = quiet
+    page.add_init_script(RECORD)
+    page.goto(site_url + "/", wait_until="domcontentloaded")
+    wait_landed(page)
+    intro = [d for n, d in page.evaluate("window.__events") if n == "intro"]
+    assert len(intro) == 1 and intro[0]["how"] == "watched" and intro[0]["ms"] > 0
+
+
+def test_skipping_the_intro_is_counted_with_why(quiet, site_url):
+    page = quiet
+    page.add_init_script(RECORD)
+    page.goto(site_url + "/", wait_until="domcontentloaded")
+    page.wait_for_timeout(300)
+    page.keyboard.press("Tab")
+    wait_landed(page)
+    intro = [d for n, d in page.evaluate("window.__events") if n == "intro"]
+    assert len(intro) == 1 and intro[0]["how"] == "skipped" and intro[0]["reason"] in ("tab", "early")

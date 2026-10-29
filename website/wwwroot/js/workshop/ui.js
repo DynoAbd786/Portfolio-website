@@ -47,6 +47,7 @@ export function createUI({ root, section, data, onOpen, onClose }) {
   let returnFocus = null;
 
   function openCard(k) {
+    window.mkTrack?.('room-object', { object: k }); // analytics (site.js)
     const d = byKey[k], was = state.focusKey;
     state.focusKey = k; state.explored.add(k); found.textContent = state.explored.size;
     kicker.textContent = '// ' + d.kicker; title.textContent = d.title; desc.textContent = d.desc;

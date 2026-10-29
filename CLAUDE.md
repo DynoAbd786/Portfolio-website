@@ -174,6 +174,14 @@ curl http://localhost:5154/api/projects
 curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
 ```
 
+## Analytics (Umami)
+
+Cookieless analytics with [Umami Cloud](https://cloud.umami.is) (website ID in `appsettings.json`, `Umami:WebsiteId`); the footer's `.privacy-note` says what's counted, including that Ask AI questions are recorded.
+- **Page views**: Umami's script, added by `App.razor` only in Production (never local runs or tests) and never on `/chat-panel`; `data-domains` limits it to mkkai.dev, and it follows enhanced navigation itself (it wraps `pushState`). `data-exclude-hash` keeps in-page glides from counting
+- **Browser events**: `mkTrack(name, data)` in `site.js` (a no-op without Umami): `cv-download` (from), `pdf-download`, `email-click`, `outbound`, `project-open` (from, homepage section), `home-section`, `ask-ai-open`, `ask-ai-question` (the text, from the chat frame through `mkChatFrame.track`), `room-object` (`ui.js`), `intro` (watched or skipped and why, `intro.js`), `scene-fallback`
+- **Server events**: `website.api/Services/Analytics.cs` posts to Umami's API in the background (Production, or `Umami:Enabled=true` in tests): `contact` (via form, api, assistant or mcp; result; subject), `mcp-tool` and `mcp-resource` (with the client's name), `ask-ai-tool`
+- Tests: `tests/website.tests/AnalyticsTests.cs` (Umami faked), `tests/browser/test_analytics.py` and the intro ones (a recording `window.umami`)
+
 ## Model Context Protocol (MCP) Integration
 
 AI agents (Claude Code, Cursor, VS Code, the MCP Inspector…) can use the portfolio over MCP. The public page about it is `/ai-integration`.

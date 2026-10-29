@@ -29,6 +29,7 @@ builder.Services.AddHttpClient<IEmailService, EmailService>(); // typed client, 
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ContactLimiter>();
+builder.Services.AddHttpClient<Analytics>(); // Umami events only the server sees (typed client)
 builder.Services.AddScoped<PortfolioTools>(); // what the MCP server and the assistant can do
 builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it
 
