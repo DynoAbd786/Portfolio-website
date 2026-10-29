@@ -71,7 +71,11 @@ def test_robot_opens_chat(page, site_url):
     page.goto(site_url + "/?debug=workshop", wait_until="load")
     wait_live(page)
     open_card(page, "robot")
-    page.click(".ws-card-cta")
+    # click where the button is, once the card has slid in, as a visitor would: Playwright's own click
+    # scrolls "into view" first, which sometimes scrolls the page and slides it over the pinned hero
+    page.wait_for_function("document.querySelector('.ws-card.open').getAnimations().length === 0", timeout=3000)
+    box = page.locator(".ws-card-cta").bounding_box()
+    page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
     page.wait_for_function("!document.getElementById('chat-panel').classList.contains('translate-x-full')", timeout=3000)
 
 
@@ -383,8 +387,8 @@ def test_held_entrance_waits_for_start(page, site_url):
     page.wait_for_timeout(2000)
     assert page.evaluate("document.getElementById('workshop').__workshop.introT()") == 0
     page.evaluate("mkWorkshop.startIntro()")
-    page.wait_for_timeout(2500)
-    assert page.evaluate("document.getElementById('workshop').__workshop.introT()") > 2.2
+    # the entrance's clock runs on frames, which the software-drawn test browser delivers slowly
+    page.wait_for_function("document.getElementById('workshop').__workshop.introT() > 2.2", timeout=6000)
 
 
 def test_paused_scene_draws_no_frames(page, site_url):

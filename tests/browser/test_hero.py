@@ -97,3 +97,11 @@ def test_fully_covered_scene_stops_drawing(page, site_url):
     page.evaluate("scrollTo(0, 0)")
     page.wait_for_timeout(500)
     assert page.evaluate(frames) > before
+
+
+def test_the_name_uses_the_same_font_file_as_the_build(page, site_url):
+    # the intro waits for this file before it builds, so the heading it lands on is never measured in
+    # a stand-in font that widens later (Google's Inter can arrive after the landing on a slow line)
+    page.goto(site_url + HOME, wait_until="load")
+    family = page.eval_on_selector("#hero h1", "e => getComputedStyle(e).fontFamily")
+    assert family.startswith('"Inter Build"'), family
