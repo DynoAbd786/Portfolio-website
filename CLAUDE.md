@@ -66,7 +66,7 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
   - `GET /api/projects` - All projects
   - `GET /api/projects/by-url?url={url}` - Project by URL
   - `GET /api/projects/categories/{category}` - Projects by category
-- **`ContactController`**: `/api/contact` - Email functionality via Postmark
+- **`ContactController`**: `/api/contact` - Email functionality via Resend
   - `POST /api/contact` - Send contact form email
 - **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). The local-Ollama access endpoints (`request-access`, `status`, `callback`, `models`) remain but the chat no longer offers them
 - **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
@@ -78,7 +78,7 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
 ### Services (Dependency Injection)
 Registered in `website.api/Program.cs`:
 - **`IProjectService`**: Project data (single source of truth)
-- **`IEmailService`**: Email sending via Postmark (requires POSTMARK_SERVER_TOKEN in .env)
+- **`IEmailService`**: Email sending via Resend (`EmailService`, a typed `HttpClient`; key `Resend__ApiKey`, sender `Resend:FromEmail`, which must be on a domain verified in Resend). A send counts only when Resend returns an email id; otherwise it logs Resend's reply and the form shows an error
 - **`IMcpService`**: JSON-RPC 2.0 protocol handler for MCP requests
 - **`IOAuthService`**: OAuth 2.0 authentication for MCP clients
 - **`website.Data.IProjectSource` / `website.Data.ProjectService`**: project data for server-rendered pages
@@ -144,7 +144,7 @@ Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project
 ### Environment Configuration
 Create `.env` file in `website.api/` for local development:
 ```
-POSTMARK_SERVER_TOKEN=your_token_here
+Resend__ApiKey=re_...   # a sending-only key is enough
 # Add OAuth tokens if using MCP features
 ```
 

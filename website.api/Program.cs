@@ -36,7 +36,7 @@ builder.Services.AddSwaggerGen();
 
 // Register custom services
 builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddHttpClient<IEmailService, EmailService>(); // typed client, like DeepSeek below
 
 builder.Services.AddSingleton<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
