@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json;
 using website.api.Services;
+using website.Data;
 
 namespace website.tests;
 
@@ -73,5 +75,22 @@ public class ChatTests : IClassFixture<SiteFactory>
         Assert.Contains("Abdua786@outlook.com", reply);
         Assert.DoesNotContain(".env", reply);
         Assert.Empty(api.Calls);
+    }
+
+    private static string SystemPrompt(string body) =>
+        JsonDocument.Parse(body).RootElement.GetProperty("messages")[0].GetProperty("content").GetString()!;
+
+    [Fact]
+    public async Task Assistant_knows_the_profile_the_homepage_shows()
+    {
+        var (client, api) = Client("test-key");
+        await Ask(client, new { message = "Tell me about him", history = Array.Empty<object>() });
+        var prompt = SystemPrompt(Assert.Single(api.Calls).Body);
+        Assert.Contains("open to work", prompt);
+        foreach (var e in HomeContent.Experience) Assert.Contains(e.Title, prompt);
+        foreach (var p in HomeContent.Products) Assert.Contains(p.Name, prompt);
+        foreach (var item in HomeContent.Stack.SelectMany(g => g.Items)) Assert.Contains(item, prompt);
+        Assert.Contains("/projects/hireforge", prompt);
+        Assert.Contains("/#contact", prompt);
     }
 }
