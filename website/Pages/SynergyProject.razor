@@ -87,14 +87,14 @@
                             <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
                             <h3 class="text-xl font-bold text-slate-100">Current Stage: Active Personal Research</h3>
                         </div>
-                        <p class="text-gray-300 leading-relaxed">
+                        <p class="text-slate-300 leading-relaxed">
                             This is an independent technical research initiative exploring graph-based code analysis and LLM knowledge enhancement. Originally conceived for academic collaboration, the project has been refocused as a personal research endeavor with potential for future publication and open-source contribution. The work explores innovative approaches to bridging the gap between static code organization and dynamic workflow understanding, with particular emphasis on version-specific package analysis and token-efficient AI assistance.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Development Timeline</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• <strong>Conceptualization:</strong> October 2025</li>
                                 <li>• <strong>Architecture Design:</strong> Ongoing</li>
                                 <li>• <strong>Implementation:</strong> Progressive development</li>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Research Focus</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Open-source package/library analysis</li>
                                 <li>• LLM knowledge gap mitigation</li>
                                 <li>• Version-specific code understanding</li>
@@ -115,14 +115,14 @@
 
                 <!-- The Problem: Code Understanding Challenges -->
                 <ProjectSection Title="The Problem" Icon="fas fa-exclamation-triangle">
-                    <p class="text-gray-300 mb-6">Developers and AI assistants struggle with unfamiliar codebases. Existing tools show directory structures ("where code lives") but fail to capture behavior ("how code works").</p>
+                    <p class="text-slate-300 mb-6">Developers and AI assistants struggle with unfamiliar codebases. Existing tools show directory structures ("where code lives") but fail to capture behavior ("how code works").</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-folder-tree mr-3"></i>Current Tool Limitations
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>File-centric organization:</strong> Shows directory structure, not workflows</li>
                                 <li><strong>Static documentation:</strong> Quickly outdated, missing system-level interactions</li>
                                 <li><strong>Fragmented relationships:</strong> Only immediate connections visible</li>
@@ -134,7 +134,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-robot mr-3"></i>AI Assistant Challenges
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Version Mismatch:</strong> Hallucinating APIs from wrong package versions</li>
                                 <li><strong>New Package Blindness:</strong> No knowledge of recently released libraries</li>
                                 <li><strong>Confabulation:</strong> Plausible but incorrect code generation</li>
@@ -145,7 +145,7 @@
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Critical Impact</h3>
-                        <p class="text-gray-300">
+                        <p class="text-slate-300">
                             AI assistants lack Architectural Context: they don't know if your team prefers composition over inheritance, whether you use dependency injection patterns, or which design principles guide your codebase. This leads to syntactically correct code that violates team culture and architectural philosophy, requiring extensive manual refactoring.
                         </p>
                     </div>
@@ -154,12 +154,12 @@
                 <!-- Proposed Solution: Hybrid C#/.NET Architecture -->
                 <ProjectSection Title="The Solution: Hybrid C#/.NET + Python Architecture" Icon="fas fa-lightbulb">
 
-                    <p class="text-gray-300 mb-6">A hybrid platform that transforms codebases into queryable graphs, combining Python's data science ecosystem for deep analysis with C#/.NET's enterprise-grade infrastructure for robust APIs and UI:</p>
+                    <p class="text-slate-300 mb-6">A hybrid platform that transforms codebases into queryable graphs, combining Python's data science ecosystem for deep analysis with C#/.NET's enterprise-grade infrastructure for robust APIs and UI:</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Deep Analysis (Python Microservice)</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li>• <strong>Doxygen + AST Pipeline:</strong> Extract entities (classes, functions) and relationships</li>
                                 <li>• <strong>Structural & Behavioral Graphs:</strong> UML-inspired dual-level analysis</li>
                                 <li>• <strong>Philosophy Metadata:</strong> Tag packages with architectural context</li>
@@ -167,9 +167,9 @@
                             </ul>
                         </div>
 
-                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Architectural Intelligence (C# ASP.NET Core)</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li>• <strong>API Gateway:</strong> Enterprise-grade REST endpoints for graph queries</li>
                                 <li>• <strong>MCP Host (McpController):</strong> JSON-RPC 2.0 protocol for AI agents</li>
                                 <li>• <strong>Refactoring Service:</strong> Active detection of God Classes and violations</li>
@@ -180,7 +180,7 @@
 
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Core Innovation: The "Architectural Linter"</h3>
-                        <p class="text-gray-300">
+                        <p class="text-slate-300">
                             Moving beyond simple code mapping to <strong>Architectural Linter capabilities</strong>. The C# RefactoringService doesn't just show the graph, it critiques it based on complexity metrics (Cyclomatic Complexity, Fan-Out) and defined project philosophies, accessible directly by LLMs via MCP. AI agents can ask: "Where are the God Classes?" and receive data-backed RefactoringCandidate objects with specific architectural violations.
                         </p>
                     </div>
@@ -188,15 +188,15 @@
 
                 <!-- System Architecture: Hybrid C#/.NET + Python -->
                 <ProjectSection Title="System Architecture: Hybrid Microservices" Icon="fas fa-server">
-                    <p class="text-gray-300 mb-6">Multi-container architecture separating analysis concerns (Python) from application infrastructure (C#/.NET), communicating via REST APIs and shared Neo4j database:</p>
+                    <p class="text-slate-300 mb-6">Multi-container architecture separating analysis concerns (Python) from application infrastructure (C#/.NET), communicating via REST APIs and shared Neo4j database:</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="rounded-lg p-6 border border-cyan-600/50 bg-white/[.02]">
+                        <div class="rounded-lg p-6 border border-cy/40 bg-white/[.02]">
                             <div class="flex items-center mb-3">
                                 <i class="fas fa-layer-group text-cy text-2xl mr-3"></i>
                                 <h3 class="text-xl font-bold text-slate-100">Frontend: Blazor WebAssembly (C#)</h3>
                             </div>
-                            <ul class="text-gray-300 text-sm space-y-1">
+                            <ul class="text-slate-300 text-sm space-y-1">
                                 <li>• Interactive graph visualization (D3.js/Cytoscape interop)</li>
                                 <li>• "Audit View" displaying RefactoringCandidates</li>
                                 <li>• GitHub repository submission interface</li>
@@ -209,7 +209,7 @@
                                 <i class="fas fa-server text-cy text-2xl mr-3"></i>
                                 <h3 class="text-xl font-bold text-slate-100">Application Layer: ASP.NET Core API (C#)</h3>
                             </div>
-                            <ul class="text-gray-300 text-sm space-y-1">
+                            <ul class="text-slate-300 text-sm space-y-1">
                                 <li>• <strong>API Gateway:</strong> REST endpoints for graph queries</li>
                                 <li>• <strong>McpController:</strong> JSON-RPC 2.0 for AI tool calls</li>
                                 <li>• <strong>RefactoringService:</strong> God Class detection heuristics</li>
@@ -222,7 +222,7 @@
                                 <i class="fas fa-code text-cy text-2xl mr-3"></i>
                                 <h3 class="text-xl font-bold text-slate-100">Analysis Layer: Python Microservice</h3>
                             </div>
-                            <ul class="text-gray-300 text-sm space-y-1">
+                            <ul class="text-slate-300 text-sm space-y-1">
                                 <li>• <strong>Doxygen + AST:</strong> Entity/relationship extraction</li>
                                 <li>• <strong>Hierarchical Sanitization:</strong> Multi-level graph construction</li>
                                 <li>• <strong>Philosophy Metadata:</strong> Architectural context tagging</li>
@@ -235,7 +235,7 @@
                                 <i class="fas fa-database text-cy text-2xl mr-3"></i>
                                 <h3 class="text-xl font-bold text-slate-100">Data Layer: Neo4j + Redis</h3>
                             </div>
-                            <ul class="text-gray-300 text-sm space-y-1">
+                            <ul class="text-slate-300 text-sm space-y-1">
                                 <li>• <strong>Neo4j:</strong> Graph database with package:version namespacing</li>
                                 <li>• <strong>Redis:</strong> Caching layer for heavy queries and AI calls</li>
                                 <li>• <strong>Cypher Queries:</strong> Graph traversal and pattern matching</li>
@@ -249,15 +249,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Separation of Concerns</h4>
-                                <p class="text-gray-400">Python handles data science, C# handles enterprise infrastructure</p>
+                                <p class="text-slate-400">Python handles data science, C# handles enterprise infrastructure</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Language-Specific Strengths</h4>
-                                <p class="text-gray-400">Leverage ecosystems: NumPy/Pandas vs. robust APIs/DI</p>
+                                <p class="text-slate-400">Leverage ecosystems: NumPy/Pandas vs. robust APIs/DI</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">MCP-First Design</h4>
-                                <p class="text-gray-400">AI agents as first-class citizens with dedicated endpoints</p>
+                                <p class="text-slate-400">AI agents as first-class citizens with dedicated endpoints</p>
                             </div>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">For Human Developers</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li>• Understand package/library APIs before integration</li>
                                 <li>• Learn capabilities and features</li>
                                 <li>• Explore class structure for open-source contributions</li>
@@ -279,7 +279,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">For AI Systems (via MCP)</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li>• Query package capabilities by name and version</li>
                                 <li>• Retrieve structured API documentation</li>
                                 <li>• Access class structure for contributions</li>
@@ -288,9 +288,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-cyan-900/20 rounded-lg p-6 border border-line">
+                    <div class="bg-cy/5 rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Package-Centric Workflow</h3>
-                        <div class="space-y-3 text-gray-300 text-sm">
+                        <div class="space-y-3 text-slate-300 text-sm">
                             <div class="flex items-start">
                                 <span class="text-cy font-bold mr-3">1.</span>
                                 <span>User submits GitHub repository link and specifies version/tag via web interface</span>
@@ -320,20 +320,20 @@
 
                     <div class="mb-8">
                         <h3 class="text-2xl font-bold text-slate-100 mb-4">Phase 1: The "Market-Ready" Prototype</h3>
-                        <p class="text-gray-300 mb-4">Goal: A functional system capable of ingesting a repo, detecting architectural flaws (God Classes), and exposing the graph to AI agents via MCP</p>
+                        <p class="text-slate-300 mb-4">Goal: A functional system capable of ingesting a repo, detecting architectural flaws (God Classes), and exposing the graph to AI agents via MCP</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Stage 1: Python Backend</h4>
-                                <ul class="text-gray-300 text-sm space-y-1">
+                                <ul class="text-slate-300 text-sm space-y-1">
                                     <li>• Doxygen + AST pipeline</li>
                                     <li>• Entity/relationship extraction</li>
                                     <li>• Philosophy metadata tagging</li>
                                 </ul>
                             </div>
-                            <div class="bg-white/[.02] rounded-lg p-4 border border-cyan-600/25">
+                            <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Stage 2: C# Bridge & MCP</h4>
-                                <ul class="text-gray-300 text-sm space-y-1">
+                                <ul class="text-slate-300 text-sm space-y-1">
                                     <li>• IGraphProvider + PythonBridgeService</li>
                                     <li>• McpController (get_workflow, explain_structure)</li>
                                     <li>• RefactoringService with God Class detection</li>
@@ -341,7 +341,7 @@
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Stage 3: Blazor UI</h4>
-                                <ul class="text-gray-300 text-sm space-y-1">
+                                <ul class="text-slate-300 text-sm space-y-1">
                                     <li>• Interactive graph rendering (D3.js interop)</li>
                                     <li>• "Audit View" for RefactoringCandidates</li>
                                     <li>• Docker deployment</li>
@@ -350,7 +350,7 @@
                         </div>
 
                         <div class="bg-white/[.02] rounded-lg p-4 border border-line mt-4">
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 <strong class="text-cy">Phase 1 Deliverable:</strong> Deployable Docker container where users upload a package (e.g., numpy), visualize the graph in Blazor, and AI agents query "Where are the God Classes?" via MCP for data-backed answers
                             </p>
                         </div>
@@ -358,24 +358,24 @@
 
                     <div>
                         <h3 class="text-2xl font-bold text-slate-100 mb-4">Phase 2: Individual Research Tracks</h3>
-                        <p class="text-gray-300 mb-4">Building on the C#/.NET + Python foundation with specialized research directions:</p>
+                        <p class="text-slate-300 mb-4">Building on the C#/.NET + Python foundation with specialized research directions:</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Track 1: Big Data ML + Cross-Language</h4>
-                                <p class="text-gray-300 text-sm">Train GNNs on graph data, map Python AST to C# structures, predict missing edges</p>
+                                <p class="text-slate-300 text-sm">Train GNNs on graph data, map Python AST to C# structures, predict missing edges</p>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Track 2: Cybersecurity Threat Modeling</h4>
-                                <p class="text-gray-300 text-sm">SecurityScanner extension, CVE mapping, vulnerability heatmap in Blazor UI</p>
+                                <p class="text-slate-300 text-sm">SecurityScanner extension, CVE mapping, vulnerability heatmap in Blazor UI</p>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Track 3: Enterprise Scaling + Hierarchical Agents</h4>
-                                <p class="text-gray-300 text-sm">Scale ASP.NET Core for concurrent MCP, Redis caching, sub-linear latency benchmarks</p>
+                                <p class="text-slate-300 text-sm">Scale ASP.NET Core for concurrent MCP, Redis caching, sub-linear latency benchmarks</p>
                             </div>
                             <div class="bg-white/[.02] rounded-lg p-4 border border-line">
                                 <h4 class="font-bold text-slate-100 mb-2">Track 4: Consultancy + Automated Auditing</h4>
-                                <p class="text-gray-300 text-sm">ReviewController for PDF reports, user validation studies, "State of OSS Architecture" report</p>
+                                <p class="text-slate-300 text-sm">ReviewController for PDF reports, user validation studies, "State of OSS Architecture" report</p>
                             </div>
                         </div>
                     </div>
@@ -384,21 +384,21 @@
                 <!-- Validation Framework: LLM Before/After Evaluation -->
                 <ProjectSection Title="Validation Framework" Icon="fas fa-chart-line">
 
-                    <p class="text-gray-300 mb-6"><strong>Primary Evaluation:</strong> Three-condition LLM experiment using Manim v0.17.3 as test codebase</p>
+                    <p class="text-slate-300 mb-6"><strong>Primary Evaluation:</strong> Three-condition LLM experiment using Manim v0.17.3 as test codebase</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-3">Condition A: Baseline</h3>
-                            <p class="text-gray-300 text-sm">LLM with Manim documentation only, no codebase access</p>
-                            <div class="mt-3 text-sm text-gray-400">
+                            <p class="text-slate-300 text-sm">LLM with Manim documentation only, no codebase access</p>
+                            <div class="mt-3 text-sm text-slate-400">
                                 <strong>Expected Error Rate:</strong> ~50%
                             </div>
                         </div>
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-3">Condition B: Full Codebase</h3>
-                            <p class="text-gray-300 text-sm">Claude Code / Agentic Tool with entire repository access</p>
-                            <div class="mt-3 text-sm text-gray-400">
+                            <p class="text-slate-300 text-sm">Claude Code / Agentic Tool with entire repository access</p>
+                            <div class="mt-3 text-sm text-slate-400">
                                 <strong>Expected Error Rate:</strong> ~28%<br/>
                                 <strong>Avg Input Tokens:</strong> 18,500
                             </div>
@@ -406,8 +406,8 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-3">Condition C: MCP Tool (Our System)</h3>
-                            <p class="text-gray-300 text-sm">Access to MCP API for structured queries</p>
-                            <div class="mt-3 text-sm text-gray-400">
+                            <p class="text-slate-300 text-sm">Access to MCP API for structured queries</p>
+                            <div class="mt-3 text-sm text-slate-400">
                                 <strong>Target Error Rate:</strong> &lt;18%<br/>
                                 <strong>Avg Input Tokens:</strong> 4,300<br/>
                                 <strong class="text-cy">⚡ 75-80% Token Reduction</strong>
@@ -420,15 +420,15 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Error Rate (Primary)</h4>
-                                <p class="text-gray-400 text-sm">Binary: Does generated code run without errors? Target: Condition C &lt;20% vs. A ~50%</p>
+                                <p class="text-slate-400 text-sm">Binary: Does generated code run without errors? Target: Condition C &lt;20% vs. A ~50%</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Token Efficiency (Critical)</h4>
-                                <p class="text-gray-400 text-sm">Context Efficiency Ratio: Target 75-80% reduction vs. full codebase (Cohen's d > 2.0)</p>
+                                <p class="text-slate-400 text-sm">Context Efficiency Ratio: Target 75-80% reduction vs. full codebase (Cohen's d > 2.0)</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Code Quality</h4>
-                                <p class="text-gray-400 text-sm">Likert scale (1-5): Correctness, idiomatic usage, clarity. Target: >4.0/5</p>
+                                <p class="text-slate-400 text-sm">Likert scale (1-5): Correctness, idiomatic usage, clarity. Target: >4.0/5</p>
                             </div>
                         </div>
                     </div>
@@ -438,11 +438,11 @@
                 <ProjectSection Title="Novel Contributions" Icon="fas fa-star">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-code-branch mr-2"></i>Hybrid Architecture
                             </h3>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 Leveraging Python's data science ecosystem for analysis while using C#/.NET for robust, enterprise-grade API and UI serving, combining the strengths of both ecosystems
                             </p>
                         </div>
@@ -451,7 +451,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-search text-white mr-2"></i>The "Architectural Linter"
                             </h3>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 A novel service that proactively critiques codebase health using graph topology, not just syntax checking, detecting God Classes, complexity violations, and architectural anti-patterns
                             </p>
                         </div>
@@ -460,7 +460,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-robot mr-2"></i>MCP-First Design
                             </h3>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 Treating AI Agents as first-class citizens with dedicated API endpoints (McpController), allowing them to "read" architecture without visual processing, direct machine-to-machine understanding
                             </p>
                         </div>
@@ -469,7 +469,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-3 flex items-center">
                                 <i class="fas fa-book mr-2"></i>Context-Aware Graphs
                             </h3>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 Embedding project philosophy directly into the data model, solving the "Cultural Alignment" problem for AI coding tools, teaching AI assistants team preferences and architectural patterns
                             </p>
                         </div>
@@ -482,8 +482,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Hierarchical LLM Architecture (Potential Pivot)</h3>
-                            <p class="text-gray-300 text-sm mb-3">Multi-level AI agents for enterprise systems:</p>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <p class="text-slate-300 text-sm mb-3">Multi-level AI agents for enterprise systems:</p>
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Deployment-level agents (distributed topology)</li>
                                 <li>• Component-level agents (subsystem management)</li>
                                 <li>• Package-level agents (module coherence)</li>
@@ -493,8 +493,8 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Big Data: Large-Scale Analysis</h3>
-                            <p class="text-gray-300 text-sm mb-3">Mass repository analysis and pattern discovery:</p>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <p class="text-slate-300 text-sm mb-3">Mass repository analysis and pattern discovery:</p>
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Thousands of high-quality open-source projects</li>
                                 <li>• Cross-project architectural pattern discovery</li>
                                 <li>• Community best practices inference</li>
@@ -504,8 +504,8 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Cross-Language Generalization</h3>
-                            <p class="text-gray-300 text-sm mb-3">Language-agnostic architecture mapping:</p>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <p class="text-slate-300 text-sm mb-3">Language-agnostic architecture mapping:</p>
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Canonical UML representations across languages</li>
                                 <li>• Structural isomorphisms (Python → C# → Java)</li>
                                 <li>• Capability matrices for construct mapping</li>
@@ -515,8 +515,8 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Cybersecurity Threat Modeling</h3>
-                            <p class="text-gray-300 text-sm mb-3">Security analysis via graph topology:</p>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <p class="text-slate-300 text-sm mb-3">Security analysis via graph topology:</p>
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Attack surface mapping and privilege escalation paths</li>
                                 <li>• Vulnerability localization using historical CVE data</li>
                                 <li>• Insecure permission flow detection</li>
@@ -533,23 +533,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Workflow-centric organization prioritizes how code works together</span>
+                                <span class="text-slate-300">Workflow-centric organization prioritizes how code works together</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Package-version namespacing enables precise LLM knowledge</span>
+                                <span class="text-slate-300">Package-version namespacing enables precise LLM knowledge</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Target 75-80% token reduction for sustainable LLM usage</span>
+                                <span class="text-slate-300">Target 75-80% token reduction for sustainable LLM usage</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Microservices architecture enables parallel development</span>
+                                <span class="text-slate-300">Microservices architecture enables parallel development</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">MCP protocol provides standardized AI-system interface</span>
+                                <span class="text-slate-300">MCP protocol provides standardized AI-system interface</span>
                             </li>
                         </ul>
                 </ProjectSection>

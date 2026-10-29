@@ -9,6 +9,8 @@ namespace website.api.Controllers;
 [Route("api/mcp")]
 public class McpController : ControllerBase
 {
+    private static readonly JsonSerializerOptions SseJson = new() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
+
     private readonly IMcpService _mcpService;
     private readonly ILogger<McpController> _logger;
     private readonly IConfiguration _configuration;
@@ -223,8 +225,8 @@ public class McpController : ControllerBase
             while (!HttpContext.RequestAborted.IsCancellationRequested)
             {
                 await Task.Delay(15000); // 15s heartbeat
-                await Response.WriteAsync($"event: ping\n");
-                await Response.WriteAsync($"data: keepalive\n\n");
+                // an SSE comment: keeps proxies from closing the stream, and clients ignore it
+                await Response.WriteAsync(": keepalive\n\n");
                 await Response.Body.FlushAsync();
             }
         }
@@ -347,13 +349,13 @@ public class McpController : ControllerBase
 
                 // Normal Handler
                 var response = await _mcpService.HandleRequestAsync(request);
-                
-                // Note: We don't need to manually send the response back via SSE here anymore
-                // because standard Clients (like prompts) usually poll or expect an immediate HTTP return if using POST.
-                // However, the JSON-RPC spec over SSE implies we might push the response via the connection if checking ID.
-                // For simplicity and compatibility with most MCP clients, if we receive a POST, we return the result in the HTTP Body.
-                // BUT, if it was an Async notification, we return Accepted.
-                
+
+                // a notification gets no reply
+                if (request.Id is null) return StatusCode(StatusCodes.Status202Accepted);
+
+                // The SSE transport: the reply goes down this client's stream as a "message" event, which
+                // is where MCP clients wait for it. The body carries it too, for clients that read it there.
+                await _mcpService.SendToSessionAsync(sessionId, "message", JsonSerializer.Serialize(response, SseJson));
                 return Ok(response);
             }
         }

@@ -15,6 +15,8 @@ public interface IMcpService
     // SSE Bridge Methods
     void RegisterConnection(string sessionId, HttpResponse response, bool isBridge);
     void RemoveConnection(string sessionId);
+    // an event to one SSE client; false if that session isn't connected
+    Task<bool> SendToSessionAsync(string sessionId, string eventType, string data);
     bool IsBridgeConnected();
     Task<OllamaBridgeResponse> SendChatRequestAsync(string model, List<Models.MessageHistoryItem> history, string message, List<McpTool>? tools = null, object? options = null);
     void HandleChatResponse(string callbackId, string response, string model, List<OllamaToolCall>? toolCalls = null, bool toolsDisabled = false);
@@ -83,6 +85,8 @@ public class McpService : IMcpService
             {
                 "initialize" => HandleInitialize(request),
                 "ping" => new McpResponse { Id = request.Id, Result = new { } },
+                // no log messages are sent, but some clients set a level regardless
+                "logging/setLevel" => new McpResponse { Id = request.Id, Result = new { } },
                 "notifications/initialized" => await HandleInitializedNotification(request),
                 "notifications/cancelled" => HandleNotification(request),
                 "resources/list" => await HandleResourcesList(request),
@@ -120,9 +124,10 @@ public class McpService : IMcpService
         var serverInfo = new
         {
             protocolVersion = "2025-06-18",
+            // only what this server does: clients act on each capability (the Inspector sets a log
+            // level if "logging" is declared, and expects list-changed notifications if promised)
             capabilities = new
             {
-                logging = new { },
                 resources = new
                 {
                     subscribe = false,
@@ -130,10 +135,8 @@ public class McpService : IMcpService
                 },
                 tools = new
                 {
-                    listChanged = true
-                },
-                completion = new { },
-                experimental = new { }
+                    listChanged = false
+                }
             },
             serverInfo = new
             {
@@ -286,38 +289,26 @@ public class McpService : IMcpService
                     specializations = new[] { "AI & Machine Learning", "Medical Technology", "Scientific Computing", "Distributed Systems", "Graphics Programming" },
                     technicalStrengths = HomeContent.Stack.SelectMany(g => g.Items),
                     domains = new[] { "Healthcare AI", "Medical Imaging", "Robotics", "CFD Simulation", "Computer Vision", "High Performance Computing" },
-                    philosophy = "Passionate about leveraging AI responsibly to solve real-world problems, particularly in healthcare and scientific domains",
-                    academicFocus = "Strong academic performance with emphasis on practical applications and ethical technology development",
                     note = "Portfolio developed during a period of long-term illness, demonstrating resilience and commitment to learning"
                 }, Readable)
             },
+            // the same facts as the /ai-integration page
             "portfolio://ai-integration" => new McpResourceContent
             {
                 Uri = uri,
                 MimeType = "application/json",
                 Text = JsonSerializer.Serialize(new
                 {
-                    title = "AI Integration Methodology",
-                    approach = "Strategic integration of AI tools to enhance development productivity while maintaining code quality and understanding",
-                    experience = new[] {
-                        "Extensive use of Claude Code Pro for complex architectural decisions",
-                        "GPT-4 API integration for healthcare applications",
-                        "AI-assisted development for rapid prototyping and learning",
-                        "Comparative analysis of different AI coding assistants"
+                    assistant = "The site's Ask AI assistant runs on DeepSeek Flash, knows the site's profile and projects, looks projects up through this server's tools, and can pass a message on (name, email, subject, message).",
+                    mcpServer = new
+                    {
+                        endpoint = "https://mkkai.dev/api/mcp",
+                        sseEndpoint = "https://mkkai.dev/api/mcp/sse",
+                        protocol = "JSON-RPC 2.0 over HTTP, no sign-in",
+                        tools = new[] { "search_projects (keyword, category, technology)", "submit_contact (name, email, subject, message; company and role optional; a few an hour)" },
+                        page = "https://mkkai.dev/ai-integration"
                     },
-                    principles = new[] {
-                        "AI as a collaborative partner, not a replacement for understanding",
-                        "Always verify and understand AI-generated code",
-                        "Use AI to accelerate learning of new technologies and frameworks",
-                        "Maintain human oversight for critical design decisions"
-                    },
-                    practicalApplications = new[] {
-                        "Blazor WebAssembly portfolio development with Claude Code assistance",
-                        "FastAPI backend development with AI-guided architecture",
-                        "Complex distributed systems design with AI consultation",
-                        "Medical AI system development with ethical AI integration"
-                    },
-                    futureVision = "See AI as transformative for development efficiency while emphasizing the irreplaceable value of human creativity, ethics, and domain expertise"
+                    howIWork = "Writing code has got fast; deciding what to build hasn't. I put most of my time into understanding the problem and the design. I use AI agents every day, and I treat what they write like a colleague's pull request: I read it, test it, and don't ship what I can't explain."
                 }, Readable)
             },
             "portfolio://projects/all" => await GetAllProjectsContent(uri),
@@ -647,6 +638,13 @@ public class McpService : IMcpService
     {
         _connectedClients.TryRemove(sessionId, out _);
         _logger.LogInformation("Client removed from McpService. SessionId: {SessionId}", sessionId);
+    }
+
+    public async Task<bool> SendToSessionAsync(string sessionId, string eventType, string data)
+    {
+        if (!_connectedClients.TryGetValue(sessionId, out var client)) return false;
+        await client.SendEventAsync(eventType, data);
+        return true;
     }
 
     public bool IsBridgeConnected()

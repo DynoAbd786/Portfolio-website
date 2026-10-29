@@ -8,7 +8,7 @@
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-robot">
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
                         I built a robot controller that explores, detects objects and navigates to them without human input. It runs
                         on ROS2 in a Gazebo simulation, and brings together SLAM (Simultaneous Localization and Mapping), computer vision
                         and a state machine that decides what the robot does next.
@@ -19,17 +19,17 @@
                                 <h3 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i class="fas fa-route text-cy mr-3"></i>Autonomous Navigation
                                 </h3>
-                                <ul class="space-y-3 text-gray-300">
+                                <ul class="space-y-3 text-slate-300">
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>ROS2:</strong> Built on ROS2 with the Nav2 stack</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Motion Planning:</strong> Explores by navigating between waypoints</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>SLAM:</strong> Maps the area and localizes itself as it moves</span>
                                     </li>
                                 </ul>
@@ -38,17 +38,17 @@
                                 <h3 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i class="fas fa-eye text-cy mr-3"></i>Computer Vision
                                 </h3>
-                                <ul class="space-y-3 text-gray-300">
+                                <ul class="space-y-3 text-slate-300">
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>RGB Detection:</strong> Classifies colors in real time with OpenCV</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>HSV Color Space:</strong> Detection holds up as the lighting changes</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Contour Analysis:</strong> Finds the edges of each object</span>
                                     </li>
                                 </ul>
@@ -68,7 +68,7 @@
                 </div>
                 
                 <div class="mt-4 p-4 bg-white/[.02] rounded-lg border-l-4 border-line">
-                    <p class="text-gray-300 text-sm leading-relaxed">
+                    <p class="text-slate-300 text-sm leading-relaxed">
                         <strong class="text-white">Demonstration (2x Speed):</strong> The TurtleBot3 maps the environment, avoids moving obstacles and picks out its targets as it goes.
                     </p>
                 </div>
@@ -83,11 +83,11 @@
                              <div class="space-y-4">
                                 <div>
                                     <strong class="text-white block mb-1">robot.py</strong>
-                                    <p class="text-gray-400 text-sm">The main control node. It tracks the robot's state, reads the sensors and decides on high-level behavior.</p>
+                                    <p class="text-slate-400 text-sm">The main control node. It tracks the robot's state, reads the sensors and decides on high-level behavior.</p>
                                 </div>
                                 <div>
                                     <strong class="text-white block mb-1">color_detector.py</strong>
-                                    <p class="text-gray-400 text-sm">The vision module. It works in HSV color space and tracks objects in real time.</p>
+                                    <p class="text-slate-400 text-sm">The vision module. It works in HSV color space and tracks objects in real time.</p>
                                 </div>
                             </div>
                         </div>
@@ -96,11 +96,11 @@
                              <div class="space-y-4">
                                 <div>
                                     <strong class="text-white block mb-1">motion_controller.py</strong>
-                                    <p class="text-gray-400 text-sm">Low-level movement. It sets velocities precisely and keeps trajectories smooth.</p>
+                                    <p class="text-slate-400 text-sm">Low-level movement. It sets velocities precisely and keeps trajectories smooth.</p>
                                 </div>
                                 <div>
                                     <strong class="text-white block mb-1">exploration_strategy.py</strong>
-                                    <p class="text-gray-400 text-sm">High-level navigation. It picks waypoints and decides when to switch between states.</p>
+                                    <p class="text-slate-400 text-sm">High-level navigation. It picks waypoints and decides when to switch between states.</p>
                                 </div>
                             </div>
                         </div>
@@ -113,19 +113,19 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">1. Navigation Phase</h4>
-                             <p class="text-sm text-gray-400">The robot drives itself to chosen scanning positions using Nav2</p>
+                             <p class="text-sm text-slate-400">The robot drives itself to chosen scanning positions using Nav2</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">2. Exploration Phase</h4>
-                             <p class="text-sm text-gray-400">It turns a full 360 degrees, running detection as it scans</p>
+                             <p class="text-sm text-slate-400">It turns a full 360 degrees, running detection as it scans</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">3. Target Acquisition</h4>
-                             <p class="text-sm text-gray-400">Computer vision identifies the object and works out where it is</p>
+                             <p class="text-sm text-slate-400">Computer vision identifies the object and works out where it is</p>
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-4 border-l-4 border-line">
                             <h4 class="font-bold text-white mb-2">4. Precision Approach</h4>
-                             <p class="text-sm text-gray-400">Visual servoing brings the robot in close, with sub-meter accuracy</p>
+                             <p class="text-sm text-slate-400">Visual servoing brings the robot in close, with sub-meter accuracy</p>
                         </div>
                     </div>
                 </ProjectSection>
@@ -137,7 +137,7 @@
                          <div class="space-y-6">
                             <div>
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-400">Recognition Accuracy</span>
+                                    <span class="text-slate-400">Recognition Accuracy</span>
                                     <span class="text-cy">95%+</span>
                                 </div>
                                 <div class="w-full bg-white/[.02] rounded-full h-2">
@@ -146,7 +146,7 @@
                             </div>
                             <div>
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-400">Detection Range</span>
+                                    <span class="text-slate-400">Detection Range</span>
                                     <span class="text-cy">3-4m</span>
                                 </div>
                                 <div class="w-full bg-white/[.02] rounded-full h-2">
@@ -155,7 +155,7 @@
                             </div>
                             <div>
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-400">Positioning Accuracy</span>
+                                    <span class="text-slate-400">Positioning Accuracy</span>
                                     <span class="text-cy">±5cm</span>
                                 </div>
                                 <div class="w-full bg-white/[.02] rounded-full h-2">
@@ -167,7 +167,7 @@
 
                     <!-- Tech Features Sidebar Content -->
                     <ProjectSection Title="Project Structure" Icon="fas fa-folder-tree">
-                         <pre class="bg-white/[.02] rounded-lg p-4 text-xs text-gray-400 overflow-x-auto font-mono">
+                         <pre class="bg-white/[.02] rounded-lg p-4 text-xs text-slate-400 overflow-x-auto font-mono">
 ros2_project/
 ├── robot.py
 ├── color_detector.py
@@ -177,10 +177,10 @@ ros2_project/
 ├── package.xml
 └── setup.py</pre>
                          <div class="mt-6 flex flex-wrap gap-2">
-                            <span class="bg-cyan-900/50 text-slate-300 px-3 py-1 rounded-full text-xs">Publisher/Subscriber</span>
-                            <span class="bg-cyan-900/50 text-slate-300 px-3 py-1 rounded-full text-xs">Sensor Fusion</span>
-                            <span class="bg-cyan-900/50 text-slate-300 px-3 py-1 rounded-full text-xs">State Machine</span>
-                             <span class="bg-cyan-900/50 text-slate-300 px-3 py-1 rounded-full text-xs">Dynamic Obstacle Avoidance</span>
+                            <span class="bg-cy/10 text-slate-300 px-3 py-1 rounded-full text-xs">Publisher/Subscriber</span>
+                            <span class="bg-cy/10 text-slate-300 px-3 py-1 rounded-full text-xs">Sensor Fusion</span>
+                            <span class="bg-cy/10 text-slate-300 px-3 py-1 rounded-full text-xs">State Machine</span>
+                             <span class="bg-cy/10 text-slate-300 px-3 py-1 rounded-full text-xs">Dynamic Obstacle Avoidance</span>
                         </div>
                 </ProjectSection>
                  </div>

@@ -1,7 +1,8 @@
 @page "/ai-integration"
 
-<PageTitle>AI Integration</PageTitle>
+<PageTitle>AI on this site · Muhammad Kashif-Khan</PageTitle>
 
+@* What's true now: the assistant (DeepSeekAgentService, AssistantContext) and the MCP server (McpService) *@
 <article class="mx-auto max-w-5xl px-4 pb-16 pt-10 sm:px-6 lg:px-8">
     <nav aria-label="Breadcrumb" class="mb-10 font-mono text-xs text-slate-400">
         <a href="/" class="hover:text-cy">home</a>
@@ -11,319 +12,91 @@
 
     <header class="mb-12">
         <p class="mono-label mb-3">// this website · AI</p>
-        <h1 class="mb-5 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">Model Context Protocol</h1>
-        <p class="mb-3 max-w-3xl text-lg leading-relaxed text-slate-300">AI Agent Integration & Future-Ready Architecture</p>
-        <p class="mb-3 max-w-3xl text-lg leading-relaxed text-slate-300">Custom MCP server implementation enabling AI agents to interact with portfolio data and functionality through standardized protocols</p>
+        <h1 class="mb-5 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">AI on this site</h1>
+        <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+            There's an assistant you can ask about my work, and an MCP server so your own AI agent can do the same: search my projects, read my profile, or pass me a message.
+        </p>
     </header>
 
     <div class="space-y-8">
-        <!-- Live Status Alert -->
-        <div>
-            <div class="surface p-6 sm:p-8">
-                <div class="flex items-start">
-                    <div class="bg-cy/10 rounded-full p-3 mr-4 flex-shrink-0 animate-pulse">
-                        <i class="fas fa-check-circle text-cy text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-100 mb-4">🚀 Live Status: Fully Operational</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                                <p class="text-slate-300">
-                                    <strong>✅ Web AI Assistant:</strong> Integrated directly into this site (Navbar/Side Panel) with Full Screen support and Local LLM switching.
-                                </p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                                <p class="text-slate-300">
-                                    <strong>✅ LM Studio Optimized:</strong> Fully tested and optimized for LM Studio (v0.3.17+) using the Remote MCP (SSE) protocol.
-                                </p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                                <p class="text-slate-300">
-                                    <strong>✅ Production Transports:</strong> Supporting both standard Request/Response (POST) and Real-time Streaming (SSE).
-                                </p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                                <p class="text-slate-300">
-                                    <strong>✅ Agent Tools Live:</strong> Search projects, submit contact forms, and read resources directly from your local LLM.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-4 p-4 bg-white/[.02] rounded-lg border border-line">
-                            <p class="text-slate-300 text-sm">
-                                <strong>Technical Status:</strong> The MCP server is running in production with bypassed OAuth for public access. 
-                                It is ready for immediate connection from any spec-compliant MCP client.
-                            </p>
-                        </div>
-                    </div>
+        <ProjectSection Title="The assistant" Icon="fas fa-robot">
+            <p class="mb-4 leading-relaxed text-slate-300">
+                <button type="button" onclick="mkChat.toggle()" class="text-cy hover:underline">Ask AI</button>, in the header, opens it. It runs on DeepSeek Flash and knows what this site knows:
+                my experience, what I'm building and every project. It looks projects up through the same MCP tools listed below, and links to the pages it's talking about.
+            </p>
+            <ul class="space-y-2 text-slate-300">
+                <li>• It can pass a message on to me: it asks for your name, email, a subject and the message, then sends it.</li>
+                <li>• It only states what's in that data, and says so when it doesn't know. It can still get things wrong, so the project pages are the final word.</li>
+            </ul>
+        </ProjectSection>
+
+        <ProjectSection Title="Connect your own agent" Subtitle="JSON-RPC 2.0 over HTTP, no sign-in needed" Icon="fas fa-plug">
+            <p class="mb-4 leading-relaxed text-slate-300">Point any MCP client at:</p>
+            <pre class="mb-4 overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-cy"><code>https://mkkai.dev/api/mcp</code></pre>
+            <p class="mb-4 leading-relaxed text-slate-300">
+                Most clients only need that URL; each has its own way of adding it. For clients that still use the older SSE transport, connect to
+                <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">https://mkkai.dev/api/mcp/sse</code> instead.
+            </p>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="mono-label mb-2">// claude code</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>claude mcp add --transport http mkkai https://mkkai.dev/api/mcp</code></pre>
+                </div>
+                <div>
+                    <h3 class="mono-label mb-2">// cursor · ~/.cursor/mcp.json</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>{ "mcpServers": { "mkkai": { "url": "https://mkkai.dev/api/mcp" } } }</code></pre>
+                </div>
+                <div>
+                    <h3 class="mono-label mb-2">// vs code · .vscode/mcp.json</h3>
+                    <pre class="overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>{ "servers": { "mkkai": { "type": "http", "url": "https://mkkai.dev/api/mcp" } } }</code></pre>
                 </div>
             </div>
-        </div>
+        </ProjectSection>
 
-        <div class="space-y-8">
-            <!-- MCP Overview -->
-            <ProjectSection Title="What is MCP?" Icon="fas fa-robot">
-                <p class="text-slate-300 text-lg leading-relaxed">
-                    Model Context Protocol (MCP) is an emerging standard for enabling AI agents to interact with external systems, data, and functionality.
-                    Our implementation provides a JSON-RPC 2.0 compliant server that exposes portfolio data, project search capabilities, and contact functionality
-                    to AI assistants through standardized tool interfaces.
-                </p>
-                </ProjectSection>
-
-            <!-- Technical Implementation -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div class="surface p-6 sm:p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="rounded-lg p-3 mr-4 bg-cy/10">
-                            <i class="fas fa-check-circle text-cy text-xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-slate-100">Working Features</h3>
-                    </div>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">•</span>
-                            <span class="text-slate-300">JSON-RPC 2.0 protocol compliance</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">•</span>
-                            <span class="text-slate-300">Project search by category/technology/keyword</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">•</span>
-                            <span class="text-slate-300">Contact form submission via email service</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">•</span>
-                            <span class="text-slate-300">Resource endpoints for profile & project data</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">•</span>
-                            <span class="text-slate-300">Full MCP Inspector compatibility</span>
-                        </li>
+        <ProjectSection Title="What it offers" Icon="fas fa-toolbox">
+            <div class="grid gap-6 md:grid-cols-2">
+                <div>
+                    <h3 class="mono-label mb-3">// tools</h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li><code class="font-mono text-cy">search_projects</code>: find projects by <code class="font-mono">keyword</code>, <code class="font-mono">category</code> (Personal, Professional, Academic) or <code class="font-mono">technology</code>.</li>
+                        <li><code class="font-mono text-cy">submit_contact</code>: send me a message. Needs <code class="font-mono">name</code>, a valid <code class="font-mono">email</code>, <code class="font-mono">subject</code> and <code class="font-mono">message</code>; <code class="font-mono">company</code> and <code class="font-mono">role</code> are optional. A few messages an hour at most.</li>
                     </ul>
                 </div>
-
-                <div class="surface p-6 sm:p-8">
-                    <div class="flex items-center mb-6">
-                        <div class="rounded-lg p-3 mr-4 bg-cy/10">
-                            <i class="fas fa-plug text-cy text-xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-slate-100">Platform Status</h3>
-                    </div>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">✅</span>
-                            <span class="text-slate-300"><strong>LM Studio:</strong> Fully verified & optimized</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">✅</span>
-                            <span class="text-slate-300"><strong>MCP Inspector:</strong> 100% compliance</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">⏳</span>
-                            <span class="text-slate-300"><strong>Claude Desktop:</strong> Testing in progress</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-cy mr-3 mt-1">🛡️</span>
-                            <span class="text-slate-300"><strong>Security:</strong> Direct SSE / No proxy required</span>
-                        </li>
+                <div>
+                    <h3 class="mono-label mb-3">// resources</h3>
+                    <ul class="space-y-2 font-mono text-sm text-slate-300">
+                        <li><span class="text-cy">portfolio://profile</span>: experience, what I'm building, stack</li>
+                        <li><span class="text-cy">portfolio://about</span>: background and education</li>
+                        <li><span class="text-cy">portfolio://contact</span>: how to reach me</li>
+                        <li><span class="text-cy">portfolio://ai-integration</span>: this page, as data</li>
+                        <li><span class="text-cy">portfolio://projects/all</span>: every project</li>
+                        <li><span class="text-cy">portfolio://projects/hireforge</span>: one project, named after its page</li>
                     </ul>
                 </div>
             </div>
+        </ProjectSection>
 
-            <!-- Technical Details -->
-            <div class="surface p-6 sm:p-8">
-                <div class="flex items-center mb-6">
-                    <div class="rounded-lg p-3 mr-4 bg-cy/10">
-                        <i class="fas fa-cogs text-cy text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold text-slate-100">Technical Architecture</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-xl font-bold text-white mb-3">Server Implementation</h4>
-                        <ul class="text-slate-300 space-y-2">
-                            <li>• ASP.NET Core Web API backend</li>
-                            <li>• JSON-RPC 2.0 message handling</li>
-                            <li>• RESTful HTTP transport layer</li>
-                            <li>• Comprehensive request/response logging</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-xl font-bold text-white mb-3">Available Tools</h4>
-                        <ul class="text-slate-300 space-y-2">
-                            <li>• <code class="bg-white/[.02] px-2 py-1 rounded">search_projects</code></li>
-                            <li>• <code class="bg-white/[.02] px-2 py-1 rounded">submit_contact</code></li>
-                            <li>• Resource endpoints for data access</li>
-                            <li>• Schema-compliant tool definitions</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <ProjectSection Title="Try it" Icon="fas fa-terminal">
+            <p class="mb-4 leading-relaxed text-slate-300">List the tools, then search for Python projects:</p>
+            <pre class="mb-4 overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-slate-300"><code>curl -X POST https://mkkai.dev/api/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 
-            <!-- Integration Instructions -->
-            <div class="surface p-6 sm:p-8">
-                <div class="flex items-center mb-6">
-                    <div class="rounded-lg p-3 mr-4 bg-cy/10">
-                        <i class="fas fa-code text-cy text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl font-bold text-slate-100">Integration Instructions</h3>
-                </div>
-                <p class="text-slate-300 mb-6">For developers who want to integrate with the MCP server:</p>
+curl -X POST https://mkkai.dev/api/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call",
+       "params":{"name":"search_projects","arguments":{"technology":"Python"}}}'</code></pre>
+            <p class="leading-relaxed text-slate-300">
+                Or browse it with the MCP Inspector: run <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">npx @@modelcontextprotocol/inspector</code> and connect to the URL above.
+            </p>
+        </ProjectSection>
 
-                <div class="space-y-8">
-                    <!-- LM Studio Setup -->
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-100 mb-4">🤖 LM Studio Configuration</h4>
-                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
-                            <p class="text-slate-300 mb-4">Add the portfolio server to LM Studio by editing your <code class="bg-white/[.02] px-2 py-0.5 rounded">mcp.json</code> file:</p>
-                            
-                            <div class="mb-6">
-                                <p class="text-sm text-slate-400 mb-2">1. Locate <code class="text-cy">mcp.json</code> (In LM Studio: Settings → MCP → Open Config File)</p>
-                                <p class="text-sm text-slate-400 mb-4">2. Append the following to your <code class="text-cy">mcpServers</code> object:</p>
-                                
-                                <div class="bg-ink rounded-lg p-4 font-mono text-sm border border-line overflow-x-auto">
-<pre class="text-cy"><code>"muhammad-portfolio": {
-  "transport": "sse",
-  "url": "https://mkkai.dev/api/mcp/sse"
-}</code></pre>
-                                </div>
-                            </div>
-
-                            <div class="p-4 bg-white/[.02] rounded-lg border border-line">
-                                <p class="text-cy text-sm">
-                                    <i class="fas fa-check-circle mr-2"></i><strong>Verify Connection:</strong> After saving, you should see a green dot next to <strong>muhammad-portfolio</strong> in the LM Studio sidebar.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MCP Inspector Testing -->
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-100 mb-4">🧪 Test with MCP Inspector</h4>
-                        <div class="bg-white/[.02] rounded-lg p-4 border border-line">
-                            <p class="text-slate-300 mb-3">Use the official MCP Inspector to test the server:</p>
-                            <div class="bg-ink rounded-lg p-3 font-mono text-sm border border-line">
-                                <div class="text-cy mb-2"># Install and run MCP Inspector</div>
-                                <div class="text-cy">npx @@modelcontextprotocol/inspector --transport http --server-url https://mkkai.dev/api/mcp</div>
-                            </div>
-                            <p class="text-slate-400 text-sm mt-3">This will open a web interface to test all available tools and resources.</p>
-                        </div>
-                    </div>
-
-                    <!-- Claude Desktop Setup (Untested)
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-100 mb-4">🖥️ Claude Desktop Configuration</h4>
-                        <div class="bg-white/[.02] rounded-lg p-4 border border-line">
-                            <p class="text-slate-300 mb-3">Add to Claude Desktop settings (Settings → Connectors):</p>
-                            <div class="bg-ink rounded-lg p-3 overflow-x-auto border border-line">
-                                <pre class="text-sm text-cy"><code>{
-  "mcpServers": {
-    "muhammad-portfolio": {
-      "transport": "http",
-      "url": "https://mkkai.dev/api/mcp",
-      "description": "Muhammad's Portfolio MCP Server"
-    }
-  }
-}</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-
-                    <!-- Direct API Testing -->
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-100 mb-4">🔧 Direct API Testing</h4>
-                        <div class="bg-white/[.02] rounded-lg p-4 border border-line">
-                            <p class="text-slate-300 mb-3">Test the JSON-RPC endpoints directly with curl:</p>
-
-                            <div class="space-y-4">
-                                <div>
-                                    <p class="text-white font-semibold mb-2">Initialize connection:</p>
-                                    <div class="bg-ink rounded-lg p-3 font-mono text-xs border border-line overflow-x-auto">
-                                        <div class="text-cy">curl -X POST https://mkkai.dev/api/mcp \</div>
-                                        <div class="text-cy ml-2">-H "Content-Type: application/json" \</div>
-                                        <div class="text-cy ml-2">-d '{</div>
-                                        <div class="text-cy ml-4">"jsonrpc": "2.0",</div>
-                                        <div class="text-cy ml-4">"id": 1,</div>
-                                        <div class="text-cy ml-4">"method": "initialize",</div>
-                                        <div class="text-cy ml-4">"params": {</div>
-                                        <div class="text-cy ml-6">"protocolVersion": "2025-06-18",</div>
-                                        <div class="text-cy ml-6">"capabilities": {},</div>
-                                        <div class="text-cy ml-6">"clientInfo": {"name": "test", "version": "1.0"}</div>
-                                        <div class="text-cy ml-4">}</div>
-                                        <div class="text-cy ml-2">}'</div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p class="text-white font-semibold mb-2">List available tools:</p>
-                                    <div class="bg-ink rounded-lg p-3 font-mono text-xs border border-line overflow-x-auto">
-                                        <div class="text-cy">curl -X POST https://mkkai.dev/api/mcp \</div>
-                                        <div class="text-cy ml-2">-H "Content-Type: application/json" \</div>
-                                        <div class="text-cy ml-2">-d '{</div>
-                                        <div class="text-cy ml-4">"jsonrpc": "2.0",</div>
-                                        <div class="text-cy ml-4">"id": 2,</div>
-                                        <div class="text-cy ml-4">"method": "tools/list",</div>
-                                        <div class="text-cy ml-4">"params": {}</div>
-                                        <div class="text-cy ml-2">}'</div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p class="text-white font-semibold mb-2">Search projects:</p>
-                                    <div class="bg-ink rounded-lg p-3 font-mono text-xs border border-line overflow-x-auto">
-                                        <div class="text-cy">curl -X POST https://mkkai.dev/api/mcp \</div>
-                                        <div class="text-cy ml-2">-H "Content-Type: application/json" \</div>
-                                        <div class="text-cy ml-2">-d '{</div>
-                                        <div class="text-cy ml-4">"jsonrpc": "2.0",</div>
-                                        <div class="text-cy ml-4">"id": 3,</div>
-                                        <div class="text-cy ml-4">"method": "tools/call",</div>
-                                        <div class="text-cy ml-4">"params": {</div>
-                                        <div class="text-cy ml-6">"name": "search_projects",</div>
-                                        <div class="text-cy ml-6">"arguments": {"technology": "Python"}</div>
-                                        <div class="text-cy ml-4">}</div>
-                                        <div class="text-cy ml-2">}'</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Available Tools & Resources -->
-                    <div>
-                        <h4 class="text-xl font-bold text-slate-100 mb-4">📋 Available Tools & Resources</h4>
-                        <div class="bg-white/[.02] rounded-lg p-4 border border-line">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <p class="text-white font-semibold mb-3">🛠️ Tools:</p>
-                                    <ul class="space-y-2 text-slate-300 text-sm">
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">search_projects</code> - Search by category/technology/keyword</li>
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">submit_contact</code> - Send contact form messages</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="text-white font-semibold mb-3">📁 Resources:</p>
-                                    <ul class="space-y-2 text-slate-300 text-sm">
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">portfolio://profile</code> - Professional info</li>
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">portfolio://contact</code> - Contact details</li>
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">portfolio://projects/all</code> - All projects</li>
-                                        <li>• <code class="bg-white/[.02] px-2 py-1 rounded text-cy">portfolio://projects/{id}</code> - Individual projects</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-        
-    
+        <ProjectSection Title="How it's built" Icon="fas fa-gears">
+            <p class="leading-relaxed text-slate-300">
+                Both are part of this site's ASP.NET Core server. The MCP server is my own JSON-RPC handler rather than an SDK; the assistant calls its tools in the same process,
+                so the chat and an outside agent see exactly the same data. Its profile is built from the same content as the homepage, so the two can't disagree.
+                There's more about the site itself on <a href="/projects/portfolio" class="text-cy hover:underline">its project page</a>.
+            </p>
+        </ProjectSection>
     </div>
 </article>

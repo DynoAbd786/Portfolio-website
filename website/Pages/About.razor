@@ -2,31 +2,39 @@
 
 <PageTitle>About · Muhammad Kashif-Khan</PageTitle>
 
+@* Facts from the CV and HomeContent; plain words, no em dashes *@
 <div class="grid-bg">
     <section class="mx-auto max-w-5xl px-4 pb-8 pt-16 sm:px-6 lg:px-8">
         <p class="mono-label mb-4">// about me</p>
         <h1 class="mb-6 text-4xl font-extrabold tracking-tight text-white sm:text-6xl">Muhammad Kashif-Khan</h1>
-
-        <h2 class="mb-4 text-2xl font-bold text-cy">Driving Innovation Through Code</h2>
         <p class="mb-4 max-w-3xl text-lg leading-relaxed text-slate-300">
-            As a First-Class MEng Computer Science and AI graduate from the University of Leeds, I build solutions that bridge the gap between theoretical knowledge and real-world impact.
+            I'm a software engineer. I graduated from the University of Leeds in 2026 with a First-Class MEng in Computer Science with AI.
+            Along the way I spent two summers building research software at the university, led my master's group project, and helped run the Leeds AI Society.
+            In my own time I'm building two tools for working with AI coding agents, <a href="/projects/synergy" class="text-cy hover:underline">Synergy</a> and <a href="/projects/hireforge" class="text-cy hover:underline">HireForge</a>.
         </p>
-        <p class="max-w-3xl leading-relaxed text-slate-400">
-            My passion lies in leveraging advanced technologies to tackle complex challenges across diverse domains, from healthcare innovation to intelligent systems design. With a multidisciplinary foundation spanning mathematics, physics, and emerging AI technologies, I bring a unique perspective to every project I undertake.
+        <p class="mb-8 max-w-3xl leading-relaxed text-slate-400">
+            I'm looking for a graduate role in software engineering, AI, cloud infrastructure or technical consultancy.
         </p>
+        <div class="flex flex-wrap gap-3">
+            <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" class="btn-primary">
+                <i class="fas fa-download" aria-hidden="true"></i> Download CV
+            </a>
+            <a href="/projects" class="btn-ghost">See my work</a>
+            <a href="/#contact" class="btn-ghost">Get in touch</a>
+        </div>
     </section>
 </div>
 
 <section class="mx-auto grid max-w-5xl gap-6 px-4 py-8 sm:px-6 md:grid-cols-5 lg:px-8">
     <div class="surface p-6 md:col-span-3">
         <h2 class="mb-5 flex items-center gap-3 text-xl font-bold text-white">
-            <i class="fas fa-code text-cy" aria-hidden="true"></i> Technical Arsenal
+            <i class="fas fa-code text-cy" aria-hidden="true"></i> What I work with
         </h2>
         <div class="space-y-5">
             @foreach (var (group, skills) in SkillGroups)
             {
                 <div>
-                    <h3 class="mono-label mb-2">@group</h3>
+                    <h3 class="mono-label mb-2">// @group</h3>
                     <div class="flex flex-wrap gap-2">
                         @foreach (var skill in skills)
                         {
@@ -40,41 +48,22 @@
 
     <div class="surface p-6 md:col-span-2">
         <h2 class="mb-5 flex items-center gap-3 text-xl font-bold text-white">
-            <i class="fas fa-graduation-cap text-cy" aria-hidden="true"></i> Academic Excellence
+            <i class="fas fa-graduation-cap text-cy" aria-hidden="true"></i> Education
         </h2>
         <p class="font-semibold text-cy">University of Leeds</p>
         <p class="mb-1 font-semibold text-white">MEng/BSc Computer Science with Artificial Intelligence</p>
-        <p class="mb-4 text-sm text-slate-400">September 2022 – June 2026</p>
-        <p class="mb-6 inline-flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-sm font-semibold text-emerald-300">
-            <i class="fas fa-trophy" aria-hidden="true"></i> First-Class Honours
+        <p class="mb-4 font-mono text-xs text-slate-400">2022 – 2026</p>
+        <p class="mb-6 inline-flex items-center gap-2 rounded-lg border border-cy/30 bg-cy/10 px-3 py-2 text-sm font-semibold text-cy">
+            <i class="fas fa-award" aria-hidden="true"></i> First-Class Honours
         </p>
 
-        <h3 class="mono-label mb-3">Core Competencies</h3>
-        <ul class="space-y-2 text-slate-300">
-            @foreach (var competency in Competencies)
-            {
-                <li class="flex items-center gap-3"><i class="fas fa-check text-xs text-cy" aria-hidden="true"></i>@competency</li>
-            }
+        <h3 class="mono-label mb-3">// along the way</h3>
+        <ul class="space-y-3 text-sm leading-relaxed text-slate-300">
+            <li>Led my master's group project: <a href="/projects/3d-reconstruction" class="text-cy hover:underline">3D reconstruction from a single video</a>, with a team of five.</li>
+            <li>Summer 2025: a <a href="/projects/medical-simulation" class="text-cy hover:underline">stent deployment simulation</a> tool for flow-diverter stents.</li>
+            <li>Summer 2024: led the rebuild of <a href="/projects/pnanolocz" class="text-cy hover:underline">pNanoLocz</a>, a MATLAB microscopy tool, in Python.</li>
+            <li>Core executive team of the Leeds Artificial Intelligence Society.</li>
         </ul>
-    </div>
-</section>
-
-<section class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-    <div class="surface p-8 text-center">
-        <h2 class="mb-4 text-2xl font-bold text-cy">Looking Forward</h2>
-        <p class="mx-auto mb-4 max-w-3xl text-lg leading-relaxed text-slate-300">
-            I'm actively seeking opportunities to translate academic excellence into industry impact. Whether it's developing intelligent healthcare solutions, optimizing complex systems, or pioneering new AI applications, I'm ready to contribute meaningful innovation to forward-thinking teams.
-        </p>
-        <p class="mx-auto mb-8 max-w-3xl text-slate-400">
-            My goal is to leverage cutting-edge technology not just for the sake of innovation, but to create solutions that genuinely improve lives and drive progress in our rapidly evolving digital landscape.
-        </p>
-        <div class="flex flex-wrap justify-center gap-3">
-            <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" class="btn-primary">
-                <i class="fas fa-download" aria-hidden="true"></i> Download CV
-            </a>
-            <a href="/projects" class="btn-ghost">See my work</a>
-            <a href="/#contact" class="btn-ghost">Get in touch</a>
-        </div>
     </div>
 </section>
 
@@ -88,26 +77,21 @@
         </div>
         <a href="/ai-integration" class="surface group block p-6 transition hover:border-cy/50">
             <h2 class="mb-2 flex items-center gap-3 text-lg font-bold text-white">
-                <i class="fas fa-robot text-cy" aria-hidden="true"></i> AI Integration
+                <i class="fas fa-robot text-cy" aria-hidden="true"></i> AI on this site
             </h2>
-            <p class="text-slate-400">How I use AI in development, and where I don't. <span class="text-cy group-hover:underline">Read it →</span></p>
+            <p class="text-slate-400">The assistant and the MCP server behind it, and how to connect an agent of your own. <span class="text-cy group-hover:underline">Read it →</span></p>
         </a>
     </div>
 </section>
 
 @code {
+    // from the CV, plus what the projects on this site use
     private static readonly (string Group, string[] Skills)[] SkillGroups =
     {
-        ("Programming Languages", new[] { "Python", "C/C++", "C#", "Java", "JavaScript", "SQL", "GLSL", "Bash" }),
-        ("AI & Machine Learning", new[] { "Machine Learning", "Computer Vision", "OpenCV", "GPT-4 API", "Scikit-learn", "JAX", "Neural Networks", "SpaCy NLP", "Decision Trees", "PCA", "Ollama", "Local LLMs", "Search Algorithms" }),
-        ("Web & Cloud Technologies", new[] { "Blazor", ".NET 10", "ASP.NET Core", "FastAPI", "Azure Functions", "Azure Cosmos DB", "Redis", "PostgreSQL", "JSON-RPC 2.0", "RESTful APIs" }),
-        ("Scientific Computing & HPC", new[] { "CUDA", "OpenMP", "MPI", "OpenCL", "NumPy", "SciPy", "Matplotlib", "ParaView", "Jupyter", "CFD", "XLB Framework" }),
-        ("Graphics & Systems", new[] { "OpenGL", "Computer Graphics", "3D Rendering", "Shader Programming", "ROS2", "SLAM", "PyQt6", "Linux/Unix", "Docker", "Git" }),
-        ("Specialized Domains", new[] { "Medical Imaging", "Biomedical Engineering", "Healthcare AI", "Autonomous Robotics", "Distributed Systems", "Blood Flow Simulation", "Agile Development", "Model Context Protocol" }),
-    };
-
-    private static readonly string[] Competencies =
-    {
-        "Advanced Algorithm Design", "Machine Learning & AI", "Data Analysis & Visualization", "Software Architecture", "Healthcare Technology",
+        ("languages", new[] { "Python", "C#", "C/C++", "TypeScript", "JavaScript", "Java", "SQL", "Bash", "GLSL" }),
+        ("ai & vision", new[] { "PyTorch", "OpenCV", "scikit-learn", "JAX", "LLM agents", "MCP", "llama.cpp" }),
+        ("web & cloud", new[] { "ASP.NET Core", "Blazor", "FastAPI", "React", "PostgreSQL", "Redis", "Azure Functions", "Cosmos DB" }),
+        ("scientific & hpc", new[] { "CUDA", "OpenMP", "MPI", "NumPy", "SciPy", "ParaView", "XLB" }),
+        ("graphics & systems", new[] { "OpenGL", "three.js", "ROS2", "SLAM", "PyQt6", "Docker", "Linux", "Git" }),
     };
 }

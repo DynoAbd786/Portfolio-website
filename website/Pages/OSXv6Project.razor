@@ -13,7 +13,7 @@
                             <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
                             <h3 class="text-xl font-bold text-slate-100">COMP2211 Operating Systems Coursework</h3>
                         </div>
-                        <p class="text-gray-300 leading-relaxed">
+                        <p class="text-slate-300 leading-relaxed">
                             An 11-week lab series built around xv6, MIT's teaching reimplementation of Unix Version 6. It targets RISC-V
                             and runs under QEMU. Over the labs I wrote user programs, added system calls to the kernel, fixed and tuned the
                             memory allocator, and built a shell from scratch.
@@ -22,7 +22,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Technical Foundation</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• xv6 operating system (MIT)</li>
                                 <li>• RISC-V architecture & QEMU emulation</li>
                                 <li>• Development inside a container</li>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Core Components</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• A shell written from scratch (582 lines)</li>
                                 <li>• New system calls</li>
                                 <li>• Memory allocator fixes and tuning</li>
@@ -46,11 +46,11 @@
 
                     <!-- Shell Features -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-code-branch mr-3"></i>Pipeline Processing
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Multi-element:</strong> Chains of any length
                                 </div>
@@ -68,7 +68,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-exchange-alt mr-3"></i>I/O Redirection
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Input:</strong> File to stdin (&lt;)
                                 </div>
@@ -86,7 +86,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-list mr-3"></i>Sequential Commands
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Operator:</strong> Semicolon (;) separator
                                 </div>
@@ -106,7 +106,7 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Shell Architecture & Parsing</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2">// Command execution pipeline architecture</div>
-                            <div class="text-gray-300 mb-4">
+                            <div class="text-slate-300 mb-4">
                                 <span class="text-cy">typedef struct</span> {<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">char</span> *argv[MAXARG];<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">char</span> *endBuffer;<br/>
@@ -117,7 +117,7 @@
                                 <span class="text-cy">parseCommand</span>() → <span class="text-cy">tokenize</span>() → <span class="text-cy">parseLine</span>() → <span class="text-cy">walkCommand</span>()
                             </div>
                             <div class="text-cy mb-2">// Pipeline processing with recursive fork/exec</div>
-                            <div class="text-gray-300">
+                            <div class="text-slate-300">
                                 <span class="text-cy">void</span> <span class="text-cy">runPipelines</span>(<span class="text-cy">execCommand</span> *commands[], <span class="text-cy">int</span> numPipes)<br/>
                                 {<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">// Recursive pipeline handling with proper file descriptor management</span><br/>
@@ -133,13 +133,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Custom System Calls</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>Implementation:</strong> Added new system calls to the xv6 kernel</div>
                                 <div><strong>Files Modified:</strong> syscall.h, syscall.c, sysproc.c, usys.pl, user.h</div>
                                 <div><strong>Example:</strong> getyear(), which returns the year Unix v6 was released (1975)</div>
                                 <div>
                                     <strong>Process:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Write the function in kernel space</li>
                                         <li>• Declare the user space interface</li>
                                         <li>• Assign a system call number</li>
@@ -151,14 +151,14 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">User Programs Developed</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>sleep:</strong> Pauses for a given number of ticks</div>
                                 <div><strong>ping-pong:</strong> Two processes talking over pipes</div>
                                 <div><strong>find:</strong> Searches a directory tree recursively</div>
                                 <div><strong>xargs:</strong> Runs a command with arguments read from a pipe</div>
                                 <div>
                                     <strong>Features:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Forking processes and waiting on them</li>
                                         <li>• Working with file descriptors</li>
                                         <li>• Dynamic memory allocation</li>
@@ -175,7 +175,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">malloc/free Implementation</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• <strong>Debugging:</strong> Found and fixed bugs in xv6's allocator</li>
                                     <li>• <strong>Alignment:</strong> Blocks aligned to 16 bytes</li>
                                     <li>• <strong>Efficiency:</strong> Better use of sbrk() for physical memory</li>
@@ -184,7 +184,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-3">Data Structures</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• <strong>Linked Lists:</strong> Nodes allocated and linked by hand in C</li>
                                     <li>• <strong>Operations:</strong> Insert, delete, traverse, search</li>
                                     <li>• <strong>Memory Safety:</strong> Careful malloc/free use</li>
@@ -201,7 +201,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Process Management</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Fork/Exec/Wait:</strong> Starting, running and reaping processes</li>
                                 <li><strong>Process Communication:</strong> Pipes and file descriptors</li>
                                 <li><strong>Synchronization:</strong> Parent-child process coordination</li>
@@ -211,7 +211,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Code Architecture</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Modular Design:</strong> Parsing kept apart from execution</li>
                                 <li><strong>Helpers:</strong> Shared utility functions</li>
                                 <li><strong>Memory Management:</strong> Dynamic allocation where needed</li>
@@ -221,7 +221,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Development Practices</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Testing:</strong> Stress testing</li>
                                 <li><strong>Build System:</strong> Makefile-based builds</li>
                                 <li><strong>Documentation:</strong> Well-commented code</li>
@@ -231,11 +231,11 @@
                     </div>
 
                     <!-- Build Environment -->
-                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Development Environment</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2"># xv6 Development Workflow</div>
-                            <div class="text-gray-300">
+                            <div class="text-slate-300">
                                 <span class="text-cy">Platform:</span> Linux with Singularity containerization<br/>
                                 <span class="text-cy">Toolchain:</span> RISC-V GCC cross-compiler<br/>
                                 <span class="text-cy">Emulation:</span> QEMU RISC-V system emulation<br/>
@@ -255,7 +255,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Complexity Indicators</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>582 Lines of Shell Code:</strong> Parsing and running commands</li>
                                     <li><strong>Multiple System Calls:</strong> Added to the kernel itself</li>
                                     <li><strong>Process Control:</strong> Pipelines with any number of stages</li>
@@ -266,9 +266,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Skills Demonstrated</h3>
+                            <h3 class="text-xl font-bold text-white mb-4">Skills I used</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>Systems Programming:</strong> Low-level C</li>
                                     <li><strong>Operating System Concepts:</strong> Processes, memory and the file system</li>
                                     <li><strong>Algorithm Design:</strong> Recursive pipelines and command parsing</li>
@@ -283,21 +283,21 @@
                     <!-- Academic Context -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line mt-6">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">COMP2211</h3>
-                        <p class="text-gray-300 text-sm mb-3">
+                        <p class="text-slate-300 text-sm mb-3">
                             The labs went beyond user programs into changing a working kernel:
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Kernel Development</h4>
-                                <p class="text-gray-400 text-sm">I changed the kernel directly and added my own system calls.</p>
+                                <p class="text-slate-400 text-sm">I changed the kernel directly and added my own system calls.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Architecture</h4>
-                                <p class="text-gray-400 text-sm">A shell with pipelines, redirection and command sequences.</p>
+                                <p class="text-slate-400 text-sm">A shell with pipelines, redirection and command sequences.</p>
                             </div>
                             <div>
-                                <h4 class="font-bold text-white mb-1">Systems Expertise</h4>
-                                <p class="text-gray-400 text-sm">A working knowledge of OS internals and process management.</p>
+                                <h4 class="font-bold text-white mb-1">Systems</h4>
+                                <p class="text-slate-400 text-sm">A working knowledge of OS internals and process management.</p>
                             </div>
                         </div>
                     </div>
@@ -305,21 +305,21 @@
 
                 <!-- GitHub Repository Links -->
                 <ProjectSection Title="Source Code & Documentation" Icon="fab fa-github">
-                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
                         The repository has my xv6 work: the shell, the system calls and the documentation.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <a href="https://github.com/DynoAbd786/OS-xv6"
                            target="_blank"
-                           class="hover:from-gray-600 hover:to-gray-700 border border-line hover:border-cy/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
+                           class="surface flex items-center justify-center px-6 py-4 font-bold text-white transition hover:border-cy/50">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">xv6 Operating System</div>
-                                <div class="text-sm text-gray-400">Custom Shell & System Calls</div>
+                                <div class="text-sm text-slate-400">Custom Shell & System Calls</div>
                             </div>
                         </a>
                     </div>
-                    <p class="text-gray-400 text-sm mt-4">
+                    <p class="text-slate-400 text-sm mt-4">
                         Includes the source code, documentation, lab manual and an implementation guide
                     </p>
                 </ProjectSection>
@@ -331,23 +331,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">How an operating system works from the inside</span>
+                                <span class="text-slate-300">How an operating system works from the inside</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Process management and IPC with pipes</span>
+                                <span class="text-slate-300">Process management and IPC with pipes</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Writing a shell from parser to execution</span>
+                                <span class="text-slate-300">Writing a shell from parser to execution</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Kernel programming and adding system calls</span>
+                                <span class="text-slate-300">Kernel programming and adding system calls</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Debugging and tuning a memory allocator</span>
+                                <span class="text-slate-300">Debugging and tuning a memory allocator</span>
                             </li>
                         </ul>
                 </ProjectSection>

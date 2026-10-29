@@ -133,7 +133,7 @@ Dark ink background, one cyan accent, Inter and JetBrains Mono. Colour tokens (`
 3. Each project has a `ProjectCategory` (Personal, Professional, Academic), one or more `ProjectField`s (AI & ML, computer vision & graphics, scientific & biomedical, cloud & distributed, systems & infrastructure, product & business; labels and URL slugs in `website/Data/ProjectFields.cs`) and a one-sentence `Result` shown under its title
 
 ### Project Page Template
-Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project · Year 2">` wrapping `<ProjectSection Title="..." Subtitle="..." Icon="fas fa-...">` panels. `ProjectPage` renders the breadcrumb, title, result and chips from the project data, plus the next-project link, so a page only writes its sections. Inside sections use the shared classes (`chip`, `surface`, `text-slate-*`, `border-line`, `text-cy`), not rainbow colours. Interactive bits are their own components (`ImageGallery`, `BridgeStatus`), never a page-level render mode.
+Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project · Year 2">` wrapping `<ProjectSection Title="..." Subtitle="..." Icon="fas fa-...">` panels. `ProjectPage` renders the breadcrumb, title, result and chips from the project data, plus the next-project link, so a page only writes its sections. Inside sections use the shared classes (`chip`, `surface`, `text-slate-*`, `border-line`, `text-cy`), not rainbow colours; `StyleTests` fails on any old palette colour inside `main` (a short list of colours that carry meaning, such as form errors and status lights, is allowed). Interactive bits are their own components (`ImageGallery`, `BridgeStatus`), never a page-level render mode.
 
 ## Document Management System
 
