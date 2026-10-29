@@ -200,7 +200,7 @@ This portfolio implements a custom MCP server that allows AI agents (like Claude
 - Tests: `tests/website.tests/McpTests.cs` (email faked)
 
 ### MCP Capabilities
-1. **Resources**: Access to profile, projects, contact info, ethos, and AI integration philosophy
+1. **Resources**: Access to profile, projects, contact info, about and AI integration
 2. **Tools**:
    - `submit_contact` - Send contact form messages
    - `search_projects` - Search projects by category, technology, or keyword

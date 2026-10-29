@@ -16,7 +16,7 @@ public class SitemapTests : IClassFixture<SiteFactory>
     {
         using var scope = _factory.Services.CreateScope();
         var projects = await scope.ServiceProvider.GetRequiredService<ProjectService>().GetProjectsAsync();
-        var expected = new[] { "/", "/about", "/projects", "/ethos", "/ai-integration" }
+        var expected = new[] { "/", "/about", "/projects", "/ai-integration" }
             .Concat(projects.Select(p => p.ProjectUrl)).ToHashSet();
 
         var xml = XDocument.Parse(await _factory.CreateClient().GetStringAsync("/sitemap.xml"));

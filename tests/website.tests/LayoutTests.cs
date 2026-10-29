@@ -24,10 +24,10 @@ public class LayoutTests : IClassFixture<SiteFactory>
 
     [Theory]
     [MemberData(nameof(Pages))]
-    public async Task Footer_links_ethos_and_ai_integration(string path)
+    public async Task Footer_links_ai_integration_and_nothing_to_ethos(string path)
     {
         var doc = await Html.GetAsync(_client, path);
-        Assert.NotNull(doc.QuerySelector("footer a[href=\"/ethos\"]"));
+        Assert.Empty(doc.QuerySelectorAll("a[href=\"/ethos\"]"));
         Assert.NotNull(doc.QuerySelector("footer a[href=\"/ai-integration\"]"));
     }
 

@@ -181,12 +181,6 @@ public class McpService : IMcpService
                 mimeType = "application/json"
             },
             new {
-                uri = "portfolio://ethos",
-                name = "Professional Ethos",
-                description = "Philosophy on technology, responsibility, and human-AI collaboration",
-                mimeType = "application/json"
-            },
-            new {
                 uri = "portfolio://ai-integration",
                 name = "AI Integration Approach",
                 description = "Methodology and philosophy for AI integration in development",
@@ -295,26 +289,6 @@ public class McpService : IMcpService
                     philosophy = "Passionate about leveraging AI responsibly to solve real-world problems, particularly in healthcare and scientific domains",
                     academicFocus = "Strong academic performance with emphasis on practical applications and ethical technology development",
                     note = "Portfolio developed during a period of long-term illness, demonstrating resilience and commitment to learning"
-                }, Readable)
-            },
-            "portfolio://ethos" => new McpResourceContent
-            {
-                Uri = uri,
-                MimeType = "application/json",
-                Text = JsonSerializer.Serialize(new
-                {
-                    title = "Professional Ethos & Philosophy",
-                    coreValues = new[] { "Responsible AI Development", "Human-Centered Technology", "Ethical Innovation", "Transparency", "Continuous Learning" },
-                    aiPhilosophy = "AI should augment human capabilities rather than replace human judgment, with transparency and ethical considerations at the forefront",
-                    responsibilityPrinciples = new[] {
-                        "Privacy-first design with GDPR compliance",
-                        "Transparent AI systems with explainable outputs",
-                        "Inclusive technology that serves diverse populations",
-                        "Environmental consciousness in computing practices"
-                    },
-                    collaborationApproach = "Believe in multidisciplinary teams where AI expertise combines with domain knowledge for meaningful impact",
-                    innovationMindset = "Focus on solving real problems rather than pursuing technology for its own sake",
-                    learningCommitment = "Committed to lifelong learning and staying current with emerging technologies while maintaining ethical standards"
                 }, Readable)
             },
             "portfolio://ai-integration" => new McpResourceContent

@@ -2,7 +2,7 @@
 import pytest
 
 # Pages checked so far; each redesign PR adds its own
-ROUTES = ["/", "/projects", "/projects?field=zzz&category=personal", "/about", "/ethos", "/ai-integration", "/no-such-page"] + [
+ROUTES = ["/", "/projects", "/projects?field=zzz&category=personal", "/about", "/ai-integration", "/no-such-page"] + [
     "/projects/machine-learning", "/projects/medical-simulation", "/projects/3d-reconstruction",
     "/projects/pnanolocz", "/projects/distributed-systems", "/projects/home-lab",
     "/projects/synergy", "/projects/formula-student-ai", "/projects/data-mining",

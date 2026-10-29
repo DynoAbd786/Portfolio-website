@@ -16,7 +16,7 @@ public class RouteTests : IClassFixture<SiteFactory>
 
     public static TheoryData<string> AllPageRoutes => new()
     {
-        "/", "/about", "/ai-integration", "/ethos", "/not-found", "/projects",
+        "/", "/about", "/ai-integration", "/not-found", "/projects",
         "/projects/3d-reconstruction", "/projects/ai-decision-trees", "/projects/ai-search-algorithms",
         "/projects/autonomous-robotics", "/projects/business-plan", "/projects/c-programming",
         "/projects/data-mining", "/projects/distributed-systems", "/projects/formula-student-ai",
@@ -65,6 +65,15 @@ public class RouteTests : IClassFixture<SiteFactory>
         var response = await client.GetAsync("/projects/taskflow");
         Assert.Equal(HttpStatusCode.MovedPermanently, response.StatusCode);
         Assert.Equal("/projects", response.Headers.Location?.OriginalString);
+    }
+
+    [Fact]
+    public async Task Removed_ethos_page_redirects_to_how_i_work_on_about()
+    {
+        var client = _factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var response = await client.GetAsync("/ethos");
+        Assert.Equal(HttpStatusCode.MovedPermanently, response.StatusCode);
+        Assert.Equal("/about#how-i-work", response.Headers.Location?.OriginalString);
     }
 
     [Fact]
