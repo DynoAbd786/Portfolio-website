@@ -68,7 +68,7 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
   - `GET /api/projects/categories/{category}` - Projects by category
 - **`ContactController`**: `/api/contact` - Email functionality via Resend
   - `POST /api/contact` - Send contact form email
-- **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). The local-Ollama access endpoints (`request-access`, `status`, `callback`, `models`) remain but the chat no longer offers them
+- **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). Its system prompt (`AssistantContext`) is built from `HomeContent` (experience, products, stack, open to work) and every project, so it knows what the homepage shows; replies render through `ChatMarkdown`, which opens site links in the main window, not the chat frame. The local-Ollama access endpoints (`request-access`, `status`, `callback`, `models`) remain but the chat no longer offers them
 - **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
   - `POST /api/mcp` - Main MCP endpoint for AI agents (Claude Desktop)
   - `GET /api/mcp` - Initialize endpoint

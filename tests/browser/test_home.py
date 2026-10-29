@@ -17,7 +17,8 @@ def test_anchor_from_other_page_lands_on_section(page, site_url):
 def test_see_my_work_scrolls_to_work(page, site_url):
     page.goto(site_url + "/", wait_until="load")
     page.click("main a[href='#work']")
-    page.wait_for_timeout(1000)
+    # a smooth scroll: wait for it to arrive rather than a fixed time (slow under a loaded machine)
+    page.wait_for_function("() => { const r = document.querySelector('#work').getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; }", timeout=4000)
     assert _in_viewport(page, "#work")
 
 

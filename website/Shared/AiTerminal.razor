@@ -105,7 +105,7 @@
                     }
                     else
                     {
-                        @((MarkupString)Markdig.Markdown.ToHtml(message.Content, pipeline))
+                        @((MarkupString)ChatMarkdown.ToHtml(message.Content))
                         
                         @if (message.ToolsDisabled && message.Role == "model")
                         {
@@ -735,9 +735,6 @@
     private bool isTyping = false;
     private List<MessageItem> history = new();
     
-    private static Markdig.MarkdownPipeline pipeline = new Markdig.MarkdownPipelineBuilder()
-        .UseAdvancedExtensions()
-        .Build();
     
     
     // Multi-session History

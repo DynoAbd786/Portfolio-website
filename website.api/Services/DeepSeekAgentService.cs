@@ -84,17 +84,7 @@ public class DeepSeekAgentService
 
         // 2. Prepare Context
         var allProjects = await _projectService.GetProjectsAsync();
-        var systemInstruction = 
-            "You are the interactive portfolio assistant for Muhammad Kashif-Khan (MKKAI). " +
-            "Your goal is to help recruiters and visitors navigate his portfolio, understand his skills, and contact him.\n\n" +
-            "CORE BEHAVIORS:\n" +
-            "- Be professional, enthusiastic, and concise.\n" +
-            "- You have direct access to tool capabilities. USE THEM. If a user asks about Python, search for Python projects.\n" +
-            "- If a user wants to contact Muhammad, guide them to provide the necessary info and call the submit_contact tool.\n" +
-            "- When showing projects, summarize them effectively and provide the ProjectUrl.\n" +
-            "- DO NOT hallucinate projects. Use the search_projects tool to find facts.\n\n" +
-            "PORTFOLIO DATA CONTEXT:\n" +
-            JsonSerializer.Serialize(allProjects);
+        var systemInstruction = AssistantContext.SystemPrompt(allProjects);
 
         // 3. Build Messages
         var messages = new List<object>
