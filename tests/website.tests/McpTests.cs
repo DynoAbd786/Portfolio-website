@@ -141,5 +141,8 @@ public class McpTests : IClassFixture<SiteFactory>
         foreach (var e in HomeContent.Experience) Assert.Contains(e.Title, profile);
         foreach (var p in HomeContent.Products) Assert.Contains(p.Name, profile);
         Assert.DoesNotContain("Gradle", profile);
+        var ai = await Read(client, "portfolio://ai-integration");
+        Assert.DoesNotContain("GPT-4", ai);
+        Assert.Contains("DeepSeek", ai);
     }
 }

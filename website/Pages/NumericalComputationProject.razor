@@ -13,7 +13,7 @@
                             <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
                             <h3 class="text-xl font-bold text-slate-100">COMP/XJCO2421 Numerical Computation Coursework</h3>
                         </div>
-                        <p class="text-gray-300 leading-relaxed">
+                        <p class="text-slate-300 leading-relaxed">
                             I implemented several differential equation solvers and compared them on a predator-prey system.
                             The model is the Lotka-Volterra equations, with external forcing functions that stand in for migration.
                             For each method I measured accuracy, speed and stability.
@@ -22,7 +22,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Problem Domain</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Modeling a predator-prey ecosystem</li>
                                 <li>• Lotka-Volterra differential equations</li>
                                 <li>• Forcing functions for migration in and out</li>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Technical Implementation</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• Euler's method, written by me</li>
                                 <li>• Several numerical solvers compared</li>
                                 <li>• Timing benchmarks</li>
@@ -45,11 +45,11 @@
                 <ProjectSection Title="Predator-Prey Mathematical System" Icon="fas fa-function">
 
                     <!-- Mathematical Equations -->
-                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25 mb-8">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-8">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Lotka-Volterra Equations with Forcing</h3>
                         <div class="bg-ink rounded-lg p-6 font-mono text-lg">
                             <div class="text-cy mb-4">// Differential equation system</div>
-                            <div class="text-gray-300 space-y-2">
+                            <div class="text-slate-300 space-y-2">
                                 <div><span class="text-cy">dx/dt</span> = αx - βxy + <span class="text-cy">f(t)</span>  <span class="text-cy">// Prey dynamics</span></div>
                                 <div><span class="text-cy">dy/dt</span> = δxy - γy + <span class="text-cy">g(t)</span>  <span class="text-cy">// Predator dynamics</span></div>
                                 <br/>
@@ -65,7 +65,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-check-circle mr-3"></i>Test Case A - Validation
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Parameters:</strong> α = β = γ = δ = 1
                                 </div>
@@ -93,7 +93,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-cogs mr-3"></i>Test Case B - Realistic
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Parameters:</strong> α = 2/3, β = 4/3, γ = δ = 1
                                 </div>
@@ -105,7 +105,7 @@
                                 </div>
                                 <div>
                                     <strong class="text-white">Expected Behavior:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Populations oscillate periodically</li>
                                         <li>• Peaks stay the same height over time</li>
                                         <li>• Stable over long runs</li>
@@ -123,13 +123,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Custom Implementation</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>Euler Method:</strong> O(h) first-order accuracy</div>
                                 <div><strong>Implementation:</strong> Written from scratch to match the provided solvers</div>
                                 <div><strong>Purpose:</strong> Baseline to compare the others against</div>
                                 <div>
                                     <strong>Features:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Butcher tableau structure</li>
                                         <li>• Timed the same way as the other solvers</li>
                                         <li>• Type-safe</li>
@@ -141,13 +141,13 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Third-Order Methods</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>SSPRK3:</strong> Strong stability preserving</div>
                                 <div><strong>Van der Houwen:</strong> Optimized coefficients</div>
                                 <div><strong>Accuracy:</strong> O(h³) convergence rate</div>
                                 <div>
                                     <strong>Applications:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Simulations where stability matters most</li>
                                         <li>• Medium precision</li>
                                         <li>• A balance of speed and accuracy</li>
@@ -159,13 +159,13 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Fourth-Order Methods</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>Runge-Kutta:</strong> Classical RK4</div>
                                 <div><strong>3/8-rule:</strong> Alternative RK4 variant</div>
                                 <div><strong>Ralston-4:</strong> Tuned for stability</div>
                                 <div>
                                     <strong>Performance:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• O(h⁴) accuracy</li>
                                         <li>• Lowest errors of the group</li>
                                         <li>• The standard choice in practice</li>
@@ -181,7 +181,7 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Implementation Architecture</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2"># Custom Euler method following solver.py patterns</div>
-                            <div class="text-gray-300 mb-4">
+                            <div class="text-slate-300 mb-4">
                                 <span class="text-cy">def</span> <span class="text-cy">Eulers_Method</span>(rhs, y0, t0, dt, T):<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy"># Butcher tableau for Euler (1st order)</span><br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;matrix = np.array([[<span class="text-cy">0.0</span>]])<br/>
@@ -203,7 +203,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Error Analysis</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Absolute Error:</strong> |computed - true|</li>
                                 <li><strong>Average Error:</strong> Mean deviation across the time range</li>
                                 <li><strong>Maximum Error:</strong> The largest deviation</li>
@@ -214,7 +214,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Performance Benchmarking</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>CPU Core Isolation:</strong> Pinned to one core for consistent timings</li>
                                 <li><strong>Multiple Runs:</strong> 5 iterations per measurement</li>
                                 <li><strong>Statistical Analysis:</strong> Averaged timings</li>
@@ -225,7 +225,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Advanced Features</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Peak Detection:</strong> Checks whether oscillations stay stable</li>
                                 <li><strong>Data Visualization:</strong> Graphs in matplotlib</li>
                                 <li><strong>Stability Assessment:</strong> Behavior over long runs</li>
@@ -236,12 +236,12 @@
                     </div>
 
                     <!-- Research Methodology -->
-                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Research Methodology</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Time Step Analysis</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• <strong>Range:</strong> a sequence of shrinking time steps</li>
                                     <li>• <strong>Test Case A:</strong> T = 2.5π (validation)</li>
                                     <li>• <strong>Test Case B:</strong> T = 30 (realistic case)</li>
@@ -250,7 +250,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-3">Statistical Framework</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• <strong>Error = C × h^p:</strong> Checks against the theoretical order</li>
                                     <li>• <strong>log(error) vs log(h):</strong> The slope gives the order</li>
                                     <li>• <strong>Multiplicative Factors:</strong> How much faster or slower each method is</li>
@@ -268,7 +268,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Key Research Results</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>Runge-Kutta (RK4):</strong> The most accurate of the methods</li>
                                     <li><strong>SSPRK3:</strong> Stable, and close behind RK4</li>
                                     <li><strong>Euler Method:</strong> The baseline; its peaks grow over time in Test B</li>
@@ -281,7 +281,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Technical Depth</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>Mathematical Rigor:</strong> Two test scenarios, one checked against an exact solution</li>
                                     <li><strong>Software Engineering:</strong> Object-oriented design with encapsulated data</li>
                                     <li><strong>Performance Optimization:</strong> CPU affinity and averaged runs</li>
@@ -296,21 +296,21 @@
                     <!-- Academic Excellence Context -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Takeaways & Industry Relevance</h3>
-                        <p class="text-gray-300 text-sm mb-3">
+                        <p class="text-slate-300 text-sm mb-3">
                             The project draws on three areas:
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Mathematical Depth</h4>
-                                <p class="text-gray-400 text-sm">Differential equation theory, convergence analysis and numerical stability.</p>
+                                <p class="text-slate-400 text-sm">Differential equation theory, convergence analysis and numerical stability.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Scientific Computing</h4>
-                                <p class="text-gray-400 text-sm">Careful implementations, with timings and measured errors for each.</p>
+                                <p class="text-slate-400 text-sm">Careful implementations, with timings and measured errors for each.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Research Methodology</h4>
-                                <p class="text-gray-400 text-sm">A structured comparison with statistics and practical recommendations.</p>
+                                <p class="text-slate-400 text-sm">A structured comparison with statistics and practical recommendations.</p>
                             </div>
                         </div>
                     </div>
@@ -318,21 +318,21 @@
 
                 <!-- GitHub Repository Links -->
                 <ProjectSection Title="Source Code & Documentation" Icon="fab fa-github">
-                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
                         The repository has all the solver code, the analysis and the written report.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <a href="https://github.com/DynoAbd786/numerical-computation-coursework"
                            target="_blank"
-                           class="hover:from-gray-600 hover:to-gray-700 border border-line hover:border-cy/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
+                           class="surface flex items-center justify-center px-6 py-4 font-bold text-white transition hover:border-cy/50">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">Numerical Computation Analysis</div>
-                                <div class="text-sm text-gray-400">Code, report and analysis</div>
+                                <div class="text-sm text-slate-400">Code, report and analysis</div>
                             </div>
                         </a>
                     </div>
-                    <p class="text-gray-400 text-sm mt-4">
+                    <p class="text-slate-400 text-sm mt-4">
                         Includes a Jupyter notebook, the solver implementations, the analysis and documentation
                     </p>
                 </ProjectSection>
@@ -344,23 +344,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">How different numerical methods behave on a predator-prey system</span>
+                                <span class="text-slate-300">How different numerical methods behave on a predator-prey system</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Measuring error and applying convergence theory</span>
+                                <span class="text-slate-300">Measuring error and applying convergence theory</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Getting reliable timings with CPU isolation and repeated runs</span>
+                                <span class="text-slate-300">Getting reliable timings with CPU isolation and repeated runs</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Implementing differential equation solvers carefully and correctly</span>
+                                <span class="text-slate-300">Implementing differential equation solvers carefully and correctly</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Turning the results into practical advice on which solver to pick</span>
+                                <span class="text-slate-300">Turning the results into practical advice on which solver to pick</span>
                             </li>
                         </ul>
                 </ProjectSection>

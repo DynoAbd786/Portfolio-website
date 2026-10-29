@@ -15,8 +15,13 @@ public class PageContentTests : IClassFixture<SiteFactory>
         var doc = await Html.GetAsync(_client, "/about");
         var main = doc.QuerySelector("main")!;
         var headings = main.QuerySelectorAll("h1, h2, h3").Select(h => h.TextContent.Trim()).ToList();
-        Assert.Contains("Driving Innovation Through Code", headings);
-        Assert.Contains("Looking Forward", headings);
+        Assert.Contains("What I work with", headings);
+        Assert.Contains("Education", headings);
+        foreach (var stale in new[] { "Driving Innovation", "Arsenal", "leverag", "passion", "cutting-edge", "GPT-4", "Ollama" })
+            Assert.DoesNotContain(stale, main.TextContent, StringComparison.OrdinalIgnoreCase);
+        Assert.NotNull(main.QuerySelector("a[href=\"/projects/3d-reconstruction\"]"));
+        Assert.NotNull(main.QuerySelector("a[href=\"/projects/medical-simulation\"]"));
+        Assert.NotNull(main.QuerySelector("a[href=\"/projects/pnanolocz\"]"));
         Assert.Empty(main.QuerySelectorAll("a[href=\"/ethos\"]"));
         var how = main.QuerySelector("#how-i-work")!;
         Assert.Contains("pull request", how.TextContent);
@@ -37,6 +42,18 @@ public class PageContentTests : IClassFixture<SiteFactory>
         Assert.NotNull(main.QuerySelector("h1"));
         Assert.NotNull(main.QuerySelector("a[href=\"/\"]"));
         Assert.NotNull(main.QuerySelector("a[href=\"/projects\"]"));
+    }
+
+    [Fact]
+    public async Task Ai_integration_says_only_what_is_true_now()
+    {
+        var doc = await Html.GetAsync(_client, "/ai-integration");
+        var text = doc.QuerySelector("main")!.TextContent;
+        foreach (var stale in new[] { "Local LLM", "LM Studio", "Fully Operational", "100%", "Claude Desktop: Testing", "GPT-4" })
+            Assert.DoesNotContain(stale, text);
+        Assert.DoesNotMatch(@"[\u2705\u23F3]|\uD83D[\uDE80\uDEE1\uDCCB\uDCC1\uDD27\uDDEA\uDD16]|\uD83E\uDDEA", text); // no emoji ticks
+        foreach (var fact in new[] { "https://mkkai.dev/api/mcp", "search_projects", "submit_contact", "portfolio://projects/hireforge", "DeepSeek" })
+            Assert.Contains(fact, text);
     }
 
     [Theory]

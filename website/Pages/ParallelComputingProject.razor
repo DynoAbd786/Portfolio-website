@@ -8,10 +8,10 @@
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-microchip">
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
                         I did this work for COMP3221 Parallel Computation at the University of Leeds. The module covers three main approaches to high-performance computing, with one piece of coursework for each.
                     </p>
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
                         Each one builds on the last. It starts with threads sharing memory on one machine, moves to processes passing messages across a cluster, and ends on the GPU.
                     </p>
                     <div class="bg-white/[.02] border border-line rounded-lg p-4">
@@ -29,10 +29,10 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Game of Life</h4>
-                            <p class="text-gray-300 text-sm mb-4">
+                            <p class="text-slate-300 text-sm mb-4">
                                 I parallelized the Game of Life with OpenMP directives. That meant four parallel functions, each written so threads respect the data dependencies and don't race.
                             </p>
-                            <ul class="space-y-2 text-sm text-gray-400">
+                            <ul class="space-y-2 text-sm text-slate-400">
                                 <li>• 283 lines of optimized C</li>
                                 <li>• Red-black ordering for the modified rules</li>
                                 <li>• Thread-safe random number generation</li>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Key Functions</h4>
-                            <div class="text-xs font-mono text-gray-300 space-y-1">
+                            <div class="text-xs font-mono text-slate-300 space-y-1">
                                 <div>numCells() - Reduction</div>
                                 <div>initialiseGrid() - Parallel Init</div>
                                 <div>iterateOriginal() - Moore</div>
@@ -55,10 +55,10 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Distributed Computing</h4>
-                            <p class="text-gray-300 text-sm mb-4">
+                            <p class="text-slate-300 text-sm mb-4">
                                 I wrote MPI programs that ran across several machines, then measured how their performance changed as I added processes.
                             </p>
-                            <ul class="space-y-2 text-sm text-gray-400">
+                            <ul class="space-y-2 text-sm text-slate-400">
                                 <li>• 199 lines of C with MPI</li>
                                 <li>• Run on a multi-machine cluster</li>
                                 <li>• Scaling measured up to 32 processes</li>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Speedup Analysis</h4>
-                            <div class="text-xs font-mono text-gray-300 space-y-1">
+                            <div class="text-xs font-mono text-slate-300 space-y-1">
                                 <div class="flex justify-between"><span>1 Proc:</span> <span class="text-cy">1.00x</span></div>
                                 <div class="flex justify-between"><span>2 Procs:</span> <span class="text-cy">1.42x</span></div>
                                 <div class="flex justify-between"><span>4 Procs:</span> <span class="text-cy">1.74x</span></div>
@@ -81,10 +81,10 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Heat Equation Solver</h4>
-                            <p class="text-gray-300 text-sm mb-4">
+                            <p class="text-slate-300 text-sm mb-4">
                                 I wrote OpenCL kernels that solve the heat equation on a 2D grid. The work covered moving memory between host and GPU and optimizing the kernels.
                             </p>
-                            <ul class="space-y-2 text-sm text-gray-400">
+                            <ul class="space-y-2 text-sm text-slate-400">
                                 <li>• 184 lines of C + OpenCL kernels</li>
                                 <li>• Optimized GPU memory transfers</li>
                                 <li>• Highly parallel execution on the GPU</li>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                              <h4 class="text-xl font-bold text-slate-100 mb-3">Features</h4>
-                             <div class="text-xs font-mono text-gray-300 space-y-1">
+                             <div class="text-xs font-mono text-slate-300 space-y-1">
                                 <div>• Host-device memory mgmt</div>
                                 <div>• 2D work-group optimization</div>
                                 <div>• Boundary condition handling</div>
@@ -109,7 +109,7 @@
                          <div class="grid grid-cols-1 gap-6">
                             <div>
                                 <h4 class="font-semibold text-slate-100 mb-2">Parallel Patterns</h4>
-                                <ul class="text-sm text-gray-300 space-y-1">
+                                <ul class="text-sm text-slate-300 space-y-1">
                                     <li>• Data parallelism</li>
                                     <li>• Task decomposition</li>
                                     <li>• Reduction operations</li>
@@ -117,7 +117,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-slate-100 mb-2">Synchronization</h4>
-                                <ul class="text-sm text-gray-300 space-y-1">
+                                <ul class="text-sm text-slate-300 space-y-1">
                                     <li>• Race condition prevention</li>
                                     <li>• Critical sections</li>
                                     <li>• GPU memory coherence</li>
@@ -125,7 +125,7 @@
                             </div>
                              <div>
                                 <h4 class="font-semibold text-slate-100 mb-2">Optimization</h4>
-                                <ul class="text-sm text-gray-300 space-y-1">
+                                <ul class="text-sm text-slate-300 space-y-1">
                                     <li>• Load balancing</li>
                                     <li>• Communication overhead analysis</li>
                                     <li>• Scalability benchmarking</li>
@@ -141,26 +141,26 @@
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Code Volume</h4>
                                 <div class="space-y-2">
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-gray-400">OpenMP</span>
+                                        <span class="text-slate-400">OpenMP</span>
                                         <span class="text-white">283 lines</span>
                                     </div>
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-gray-400">MPI</span>
+                                        <span class="text-slate-400">MPI</span>
                                         <span class="text-white">199 lines</span>
                                     </div>
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-gray-400">OpenCL</span>
+                                        <span class="text-slate-400">OpenCL</span>
                                         <span class="text-white">184 lines</span>
                                     </div>
                                     <div class="flex justify-between text-sm border-t border-line pt-2">
-                                        <span class="text-gray-400">Total</span>
+                                        <span class="text-slate-400">Total</span>
                                         <span class="text-cy font-bold">666 lines</span>
                                     </div>
                                 </div>
                             </div>
                              <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Key Wins</h4>
-                                <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
+                                <ul class="space-y-1 text-sm text-slate-300 pl-3 border-l border-line">
                                     <li>• Parallel Game of Life (OpenMP)</li>
                                     <li>• 3.09x speedup on 8 processes (MPI)</li>
                                     <li>• GPU heat equation solver (OpenCL)</li>

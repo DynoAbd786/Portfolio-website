@@ -10,7 +10,7 @@
                 <ProjectSection Title="How it's built" Icon="fas fa-layer-group">
                     <ul class="space-y-3 leading-relaxed text-slate-300">
                         <li>• ASP.NET Core and Blazor on .NET 10. Every page is rendered on the server as plain HTML, so it loads quickly and reads fine without JavaScript.</li>
-                        <li>• Only the parts that need it run in the browser with WebAssembly: the contact form, the image gallery, the home lab status and the AI chat.</li>
+                        <li>• Only the parts that need it run in the browser with WebAssembly: the image gallery, the home lab status and the AI chat. The contact form posts to the server and sends its email through Resend.</li>
                         <li>• All the project data lives in one place and feeds the pages, the public API and the MCP server.</li>
                         <li>• Styled with Tailwind CSS.</li>
                     </ul>
@@ -20,12 +20,13 @@
                     <p class="leading-relaxed text-slate-300">
                         The homepage is a small 3D room built with three.js, with an object for each project. Click one and the camera moves in and a card about it opens.
                         The scene adjusts its quality to hold a steady frame rate. On a device that can't keep up, or without WebGL or JavaScript, it shows a still image of the room with the same links.
+                        While the room loads, my name builds itself out of a triangle mesh and then flies into place, and moving between pages crossfades instead of jumping.
                     </p>
                 </ProjectSection>
 
                 <ProjectSection Title="AI assistant and MCP server" Icon="fas fa-robot">
                     <p class="mb-4 leading-relaxed text-slate-300">
-                        The chat panel answers questions about my work, using hosted models (Gemini and Groq) or a local model on my home lab.
+                        The chat panel answers questions about my work. It runs on DeepSeek Flash and is given the same profile and project data the pages are built from, so it can't know less than the site does.
                     </p>
                     <p class="leading-relaxed text-slate-300">
                         The site also runs an MCP server, so AI agents like Claude can search my projects and send me a message directly. More on that on the
@@ -35,7 +36,7 @@
 
                 <ProjectSection Title="Testing and deployment" Icon="fas fa-vial">
                     <p class="leading-relaxed text-slate-300">
-                        Nearly 200 server-side tests (xUnit) and 75 browser tests (Playwright in Chrome) cover every page, the 3D scene and its fallbacks, phone layouts and text contrast.
+                        About 350 server-side tests (xUnit) and 155 browser tests (Playwright in Chrome) cover every page, the 3D scene and its fallbacks, the intro, phone layouts and text contrast.
                         The site runs on Render from a Docker image.
                     </p>
                     <div class="mt-5 flex flex-wrap gap-2">

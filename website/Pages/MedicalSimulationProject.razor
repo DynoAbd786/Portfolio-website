@@ -9,7 +9,7 @@
                 
                 <!-- Project Overview & Scope -->
                 <ProjectSection Title="Project Overview & Scope" Icon="fas fa-heartbeat">
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
                         The platform brings together 3D vessel mesh visualization, vessel analysis with VMTK, and a physics-based stent expansion algorithm. It is meant to support aneurysm treatment planning, medical device R&D and biomedical engineering teaching. It extends Paliwal's 2016 Virtual Stenting Workflow (VSW) algorithm using current computational methods.
                     </p>
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line">
@@ -20,21 +20,21 @@
                                     <i class="fas fa-user-md text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Clinical Planning</h4>
-                                <p class="text-gray-400 text-sm">Helping plan aneurysm treatment and inform surgical decisions</p>
+                                <p class="text-slate-400 text-sm">Helping plan aneurysm treatment and inform surgical decisions</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-flask text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Device R&D</h4>
-                                <p class="text-gray-400 text-sm">Testing stent designs during device research and development</p>
+                                <p class="text-slate-400 text-sm">Testing stent designs during device research and development</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-cy/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
                                     <i class="fas fa-graduation-cap text-cy"></i>
                                 </div>
                                 <h4 class="font-bold text-white mb-2">Education</h4>
-                                <p class="text-gray-400 text-sm">Teaching and training in biomedical engineering</p>
+                                <p class="text-slate-400 text-sm">Teaching and training in biomedical engineering</p>
                             </div>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-cube mr-3"></i>Physics Engine
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Joint-level expansion:</strong> forces applied at each wire joint, so the stent opens the way a real one does</li>
                                 <li><strong>Forces:</strong> the wires expand according to a physics model</li>
                                 <li><strong>Collision detection:</strong> stopping the stent where it meets the vessel wall, started but not finished</li>
@@ -61,7 +61,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-eye mr-3"></i>Visualization Pipeline
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>GPU:</strong> rendering runs on NVIDIA CUDA</li>
                                 <li><strong>PyVista/VTK:</strong> used for all the 3D views</li>
                                 <li><strong>Interactive meshes:</strong> vessels can be moved and inspected in real time</li>
@@ -73,7 +73,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-heartbeat mr-3"></i>Medical Imaging
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>VMTK:</strong> analyses and reconstructs the vessel</li>
                                 <li><strong>Centerlines:</strong> the path through each vessel is found automatically</li>
                                 <li><strong>Geometry:</strong> builds patient-specific meshes</li>
@@ -85,7 +85,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-desktop mr-3"></i>User Interface
                             </h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>PyQt6:</strong> a desktop application</li>
                                 <li><strong>Layers:</strong> each layer handles one concern</li>
                                 <li><strong>Data:</strong> results are managed and exported as HDF5</li>
@@ -95,12 +95,12 @@
                     </div>
 
                     <!-- Device Repository -->
-                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Device Repository</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-2">Enterprise Stents</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• Codman Enterprise VRD</li>
                                     <li>• Wires that behave like the real device</li>
                                     <li>• Porosity that varies along the stent</li>
@@ -108,7 +108,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Pipeline Devices</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• Pipeline Embolization Device</li>
                                     <li>• Models how it diverts flow</li>
                                     <li>• Simulates the braided structure</li>
@@ -116,7 +116,7 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-2">Silk Stents</h4>
-                                <ul class="text-gray-400 text-sm space-y-1">
+                                <ul class="text-slate-400 text-sm space-y-1">
                                     <li>• Silk Vista Baby FD</li>
                                     <li>• Models its very fine wires</li>
                                     <li>• Analyses deployment forces</li>
@@ -136,10 +136,10 @@
                 <ProjectSection Title="8-Week Development Progress" Icon="fas fa-tasks">
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-cyan-500 rounded-full w-3 h-3 mr-3"></div>
+                            <div class="bg-cy rounded-full w-3 h-3 mr-3"></div>
                             <h3 class="text-xl font-bold text-slate-100">Internship Timeline</h3>
                         </div>
-                        <p class="text-gray-300 leading-relaxed">
+                        <p class="text-slate-300 leading-relaxed">
                             I had 8 weeks for this internship. In that time I moved every major part of the system forward, so later simulation research and clinical work have a base to start from.
                         </p>
                     </div>
@@ -152,28 +152,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Physics-Based Stent Expansion:</strong>
-                                        <span class="text-gray-400"> expansion forces applied at each wire joint, the base for a realistic deployment</span>
+                                        <span class="text-slate-400"> expansion forces applied at each wire joint, the base for a realistic deployment</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Device Repository:</strong>
-                                        <span class="text-gray-400"> several stent models with realistic wire mechanics</span>
+                                        <span class="text-slate-400"> several stent models with realistic wire mechanics</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Visualization Pipeline:</strong>
-                                        <span class="text-gray-400"> 3D rendering on the GPU, with meshes you can interact with</span>
+                                        <span class="text-slate-400"> 3D rendering on the GPU, with meshes you can interact with</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Professional Architecture:</strong>
-                                        <span class="text-gray-400"> a layered design that keeps each part separate</span>
+                                        <span class="text-slate-400"> a layered design that keeps each part separate</span>
                                     </div>
                                 </li>
                             </ul>
@@ -185,28 +185,28 @@
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Complete Expansion Workflows:</strong>
-                                        <span class="text-gray-400"> finish the full deployment: collision with the vessel wall and fitting the stent to its shape</span>
+                                        <span class="text-slate-400"> finish the full deployment: collision with the vessel wall and fitting the stent to its shape</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">CFD Integration:</strong>
-                                        <span class="text-gray-400"> study blood flow after the stent is deployed</span>
+                                        <span class="text-slate-400"> study blood flow after the stent is deployed</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Clinical Automation:</strong>
-                                        <span class="text-gray-400"> automate the workflow so clinicians can use it</span>
+                                        <span class="text-slate-400"> automate the workflow so clinicians can use it</span>
                                     </div>
                                 </li>
                                 <li class="flex items-start">
                                     <div class="bg-cy rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
                                     <div>
                                         <strong class="text-white">Research Pipeline:</strong>
-                                        <span class="text-gray-400"> better data export for academic studies</span>
+                                        <span class="text-slate-400"> better data export for academic studies</span>
                                     </div>
                                 </li>
                             </ul>
@@ -217,31 +217,31 @@
                 <!-- Professional Impact & Skills -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Technical Skills Demonstrated -->
-                    <ProjectSection Title="Skills Demonstrated" Icon="fas fa-brain">
+                    <ProjectSection Title="Skills I used" Icon="fas fa-brain">
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Writing software for biomedical research</span>
+                                <span class="text-slate-300">Writing software for biomedical research</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Medical imaging workflows (VMTK + VTK)</span>
+                                <span class="text-slate-300">Medical imaging workflows (VMTK + VTK)</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Computational geometry and physics simulation</span>
+                                <span class="text-slate-300">Computational geometry and physics simulation</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">GPU-accelerated scientific visualization</span>
+                                <span class="text-slate-300">GPU-accelerated scientific visualization</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Structuring a codebase with established design patterns</span>
+                                <span class="text-slate-300">Structuring a codebase with established design patterns</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Cross-platform deployment and containerization</span>
+                                <span class="text-slate-300">Cross-platform deployment and containerization</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -251,27 +251,27 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Simulating medical devices</span>
+                                <span class="text-slate-300">Simulating medical devices</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Running computational research</span>
+                                <span class="text-slate-300">Running computational research</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Working across engineering and medicine</span>
+                                <span class="text-slate-300">Working across engineering and medicine</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">A starting point for an open-source simulation platform</span>
+                                <span class="text-slate-300">A starting point for an open-source simulation platform</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Potential for clinical use later</span>
+                                <span class="text-slate-300">Potential for clinical use later</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Work that could feed into an academic paper</span>
+                                <span class="text-slate-300">Work that could feed into an academic paper</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -279,7 +279,7 @@
 
                 <!-- Technology Stack & Implementation -->
                 <ProjectSection Title="Technology Stack" Icon="fas fa-tools">
-                    <p class="text-gray-400 mb-6">What the platform is built with</p>
+                    <p class="text-slate-400 mb-6">What the platform is built with</p>
                     <div class="flex flex-wrap justify-center gap-3">
                         <span class="chip">Python 3.10</span>
                         <span class="chip">NumPy/SciPy</span>

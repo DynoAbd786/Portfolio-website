@@ -8,7 +8,7 @@
                 
                 <!-- Project Overview -->
                 <ProjectSection Title="Project Overview" Icon="fas fa-palette">
-                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <p class="text-slate-300 text-lg leading-relaxed mb-6">
                         The coursework covered the basic 2D operations: setting pixels, drawing lines, rasterizing triangles and blitting
                         images. I built each primitive from scratch in C++ and worked through the geometry behind it. I also wrote the
                         tests and benchmarks used to check correctness and speed.
@@ -19,21 +19,21 @@
                                 <h3 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i class="fas fa-vector-square text-cy mr-3"></i>Core Algorithms
                                 </h3>
-                                <ul class="space-y-3 text-gray-300">
+                                <ul class="space-y-3 text-slate-300">
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Line Drawing:</strong> Bresenham's algorithm and DDA</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Triangle Rasterization:</strong> Interpolation with barycentric coordinates</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Pixel Manipulation:</strong> A Surface class that handles RGBA pixels</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>2D Transformations:</strong> Rotation matrices and coordinate systems</span>
                                     </li>
                                 </ul>
@@ -42,21 +42,21 @@
                                 <h3 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i class="fas fa-chart-line text-cy mr-3"></i>Testing & Perf
                                 </h3>
-                                <ul class="space-y-3 text-gray-300">
+                                <ul class="space-y-3 text-slate-300">
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Benchmarking:</strong> Google Benchmark</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Testing Framework:</strong> Automated tests in Catch2</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Memory Optimization:</strong> No dynamic allocation</span>
                                     </li>
                                     <li class="flex items-start">
-                                        <i class="fas fa-check text-cyan-500 mt-1 mr-3"></i>
+                                        <i class="fas fa-check text-cy mt-1 mr-3"></i>
                                         <span><strong>Edge Case Handling:</strong> Tests for clipping at the edges</span>
                                     </li>
                                 </ul>
@@ -70,21 +70,21 @@
                     <div class="grid md:grid-cols-3 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Line Drawing</h4>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 I implemented both Bresenham's and DDA and compared their performance.
                                 Lines are pixel-perfect, clip correctly and have no gaps.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Rasterization</h4>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 Triangles are filled using barycentric coordinates, which gives smooth color
                                 gradients across each one. I handled the edge cases and tuned it for triangles of different sizes.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-xl font-bold text-slate-100 mb-3">Optimization</h4>
-                            <p class="text-gray-300 text-sm">
+                            <p class="text-slate-300 text-sm">
                                 Every algorithm runs in O(N) with no dynamic allocations.
                                 Benchmarks confirm the performance.
                             </p>
@@ -99,19 +99,19 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Direct pixel access on an RGBx surface</span>
+                                <span class="text-slate-300">Direct pixel access on an RGBx surface</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Triangles filled with interpolated color</span>
+                                <span class="text-slate-300">Triangles filled with interpolated color</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Image blitting with an alpha mask</span>
+                                <span class="text-slate-300">Image blitting with an alpha mask</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check text-cy mt-1 mr-3 flex-shrink-0"></i>
-                                <span class="text-gray-300">Clipping to the viewport</span>
+                                <span class="text-slate-300">Clipping to the viewport</span>
                             </li>
                         </ul>
                 </ProjectSection>
@@ -121,7 +121,7 @@
                          <div class="space-y-6">
                             <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Development Stack</h4>
-                                <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
+                                <ul class="space-y-1 text-sm text-slate-300 pl-3 border-l border-line">
                                     <li>• C++ (Modern C++17)</li>
                                     <li>• Premake5 build system</li>
                                     <li>• GLFW & OpenGL</li>
@@ -129,7 +129,7 @@
                             </div>
                             <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Testing</h4>
-                                <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
+                                <ul class="space-y-1 text-sm text-slate-300 pl-3 border-l border-line">
                                     <li>• Catch2 framework</li>
                                     <li>• Google Benchmark</li>
                                     <li>• Regression testing</li>
@@ -137,7 +137,7 @@
                             </div>
                              <div>
                                 <h4 class="font-semibold text-slate-100 text-sm mb-2">Targets</h4>
-                                <ul class="space-y-1 text-sm text-gray-300 pl-3 border-l border-line">
+                                <ul class="space-y-1 text-sm text-slate-300 pl-3 border-l border-line">
                                     <li>• O(N) complexity</li>
                                     <li>• Zero dynamic allocations</li>
                                     <li>• Real-time rendering</li>
@@ -148,7 +148,7 @@
                 </div>
 
                 <!-- GitHub Repository -->
-                <div class="rounded-2xl p-8 border border-gray-700/50 hover:border-cy/50 transition-all text-center md:text-left bg-white/[.02]">
+                <div class="rounded-2xl p-8 border border-line hover:border-cy/50 transition-all text-center md:text-left bg-white/[.02]">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="flex items-center">
                             <div class="bg-white/[.02] rounded-full p-4 mr-4 hidden md:block">
@@ -156,7 +156,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white mb-1">Source Code Repository</h3>
-                                <p class="text-gray-400">Full implementation and documentation</p>
+                                <p class="text-slate-400">Full implementation and documentation</p>
                             </div>
                         </div>
                         <a href="https://github.com/DynoAbd786/graphics-cw1" target="_blank"

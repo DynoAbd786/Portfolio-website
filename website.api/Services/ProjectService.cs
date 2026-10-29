@@ -166,7 +166,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "pNanoLocz: Python AFM Analysis Platform Development",
-                    Description = "Modern Python-based analysis platform for Atomic Force Microscopy (AFM), migrating a legacy MATLAB tool. Features a modular PyQt6 GUI and multi-format file support to streamline scientific workflows. empowers researchers with robust data visualization and processing capabilities.",
+                    Description = "A Python rebuild of a MATLAB analysis tool for Atomic Force Microscopy (AFM), with a modular PyQt6 interface and support for several microscope file formats.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=pNanoLocz",
                     ProjectUrl = "/projects/pnanolocz",
                     Tags = new[] { "Python", "PyQt6", "NumPy", "MATLAB", "AFM Analysis", "Scientific Computing", "GUI Development", "File Parsing" },
@@ -190,7 +190,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Numerical Methods for Predator-Prey Systems",
-                    Description = "High-performance differential equation solver analyzing predator-prey system stability. Implemented custom Euler and Runge-Kutta methods in Python with rigorous error analysis. Demonstrates scientific computing expertise through CPU-isolated benchmarking and mathematical convergence proof.",
+                    Description = "A Python solver for a predator-prey system of differential equations, with Euler and Runge-Kutta methods written by hand and their errors compared.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Numerical+Methods",
                     ProjectUrl = "/projects/numerical-computation",
                     Tags = new[] { "Python", "NumPy", "Matplotlib", "Numerical Analysis", "Differential Equations", "Scientific Computing", "Performance Analysis", "Mathematical Modeling" },
@@ -202,7 +202,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "AI-Powered Mental Health App Design",
-                    Description = "Strategic technical design for a scalable mental health platform targeting global university students. Proposes a secure, AI-integrated (ChatGPT-4) architecture with strict privacy controls. Comprehensive engineering roadmap focusing on ethical compliance, API integration, and system scalability.",
+                    Description = "A technical design for a mental health platform for university students worldwide: an AI-assisted (ChatGPT-4) architecture with strict privacy controls, and a roadmap covering compliance, API integration and scaling.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Mental+Health+App",
                     ProjectUrl = "/projects/mental-health-app",
                     Tags = new[] { "Software Engineering", "AI Integration", "ChatGPT-4", "System Design", "UML", "Agile Development", "Ethics & Privacy", "Healthcare Technology" },
@@ -214,7 +214,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "TerraTracker - GPS Route Tracking Platform",
-                    Description = "Full-stack GPS tracking application built by a 6-person agile team. Utilizes Flask, PostgreSQL, and Leaflet.js for real-time route sharing and analytics. Showcases professional DevOps practices including CI/CD pipelines, Docker containerization, and rigorous version control.",
+                    Description = "A GPS route-sharing app built by a team of six with Flask, PostgreSQL and Leaflet.js, with CI/CD pipelines and Docker.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TerraTracker",
                     ProjectUrl = "/projects/terratracker",
                     Tags = new[] { "Team Project", "Flask", "Python", "PostgreSQL", "Agile", "Git Workflow", "Docker", "CI/CD", "Leaflet.js", "RESTful API" },
@@ -250,7 +250,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Machine Learning: Regression & Dimensionality Reduction",
-                    Description = "Implementation of advanced dimensionality reduction (PCA/ICA) and regression algorithms from scratch. Applied to complex high-dimensional datasets to extract meaningful features. Demonstrates deep understanding of statistical modeling and mathematical foundations of ML.",
+                    Description = "Dimensionality reduction (PCA/ICA) and regression written from scratch and applied to high-dimensional datasets.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Machine+Learning",
                     ProjectUrl = "/projects/machine-learning",
                     Tags = new[] { "Python", "Machine Learning", "Regression Analysis", "PCA", "ICA", "Statistical Modeling", "Data Science", "NumPy", "Scikit-learn", "Dimensionality Reduction" },
@@ -274,7 +274,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "AI Search Algorithms: Sliding Block Puzzle Analysis",
-                    Description = "Comparative analysis of AI search algorithms (A*, BFS, DFS) solving complex puzzle states. Optimized heuristic functions to inspect search space complexity and efficiency. Demonstrates strong algorithmic problem-solving skills in constraint satisfaction scenarios.",
+                    Description = "A comparison of search algorithms (A*, BFS, DFS) on puzzle states, with tuned heuristics and a look at how much of the search space each one explores.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=AI+Search",
                     ProjectUrl = "/projects/ai-search-algorithms",
                     Tags = new[] { "Python", "Artificial Intelligence", "Search Algorithms", "A* Algorithm", "Heuristics", "Problem Solving", "State Space Search", "Algorithm Analysis", "BFS", "DFS" },
@@ -286,7 +286,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Machine Learning: Decision Trees for Fraud Detection",
-                    Description = "Custom implementation of ID3 decision tree algorithms for financial fraud detection. Optimized information gain and entropy calculations for accurate classification. Showcases practical application of supervised learning to improved security systems.",
+                    Description = "An ID3 decision tree written from scratch for detecting financial fraud, built on information gain and entropy.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Decision+Trees",
                     ProjectUrl = "/projects/ai-decision-trees",
                     Tags = new[] { "Python", "Machine Learning", "Decision Trees", "Fraud Detection", "Classification", "ID3 Algorithm", "Data Mining", "Financial Security", "Supervised Learning", "Feature Selection" },
@@ -310,7 +310,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Autonomous Robot Navigation & Object Detection",
-                    Description = "ROS2-based navigation system aiming for intelligent object interactions in simulated environments. Integrates SLAM, YOLOv8 object detection, and motion planning algorithms. Delivers a robust autonomous agent capable of mapping and navigating dynamic spaces.",
+                    Description = "A ROS2 navigation system for a simulated robot, combining SLAM, YOLOv8 object detection and motion planning to map a space and move around it.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Autonomous+Robotics",
                     ProjectUrl = "/projects/autonomous-robotics",
                     Tags = new[] { "ROS2", "Python", "Computer Vision", "SLAM", "YOLOv8", "OpenCV", "TurtleBot3", "Gazebo", "Motion Planning", "Autonomous Systems" },
@@ -322,7 +322,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "3D OpenGL Renderer with Advanced Graphics Pipeline",
-                    Description = "Real-time 3D rendering engine built with C++ and modern OpenGL. Features a complete programmable pipeline with custom shaders, terrain generation, and advanced lighting. Demonstrates core graphics programming skills and optimization for visual fidelity.",
+                    Description = "A real-time 3D renderer in C++ and modern OpenGL, with custom shaders, terrain generation and lighting.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=OpenGL+Renderer",
                     ProjectUrl = "/projects/opengl-renderer",
                     Tags = new[] { "OpenGL", "C++", "Computer Graphics", "3D Rendering", "Shader Programming", "Terrain Visualization", "Real-time Rendering", "Collaborative Project" },
@@ -358,7 +358,7 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Custom Image Format & Compression System",
-                    Description = "Low-level image processing system with custom binary file formats and compression algorithms. Written in pure C to optimize memory usage and processing speed. Demonstrates strong systems programming fundamentals and bit-level data manipulation.",
+                    Description = "Image processing in plain C, with custom binary file formats and compression, written to keep memory use and processing time down.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=C+Programming",
                     ProjectUrl = "/projects/c-programming",
                     Tags = new[] { "C Programming", "Image Processing", "Compression Algorithms", "File Formats", "Memory Management", "Systems Programming", "Bit Manipulation", "Algorithm Optimization" },

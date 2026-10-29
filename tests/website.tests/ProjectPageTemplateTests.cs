@@ -16,7 +16,7 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
     }
 
     // Every project page, all on the shared template
-    private static readonly string[] Routes =
+    public static readonly string[] AllRoutes =
     {
         "/projects/machine-learning", "/projects/medical-simulation",
         "/projects/3d-reconstruction", "/projects/pnanolocz", "/projects/distributed-systems",
@@ -31,14 +31,14 @@ public class ProjectPageTemplateTests : IClassFixture<SiteFactory>
         "/projects/evolutionary-agents", "/projects/kubernetes-cloud-edge", "/projects/climate-data-science",
     };
 
-    public static TheoryData<string> MigratedRoutes => new(Routes);
+    public static TheoryData<string> MigratedRoutes => new(AllRoutes);
 
     [Fact]
     public async Task All_project_routes_use_template()
     {
         using var scope = _factory.Services.CreateScope();
         var projects = await scope.ServiceProvider.GetRequiredService<ProjectService>().GetProjectsAsync();
-        Assert.Equal(projects.Select(p => p.ProjectUrl).ToHashSet(), Routes.ToHashSet());
+        Assert.Equal(projects.Select(p => p.ProjectUrl).ToHashSet(), AllRoutes.ToHashSet());
     }
 
     [Theory]

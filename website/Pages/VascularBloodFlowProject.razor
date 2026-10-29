@@ -15,7 +15,7 @@
                             <i class="fas fa-info-circle text-cy text-xl mr-4 mt-1"></i>
                             <div>
                                 <h4 class="text-slate-100 font-bold mb-2">Project Context</h4>
-                                <p class="text-yellow-200/90 text-sm leading-relaxed">
+                                <p class="text-lamp/90 text-sm leading-relaxed">
                                     I completed this dissertation during a long-term illness. I still met the core technical objectives, and the results suggest GPU-accelerated LBM is a workable approach to clinical blood flow simulation.
                                 </p>
                             </div>
@@ -25,13 +25,13 @@
                     <div class="grid md:grid-cols-2 gap-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-3">Clinical Challenge</h4>
-                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">
                                 Aneurysm risk is currently assessed with finite element methods (FEM), which are too slow to support decisions in real time. Aneurysms rupture at a rate of 1.4% a year, so faster tools matter.
                             </p>
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-3">Technical Approach</h4>
-                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            <p class="text-slate-300 mb-4 text-sm leading-relaxed">
                                 I extended XLB with custom boundary conditions, non-Newtonian fluid modeling and wall shear stress calculation. The result runs on the GPU at over 2,340 MLUPS.
                             </p>
                         </div>
@@ -45,7 +45,7 @@
                             <h3 class="text-lg font-bold text-white mb-4 flex items-center">
                                 <i class="fas fa-calculator text-cy mr-2"></i>LBM Core
                             </h3>
-                            <ul class="space-y-2 text-sm text-gray-400">
+                            <ul class="space-y-2 text-sm text-slate-400">
                                 <li>• Simulates fluid at the mesoscopic scale</li>
                                 <li>• D2Q9 velocity model</li>
                                 <li>• Runs in parallel on the GPU</li>
@@ -56,7 +56,7 @@
                             <h3 class="text-lg font-bold text-white mb-4 flex items-center">
                                 <i class="fas fa-tint text-cy mr-2"></i>Physiological Model
                             </h3>
-                            <ul class="space-y-2 text-sm text-gray-400">
+                            <ul class="space-y-2 text-sm text-slate-400">
                                 <li>• Non-Newtonian Carreau-Yasuda rheology</li>
                                 <li>• Pulsatile flow that changes over time</li>
                                 <li>• Inflow follows a realistic cardiac cycle</li>
@@ -71,7 +71,7 @@
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-2">Custom Boundary Conditions</h4>
-                            <ul class="space-y-2 text-sm text-gray-300">
+                            <ul class="space-y-2 text-sm text-slate-300">
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Zou-He inlet that varies over time, interpolated from 64 points across the cardiac cycle</li>
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Fullway bounce-back at the walls, for stability</li>
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Extrapolation at the outlet to stop artificial reflections</li>
@@ -79,7 +79,7 @@
                         </div>
                          <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h4 class="text-lg font-semibold text-slate-100 mb-2">Non-Newtonian Physics</h4>
-                            <ul class="space-y-2 text-sm text-gray-300">
+                            <ul class="space-y-2 text-sm text-slate-300">
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Carreau-Yasuda viscosity model</li>
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Relaxation time calculated per cell, so it varies across the domain</li>
                                 <li class="flex items-start"><i class="fas fa-check text-cy mt-1 mr-2"></i>Models shear-thinning near the vessel walls</li>
@@ -117,22 +117,22 @@
                         <ul class="space-y-4">
                             <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">Move to anatomically accurate 3D models built from STL files</span>
+                                <span class="text-slate-300">Move to anatomically accurate 3D models built from STL files</span>
                             </li>
                              <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">Feed the results into ML models that predict rupture risk</span>
+                                <span class="text-slate-300">Feed the results into ML models that predict rupture risk</span>
                             </li>
                              <li class="flex items-start text-sm">
                                 <i class="fas fa-arrow-right text-cy mt-1 mr-3"></i>
-                                <span class="text-gray-300">Fit the tool into the workflow of NHS radiologists</span>
+                                <span class="text-slate-300">Fit the tool into the workflow of NHS radiologists</span>
                             </li>
                         </ul>
                 </ProjectSection>
                 </div>
 
                 <!-- Links -->
-                <div class="rounded-2xl p-8 border border-gray-700/50 hover:border-cy/50 transition-all text-center md:text-left bg-white/[.02]">
+                <div class="rounded-2xl p-8 border border-line hover:border-cy/50 transition-all text-center md:text-left bg-white/[.02]">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div class="flex items-center">
                             <div class="bg-white/[.02] rounded-full p-4 mr-4 hidden md:block">
@@ -140,14 +140,14 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white mb-1">Project Resources</h3>
-                                <p class="text-gray-400">The source code and the full technical report</p>
+                                <p class="text-slate-400">The source code and the full technical report</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
-                             <a href="https://github.com/DynoAbd786/dissertation-xlb-blood-flow-simulation" target="_blank" class="inline-flex items-center px-6 py-3 rounded-lg bg-white/[.02] hover:bg-gray-600 text-white font-medium transition-colors border border-line">
+                             <a href="https://github.com/DynoAbd786/dissertation-xlb-blood-flow-simulation" target="_blank" class="btn-ghost">
                                 <i class="fab fa-github mr-2"></i>GitHub
                             </a>
-                            <a href="/docs/dissertation-report.pdf" target="_blank" class="inline-flex items-center px-6 py-3 rounded-lg bg-cy/10 hover:bg-red-500 text-white font-medium transition-colors shadow-lg shadow-red-900/20">
+                            <a href="/docs/dissertation-report.pdf" target="_blank" class="btn-primary">
                                 <i class="fas fa-file-pdf mr-2"></i>PDF Report
                             </a>
                         </div>

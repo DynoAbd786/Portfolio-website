@@ -13,7 +13,7 @@
                             <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
                             <h3 class="text-xl font-bold text-slate-100">Two-Part Coursework System</h3>
                         </div>
-                        <p class="text-gray-300 leading-relaxed">
+                        <p class="text-slate-300 leading-relaxed">
                             I wrote this across two pieces of coursework that formed the foundation of the systems programming module.
                             The task was to implement custom image file formats in C, then write the tools to read, compare, convert and
                             compress them, mostly with low-level memory and bit operations.
@@ -22,7 +22,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Coursework 1 - Foundation (50%)</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• 10 executable programs</li>
                                 <li>• 3 custom file formats (EBF, EBU, EBC)</li>
                                 <li>• Echo, Compare, Convert utilities</li>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Coursework 2 - Advanced (50%)</h4>
-                            <ul class="text-gray-400 text-sm space-y-1">
+                            <ul class="text-slate-400 text-sm space-y-1">
                                 <li>• 6 additional compression programs</li>
                                 <li>• Block-based lossy compression (9x reduction)</li>
                                 <li>• Random block algorithms using a seeded generator</li>
@@ -46,11 +46,11 @@
 
                     <!-- File Format Specifications -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-layer-group mr-3"></i>EBF Format
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Purpose:</strong> Base image format
                                 </div>
@@ -59,7 +59,7 @@
                                 </div>
                                 <div>
                                     <strong class="text-white">Structure:</strong>
-                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                    <ul class="mt-1 space-y-1 text-slate-400">
                                         <li>• Magic number identifier</li>
                                         <li>• Width and height metadata</li>
                                         <li>• Raw pixel data array</li>
@@ -72,7 +72,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-compress mr-3"></i>EBU Format
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Purpose:</strong> Binary compression
                                 </div>
@@ -81,7 +81,7 @@
                                 </div>
                                 <div>
                                     <strong class="text-white">Method:</strong>
-                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                    <ul class="mt-1 space-y-1 text-slate-400">
                                         <li>• Remove first byte of each pixel</li>
                                         <li>• Convert to binary representation</li>
                                         <li>• Preserve metadata structure</li>
@@ -94,7 +94,7 @@
                             <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-compress-alt mr-3"></i>EBC Format
                             </h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div>
                                     <strong class="text-white">Purpose:</strong> Tighter compression
                                 </div>
@@ -103,7 +103,7 @@
                                 </div>
                                 <div>
                                     <strong class="text-white">Method:</strong>
-                                    <ul class="mt-1 space-y-1 text-gray-400">
+                                    <ul class="mt-1 space-y-1 text-slate-400">
                                         <li>• 5-bit pixel packing</li>
                                         <li>• Bit shifting across byte boundaries</li>
                                         <li>• No unused bits stored</li>
@@ -118,13 +118,13 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4">EBC Compression Algorithm Example</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2">// Pixel values: 30, 30, 30</div>
-                            <div class="text-gray-300 mb-4">
+                            <div class="text-slate-300 mb-4">
                                 <span class="text-cy">EBU format:</span> 00011110 00011110 00011110<br/>
                                 <span class="text-cy">EBC format:</span> 11110|111 10|11110|0<br/>
                                 <span class="text-cy">// 5-bit packing: first pixel (11110) + part of second (111)</span>
                             </div>
                             <div class="text-cy mb-2">// Core compression function</div>
-                            <div class="text-gray-300">
+                            <div class="text-slate-300">
                                 <span class="text-cy">BYTE</span> *<span class="text-cy">convertEbu2Ebc</span>(<span class="text-cy">BYTE</span> *uncompressed, <span class="text-cy">BYTE</span> *compressed, <span class="text-cy">int</span> numBytes)<br/>
                                 {<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">BYTE</span> storageByte = <span class="text-cy">0</span>;<br/>
@@ -142,13 +142,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Block-Based Lossy Compression</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>Programs:</strong> ebcBlock, ebcUnblock</div>
                                 <div><strong>Method:</strong> 3x3 pixel block averaging</div>
                                 <div><strong>Compression:</strong> 9x size reduction</div>
                                 <div>
                                     <strong>Process:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Divide image into 3x3 pixel blocks</li>
                                         <li>• Calculate average pixel value per block</li>
                                         <li>• Store one value for the whole block</li>
@@ -160,13 +160,13 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Random Block Algorithms</h3>
-                            <div class="space-y-3 text-gray-300 text-sm">
+                            <div class="space-y-3 text-slate-300 text-sm">
                                 <div><strong>Programs:</strong> ebcR32, ebcR128, ebcU32, ebcU128</div>
                                 <div><strong>Method:</strong> Seeded random selection</div>
                                 <div><strong>Block Counts:</strong> 32 or 128 random selections</div>
                                 <div>
                                     <strong>Algorithm:</strong>
-                                    <ul class="mt-2 space-y-1 text-gray-400">
+                                    <ul class="mt-2 space-y-1 text-slate-400">
                                         <li>• Select random 3x3 blocks (seeded)</li>
                                         <li>• Map blocks to image positions</li>
                                         <li>• Process the image by similarity matching</li>
@@ -182,7 +182,7 @@
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Data Structure Design</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2">// Custom data structures for each format</div>
-                            <div class="text-gray-300">
+                            <div class="text-slate-300">
                                 <span class="text-cy">typedef struct</span> {<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">unsigned char</span> magicNumber[<span class="text-cy">2</span>];<br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">int</span> width, height;<br/>
@@ -203,7 +203,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Memory Management</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Dynamic Allocation:</strong> Careful malloc/free use</li>
                                 <li><strong>Memory Safety:</strong> Defensive checks throughout</li>
                                 <li><strong>Leak Prevention:</strong> Dedicated cleanup functions</li>
@@ -213,7 +213,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Modular Architecture</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>20+ C Files:</strong> Split by responsibility</li>
                                 <li><strong>Header Files:</strong> Shared function declarations</li>
                                 <li><strong>Reusability:</strong> Common operations shared between programs</li>
@@ -223,7 +223,7 @@
 
                         <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                             <h3 class="text-xl font-bold text-slate-100 mb-4">Engineering Practices</h3>
-                            <ul class="space-y-2 text-gray-300 text-sm">
+                            <ul class="space-y-2 text-slate-300 text-sm">
                                 <li><strong>Git:</strong> Work tracked in version control</li>
                                 <li><strong>Testing:</strong> Bash scripts that test each program</li>
                                 <li><strong>Build System:</strong> A makefile I wrote, with dependencies</li>
@@ -233,11 +233,11 @@
                     </div>
 
                     <!-- Build System -->
-                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Build System</h3>
                         <div class="bg-ink rounded-lg p-4 font-mono text-sm">
                             <div class="text-cy mb-2"># Makefile configuration</div>
-                            <div class="text-gray-300">
+                            <div class="text-slate-300">
                                 <span class="text-cy">CC</span> = gcc<br/>
                                 <span class="text-cy">CFLAGS</span> = -std=c99 -Wall -Werror -g -Wextra -lm<br/>
                                 <span class="text-cy">EXE</span> = ebfEcho ebfComp ebf2ebu ebuEcho ... <span class="text-cy"># 16 executables</span><br/>
@@ -256,7 +256,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Complexity Indicators</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>16 Executable Programs:</strong> Across both pieces of coursework</li>
                                     <li><strong>3 Custom File Formats:</strong> Specified, read and written</li>
                                     <li><strong>Bit Manipulation:</strong> 5-bit pixels packed into 8-bit bytes</li>
@@ -267,9 +267,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Skills Demonstrated</h3>
+                            <h3 class="text-xl font-bold text-white mb-4">Skills I used</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
-                                <ul class="text-gray-300 text-sm space-y-2">
+                                <ul class="text-slate-300 text-sm space-y-2">
                                     <li><strong>Low-Level Programming:</strong> Working directly with memory and bits</li>
                                     <li><strong>Algorithm Design:</strong> Writing the compression schemes</li>
                                     <li><strong>Code Structure:</strong> Splitting a codebase into modules</li>
@@ -284,21 +284,21 @@
                     <!-- Academic Context -->
                     <div class="bg-white/[.02] rounded-lg p-6 border border-line mt-6">
                         <h3 class="text-xl font-bold text-slate-100 mb-4">Takeaways</h3>
-                        <p class="text-gray-300 text-sm mb-3">
+                        <p class="text-slate-300 text-sm mb-3">
                             This was Year 1 coursework, but it went well past the basics of C. It covered:
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Foundations</h4>
-                                <p class="text-gray-400 text-sm">C fundamentals, manual memory management and data structures.</p>
+                                <p class="text-slate-400 text-sm">C fundamentals, manual memory management and data structures.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Advanced Concepts</h4>
-                                <p class="text-gray-400 text-sm">Compression and bit-packing algorithms that took careful thought to get right.</p>
+                                <p class="text-slate-400 text-sm">Compression and bit-packing algorithms that took careful thought to get right.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Engineering Practices</h4>
-                                <p class="text-gray-400 text-sm">Testing, documentation and strict compiler flags as part of the normal workflow.</p>
+                                <p class="text-slate-400 text-sm">Testing, documentation and strict compiler flags as part of the normal workflow.</p>
                             </div>
                         </div>
                     </div>
@@ -306,30 +306,30 @@
 
                 <!-- GitHub Repository Links -->
                 <ProjectSection Title="Source Code" Icon="fab fa-github">
-                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    <p class="text-slate-300 mb-6 max-w-2xl mx-auto">
                         Both repositories hold the full source, documentation and test scripts.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <a href="https://github.com/DynoAbd786/Coursework-1-DynoAbd786-Uni"
                            target="_blank"
-                           class="hover:from-gray-600 hover:to-gray-700 border border-line hover:border-cy/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
+                           class="surface flex items-center justify-center px-6 py-4 font-bold text-white transition hover:border-cy/50">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">Coursework 1</div>
-                                <div class="text-sm text-gray-400">Foundation System (10 programs)</div>
+                                <div class="text-sm text-slate-400">Foundation System (10 programs)</div>
                             </div>
                         </a>
                         <a href="https://github.com/DynoAbd786/Coursework-2-DynoAbd786-Uni"
                            target="_blank"
-                           class="hover:from-gray-600 hover:to-gray-700 border border-line hover:border-cy/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
+                           class="surface flex items-center justify-center px-6 py-4 font-bold text-white transition hover:border-cy/50">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">Coursework 2</div>
-                                <div class="text-sm text-gray-400">Advanced Compression (6 programs)</div>
+                                <div class="text-sm text-slate-400">Advanced Compression (6 programs)</div>
                             </div>
                         </a>
                     </div>
-                    <p class="text-gray-400 text-sm mt-4">
+                    <p class="text-slate-400 text-sm mt-4">
                         Each includes the source, makefile, test scripts and sample images with results
                     </p>
                 </ProjectSection>
@@ -341,23 +341,23 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Systems programming concepts met early, in Year 1</span>
+                                <span class="text-slate-300">Systems programming concepts met early, in Year 1</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Several compression algorithms, lossless and lossy</span>
+                                <span class="text-slate-300">Several compression algorithms, lossless and lossy</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Version control, builds and tests from the start</span>
+                                <span class="text-slate-300">Version control, builds and tests from the start</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Designing a file format and writing tools for it</span>
+                                <span class="text-slate-300">Designing a file format and writing tools for it</span>
                             </li>
                             <li class="flex items-start">
                                 <span class="text-cy mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Bit arithmetic that has to be exactly right</span>
+                                <span class="text-slate-300">Bit arithmetic that has to be exactly right</span>
                             </li>
                         </ul>
                 </ProjectSection>
