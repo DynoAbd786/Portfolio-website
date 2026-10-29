@@ -39,7 +39,9 @@
    landscape screens: name, room, then the rest of the text, scrolling normally. */
 /* --still-room: the room's width as a fraction of the still picture (printed by
    tools/render-workshop-still.py) */
-#hero { --frame-x: .62; --still-room: .6732; position: relative; }
+/* overflow-x: on a phone the room is edge to edge, and its entrance (scale 1.12) mustn't make the
+   page scroll sideways; desktop clips all of it (overflow: hidden, below) */
+#hero { --frame-x: .62; --still-room: .6732; position: relative; overflow-x: clip; }
 /* the hero's side margin, which the header shares on every page */
 :root { --hero-pad: clamp(1.5rem, 5vw, 6rem); }
 
@@ -225,9 +227,10 @@
 
 /* The intro (js/intro): while .intro-pending the hero is hidden and the name build draws over it;
    .intro-flying while the built name flies onto the <h1>; .intro-landed while the rest fades in */
+/* hidden on screen only (opacity, not visibility), so a screen reader still reads the name */
 .intro-pending .hero-head h1,
 .intro-flying .hero-head h1 {
-    visibility: hidden;
+    opacity: 0;
 }
 
 .intro-pending .hero-kicker,

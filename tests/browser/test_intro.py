@@ -409,3 +409,25 @@ def test_scroll_waits_until_the_room_has_settled(desktop, site_url):
     page.mouse.wheel(0, 900)
     page.wait_for_timeout(500)
     assert page.evaluate("scrollY") > 0
+
+
+def test_phone_page_is_never_wider_than_the_screen_during_the_intro(page, site_url):
+    # the room's entrance zooms it out from 112%; on a phone it is edge to edge, so the hero clips it
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(site_url + "/", wait_until="domcontentloaded")
+    widest = 0
+    for _ in range(120):
+        widest = max(widest, page.evaluate("document.documentElement.scrollWidth"))
+        if page.evaluate(LANDED + " && !document.documentElement.classList.contains('intro-landed')"):
+            break
+        page.wait_for_timeout(100)
+    assert widest <= 390
+
+
+def test_screen_readers_get_the_name_while_it_builds(desktop, site_url):
+    page = desktop
+    page.goto(site_url + "/", wait_until="domcontentloaded")
+    assert page.evaluate(PENDING)
+    heading = page.get_by_role("heading", level=1)
+    assert heading.count() == 1 and "Kashif-Khan" in heading.inner_text()
+    assert page.eval_on_selector("#hero h1", "e => getComputedStyle(e).opacity") == "0"  # still hidden on screen
