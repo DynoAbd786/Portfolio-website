@@ -4,7 +4,8 @@ Run the site first, then:
     uv run --with playwright python tools/render-workshop-still.py http://127.0.0.1:5199
 
 Writes website/wwwroot/images/workshop/still.webp (1600x1000) and still@2x.webp (3200x2000),
-and prints PinX/PinY values to paste into website/Data/HomeContent.cs.
+and prints PinX/PinY values to paste into website/Data/HomeContent.cs and the --still-room
+value for css/app.css.
 """
 import base64
 import sys
@@ -30,8 +31,10 @@ def main(base):
             assert url.startswith("data:image/webp"), "the browser could not encode WebP"
             (OUT / name).write_bytes(base64.b64decode(url.split(",", 1)[1]))
             print(f"wrote {OUT / name}")
-        pins = page.evaluate("document.getElementById('workshop').__workshop.pins()")
+        pins = page.evaluate("document.getElementById('workshop').__workshop.stillPins()")
+        still_room = page.evaluate("document.getElementById('workshop').__workshop.stillRoom()")
         browser.close()
+    print(f"\n/* css/app.css, #hero */ --still-room: {still_room};")
     print("\n// PinX, PinY for HomeContent.Workshop")
     for pin in pins:
         print(f'{pin["key"]}: {pin["x"]}, {pin["y"]}')

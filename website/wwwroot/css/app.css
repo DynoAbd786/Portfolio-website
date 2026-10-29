@@ -23,43 +23,38 @@
     display: none;
 }
 
-/* Homepage workshop: a still image with link pins, replaced by the 3D canvas once it runs
-   (js/workshop). A fixed aspect ratio keeps the pins over the same objects at every size. */
+/* Inter 800 for the homepage's name build (js/intro), served from this site so the build can start
+   at once; the page's own text uses Inter from Google Fonts */
+@font-face {
+    font-family: "Inter Build";
+    font-weight: 800;
+    font-style: normal;
+    font-display: block;
+    src: url("/fonts/inter-latin-800-normal.woff2") format("woff2");
+}
+
+/* Homepage hero. Desktop: the hero stays put under the header (sticky) and fills the screen; the
+   room fills it behind the text, centred at --frame-x (the middle of the space right of the text,
+   set by site.js), and the rest of the page (.hero-cover) slides up over it. Phones and short
+   landscape screens: name, room, then the rest of the text, scrolling normally. */
+/* --still-room: the room's width as a fraction of the still picture (printed by
+   tools/render-workshop-still.py) */
+#hero { --frame-x: .62; --still-room: .6732; position: relative; }
+/* the hero's side margin, which the homepage's header shares */
+:root { --hero-pad: clamp(1.5rem, 5vw, 6rem); }
+
+.hero-cover {
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 -30px 60px rgba(0, 0, 0, .5);
+}
+
+/* The workshop: a still image with link pins (a fixed 16:10 picture, so the pins stay over the
+   same objects), replaced by the 3D canvas once it runs (js/workshop). */
 .workshop {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
-}
-
-/* Edges fade into the page; only the picture, so the overlay's tag and hint stay crisp */
-.workshop-still img,
-.workshop-canvas {
-    -webkit-mask-image: radial-gradient(ellipse 56% 58% at 50% 50%, #000 70%, transparent 100%);
-    mask-image: radial-gradient(ellipse 56% 58% at 50% 50%, #000 70%, transparent 100%);
-}
-
-/* Stacked layout (phones, tablets): the room comes first, then its card and links, then the text */
-@media (max-width: 899px) {
-    #workshop { order: 1; }
-    .ws-card { order: 2; }
-    .workshop-links { order: 3; }
-    .hero-copy { order: 4; }
-}
-
-/* Phones: the room is limited by the screen's width, so the stage runs edge to edge and is taller
-   (the camera's vertical field of view is fixed, so a taller stage draws the room larger) */
-@media (max-width: 639px) {
-    .workshop {
-        width: calc(100% + 2rem);
-        margin-inline: -1rem;
-        aspect-ratio: 4 / 3;
-    }
-
-    .workshop-still img,
-    .workshop-canvas {
-        -webkit-mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
-        mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
-    }
 }
 
 .workshop-still,
@@ -92,6 +87,219 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity .6s ease, visibility 0s .6s;
+}
+
+.hero-namefx,
+.hero-loading {
+    display: none;
+}
+
+.hero-scroll {
+    display: none;
+}
+
+@media (min-width: 900px) and (min-height: 500px) {
+    #hero {
+        position: sticky;
+        top: 4rem;
+        height: calc(100svh - 4rem);
+        overflow: hidden;
+    }
+
+    /* the text keeps to the left edge (not the centred page container), so on wide screens the room
+       gets the rest of the width */
+    #hero .hero-section { /* beats the section's max-w-7xl/px utilities, which load later */
+        display: flex;
+        align-items: center;
+        height: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0 0 0 var(--hero-pad);
+    }
+
+    /* on the homepage the header spans the screen too: the logo over the name, the icons at the
+       right (beats the nav's max-w-7xl/px utilities) */
+    body:has(#hero) header > nav {
+        max-width: none;
+        padding-left: var(--hero-pad);
+        padding-right: var(--hero-pad);
+    }
+
+    .hero-copy {
+        position: relative;
+        z-index: 5;
+        width: min(38rem, 42%);
+    }
+
+    /* dims and pulls back as the page slides over it (--cover, set by site.js) */
+    .workshop {
+        position: absolute;
+        inset: 0;
+        aspect-ratio: auto;
+        opacity: calc(1 - var(--cover, 0) * .65);
+        transform: scale(calc(1 - var(--cover, 0) * .06));
+    }
+
+    /* the still picture is centred on --frame-x, as tall as the stage unless the room in it would
+       then be wider than the space right of the text (the scene sizes the live room the same way) */
+    .workshop-still {
+        inset: auto;
+        top: 50%;
+        left: calc(var(--frame-x) * 100%);
+        width: min((100svh - 4rem) * 1.6, 2 * (1 - var(--frame-x)) * 100% * .88 / var(--still-room));
+        height: auto;
+        aspect-ratio: 16 / 10;
+        transform: translate(-50%, -50%);
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%);
+        mask-image: linear-gradient(90deg, transparent, #000 12%);
+    }
+
+    /* the canvas fills the hero; it fades into the grid at the edge of the text column */
+    .workshop-canvas {
+        -webkit-mask-image: linear-gradient(90deg, transparent calc((2 * var(--frame-x) - 1) * 100%), #000 calc((2 * var(--frame-x) - 1) * 100% + 6vw));
+        mask-image: linear-gradient(90deg, transparent calc((2 * var(--frame-x) - 1) * 100%), #000 calc((2 * var(--frame-x) - 1) * 100% + 6vw));
+    }
+
+    .hero-scroll {
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        transform: translateX(-50%);
+        text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    .hero-scroll span {
+        width: 1px;
+        height: 28px;
+        background: linear-gradient(#22d3ee, transparent);
+        animation: hero-scroll 1.6s infinite;
+    }
+}
+
+@keyframes hero-scroll {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Stacked layout (phones, tablets, short landscape screens): name, room (edge to edge, 4:3, so the
+   room is as large as the width allows), its card and links, then the rest of the text */
+@media (max-width: 899px), (max-height: 499px) {
+    .hero-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-copy { display: contents; }
+    .hero-head { order: 1; }
+    #workshop { order: 2; }
+    .ws-card { order: 3; }
+    .hero-body { order: 4; margin-top: 1.5rem; }
+    .workshop-links { order: 5; }
+
+    .hero-head h1 { margin-bottom: 1rem; }
+
+    .workshop {
+        width: calc(100% + 2rem);
+        margin-inline: -1rem;
+        aspect-ratio: 4 / 3;
+    }
+}
+
+/* the section's side padding grows to 1.5rem from 640px; the stage still runs edge to edge */
+@media (min-width: 640px) and (max-width: 899px), (min-width: 640px) and (max-height: 499px) {
+    .workshop {
+        width: calc(100% + 3rem);
+        margin-inline: -1.5rem;
+    }
+
+    .workshop-still img,
+    .workshop-canvas {
+        -webkit-mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
+        mask-image: radial-gradient(ellipse 64% 66% at 50% 50%, #000 78%, transparent 100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-scroll span { animation: none; }
+}
+
+/* The intro (js/intro): while .intro-pending the hero is hidden and the name build draws over it;
+   .intro-flying while the built name flies onto the <h1>; .intro-landed while the rest fades in */
+.intro-pending .hero-head h1,
+.intro-flying .hero-head h1 {
+    visibility: hidden;
+}
+
+.intro-pending .hero-kicker,
+.intro-pending .hero-body,
+.intro-pending .ws-hint,
+.intro-pending .hero-scroll {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-pending #workshop {
+    opacity: 0;
+    transform: scale(1.12);
+    pointer-events: none;
+}
+
+.intro-landed .hero-kicker,
+.intro-landed .hero-body {
+    transition: opacity .7s ease .9s;
+}
+
+.intro-landed .ws-hint,
+.intro-landed .hero-scroll {
+    transition: opacity .8s ease 1.4s;
+}
+
+.intro-landed #workshop {
+    transition: opacity 1.4s ease, transform 2.2s cubic-bezier(.2, .7, .2, 1);
+}
+
+.intro-pending .hero-namefx,
+.intro-flying .hero-namefx {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20;
+    pointer-events: none;
+    transform-origin: 0 0;
+}
+
+.intro-pending .hero-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    left: 50%;
+    bottom: 18%;
+    z-index: 20;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.hero-loading span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22d3ee;
+    animation: hero-loading 1s infinite alternate;
+}
+
+@keyframes hero-loading {
+    from { opacity: .25; }
+    to { opacity: 1; }
 }
 
 /* Pins label each object on the still image; shown until the scene is live (no JS, no WebGL,
@@ -235,12 +443,14 @@
 .ws-card.open { display: block; }
 /* stacked layout: a sheet over the bottom of the screen, with the room in view above it, so a
    visitor can tap object after object without scrolling */
-@media (max-width: 899px) {
+@media (max-width: 899px), (max-height: 499px) {
     .ws-card.open {
         position: fixed; left: 8px; right: 8px; bottom: calc(8px + env(safe-area-inset-bottom));
-        z-index: 45; max-height: 46svh; overflow-y: auto; overscroll-behavior: contain;
+        z-index: 45; max-height: 44svh; overflow-y: auto; overscroll-behavior: contain;
         padding: 16px 20px 20px; border-radius: 18px;
     }
+    .ws-card-title { font-size: 20px; }
+    .ws-card-desc { font-size: 14px; }
 }
 .ws-card-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .ws-card-back {
@@ -273,20 +483,18 @@
 }
 .ws-card-cta { height: 42px; padding: 0 18px; font-size: 14px; }
 
-@media (min-width: 900px) {
+@media (min-width: 900px) and (min-height: 500px) {
     .ws-card {
-        display: block; position: absolute; left: 1rem; top: 50%; width: min(460px, 38%); z-index: 6;
+        /* in the text column's place: the same left edge as the max-w-7xl container's content */
+        display: block; position: absolute; left: var(--hero-pad); top: 50%; width: min(460px, 38%); z-index: 6;
         opacity: 0; pointer-events: none; transform: translateY(-50%) translateX(-24px);
         transition: opacity .45s ease, transform .6s cubic-bezier(.2, .7, .2, 1);
     }
     .ws-card.open { opacity: 1; pointer-events: auto; transform: translateY(-50%); transition-delay: .15s; }
     .ws-focused .hero-copy { opacity: 0; transform: translateX(-28px); pointer-events: none; }
 }
-@media (min-width: 1024px) {
-    .ws-card { left: 2rem; }
-}
-@media (max-width: 899px) {
-    .ws-hint { right: 3%; font-size: 11px; gap: 10px; }
+@media (max-width: 899px), (max-height: 499px) {
+    .ws-hint { right: auto; left: 4%; font-size: 11px; gap: 10px; }
     .ws-card-points { display: none; }
 }
 @media (max-width: 560px) {

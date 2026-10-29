@@ -27,6 +27,33 @@
         box-shadow: 0 0 0 1px rgba(34, 211, 238, .8), 0 16px 40px -10px rgba(34, 211, 238, .9);
     }
 
+    /* The main call to action: a light keeps tracing its outline, with a soft glow behind it */
+    .btn-shine {
+        @apply relative isolate;
+    }
+    .btn-shine::before,
+    .btn-shine::after {
+        content: "";
+        position: absolute;
+        inset: -3px;
+        border-radius: 15px;
+        background: conic-gradient(from var(--shine-a), transparent 0deg 230deg, rgba(255, 255, 255, .15) 270deg, #fff 330deg, transparent 360deg);
+        animation: btn-shine-trace 3s linear infinite;
+        pointer-events: none;
+    }
+    .btn-shine::before {
+        z-index: -1;
+        padding: 2px;
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+    }
+    .btn-shine::after {
+        z-index: -2;
+        filter: blur(10px);
+        opacity: .55;
+    }
+
     .btn-ghost {
         @apply inline-flex items-center gap-2 h-12 px-6 rounded-xl border border-white/15 bg-white/[.03] text-slate-100 font-semibold backdrop-blur transition duration-200;
     }
@@ -57,5 +84,23 @@
     }
     .reveal-ready .reveal:not(.is-in) {
         @apply opacity-0 translate-y-4;
+    }
+}
+
+/* The angle .btn-shine's light runs round; registered so it can animate */
+@property --shine-a {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes btn-shine-trace {
+    to { --shine-a: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-shine::before,
+    .btn-shine::after {
+        animation: none;
     }
 }

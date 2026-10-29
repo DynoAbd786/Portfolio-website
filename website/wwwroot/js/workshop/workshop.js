@@ -17,7 +17,11 @@ const HOME = { t: new V3(.35, 1.45, -1.05), az: .34, polar: 1.12, r: 21.8 * FRAM
 const INTRO_FROM = { t: new V3(.35, .7, -.8), az: .34 + .8, polar: .55, r: 38 * FRAME };
 const INTRO_DUR = 2.2;
 
-export async function mount(root, data) {
+// holdIntro: keep the entrance (objects popping in, monitors booting, the camera's flight) until
+// startIntro(), since the homepage's name build plays over it first (js/intro). Nothing is drawn
+// until firstFrame() either: the first frame links the shaders and holds the main thread, so it waits
+// until the build has finished drawing.
+export async function mount(root, data, { holdIntro = false } = {}) {
   const canvas = root.querySelector('canvas.workshop-canvas');
   const section = root.closest('section') || root.parentElement;
   // ?still=1 (tools/render-workshop-still.py): no motion and the home pose, for rendering the still image
@@ -28,6 +32,8 @@ export async function mount(root, data) {
   const DEBUG = new URLSearchParams(location.search).get('debug') === 'workshop';
   const TOUCH = matchMedia('(hover: none)').matches;
   let MOBILE = innerWidth < 900;
+  // the stacked layout (phones, tablets, short landscape screens); the room sits beside the text otherwise
+  const stackedQuery = matchMedia('(max-width: 899px), (max-height: 499px)');
   let W = Math.max(1, root.clientWidth), H = Math.max(1, root.clientHeight);
 
   const renderer = createRenderer(canvas); // throws 'webgl-unavailable'
@@ -61,6 +67,10 @@ export async function mount(root, data) {
   const hs = bindHotspots(data, room);
 
   let disposed = false, dirty = true, hfT0 = 0, T = 0, intro = REDUCED ? 99 : 0, lampOn = REDUCED ? 1 : 0, frameNo = 0;
+  let held = holdIntro && !REDUCED, paused = false, framesAllowed = !held;
+  // resolves once the entrance has played out (the camera at rest, everything popped in)
+  let entered; const entrance = new Promise((resolve) => { entered = resolve; });
+  if (REDUCED) entered();
   const ui = createUI({
     root, section, data,
     onOpen: (k) => { if (k === 'hireforge') hfT0 = T; dirty = true; },
@@ -73,13 +83,53 @@ export async function mount(root, data) {
 
   // ---------------------------------------------------------------- camera rig
   const cam = { t: HOME.t.clone(), az: HOME.az, polar: HOME.polar, r: HOME.r };
+  // Framing beside the text (wide layout): the room fits the stage height, or the free space right of
+  // the hero text if that is tighter (camera.zoom), and is centred in that space (camera.filmOffset).
+  // A clicked object is centred in the space right of its card instead.
+  const roomBox = new THREE.Box3().setFromObject(room.room); // before the entrance moves the world
+  const corner = new V3();
+  let zoomHome = 1, skewHome = 0, zoomNow = 1, skewNow = 0, fxOverride = null, stillRoom = 0, stillPins = [], parOx = 0;
+  // and moved up or down (ndc) so it sits in the middle of the stage's height
+  let liftHome = 0, liftNow = 0;
+  function applyProjection() {
+    camera.zoom = zoomNow; camera.filmOffset = skewNow; camera.updateProjectionMatrix();
+    if (liftNow) { camera.projectionMatrix.elements[9] -= liftNow; camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert(); }
+  }
+  // the film offset that moves ndc x `from` (at zoom 1) to ndc x `to` at the given zoom
+  const skewFor = (from, to, zoom) => (from * zoom - to) * camera.getFilmWidth() * camera.aspect * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / zoom;
+  // the room's outline in ndc for the current camera
+  function roomNdc() {
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    for (let i = 0; i < 8; i++) {
+      corner.set(i & 1 ? roomBox.max.x : roomBox.min.x, i & 2 ? roomBox.max.y : roomBox.min.y, i & 4 ? roomBox.max.z : roomBox.min.z).project(camera);
+      x0 = Math.min(x0, corner.x); x1 = Math.max(x1, corner.x); y0 = Math.min(y0, corner.y); y1 = Math.max(y1, corner.y);
+    }
+    return { x0, x1, y0, y1 };
+  }
+  function frameHome() {
+    if (stackedQuery.matches && fxOverride == null) {
+      // the phone stage (4:3) is narrow enough that the room's left wall would touch the edge: pan to centre it
+      zoomHome = 1; skewHome = W / H < 1.45 ? -1 : 0; liftHome = 0; parOx = 0;
+      return;
+    }
+    const fx = fxOverride ?? (window.mkHeroFrame?.() ?? .62), freeW = 2 * (1 - fx) * W;
+    parOx = 2 * fx - 1; // the pointer's parallax is neutral over the room, not the middle of the hero
+    camera.zoom = 1; camera.filmOffset = 0; camera.updateProjectionMatrix();
+    placeCamera(HOME.az, HOME.polar, HOME.r, HOME.t); camera.updateMatrixWorld();
+    const b = roomNdc();
+    const wPx = (b.x1 - b.x0) / 2 * W, hPx = (b.y1 - b.y0) / 2 * H;
+    zoomHome = Math.min(.92 * H / hPx, .88 * freeW / wPx);
+    skewHome = skewFor((b.x0 + b.x1) / 2, 2 * fx - 1, zoomHome);
+    liftHome = -(b.y0 + b.y1) / 2 * zoomHome;
+    applyProjection();
+  }
   function layout() {
     W = Math.max(1, root.clientWidth); H = Math.max(1, root.clientHeight); MOBILE = innerWidth < 900;
     DPR = dprFor(quality.level); // the budget depends on the stage's size
     camera.aspect = W / H;
-    // the phone stage (4:3) is narrow enough that the room's left wall would touch the edge: pan to centre it
-    camera.filmOffset = W / H < 1.45 ? -1 : 0;
-    camera.updateProjectionMatrix();
+    frameHome();
+    if (frameNo === 0) { zoomNow = zoomHome; skewNow = skewHome; liftNow = liftHome; }
+    applyProjection();
     room.cloudMat.uniforms.uPx.value = H * DPR * .5;
   }
   function placeCamera(az, polar, r, t) {
@@ -151,7 +201,8 @@ export async function mount(root, data) {
   function frame(raw) {
     const dt = Math.min(raw, .05); const adt = REDUCED ? 0 : dt; const now = clock.elapsedTime;
     const focusKey = ui.state.focusKey;
-    T += adt; intro += Math.min(raw, .1); frameNo++;
+    T += adt; if (!held) intro += Math.min(raw, .1); frameNo++;
+    if (intro >= 2.4) entered();
     updateIntro();
 
     // --- pointer: raycast only when the pointer moved (or a slow refresh for moving targets)
@@ -164,6 +215,9 @@ export async function mount(root, data) {
     const visibleTag = hoverKey && hoverKey !== focusKey ? hoverKey : null;
     if (visibleTag !== shownTag) { shownTag = visibleTag; ui.setTag(visibleTag, TOUCH ? 'tap' : 'click'); }
     post.setOutline(visibleTag, visibleTag ? hs.byKey[visibleTag].meshes : null, TOUCH);
+    // held under the intro (nothing on screen): draw the lamp's motes and an outline once, so their
+    // shaders are compiled now rather than stalling the entrance later
+    if (held) post.setOutline('synergy', hs.byKey.synergy.meshes, false);
     const say = visibleTag === 'robot';
     ui.setTagStyle(demo && !hk, say);
     if (say) ui.setTagSub(ROBOT_LINES[Math.floor(now / 2.2) % ROBOT_LINES.length]);
@@ -183,7 +237,7 @@ export async function mount(root, data) {
     const dist = lights.spot.position.distanceTo(aimPos);
     room.beam.scale.setScalar(Math.max(.5, dist - .2) / S);
     lights.spot.intensity = 85 * lampOn; room.lampBulb.material.color.setRGB(3.2, 2.5, 1.7).multiplyScalar(lampOn);
-    room.beam.material.uniforms.uOp.value = .13 * lampOn; room.motes.material.opacity = .75 * lampOn; room.motes.visible = lampOn > .01;
+    room.beam.material.uniforms.uOp.value = .13 * lampOn; room.motes.material.opacity = .75 * lampOn; room.motes.visible = lampOn > .01 || held;
     if (!REDUCED) {
       const a = room.motes.geometry.attributes.position, sd = room.motes.userData.seeds, ta = Math.tan(.38);
       for (let i = 0; i < sd.length; i++) { const s = sd[i]; const z = .12 + ((s[0] + T * .02 * (.5 + s[2])) % 1) * .8; const ang = s[1] * 6.283 + T * .1 * (s[2] - .5); const rr = Math.sqrt(s[2]) * z * ta; a.setXYZ(i, Math.cos(ang) * rr, Math.sin(ang) * rr, z); }
@@ -239,8 +293,16 @@ export async function mount(root, data) {
       cam.t.lerp(gt, k); cam.az = lerp(cam.az, goal.az, k); cam.polar = lerp(cam.polar, goal.polar, k); cam.r = lerp(cam.r, goal.r, k);
     }
     const pk = REDUCED || TOUCH ? 0 : 1;
-    const px = hasPointer ? clamp(ndc.x, -1.5, 1.5) : 0, py = hasPointer ? clamp(ndc.y, -1.5, 1.5) : 0;
+    const px = hasPointer ? clamp(ndc.x - parOx, -1.5, 1.5) : 0, py = hasPointer ? clamp(ndc.y, -1.5, 1.5) : 0;
     par.x = lerp(par.x, px, damp(dt, 3)); par.y = lerp(par.y, py, damp(dt, 3));
+    // framing: zoom and film offset ease towards the room's (or the clicked object's) place
+    const fxCard = focusKey ? ui.frameX() : null;
+    const zoomGoal = fxCard != null ? 1 : zoomHome, skewGoal = fxCard != null ? skewFor(0, 2 * fxCard - 1, 1) : skewHome, liftGoal = fxCard != null ? 0 : liftHome;
+    const fk = REDUCED || frameNo < 2 ? 1 : damp(dt, 2.6);
+    if (Math.abs(zoomNow - zoomGoal) > 1e-4 || Math.abs(skewNow - skewGoal) > 1e-4 || Math.abs(liftNow - liftGoal) > 1e-4 || camera.zoom !== zoomNow) {
+      zoomNow = lerp(zoomNow, zoomGoal, fk); skewNow = lerp(skewNow, skewGoal, fk); liftNow = lerp(liftNow, liftGoal, fk);
+      applyProjection();
+    }
     const pf = focusKey ? .3 : 1;
     const breathe = REDUCED ? 0 : Math.sin(T * .16) * .025;
     placeCamera(cam.az + (par.x * .13 * pf + breathe) * pk, cam.polar + par.y * .05 * pf * pk, cam.r, cam.t);
@@ -272,7 +334,7 @@ export async function mount(root, data) {
     if (frameNo % dirEvery === 0 || liftMoving) lights.moon.shadow.needsUpdate = true;
 
     // --- render on demand in reduced motion
-    const moving = Math.abs(cam.r - goal.r) > .01 || cam.t.distanceToSquared(gt) > 1e-5 || liftMoving;
+    const moving = Math.abs(cam.r - goal.r) > .01 || cam.t.distanceToSquared(gt) > 1e-5 || liftMoving || Math.abs(zoomNow - zoomGoal) > 1e-3 || Math.abs(skewNow - skewGoal) > 1e-3 || Math.abs(liftNow - liftGoal) > 1e-3;
     const need = !REDUCED || dirty || moving || intro < 3 || frameNo < 4;
     if (need) { if (REDUCED) lights.moon.shadow.needsUpdate = true; dirty = false; }
     if (!REDUCED && intro > 2.6) quality.adapt(raw, now);
@@ -293,12 +355,13 @@ export async function mount(root, data) {
     if (disposed) return; // gave up during the frame
     if (need) post.render();
     if (root.dataset.state !== 'live') root.dataset.state = 'live';
+    if (held && frameNo >= 3) updateLoop(); // live and hidden under the intro: wait for startIntro()
   }
 
   // ---------------------------------------------------------------- lifecycle: pause when hidden or scrolled out of view
   let running = false, inView = true;
   function updateLoop() {
-    const run = inView && !document.hidden && !disposed;
+    const run = inView && !paused && framesAllowed && !(held && frameNo >= 3) && !document.hidden && !disposed;
     if (run && !running) { clock.getDelta(); quality.reset(clock.elapsedTime); renderer.setAnimationLoop(loop); running = true; }
     else if (!run && running) { renderer.setAnimationLoop(null); running = false; }
   }
@@ -309,7 +372,8 @@ export async function mount(root, data) {
   layout();
   quality.set(isSoftwareRenderer(renderer) ? 3 : 0); // a software rasteriser (no GPU): start lighter
   placeCamera(HOME.az, HOME.polar, HOME.r, HOME.t);
-  renderer.compile(scene, camera);
+  // compile the shaders without blocking where the browser can (KHR_parallel_shader_compile)
+  await renderer.compileAsync(scene, camera);
   quality.refreshHz = await measureRefresh();
   resizeObserver.observe(root);
   viewObserver.observe(root);
@@ -319,18 +383,31 @@ export async function mount(root, data) {
     root.__workshop = {
       pins: () => hs.pins(camera),
       forceFps: (n) => quality.forceFps(n),
+      introT: () => (held ? 0 : intro),
+      frames: () => frameNo,
+      // the clicked-object camera target of a hotspot, in stage pixels
+      project(key) { tmpV.copy(hs.byKey[key].focus.t()).project(camera); return { x: (tmpV.x + 1) / 2 * W, y: (1 - tmpV.y) / 2 * H }; },
+      // the room's outline in stage pixels
+      roomRect() { const b = roomNdc(); return { left: (b.x0 + 1) / 2 * W, right: (b.x1 + 1) / 2 * W, top: (1 - b.y1) / 2 * H, bottom: (1 - b.y0) / 2 * H }; },
+      // the room's width as a fraction of the last snapshot's width (css: --still-room)
+      stillRoom: () => stillRoom,
+      // the pins (as % of the picture) for the last snapshot
+      stillPins: () => stillPins,
       tier: () => quality.level,
       setTier: (n) => quality.set(n),
       // the hotspot exactly under a page point, without the touch tolerance
       keyAt: (x, y) => keyAt(x, y, false),
       // renders the current frame at width x height and returns it as a data URL (for the still image)
+      // (framed as if the whole picture were free space; css centres the picture on --frame-x)
       snapshot(width, height, type = 'image/webp', q = .8) {
         quality.set(0);
+        W = width; H = height; fxOverride = .5; camera.aspect = W / H; frameHome(); zoomNow = zoomHome; skewNow = skewHome; liftNow = liftHome; applyProjection();
         renderer.setPixelRatio(1); renderer.setSize(width, height, false); post.setSize(width, height, 1);
         room.cloudMat.uniforms.uPx.value = height * .5;
         frame(1 / 60); post.render();
         const url = canvas.toDataURL(type, q);
-        layout(); sizeAll();
+        const b = roomNdc(); stillRoom = +((b.x1 - b.x0) / 2).toFixed(4); stillPins = hs.pins(camera);
+        fxOverride = null; layout(); sizeAll();
         return url;
       },
     };
@@ -338,6 +415,10 @@ export async function mount(root, data) {
 
   function instance() {
     return {
+      firstFrame() { framesAllowed = true; updateLoop(); },
+      entrance,
+      startIntro() { held = false; framesAllowed = true; dirty = true; updateLoop(); },
+      setPaused(p) { paused = !!p; updateLoop(); },
       dispose() {
         if (disposed) return;
         disposed = true;

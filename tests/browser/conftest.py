@@ -61,3 +61,19 @@ def page_errors(page):
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
     return errors
+
+
+# The homepage intro (js/intro) plays on a tab's first load of /. Most tests are about what comes
+# after it, so pages start as if the intro had been seen; tests of the intro itself are marked intro.
+SKIP_INTRO = "try { sessionStorage.setItem('mk-intro-off', '1'); } catch (e) {}"
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "intro: runs with the homepage intro (conftest skips it otherwise)")
+
+
+@pytest.fixture
+def context(context, request):
+    if not request.node.get_closest_marker("intro"):
+        context.add_init_script(SKIP_INTRO)
+    return context

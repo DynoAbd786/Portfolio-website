@@ -117,6 +117,50 @@ window.mkWorkshop = {
     _instance: null,
     _root: null,
     _pending: null,
+    _settled: null,
+    _settle: null,
+    _wantIntro: false,
+    _paused: false,
+
+    // Resolves 'live' once the scene draws its first frame, or 'still' if it won't run here (no WebGL,
+    // a failed load, too slow); js/intro waits on it before landing the name
+    settled() {
+        if (!this._settled) this._settled = new Promise((resolve) => { this._settle = resolve; });
+        const state = document.getElementById('workshop')?.dataset.state;
+        if (!document.getElementById('workshop') || state === 'failed' || this._tooSlow()) this._settle('still');
+        else if (state === 'live') this._settle('live');
+        return this._settled;
+    },
+
+    // Resolves once the scene's script has loaded and built the room (the part that holds the main
+    // thread), or if it won't run; js/intro starts the name build after it so the build never stalls
+    loaded() {
+        if (!this._loaded) this._loaded = new Promise((resolve) => { this._load = resolve; });
+        return this._loaded;
+    },
+
+    // the held entrance (see mount's holdIntro) starts; remembered if the scene is still loading
+    startIntro() {
+        this._wantIntro = true;
+        this._instance?.startIntro();
+    },
+
+    // Resolves once the scene's entrance has played out, or at once if it isn't running (yet)
+    entrance() {
+        const live = document.getElementById('workshop')?.dataset.state === 'live';
+        return live && this._instance ? this._instance.entrance : Promise.resolve();
+    },
+
+    // a held scene may draw its first frame (js/intro calls this once the name build has finished)
+    firstFrame() {
+        this._wantFrame = true;
+        this._instance?.firstFrame();
+    },
+
+    setPaused(paused) {
+        this._paused = !!paused;
+        this._instance?.setPaused(this._paused);
+    },
 
     async sync() {
         // a mount still loading finishes first, so it can be disposed below if we've left the page
@@ -127,17 +171,31 @@ window.mkWorkshop = {
             this._instance = this._root = null;
             this.active = false;
             this.disposes++;
+            this._settled = this._settle = null;
         }
 
         const root = document.getElementById('workshop');
-        if (!root || this._instance || root.dataset.state === 'failed' || this._tooSlow()) return;
+        if (!root || this._instance || root.dataset.state === 'failed' || this._tooSlow()) { this.settled(); this.loaded(); this._load(); return; }
+        this.loaded();
 
         this._pending = (async () => {
             try {
                 const data = JSON.parse(root.querySelector('#workshop-data').textContent);
                 const { mount } = await import('/js/workshop/workshop.js');
-                this._instance = await mount(root, data);
+                // the homepage's intro plays first; tests hold it with ?hold=1
+                const holdIntro = document.documentElement.classList.contains('intro-pending') || new URLSearchParams(location.search).get('hold') === '1';
+                this._wantIntro = this._wantFrame = false;
+                const mounting = mount(root, data, { holdIntro }); // builds the room before its first await
+                this._load();
+                this._instance = await mounting;
                 this._root = root;
+                if (this._wantIntro) this._instance.startIntro();
+                else if (this._wantFrame) this._instance.firstFrame();
+                if (this._paused) this._instance.setPaused(true);
+                new MutationObserver((_, mo) => {
+                    if (root.dataset.state === 'live') { this.settled(); mo.disconnect(); }
+                }).observe(root, { attributes: true, attributeFilter: ['data-state'] });
+                if (root.dataset.state === 'live') this.settled();
                 // the scene gives up on devices too slow for it (or a lost GPU context)
                 root.addEventListener('workshop-still', () => this._giveUp(root), { once: true });
                 this.active = true;
@@ -146,6 +204,8 @@ window.mkWorkshop = {
                 // no WebGL, a failed download or a bug: the still image and its links stay
                 root.dataset.state = 'failed';
                 console.warn('[workshop]', e && e.message);
+                this.settled();
+                this._load();
             }
         })();
         await this._pending;
@@ -162,6 +222,7 @@ window.mkWorkshop = {
         this.disposes++;
         root.dataset.state = 'still';
         try { sessionStorage.setItem('mk-workshop-slow', '1'); } catch { }
+        this.settled();
     },
 
     // a device that was too slow once this session gets the still image straight away
@@ -170,7 +231,121 @@ window.mkWorkshop = {
     }
 };
 
+// The name build's dependencies (js/intro): Delaunator, a classic script that sets window.Delaunator,
+// and the self-hosted Inter 800. Rejects if either fails to load.
+window.mkIntroDeps = function () {
+    return this._introDeps ??= Promise.all([
+        window.Delaunator ? null : new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = '/lib/delaunator/delaunator.min.js';
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('could not load Delaunator'));
+            document.head.append(script);
+        }),
+        document.fonts.load('800 100px "Inter Build"').then((faces) => { if (!faces.length) throw new Error('could not load Inter Build'); }),
+    ]);
+};
+
+// ?debug=namebuild (tests): exposes the name build on its own
+if (new URLSearchParams(location.search).get('debug') === 'namebuild') {
+    window.__nameBuildReady = (async () => {
+        await mkIntroDeps();
+        const { createNameBuild } = await import('/js/intro/name-build.js');
+        window.__nameBuild = { create: createNameBuild };
+    })();
+}
+
+// The homepage hero, side by side: --frame-x is the middle of the space right of the hero text, as a
+// fraction of the hero's width. The room (css/app.css and the scene) centres itself there. Returns it.
+window.mkHeroFrame = function () {
+    const hero = document.getElementById('hero'), copy = hero?.querySelector('.hero-copy');
+    if (!hero || !copy) return .5;
+    const wide = matchMedia('(min-width: 900px) and (min-height: 500px)').matches;
+    const width = hero.clientWidth;
+    // offsetLeft ignores the transform .hero-copy slides out with while a card is open
+    const fx = wide && width ? (copy.offsetLeft + copy.offsetWidth + width) / 2 / width : .5;
+    hero.style.setProperty('--frame-x', fx.toFixed(4));
+    return fx;
+};
+
+// Desktop: as the page slides up over the hero, --cover runs 0 to 1 (css/app.css dims the room with
+// it), and the scene stops drawing once it is fully covered
+window.mkHeroCover = function () {
+    const hero = document.getElementById('hero');
+    const wide = matchMedia('(min-width: 900px) and (min-height: 500px)').matches;
+    const cover = hero && wide ? Math.min(1, Math.max(0, scrollY / hero.offsetHeight)) : 0;
+    hero?.style.setProperty('--cover', cover.toFixed(3));
+    if ((cover >= 1) !== mkWorkshop._paused) mkWorkshop.setPaused(cover >= 1);
+};
+
+// The hero's See my work and Get in touch glide down to their section
+document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('.hero-buttons a[href^="#"]');
+    const target = a && document.getElementById(a.getAttribute('href').slice(1));
+    if (!target || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault(); e.stopPropagation(); // Blazor would jump instead
+    history.pushState(history.state, '', a.getAttribute('href'));
+    target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+}, true);
+
+// The homepage intro (js/intro/intro.js): runs when App.razor's head script marked the page .intro-pending
+window.mkIntro = {
+    running: false,
+    _control: null,
+
+    async start() {
+        const html = document.documentElement, hero = document.getElementById('hero');
+        if (!html.classList.contains('intro-pending') || this.running) return;
+        this.running = true;
+        // until intro.js has loaded: hold scrolling already, and remember a Tab or click that should end it
+        this._endEarly = false;
+        const early = [
+            ['wheel', (e) => e.preventDefault(), { passive: false }],
+            ['touchmove', (e) => e.preventDefault(), { passive: false }],
+            ['keydown', (e) => { if (e.key === 'Tab') this._endEarly = true; else if (['ArrowDown', 'PageDown', ' ', 'End'].includes(e.key)) e.preventDefault(); }, true],
+            ['click', (e) => { if (e.target.closest?.('a, button')) this._endEarly = true; }, true],
+        ];
+        early.forEach(([type, fn, opts]) => addEventListener(type, fn, opts));
+        const dropEarly = this._dropEarly = () => early.forEach(([type, fn, opts]) => removeEventListener(type, fn, opts));
+        try {
+            if (!hero) throw new Error('no hero');
+            const { runIntro } = await import('/js/intro/intro.js');
+            dropEarly();
+            this._control = runIntro({
+                hero,
+                deps: () => mkIntroDeps(),
+                loadBuild: () => import('/js/intro/name-build.js'),
+                settled: mkWorkshop.settled(),
+                startScene: () => mkWorkshop.startIntro(),
+                firstFrame: () => mkWorkshop.firstFrame(),
+                sceneLoaded: mkWorkshop.loaded(),
+                sceneEntered: () => mkWorkshop.entrance(),
+            });
+            if (this._endEarly) this._control.finish();
+            await this._control.done;
+        } catch (e) {
+            dropEarly();
+            console.warn('[intro]', e && e.message);
+            html.classList.remove('intro-pending', 'intro-flying');
+            mkWorkshop.startIntro();
+        }
+        this._control = null;
+        this.running = false;
+    },
+
+    // lands at once (leaving the page mid-intro, for one)
+    finish() {
+        if (this._control) this._control.finish();
+        else if (this.running) { this._endEarly = true; this._dropEarly?.(); }
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    mkHeroFrame();
     mkWorkshop.sync();
-    if (window.Blazor) window.Blazor.addEventListener('enhancedload', () => mkWorkshop.sync());
+    mkIntro.start();
+    mkHeroCover();
+    addEventListener('resize', () => { mkHeroFrame(); mkHeroCover(); });
+    addEventListener('scroll', () => mkHeroCover(), { passive: true });
+    if (window.Blazor) window.Blazor.addEventListener('enhancedload', () => { mkIntro.finish(); mkHeroFrame(); mkHeroCover(); mkWorkshop.sync(); });
 });

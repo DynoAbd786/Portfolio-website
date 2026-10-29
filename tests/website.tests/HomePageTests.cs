@@ -25,6 +25,23 @@ public class HomePageTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
+    public async Task Hero_buttons_are_see_my_work_cv_then_get_in_touch()
+    {
+        var doc = await HomeAsync();
+        var buttons = doc.QuerySelectorAll(".hero-buttons a").ToList();
+        Assert.Equal(new[] { "See my work", "Download CV", "Get in touch" }, buttons.Select(b => b.TextContent.Trim()));
+        Assert.Equal("#work", buttons[0].GetAttribute("href"));
+        Assert.StartsWith("/docs/Muhammad-Kashif-Khan-CV.pdf", buttons[1].GetAttribute("href"));
+        Assert.Equal("#contact", buttons[2].GetAttribute("href"));
+        Assert.Contains("btn-primary", buttons[2].ClassList);
+        Assert.Contains("btn-shine", buttons[2].ClassList);
+        Assert.All(buttons.Take(2), b => Assert.Contains("btn-ghost", b.ClassList));
+        Assert.NotNull(doc.QuerySelector("#hero .hero-head h1"));
+        Assert.NotNull(doc.QuerySelector("#hero canvas.hero-namefx"));
+        Assert.NotNull(doc.QuerySelector(".hero-cover #work"));
+    }
+
+    [Fact]
     public async Task Sections_in_order()
     {
         var doc = await HomeAsync();
