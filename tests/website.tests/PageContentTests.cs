@@ -52,8 +52,9 @@ public class PageContentTests : IClassFixture<SiteFactory>
         foreach (var stale in new[] { "Local LLM", "LM Studio", "Fully Operational", "100%", "Claude Desktop: Testing", "GPT-4" })
             Assert.DoesNotContain(stale, text);
         Assert.DoesNotMatch(@"[\u2705\u23F3]|\uD83D[\uDE80\uDEE1\uDCCB\uDCC1\uDD27\uDDEA\uDD16]|\uD83E\uDDEA", text); // no emoji ticks
-        foreach (var fact in new[] { "https://mkkai.dev/api/mcp", "search_projects", "submit_contact", "portfolio://projects/hireforge", "DeepSeek" })
-            Assert.Contains(fact, text);
+        foreach (var fact in new[] { "https://mkkai.dev/api/mcp", "search_projects", "submit_contact", "portfolio://projects/{id}", "DeepSeek", "official MCP C# SDK", "read-only" })
+            Assert.Contains(fact, text, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("/api/mcp/sse", text); // the bridge and the old SSE transport are gone
     }
 
     [Theory]
@@ -70,11 +71,10 @@ public class PageContentTests : IClassFixture<SiteFactory>
     }
 
     [Fact]
-    public async Task Home_lab_status_shows_no_made_up_uptime()
+    public async Task Home_lab_has_no_live_status_panel()
     {
         var doc = await Html.GetAsync(_client, "/projects/home-lab");
-        var status = doc.QuerySelector("main .bridge-status")!.TextContent;
-        Assert.DoesNotContain("Uptime", status);
-        Assert.DoesNotContain("%", status);
+        Assert.Null(doc.QuerySelector("main .bridge-status"));
+        Assert.DoesNotContain("System Status", doc.QuerySelector("main")!.TextContent);
     }
 }

@@ -3,13 +3,17 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using ModelContextProtocol;
+using ModelContextProtocol.Client;
+using ModelContextProtocol.Protocol;
 using website.api.Models;
 using website.api.Services;
 using website.Data;
 
 namespace website.tests;
 
-// The MCP server at /api/mcp (JSON-RPC 2.0), which AI agents and the site's assistant use. Email is faked.
+// The MCP server at /api/mcp, as the official MCP client sees it (Streamable HTTP, the SDK's
+// stateless mode). Email is faked.
 public class McpTests : IClassFixture<SiteFactory>
 {
     private readonly SiteFactory _factory;
@@ -26,176 +30,181 @@ public class McpTests : IClassFixture<SiteFactory>
         }
     }
 
-    private (HttpClient, FakeEmail) Client()
+    private (HttpClient Http, FakeEmail Email) Site()
     {
         var email = new FakeEmail();
-        var client = _factory.WithWebHostBuilder(b =>
+        var http = _factory.WithWebHostBuilder(b =>
             b.ConfigureTestServices(s => s.AddSingleton<IEmailService>(email))).CreateClient();
-        return (client, email);
+        return (http, email);
     }
 
-    private static async Task<HttpResponseMessage> Post(HttpClient client, string method, object? @params = null, int? id = 1)
+    private static Task<McpClient> Connect(HttpClient http) => McpClient.CreateAsync(
+        new HttpClientTransport(new HttpClientTransportOptions
+        {
+            Endpoint = new Uri(http.BaseAddress!, "/api/mcp"),
+            TransportMode = HttpTransportMode.StreamableHttp,
+        }, http, ownsHttpClient: false));
+
+    private static Dictionary<string, object?> Contact(string email = "ada@example.com") =>
+        new() { ["name"] = "Ada", ["email"] = email, ["subject"] = "Job Opportunity", ["message"] = "We'd like to talk." };
+
+    private static string Text(CallToolResult r) => string.Join("\n", r.Content.OfType<TextContentBlock>().Select(c => c.Text));
+
+    private static async Task<string> Read(McpClient mcp, string uri) =>
+        ((TextResourceContents)(await mcp.ReadResourceAsync(uri)).Contents[0]).Text;
+
+    [Fact]
+    public async Task Tools_say_which_only_read_and_which_send_a_message()
     {
-        var body = new Dictionary<string, object?> { ["jsonrpc"] = "2.0", ["method"] = method };
-        if (id is not null) body["id"] = id;
-        if (@params is not null) body["params"] = @params;
-        return await client.PostAsJsonAsync("/api/mcp", body);
+        var (http, _) = Site();
+        await using var mcp = await Connect(http);
+        var tools = (await mcp.ListToolsAsync()).ToDictionary(t => t.Name, t => t.ProtocolTool);
+        Assert.Equal(new[] { "search_projects", "submit_contact" }, tools.Keys.Order());
+        Assert.True(tools["search_projects"].Annotations!.ReadOnlyHint);
+        Assert.False(tools["search_projects"].Annotations!.OpenWorldHint);
+        Assert.NotNull(tools["search_projects"].OutputSchema);
+        Assert.False(tools["submit_contact"].Annotations!.ReadOnlyHint);
+        Assert.False(tools["submit_contact"].Annotations!.DestructiveHint);
+        Assert.True(tools["submit_contact"].Annotations!.OpenWorldHint);
+        var required = tools["submit_contact"].InputSchema.GetProperty("required").EnumerateArray().Select(r => r.GetString()).Order();
+        Assert.Equal(new[] { "email", "message", "name", "subject" }, required);
     }
 
-    private static async Task<JsonElement> Rpc(HttpClient client, string method, object? @params = null)
+    [Fact]
+    public async Task Search_returns_structured_projects_with_their_pages()
     {
-        var response = await Post(client, method, @params);
-        response.EnsureSuccessStatusCode();
-        return JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
+        var (http, _) = Site();
+        await using var mcp = await Connect(http);
+        var result = await mcp.CallToolAsync("search_projects", new Dictionary<string, object?> { ["keyword"] = "HireForge" });
+        Assert.NotEqual(true, result.IsError);
+        var projects = JsonSerializer.SerializeToElement(result.StructuredContent).GetProperty("projects");
+        var hireforge = projects.EnumerateArray().Single(p => p.GetProperty("title").GetString()!.StartsWith("HireForge"));
+        Assert.Equal("https://mkkai.dev/projects/hireforge", hireforge.GetProperty("page").GetString());
     }
-
-    private static async Task<(bool IsError, string Text)> Call(HttpClient client, string tool, object arguments)
-    {
-        var result = (await Rpc(client, "tools/call", new { name = tool, arguments })).GetProperty("result");
-        return (result.GetProperty("isError").GetBoolean(), result.GetProperty("content")[0].GetProperty("text").GetString()!);
-    }
-
-    private static async Task<string> Read(HttpClient client, string uri) =>
-        (await Rpc(client, "resources/read", new { uri })).GetProperty("result").GetProperty("contents")[0].GetProperty("text").GetString()!;
-
-    private static object Contact(string email = "ada@example.com") =>
-        new { name = "Ada", email, subject = "Job Opportunity", message = "We'd like to talk." };
 
     [Fact]
     public async Task Submit_contact_rejects_missing_fields_and_sends_nothing()
     {
-        var (client, email) = Client();
-        var (isError, text) = await Call(client, "submit_contact", new { name = "x" });
-        Assert.True(isError);
-        Assert.Contains("email", text);
-        Assert.Contains("message", text);
+        var (http, email) = Site();
+        await using var mcp = await Connect(http);
+        // fields sent but empty get a message that says which; fields left out fail the schema
+        var empty = await mcp.CallToolAsync("submit_contact", new Dictionary<string, object?> { ["name"] = "x", ["email"] = "", ["subject"] = " ", ["message"] = "" });
+        Assert.True(empty.IsError);
+        Assert.Contains("Missing: email, subject, message", Text(empty));
+        var omitted = await mcp.CallToolAsync("submit_contact", new Dictionary<string, object?> { ["name"] = "x" });
+        Assert.True(omitted.IsError);
         Assert.Empty(email.Sent);
     }
 
     [Fact]
     public async Task Submit_contact_rejects_a_bad_email()
     {
-        var (client, email) = Client();
-        var (isError, _) = await Call(client, "submit_contact", Contact("not-an-email"));
-        Assert.True(isError);
+        var (http, email) = Site();
+        await using var mcp = await Connect(http);
+        Assert.True((await mcp.CallToolAsync("submit_contact", Contact("not-an-email"))).IsError);
+        Assert.True((await mcp.CallToolAsync("submit_contact", Contact("ada@nope"))).IsError); // no real domain
         Assert.Empty(email.Sent);
     }
 
     [Fact]
     public async Task Submit_contact_sends_a_complete_message()
     {
-        var (client, email) = Client();
-        var (isError, _) = await Call(client, "submit_contact", Contact());
-        Assert.False(isError);
+        var (http, email) = Site();
+        await using var mcp = await Connect(http);
+        Assert.NotEqual(true, (await mcp.CallToolAsync("submit_contact", Contact())).IsError);
         Assert.Equal("Ada", Assert.Single(email.Sent).Name);
     }
 
     [Fact]
     public async Task Submit_contact_limits_how_often_one_visitor_can_send()
     {
-        var (client, email) = Client();
+        var (http, email) = Site();
+        await using var mcp = await Connect(http);
         for (var i = 0; i < ContactLimiter.PerVisitorPerHour; i++)
-            Assert.False((await Call(client, "submit_contact", Contact())).IsError);
-        var (isError, text) = await Call(client, "submit_contact", Contact());
-        Assert.True(isError);
-        Assert.Contains("later", text);
+            Assert.NotEqual(true, (await mcp.CallToolAsync("submit_contact", Contact())).IsError);
+        var over = await mcp.CallToolAsync("submit_contact", Contact());
+        Assert.True(over.IsError);
+        Assert.Contains("later", Text(over));
         Assert.Equal(ContactLimiter.PerVisitorPerHour, email.Sent.Count);
-    }
-
-    [Fact]
-    public async Task Ping_answers_with_an_empty_result()
-    {
-        var (client, _) = Client();
-        var reply = await Rpc(client, "ping");
-        Assert.Equal(JsonValueKind.Object, reply.GetProperty("result").ValueKind);
-        Assert.False(reply.TryGetProperty("error", out var error) && error.ValueKind != JsonValueKind.Null);
-    }
-
-    [Fact]
-    public async Task Initialize_declares_only_what_the_server_does()
-    {
-        var (client, _) = Client();
-        var caps = (await Rpc(client, "initialize", new { protocolVersion = "2025-06-18", capabilities = new { }, clientInfo = new { name = "test", version = "1" } }))
-            .GetProperty("result").GetProperty("capabilities");
-        var declared = caps.EnumerateObject().Select(p => p.Name).ToHashSet();
-        Assert.Equal(new HashSet<string> { "tools", "resources" }, declared);
-        Assert.False(caps.GetProperty("tools").GetProperty("listChanged").GetBoolean());
-    }
-
-    [Fact]
-    public async Task A_log_level_request_is_accepted()
-    {
-        // some clients (the MCP Inspector) send it straight after connecting
-        var (client, _) = Client();
-        var reply = await Rpc(client, "logging/setLevel", new { level = "info" });
-        Assert.Equal(JsonValueKind.Object, reply.GetProperty("result").ValueKind);
-    }
-
-    [Fact]
-    public async Task Notifications_get_no_reply()
-    {
-        var (client, _) = Client();
-        var response = await Post(client, "notifications/initialized", id: null);
-        Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
-        Assert.Equal("", await response.Content.ReadAsStringAsync());
     }
 
     [Fact]
     public async Task Each_project_is_a_resource_named_after_its_page()
     {
-        var (client, _) = Client();
-        var uris = (await Rpc(client, "resources/list")).GetProperty("result").GetProperty("resources")
-            .EnumerateArray().Select(r => r.GetProperty("uri").GetString()).ToList();
-        Assert.Contains("portfolio://projects/hireforge", uris);
-        Assert.Contains("portfolio://projects/pnanolocz", uris);
+        var (http, _) = Site();
+        await using var mcp = await Connect(http);
+        var templates = (await mcp.ListResourceTemplatesAsync()).Select(t => t.UriTemplate).ToList();
+        Assert.Contains("portfolio://projects/{id}", templates);
+        Assert.Contains("HireForge", await Read(mcp, "portfolio://projects/hireforge"));
+        Assert.Contains("pNanoLocz", await Read(mcp, "portfolio://projects/pnanolocz"));
+        await Assert.ThrowsAsync<McpProtocolException>(async () => await mcp.ReadResourceAsync("portfolio://projects/nope"));
+    }
+
+    [Fact]
+    public async Task Resources_cover_the_profile_contact_about_and_this_page()
+    {
+        var (http, _) = Site();
+        await using var mcp = await Connect(http);
+        var uris = (await mcp.ListResourcesAsync()).Select(r => r.Uri).ToHashSet();
+        foreach (var uri in new[] { "portfolio://profile", "portfolio://contact", "portfolio://about", "portfolio://ai-integration", "portfolio://projects/all" })
+            Assert.Contains(uri, uris);
         Assert.DoesNotContain("portfolio://ethos", uris);
-        Assert.Contains("HireForge", await Read(client, "portfolio://projects/hireforge"));
     }
 
     [Fact]
     public async Task Profile_matches_what_the_homepage_shows()
     {
-        var (client, _) = Client();
-        var profile = await Read(client, "portfolio://profile");
+        var (http, _) = Site();
+        await using var mcp = await Connect(http);
+        var profile = await Read(mcp, "portfolio://profile");
         foreach (var item in HomeContent.Stack.SelectMany(g => g.Items)) Assert.Contains(item, profile);
         foreach (var e in HomeContent.Experience) Assert.Contains(e.Title, profile);
         foreach (var p in HomeContent.Products) Assert.Contains(p.Name, profile);
         Assert.DoesNotContain("Gradle", profile);
-        var ai = await Read(client, "portfolio://ai-integration");
+        var ai = await Read(mcp, "portfolio://ai-integration");
         Assert.DoesNotContain("GPT-4", ai);
         Assert.Contains("DeepSeek", ai);
+        Assert.DoesNotContain("/sse", ai);
     }
 
-    // The older SSE transport: GET /api/mcp/sse sends an "endpoint" event; the client POSTs there and
-    // the reply arrives on the stream as a "message" event (where the official SDKs wait for it)
     [Fact]
-    public async Task Sse_clients_get_their_replies_on_the_stream()
+    public async Task Plain_curl_from_the_ai_page_works()
     {
-        var (client, _) = Client();
-        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-        var get = new HttpRequestMessage(HttpMethod.Get, "/api/mcp/sse");
-        get.Headers.Add("Accept", "text/event-stream");
-        using var sse = await client.SendAsync(get, HttpCompletionOption.ResponseHeadersRead, cts.Token);
-        using var reader = new StreamReader(await sse.Content.ReadAsStreamAsync(cts.Token));
-
-        async Task<(string Event, string Data)> NextEvent()
+        // the page's examples: one POST each, no session, the Accept header MCP requires
+        var (http, _) = Site();
+        var request = new HttpRequestMessage(HttpMethod.Post, "/api/mcp")
         {
-            string? ev = null, data = null;
-            while (true)
-            {
-                var line = await reader.ReadLineAsync(cts.Token) ?? throw new Exception("the stream ended");
-                if (line.StartsWith("event: ")) ev = line[7..];
-                else if (line.StartsWith("data: ")) data = line[6..];
-                else if (line == "" && ev is not null) return (ev, data!);
-            }
-        }
+            Content = JsonContent.Create(new { jsonrpc = "2.0", id = 1, method = "tools/list" }),
+        };
+        request.Headers.Add("Accept", "application/json, text/event-stream");
+        var response = await http.SendAsync(request);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Contains("search_projects", await response.Content.ReadAsStringAsync());
+    }
 
-        var (first, endpoint) = await NextEvent();
-        Assert.Equal("endpoint", first);
-        var post = await client.PostAsJsonAsync(new Uri(endpoint).PathAndQuery, new { jsonrpc = "2.0", id = 7, method = "ping" }, cts.Token);
-        Assert.True(post.IsSuccessStatusCode);
-        var (second, reply) = await NextEvent();
-        Assert.Equal("message", second);
-        Assert.Equal(7, JsonDocument.Parse(reply).RootElement.GetProperty("id").GetInt32());
+    [Theory]
+    [InlineData("GET")]
+    [InlineData("DELETE")]
+    public async Task No_stream_or_session_to_open_or_close_is_a_405(string method)
+    {
+        // the spec: a server without the standalone SSE stream answers GET with 405 (clients like the
+        // MCP Inspector disconnect on anything else), and a stateless one has no session to DELETE
+        var (http, _) = Site();
+        var request = new HttpRequestMessage(new HttpMethod(method), "/api/mcp");
+        request.Headers.Add("Accept", "text/event-stream");
+        var response = await http.SendAsync(request);
+        Assert.Equal(HttpStatusCode.MethodNotAllowed, response.StatusCode);
+        Assert.Contains("POST", response.Content.Headers.Allow);
+    }
+
+    [Theory]
+    [InlineData("/api/mcp/sse")]
+    [InlineData("/api/mcp/status/bridge")]
+    [InlineData("/api/oauth/.well-known/oauth-authorization-server")]
+    [InlineData("/api/chat/models")]
+    public async Task The_old_bridge_sse_and_oauth_endpoints_are_gone(string path)
+    {
+        var (http, _) = Site();
+        Assert.Equal(HttpStatusCode.NotFound, (await http.GetAsync(path)).StatusCode);
     }
 }

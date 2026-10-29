@@ -30,12 +30,11 @@
             </ul>
         </ProjectSection>
 
-        <ProjectSection Title="Connect your own agent" Subtitle="JSON-RPC 2.0 over HTTP, no sign-in needed" Icon="fas fa-plug">
+        <ProjectSection Title="Connect your own agent" Subtitle="Streamable HTTP, no sign-in needed" Icon="fas fa-plug">
             <p class="mb-4 leading-relaxed text-slate-300">Point any MCP client at:</p>
             <pre class="mb-4 overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-cy"><code>https://mkkai.dev/api/mcp</code></pre>
             <p class="mb-4 leading-relaxed text-slate-300">
-                Most clients only need that URL; each has its own way of adding it. For clients that still use the older SSE transport, connect to
-                <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">https://mkkai.dev/api/mcp/sse</code> instead.
+                Clients only need that URL; each has its own way of adding it.
             </p>
             <div class="space-y-4">
                 <div>
@@ -58,7 +57,7 @@
                 <div>
                     <h3 class="mono-label mb-3">// tools</h3>
                     <ul class="space-y-3 text-sm text-slate-300">
-                        <li><code class="font-mono text-cy">search_projects</code>: find projects by <code class="font-mono">keyword</code>, <code class="font-mono">category</code> (Personal, Professional, Academic) or <code class="font-mono">technology</code>.</li>
+                        <li><code class="font-mono text-cy">search_projects</code>: find projects by <code class="font-mono">keyword</code>, <code class="font-mono">category</code> (Personal, Professional, Academic) or <code class="font-mono">technology</code>. Read-only, and returns structured results with each project's page.</li>
                         <li><code class="font-mono text-cy">submit_contact</code>: send me a message. Needs <code class="font-mono">name</code>, a valid <code class="font-mono">email</code>, <code class="font-mono">subject</code> and <code class="font-mono">message</code>; <code class="font-mono">company</code> and <code class="font-mono">role</code> are optional. A few messages an hour at most.</li>
                     </ul>
                 </div>
@@ -70,7 +69,7 @@
                         <li><span class="text-cy">portfolio://contact</span>: how to reach me</li>
                         <li><span class="text-cy">portfolio://ai-integration</span>: this page, as data</li>
                         <li><span class="text-cy">portfolio://projects/all</span>: every project</li>
-                        <li><span class="text-cy">portfolio://projects/hireforge</span>: one project, named after its page</li>
+                        <li><span class="text-cy">portfolio://projects/{id}</span>: one project, named after its page, such as <span class="text-cy">hireforge</span></li>
                     </ul>
                 </div>
             </div>
@@ -86,6 +85,9 @@ curl -X POST https://mkkai.dev/api/mcp \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call",
        "params":{"name":"search_projects","arguments":{"technology":"Python"}}}'</code></pre>
+            <p class="mb-4 leading-relaxed text-slate-300">
+                Each reply comes back as a single event: an <code class="font-mono text-sm">event: message</code> line, then the JSON on a <code class="font-mono text-sm">data:</code> line.
+            </p>
             <p class="leading-relaxed text-slate-300">
                 Or browse it with the MCP Inspector: run <code class="rounded bg-white/[.06] px-1.5 py-0.5 font-mono text-sm text-cy">npx @@modelcontextprotocol/inspector</code> and connect to the URL above.
             </p>
@@ -93,8 +95,9 @@ curl -X POST https://mkkai.dev/api/mcp \
 
         <ProjectSection Title="How it's built" Icon="fas fa-gears">
             <p class="leading-relaxed text-slate-300">
-                Both are part of this site's ASP.NET Core server. The MCP server is my own JSON-RPC handler rather than an SDK; the assistant calls its tools in the same process,
-                so the chat and an outside agent see exactly the same data. Its profile is built from the same content as the homepage, so the two can't disagree.
+                Both are part of this site's ASP.NET Core server. The MCP server is built on the official MCP C# SDK and follows the current spec (2026-07-28): stateless
+                Streamable HTTP, with annotations that tell clients which tool only reads and which sends a message. The chat assistant runs the same tools in the same process,
+                so it and an outside agent see exactly the same data, and the profile is built from the same content as the homepage, so the two can't disagree.
                 There's more about the site itself on <a href="/projects/portfolio" class="text-cy hover:underline">its project page</a>.
             </p>
         </ProjectSection>

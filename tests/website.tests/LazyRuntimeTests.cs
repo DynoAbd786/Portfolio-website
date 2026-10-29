@@ -14,8 +14,8 @@ public class LazyRuntimeTests : IClassFixture<SiteFactory>
 
     public LazyRuntimeTests(SiteFactory factory) => _factory = factory;
 
-    // Pages that need it for their own interactive parts (image gallery, live bridge status)
-    private static readonly string[] NeedsRuntime = { "/projects/medical-simulation", "/projects/machine-learning", "/projects/home-lab" };
+    // Pages that need it for their own interactive parts (the image gallery)
+    private static readonly string[] NeedsRuntime = { "/projects/medical-simulation", "/projects/machine-learning" };
 
     [Theory]
     [MemberData(nameof(RouteTests.AllPageRoutes), MemberType = typeof(RouteTests))]

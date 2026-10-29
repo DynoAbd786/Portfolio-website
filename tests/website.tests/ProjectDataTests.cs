@@ -75,13 +75,12 @@ public class ProjectDataTests : IClassFixture<SiteFactory>
     public async Task Mcp_profile_is_not_a_student(string uri)
     {
         var client = _factory.CreateClient();
-        var response = await client.PostAsJsonAsync("/api/mcp", new
+        var request = new HttpRequestMessage(HttpMethod.Post, "/api/mcp")
         {
-            jsonrpc = "2.0",
-            id = 1,
-            method = "resources/read",
-            @params = new { uri },
-        });
+            Content = JsonContent.Create(new { jsonrpc = "2.0", id = 1, method = "resources/read", @params = new { uri } }),
+        };
+        request.Headers.Add("Accept", "application/json, text/event-stream"); // MCP clients must accept both
+        var response = await client.SendAsync(request);
         var body = await response.Content.ReadAsStringAsync();
         Assert.True(response.IsSuccessStatusCode, body);
         Assert.Contains("\"contents\"", body);

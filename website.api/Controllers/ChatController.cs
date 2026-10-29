@@ -10,82 +10,11 @@ public class ChatController : ControllerBase
 {
     private readonly ILogger<ChatController> _logger;
     private readonly DeepSeekAgentService _assistant;
-    private readonly IDiscordService _discordService;
-    private readonly IAccessStateService _accessState;
-    private readonly OllamaService _ollamaService;
-    private readonly IConfiguration _configuration;
 
-    public ChatController(
-        ILogger<ChatController> logger, 
-        DeepSeekAgentService assistant,
-        IDiscordService discordService,
-        IAccessStateService accessState,
-        OllamaService ollamaService,
-        IConfiguration configuration)
+    public ChatController(ILogger<ChatController> logger, DeepSeekAgentService assistant)
     {
         _logger = logger;
         _assistant = assistant;
-        _discordService = discordService;
-        _accessState = accessState;
-        _ollamaService = ollamaService;
-        _configuration = configuration;
-    }
-
-    [HttpPost("request-access")]
-    public async Task<IActionResult> RequestAccess([FromBody] AccessRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Name) || 
-            string.IsNullOrWhiteSpace(request.Email))
-        {
-            return BadRequest(new { message = "All fields are required" });
-        }
-
-        var requestId = await _discordService.SendAccessRequestAsync(request);
-        
-        if (requestId != null)
-        {
-            return Ok(new { message = "Request sent successfully", requestId });
-        }
-
-        return StatusCode(500, new { message = "Failed to send request" });
-    }
-
-    [HttpGet("status/{id}")]
-    public IActionResult GetStatus(string id)
-    {
-        var status = _accessState.GetStatus(id);
-        return Ok(new { status = status.ToString() });
-    }
-
-    [HttpPost("callback/{id}")]
-    public IActionResult SetReady(string id)
-    {
-        // SECURITY CHECK
-        var apiKey = _configuration["BRIDGE_API_KEY"];
-        if (!string.IsNullOrEmpty(apiKey))
-        {
-            if (!Request.Headers.TryGetValue("X-Bridge-Key", out var providedKey) || providedKey != apiKey)
-            {
-                return Unauthorized();
-            }
-        }
-
-        _accessState.SetStatus(id, AccessStatus.Ready);
-        return Ok(new { message = "Status updated to Ready" });
-    }
-
-    [HttpGet("models")]
-    public async Task<IActionResult> GetModels([FromQuery] string provider = "gemini")
-    {
-        if (provider.ToLower() == "ollama")
-        {
-            var models = await _ollamaService.GetModelsAsync();
-            return Ok(new { models });
-        }
-        
-        // Return default models for other providers if needed, or just standard list logic
-        // For now, only dynamic list is for Ollama
-        return Ok(new { models = new List<string>() });
     }
 
     [HttpPost]
