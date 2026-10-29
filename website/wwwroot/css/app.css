@@ -502,3 +502,15 @@
     .ws-card, .ws-tag, .hero-copy, .workshop-canvas { transition-duration: .01s !important; }
     .ws-tag.demo .ws-tag-in { animation: none; }
 }
+
+/* Moving between pages (mkPageFade in site.js): the old page fades out and the new one fades in,
+   rising a few pixels into place. The header and the chat panel are layers of their own, so they
+   stay where they are. */
+@media (prefers-reduced-motion: no-preference) {
+    .site-header { view-transition-name: site-header; }
+    #chat-panel { view-transition-name: chat-panel; }
+    ::view-transition-old(root) { animation: mk-page-out .16s ease both; }
+    ::view-transition-new(root) { animation: mk-page-in .34s cubic-bezier(.2, .7, .2, 1) both; }
+}
+@keyframes mk-page-out { to { opacity: 0; } }
+@keyframes mk-page-in { from { opacity: 0; transform: translateY(8px); } }
