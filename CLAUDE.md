@@ -192,6 +192,12 @@ This portfolio implements a custom MCP server that allows AI agents (like Claude
 - **Service**: `McpService` handles protocol implementation (`website.api/Services/McpService.cs`)
 - **Authentication**: Custom OAuth 2.0 middleware (`website.api/Middleware/McpOAuthMiddleware.cs`)
 
+### MCP Behaviour
+- `submit_contact` sends only a complete message (name, valid email, subject, message) and at most `ContactLimiter.PerVisitorPerHour` per visitor an hour (30 an hour in all); the site's assistant calls the same tool, so the limit covers it too
+- `ping` is answered; notifications get `202` with no body
+- Project resources are named after their pages (`portfolio://projects/hireforge`); `portfolio://profile` is built from `HomeContent`, like the assistant's prompt
+- Tests: `tests/website.tests/McpTests.cs` (email faked)
+
 ### MCP Capabilities
 1. **Resources**: Access to profile, projects, contact info, ethos, and AI integration philosophy
 2. **Tools**:

@@ -113,6 +113,10 @@ public class McpController : ControllerBase
             _logger.LogInformation("Calling MCP service...");
             var response = await _mcpService.HandleRequestAsync(request);
 
+            // a notification (no id) gets no JSON-RPC reply, just 202
+            if (request.Id is null && request.Method.StartsWith("notifications/"))
+                return StatusCode(StatusCodes.Status202Accepted);
+
             _logger.LogInformation("MCP service returned response for ID: {Id}", response.Id);
             _logger.LogInformation("=== MCP REQUEST SUCCESS ===");
             return Ok(response);

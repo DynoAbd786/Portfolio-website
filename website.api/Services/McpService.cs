@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using website.api.Models;
 using website.api.Services;
+using HomeContent = website.Data.HomeContent;
 
 namespace website.api.Services;
 
@@ -53,11 +56,22 @@ public class McpService : IMcpService
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<OllamaBridgeResponse>> _pendingChatRequests = new();
     private readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskCompletionSource<List<string>>> _pendingModelsRequests = new();
 
-    public McpService(IServiceScopeFactory scopeFactory, ILogger<McpService> logger)
+    public McpService(IServiceScopeFactory scopeFactory, ILogger<McpService> logger, ContactLimiter contactLimiter, IHttpContextAccessor http)
     {
         _scopeFactory = scopeFactory;
         _logger = logger;
+        _contactLimiter = contactLimiter;
+        _http = http;
     }
+
+    // resources are read by agents, not put in a page: keep "C/C++" and "&" as they are
+    private static readonly JsonSerializerOptions Readable = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
+    private readonly ContactLimiter _contactLimiter;
+    private readonly IHttpContextAccessor _http;
+
+    // A project's resource id is its page's name: /projects/hireforge is portfolio://projects/hireforge
+    private static string ResourceId(Project project) => project.ProjectUrl.TrimEnd('/').Split('/').Last();
 
     public async Task<McpResponse> HandleRequestAsync(McpRequest request)
     {
@@ -68,6 +82,7 @@ public class McpService : IMcpService
             var response = request.Method switch
             {
                 "initialize" => HandleInitialize(request),
+                "ping" => new McpResponse { Id = request.Id, Result = new { } },
                 "notifications/initialized" => await HandleInitializedNotification(request),
                 "notifications/cancelled" => HandleNotification(request),
                 "resources/list" => await HandleResourcesList(request),
@@ -188,7 +203,7 @@ public class McpService : IMcpService
         // Add individual project resources
         foreach (var project in projects)
         {
-            var projectId = project.Title.ToLower().Replace(" ", "-").Replace("&", "and");
+            var projectId = ResourceId(project);
             resources.Add(new {
                 uri = $"portfolio://projects/{projectId}",
                 name = project.Title,
@@ -234,6 +249,7 @@ public class McpService : IMcpService
     {
         return uri switch
         {
+            // the same facts as the homepage (HomeContent), so the two never disagree
             "portfolio://profile" => new McpResourceContent
             {
                 Uri = uri,
@@ -246,19 +262,11 @@ public class McpService : IMcpService
                     degree = "MEng/BSc Computer Science with Artificial Intelligence",
                     graduationYear = "2026",
                     grade = "First-Class Honours",
-                    skills = new[]
-                    {
-                        "Python", "C", "Java", "SQL", "Bash",
-                        "Git & GitHub", "Docker", "VS Code", "Gradle",
-                        "PyQt6", "Matplotlib", "Jupyter", "Anaconda",
-                        "Microsoft Azure", "AI Services", "ML on Cloud"
-                    },
-                    interests = new[]
-                    {
-                        "Artificial Intelligence", "Machine Learning", "Healthcare Technology",
-                        "Data Analysis", "Software Architecture", "Algorithm Design"
-                    }
-                }, new JsonSerializerOptions { WriteIndented = true })
+                    openToWork = HomeContent.OpenToWork,
+                    experience = HomeContent.Experience.Select(e => new { when = e.When, title = e.Title, organisation = e.Org, detail = e.Detail }),
+                    building = HomeContent.Products.Select(p => new { name = p.Name, summary = p.Summary, tags = p.Tags, page = p.Href is null ? null : "https://mkkai.dev" + p.Href }),
+                    stack = HomeContent.Stack.ToDictionary(g => g.Label, g => g.Items)
+                }, Readable)
             },
             "portfolio://contact" => new McpResourceContent
             {
@@ -270,8 +278,8 @@ public class McpService : IMcpService
                     linkedin = "https://linkedin.com/in/dynoabd786",
                     github = "https://github.com/DynoAbd786",
                     portfolio = "https://mkkai.dev",
-                    responseTime = "24-48 hours"
-                }, new JsonSerializerOptions { WriteIndented = true })
+                    contactForm = "https://mkkai.dev/#contact"
+                }, Readable)
             },
             "portfolio://about" => new McpResourceContent
             {
@@ -282,12 +290,12 @@ public class McpService : IMcpService
                     background = "First-Class MEng Computer Science with AI graduate (University of Leeds, 2026) with a focus on AI, medical technology and multidisciplinary problem-solving",
                     education = "MEng Computer Science with Artificial Intelligence, University of Leeds (2022-2026), First-Class Honours",
                     specializations = new[] { "AI & Machine Learning", "Medical Technology", "Scientific Computing", "Distributed Systems", "Graphics Programming" },
-                    technicalStrengths = new[] { "Python", "C/C++", "C#", "CUDA", "OpenMP", "MPI", "OpenCL", "GPT-4 API", "ROS2", "OpenGL" },
+                    technicalStrengths = HomeContent.Stack.SelectMany(g => g.Items),
                     domains = new[] { "Healthcare AI", "Medical Imaging", "Robotics", "CFD Simulation", "Computer Vision", "High Performance Computing" },
                     philosophy = "Passionate about leveraging AI responsibly to solve real-world problems, particularly in healthcare and scientific domains",
                     academicFocus = "Strong academic performance with emphasis on practical applications and ethical technology development",
                     note = "Portfolio developed during a period of long-term illness, demonstrating resilience and commitment to learning"
-                }, new JsonSerializerOptions { WriteIndented = true })
+                }, Readable)
             },
             "portfolio://ethos" => new McpResourceContent
             {
@@ -307,7 +315,7 @@ public class McpService : IMcpService
                     collaborationApproach = "Believe in multidisciplinary teams where AI expertise combines with domain knowledge for meaningful impact",
                     innovationMindset = "Focus on solving real problems rather than pursuing technology for its own sake",
                     learningCommitment = "Committed to lifelong learning and staying current with emerging technologies while maintaining ethical standards"
-                }, new JsonSerializerOptions { WriteIndented = true })
+                }, Readable)
             },
             "portfolio://ai-integration" => new McpResourceContent
             {
@@ -336,7 +344,7 @@ public class McpService : IMcpService
                         "Medical AI system development with ethical AI integration"
                     },
                     futureVision = "See AI as transformative for development efficiency while emphasizing the irreplaceable value of human creativity, ethics, and domain expertise"
-                }, new JsonSerializerOptions { WriteIndented = true })
+                }, Readable)
             },
             "portfolio://projects/all" => await GetAllProjectsContent(uri),
             _ when uri.StartsWith("portfolio://projects/") => await GetProjectContent(uri),
@@ -378,7 +386,7 @@ public class McpService : IMcpService
         {
             Uri = uri,
             MimeType = "application/json",
-            Text = JsonSerializer.Serialize(projects, new JsonSerializerOptions { WriteIndented = true })
+            Text = JsonSerializer.Serialize(projects, Readable)
         };
     }
 
@@ -391,8 +399,7 @@ public class McpService : IMcpService
         
         var projects = await projectService.GetProjectsAsync();
 
-        var project = projects.FirstOrDefault(p =>
-            p.Title.ToLower().Replace(" ", "-").Replace("&", "and") == projectId);
+        var project = projects.FirstOrDefault(p => ResourceId(p) == projectId);
 
         if (project == null)
         {
@@ -408,7 +415,7 @@ public class McpService : IMcpService
         {
             Uri = uri,
             MimeType = "application/json",
-            Text = JsonSerializer.Serialize(project, new JsonSerializerOptions { WriteIndented = true })
+            Text = JsonSerializer.Serialize(project, Readable)
         };
     }
 
@@ -540,6 +547,20 @@ public class McpService : IMcpService
                 Message = arguments.GetValueOrDefault("message")?.ToString() ?? ""
             };
 
+            var missing = new[] { ("name", contactRequest.Name), ("email", contactRequest.Email), ("subject", contactRequest.Subject), ("message", contactRequest.Message) }
+                .Where(f => string.IsNullOrWhiteSpace(f.Item2)).Select(f => f.Item1).ToList();
+            if (missing.Count > 0)
+                return ContactError($"Missing: {string.Join(", ", missing)}. Ask for these, then call submit_contact again.");
+            if (!new EmailAddressAttribute().IsValid(contactRequest.Email))
+                return ContactError("That email address doesn't look right. Ask for it again.");
+
+            var visitor = _http.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+            if (!_contactLimiter.TryTake(visitor))
+            {
+                _logger.LogWarning("MCP contact limit reached for {Visitor}", visitor);
+                return ContactError("Too many messages in the last hour. Please try again later, or use the contact form at https://mkkai.dev/#contact.");
+            }
+
             using var scope = _scopeFactory.CreateScope();
             var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
             var success = await emailService.SendContactEmailAsync(contactRequest);
@@ -552,8 +573,8 @@ public class McpService : IMcpService
                     {
                         Type = "text",
                         Text = success
-                            ? "Contact message sent successfully! Muhammad will respond within 24-48 hours."
-                            : "Failed to send contact message. Please try again or email directly at contact@mkkai.dev"
+                            ? "Message sent. Muhammad will reply by email."
+                            : "The message couldn't be sent just now. Please try the contact form at https://mkkai.dev/#contact or email contact@mkkai.dev."
                     }
                 },
                 IsError = !success
@@ -572,6 +593,12 @@ public class McpService : IMcpService
             };
         }
     }
+
+    private static McpToolResult ContactError(string text) => new()
+    {
+        Content = new List<McpContent> { new McpContent { Type = "text", Text = text } },
+        IsError = true
+    };
 
     private async Task<McpToolResult> HandleSearchProjects(Dictionary<string, object>? arguments)
     {
@@ -608,7 +635,7 @@ public class McpService : IMcpService
         }
 
         var resultText = projects.Any()
-            ? JsonSerializer.Serialize(projects, new JsonSerializerOptions { WriteIndented = true })
+            ? JsonSerializer.Serialize(projects, Readable)
             : "No projects found matching the search criteria.";
 
         return new McpToolResult
