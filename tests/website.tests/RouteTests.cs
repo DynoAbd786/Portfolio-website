@@ -36,6 +36,14 @@ public class RouteTests : IClassFixture<SiteFactory>
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
+    [Theory]
+    [MemberData(nameof(AllPageRoutes))]
+    public async Task Page_has_no_em_dashes(string path)
+    {
+        var doc = await Html.GetAsync(_client, path);
+        Assert.DoesNotContain("\u2014", doc.Body!.TextContent);
+    }
+
     [Fact]
     public async Task Removed_taskflow_page_redirects_to_all_projects()
     {

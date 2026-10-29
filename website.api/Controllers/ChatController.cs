@@ -9,8 +9,7 @@ namespace website.api.Controllers;
 public class ChatController : ControllerBase
 {
     private readonly ILogger<ChatController> _logger;
-    private readonly GroqAgentService _groqService;
-    private readonly GeminiAgentService _geminiService;
+    private readonly DeepSeekAgentService _assistant;
     private readonly IDiscordService _discordService;
     private readonly IAccessStateService _accessState;
     private readonly OllamaService _ollamaService;
@@ -18,16 +17,14 @@ public class ChatController : ControllerBase
 
     public ChatController(
         ILogger<ChatController> logger, 
-        GroqAgentService groqService, 
-        GeminiAgentService geminiService,
+        DeepSeekAgentService assistant,
         IDiscordService discordService,
         IAccessStateService accessState,
         OllamaService ollamaService,
         IConfiguration configuration)
     {
         _logger = logger;
-        _groqService = groqService;
-        _geminiService = geminiService;
+        _assistant = assistant;
         _discordService = discordService;
         _accessState = accessState;
         _ollamaService = ollamaService;
@@ -101,45 +98,14 @@ public class ChatController : ControllerBase
                 return BadRequest(new { message = "Message is required" });
             }
 
-            // Route based on provider
-            var provider = request.Provider?.ToLower() ?? "gemini";
-
-            // If local model, check access request ID
-            if (provider == "ollama")
-            {
-                Request.Headers.TryGetValue("X-Access-RequestId", out var requestId);
-                if (string.IsNullOrEmpty(requestId) || _accessState.GetStatus(requestId!) != AccessStatus.Ready)
-                {
-                    return Unauthorized(new { message = "Ollama access required." });
-                }
-                
-                // Refresh session on every message
-                _accessState.RefreshAccess(requestId!);
-            }
-
-            // Limit history to last 20 messages
+            // One model for everyone (DeepSeek Flash); any provider or model a client sends is ignored
             var history = request.History ?? new List<MessageHistoryItem>();
             if (history.Count > 20)
             {
                 history = history.TakeLast(20).ToList();
             }
 
-            string response;
-            if (provider == "groq")
-            {
-                var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama-3.3-70b-versatile";
-                response = await _groqService.ChatAsync(request.Message, history, model);
-            }
-            else if (provider == "ollama")
-            {
-                var model = !string.IsNullOrEmpty(request.Model) ? request.Model : "llama3.2";
-                response = await _ollamaService.ChatAsync(request.Message, history, model);
-            }
-            else
-            {
-                response = await _geminiService.ChatAsync(request.Message, history);
-            }
-            
+            var response = await _assistant.ChatAsync(request.Message, history);
             return Ok(new ChatResponse { Response = response });
         }
         catch (Exception ex)
@@ -154,8 +120,9 @@ public class ChatRequest
 {
     public string Message { get; set; } = "";
     public List<MessageHistoryItem>? History { get; set; }
-    public string? Provider { get; set; } = "gemini"; // "gemini" or "groq"
-    public string? Model { get; set; } = "gemini-3-flash";
+    // Older clients still send these; the assistant always uses DeepSeek Flash
+    public string? Provider { get; set; }
+    public string? Model { get; set; }
 }
 
 public class ChatResponse

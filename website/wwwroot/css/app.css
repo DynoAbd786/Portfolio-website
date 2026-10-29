@@ -18,66 +18,6 @@
     top: 0.5rem;
 }
 
-/* Custom NavLink styles */
-.nav-link {
-    position: relative;
-    padding-bottom: 0.5rem;
-    color: #d1d5db; /* text-gray-300 */
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: #ffffff; /* text-white */
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #22d3ee; /* cyan-400 */
-    transition: width 0.3s ease;
-}
-
-.nav-link.active::after,
-.nav-link:hover::after {
-    width: 100%;
-}
-
-/* Project Card Hover Effects */
-.project-card-container {
-    transition: all 0.3s ease;
-}
-
-.project-card {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-    will-change: transform, box-shadow;
-}
-
-.project-card-container:hover .project-card {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3), 0 0 20px rgba(6, 182, 212, 0.1);
-}
-
-/* Loading Spinner */
-.loader {
-    border: 5px solid #374151; /* border-gray-700 */
-    border-top: 5px solid #22d3ee; /* border-cyan-400 */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
 /* Chat panel placeholder: hidden as soon as the AI terminal renders next to it */
 .chat-loading:not(:only-child) {
     display: none;

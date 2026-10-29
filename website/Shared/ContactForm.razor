@@ -1,7 +1,8 @@
-@rendermode InteractiveWebAssembly
-@using Microsoft.AspNetCore.Components.Web
-@using System.Net.Http.Json
-@inject HttpClient Http
+@using website.Data
+@inject IContactSender Sender
+
+@* A plain server-side form (no WebAssembly): it posts, the server validates and emails it, and
+   enhanced navigation swaps in the result without a full page load *@
 
 <section id="contact" class="scroll-mt-20 py-14 sm:py-20">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -56,45 +57,43 @@
 
             <!-- Contact Form -->
             <div class="surface p-8 lg:col-span-3">
-                    <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">
+                    <EditForm Model="Model" FormName="contact" OnValidSubmit="HandleSubmit" Enhance>
                         <DataAnnotationsValidator />
-                        @* The form is prerendered as HTML; keep it disabled until it runs in the browser,
-                           so nothing typed is lost and nothing posts to the server early *@
-                        <fieldset disabled="@(!RendererInfo.IsInteractive)" class="space-y-6">
+                        <fieldset class="space-y-6">
 
                         <div>
                             <label for="name" class="mb-2 block text-sm font-semibold text-slate-200">Full Name *</label>
-                            <InputText @bind-Value="contactForm.Name" id="name"
+                            <InputText @bind-Value="Model!.Name" id="name"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your full name" />
-                            <ValidationMessage For="@(() => contactForm.Name)" class="text-red-400 text-sm mt-1" />
+                            <ValidationMessage For="@(() => Model!.Name)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
                             <label for="email" class="mb-2 block text-sm font-semibold text-slate-200">Email Address *</label>
-                            <InputText @bind-Value="contactForm.Email" id="email" type="email"
+                            <InputText @bind-Value="Model!.Email" id="email" type="email"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="your.email@example.com" />
-                            <ValidationMessage For="@(() => contactForm.Email)" class="text-red-400 text-sm mt-1" />
+                            <ValidationMessage For="@(() => Model!.Email)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
                             <label for="company" class="mb-2 block text-sm font-semibold text-slate-200">Company/Organization</label>
-                            <InputText @bind-Value="contactForm.Company" id="company"
+                            <InputText @bind-Value="Model!.Company" id="company"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your company or organization" />
                         </div>
 
                         <div>
                             <label for="role" class="mb-2 block text-sm font-semibold text-slate-200">Your Role/Position</label>
-                            <InputText @bind-Value="contactForm.Role" id="role"
+                            <InputText @bind-Value="Model!.Role" id="role"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="e.g., Software Engineer, Recruiter, CTO" />
                         </div>
 
                         <div>
                             <label for="subject" class="mb-2 block text-sm font-semibold text-slate-200">Subject *</label>
-                            <InputSelect @bind-Value="contactForm.Subject" id="subject"
+                            <InputSelect @bind-Value="Model!.Subject" id="subject"
                                         class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25">
                                 <option value="">Select a subject</option>
                                 <option value="Job Opportunity">Job Opportunity</option>
@@ -104,42 +103,28 @@
                                 <option value="General Inquiry">General Inquiry</option>
                                 <option value="Other">Other</option>
                             </InputSelect>
-                            <ValidationMessage For="@(() => contactForm.Subject)" class="text-red-400 text-sm mt-1" />
+                            <ValidationMessage For="@(() => Model!.Subject)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
                             <label for="message" class="mb-2 block text-sm font-semibold text-slate-200">Message *</label>
-                            <InputTextArea @bind-Value="contactForm.Message" id="message" rows="5"
+                            <InputTextArea @bind-Value="Model!.Message" id="message" rows="5"
                                           class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25 resize-none"
                                           placeholder="Tell me about your project, opportunity, or how I can help..." />
-                            <ValidationMessage For="@(() => contactForm.Message)" class="text-red-400 text-sm mt-1" />
+                            <ValidationMessage For="@(() => Model!.Message)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div class="flex items-center">
-                            <InputCheckbox @bind-Value="contactForm.AgreeToContact" id="agree" class="mr-3 rounded" />
+                            <InputCheckbox @bind-Value="Model!.AgreeToContact" id="agree" class="mr-3 rounded" />
                             <label for="agree" class="text-sm text-slate-400">
                                 I agree to be contacted regarding this inquiry *
                             </label>
                         </div>
-                        <ValidationMessage For="@(() => contactForm.AgreeToContact)" class="text-red-400 text-sm" />
+                        <ValidationMessage For="@(() => Model!.AgreeToContact)" class="text-red-400 text-sm" />
 
-                        <button type="submit" disabled="@isSubmitting"
-                                class="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-50 disabled:translate-y-0">
-                            @if (!RendererInfo.IsInteractive)
-                            {
-                                <i class="fas fa-spinner fa-spin mr-2"></i>
-                                <span>Loading form...</span>
-                            }
-                            else if (isSubmitting)
-                            {
-                                <i class="fas fa-spinner fa-spin mr-2"></i>
-                                <span>Sending...</span>
-                            }
-                            else
-                            {
-                                <i class="fas fa-paper-plane mr-2"></i>
-                                <span>Send Message</span>
-                            }
+                        <button type="submit" class="btn-primary w-full justify-center">
+                            <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>
+                            <span>Send Message</span>
                         </button>
 
                         @if (!string.IsNullOrEmpty(submitMessage))
@@ -157,52 +142,26 @@
 </section>
 
 @code {
-    private ContactFormModel contactForm = new();
-    private bool isSubmitting = false;
+    [SupplyParameterFromForm(FormName = "contact")]
+    private ContactFormModel? Model { get; set; }
+
     private string submitMessage = "";
     private bool submitSuccess = false;
 
+    protected override void OnInitialized() => Model ??= new();
+
     private async Task HandleSubmit()
     {
-        isSubmitting = true;
-        submitMessage = "";
-        StateHasChanged();
-
-        try
+        var m = Model!;
+        submitSuccess = await Sender.SendAsync(new ContactMessage(m.Name, m.Email, m.Company, m.Role, m.Subject, m.Message));
+        if (submitSuccess)
         {
-            // Send email via API
-            var response = await Http.PostAsJsonAsync("api/contact", contactForm);
-
-            if (response.IsSuccessStatusCode)
-            {
-                submitMessage = "Thank you! Your message has been sent successfully. I'll get back to you soon.";
-                submitSuccess = true;
-                isSubmitting = false;
-                StateHasChanged();
-
-                // Reset form after successful submission
-                await Task.Delay(20000);
-                contactForm = new();
-                submitMessage = "";
-            }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
-                submitSuccess = false;
-                StateHasChanged();
-            }
+            submitMessage = "Thank you! Your message has been sent. I'll get back to you soon.";
+            Model = new();
         }
-        catch (Exception)
+        else
         {
             submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
-            submitSuccess = false;
-            StateHasChanged();
-        }
-        finally
-        {
-            isSubmitting = false;
-            StateHasChanged();
         }
     }
 

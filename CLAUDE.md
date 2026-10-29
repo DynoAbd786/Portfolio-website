@@ -16,9 +16,10 @@ Full-stack personal portfolio website built as a .NET 10 Blazor Web App: pages a
 
 ### Render Modes
 - **Static SSR (default)**: every page renders to plain HTML on the server; no WebAssembly needed to see content
-- **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): `ContactForm`, `MedicalSimulationProject` (image gallery), `HomeLabProject` (bridge status polling), and `AiTerminal` (in `MainLayout`, `prerender: false` because it reads localStorage)
+- **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): only `ImageGallery` (medical simulation and machine learning pages), `BridgeStatus` (home lab page, polls the bridge status) and `AiTerminal`. The .NET runtime (about 3 MB) loads only on pages with one of these, so keep pages static where possible (a test lists the pages allowed to start it)
 - Interactive components are also prerendered on the server, so don't call `HttpClient` or JS from `OnInitialized` in them; do it in `OnAfterRender(firstRender)` or event handlers
-- The layout is static: the mobile menu and the chat panel open/close via `wwwroot/js/site.js`; the chat panel sits in a `data-permanent` container so enhanced navigation keeps it open and running
+- The layout is static: the mobile menu and the chat panel open/close via `wwwroot/js/site.js`. The assistant (`AiTerminal`, `prerender: false` because it reads localStorage) lives on its own page, `/chat-panel` (`BareLayout`, noindex), which `mkChat` loads into an iframe the first time the panel opens; the panel is `data-permanent`, so the frame and conversation survive enhanced navigation
+- `ContactForm` is a static SSR form (`EditForm` with `FormName`, `Enhance`): it posts to the server, which emails through `website.Data.IContactSender` (`website.api/Services/EmailContactSender.cs`)
 
 ### Client-Server Communication
 - One origin in development and production: the site and API both run on `website.api`
@@ -67,7 +68,7 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
   - `GET /api/projects/categories/{category}` - Projects by category
 - **`ContactController`**: `/api/contact` - Email functionality via Postmark
   - `POST /api/contact` - Send contact form email
-- **`ChatController`**: `/api/chat/*` - AI assistant (Gemini, Groq, local Ollama via the bridge)
+- **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). The local-Ollama access endpoints (`request-access`, `status`, `callback`, `models`) remain but the chat no longer offers them
 - **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
   - `POST /api/mcp` - Main MCP endpoint for AI agents (Claude Desktop)
   - `GET /api/mcp` - Initialize endpoint
@@ -81,7 +82,7 @@ Registered in `website.api/Program.cs`:
 - **`IMcpService`**: JSON-RPC 2.0 protocol handler for MCP requests
 - **`IOAuthService`**: OAuth 2.0 authentication for MCP clients
 - **`website.Data.IProjectSource` / `website.Data.ProjectService`**: project data for server-rendered pages
-- Typed `HttpClient`s for the Gemini/Groq/Discord/Ollama services. `AddHttpClient` also registers the default transient `HttpClient` that prerendered interactive components resolve — don't register a scoped `HttpClient` (the singleton `DiscordService` would capture it)
+- Typed `HttpClient`s for the DeepSeek/Discord/Ollama services. `AddHttpClient` also registers the default transient `HttpClient` that prerendered interactive components resolve — don't register a scoped `HttpClient` (the singleton `DiscordService` would capture it)
 
 ### Middleware Pipeline
 Order matters (`website.api/Program.cs`):
@@ -104,9 +105,21 @@ Order matters (`website.api/Program.cs`):
 
 ## Frontend Architecture
 
+### Look
+Dark ink background, one cyan accent, Inter and JetBrains Mono. Colour tokens (`ink`, `ink-2`, `line`, `cy`, `lamp`) live in `website/tailwind.config.js`; shared classes (`mono-label`, `btn-primary`, `btn-ghost`, `chip`, `surface`, `grid-bg`, `reveal`) in `website/Styles/tailwind.css`. Use these rather than raw colours. `.reveal` fades content in on scroll, but only once the head script has added `reveal-ready` (so content stays visible without JavaScript).
+
+### Homepage
+- **`website/Pages/Index.razor`**: the workshop hero, proof strip, selected work, what I'm building, experience and the contact form
+- **`website/Data/HomeContent.cs`**: everything the homepage says that isn't project data (proof facts, selected work, products, experience, and the workshop's 11 hotspots). `WorkshopJson()` embeds the hotspots in the page for the 3D scene
+- **The workshop** (`website/wwwroot/js/workshop/`, three.js 0.160.0 served from `wwwroot/lib/three/`, mapped in the import map in `App.razor`):
+  - `workshop.js` — `mount(root, data)`: renderer, camera, frame loop, intro flight; `?debug=workshop` exposes `root.__workshop` (pins, forceFps, snapshot), `?still=1` renders one frame
+  - `room.js` (the room, desk, monitors, robot, bookcase…), `props.js` (stent, microscope cart, Azure cloud), `screens.js` (the Synergy and HireForge monitors), `hotspots.js` (clickable objects and camera poses), `ui.js` (hover tag, cards, tour), `post.js` (outline + bloom), `quality.js` (adaptive quality and the too-slow check), `kit.js` (shared materials and geometry)
+  - `window.mkWorkshop` in `site.js` mounts and disposes the scene across enhanced navigation (`#hero` is `data-permanent`). On no WebGL, a failed load or a device too slow for it (remembered for the session), the page keeps the still image with link pins; under 640px the pins become a link list
+  - The still image (`wwwroot/images/workshop/still.webp` and `@2x`) is rendered from the live scene: run the site, then `uv run --with playwright python tools/render-workshop-still.py http://127.0.0.1:5199`. It prints new `PinX`/`PinY` values for `HomeContent`; re-run it whenever the scene changes
+
 ### Pages & Components
-- **Project Pages**: Individual pages for each project (Academic, Professional, Personal) in `website/Pages/`
-- **Shared Components**: `ProjectCard.razor` for consistent project display
+- **Project Pages**: one page per project in `website/Pages/` (`*Project.razor`), all on the shared template (see below)
+- **`/projects`** (`Projects.razor`): one grid of `ProjectCard`s, filtered by plain links `?field=<slug>&category=<personal|professional|academic>`; unknown values are ignored
 - **Layout**: `MainLayout.razor` with responsive navigation; sets the default `<PageTitle>` (a page's own `<PageTitle>` wins)
 - **Document head**: `website.api/Components/App.razor` (meta tags, per-page canonical URL, CDN fonts/icons, stylesheets). `tailwind.css` is the last stylesheet (as the old CDN script injected it) so utilities override `app.css`, Font Awesome, KaTeX and highlight.js
 - **Not found**: `website/Pages/NotFound.razor` (`/not-found`)
@@ -114,8 +127,10 @@ Order matters (`website.api/Program.cs`):
 ### Project Data Flow
 1. A page injects `website.Data.ProjectService`
 2. On the server, `ApiProjectSource` maps `IProjectService` data to `website.Data.Project`
-3. Projects categorized by `ProjectCategory` enum (Personal, Professional, Academic)
-4. Pages display projects in category-grouped sections
+3. Each project has a `ProjectCategory` (Personal, Professional, Academic), one or more `ProjectField`s (AI & ML, computer vision & graphics, scientific & biomedical, cloud & distributed, systems & infrastructure, product & business; labels and URL slugs in `website/Data/ProjectFields.cs`) and a one-sentence `Result` shown under its title
+
+### Project Page Template
+Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project · Year 2">` wrapping `<ProjectSection Title="..." Subtitle="..." Icon="fas fa-...">` panels. `ProjectPage` renders the breadcrumb, title, result and chips from the project data, plus the next-project link, so a page only writes its sections. Inside sections use the shared classes (`chip`, `surface`, `text-slate-*`, `border-line`, `text-cy`), not rainbow colours. Interactive bits are their own components (`ImageGallery`, `BridgeStatus`), never a page-level render mode.
 
 ## Document Management System
 
@@ -123,12 +138,6 @@ Order matters (`website.api/Program.cs`):
 - **PowerShell Scripts**: Convert Word documents to PDF for academic projects
 - **Storage Location**: `website/wwwroot/docs/` for downloadable documents
 - **Naming Convention**: Descriptive names (e.g., `medical-ai-research-proposal.pdf`)
-
-### Academic Project Structure
-Each academic project follows standardized format:
-- **Typography**: Consistent heading sizes (`text-6xl`, `text-2xl`, `text-xl`)
-- **Layout**: Breadcrumbs, header section, hero visual, content sections, downloads
-- **Styling**: Tailwind CSS with dark theme and colored accents
 
 ## Critical Configuration
 
@@ -146,11 +155,22 @@ POSTMARK_SERVER_TOKEN=your_token_here
 
 ## Common Development Tasks
 
-### Adding New Academic Projects
-1. Add project data to `website.api/Services/ProjectService.cs`
-2. Create individual project page in `website/Pages/`
-3. Convert academic documents to PDF using PowerShell scripts
-4. Follow established typography and layout patterns
+### Adding a New Project
+1. Add project data to `website.api/Services/ProjectService.cs`, including `Fields` and a one-sentence `Result`
+2. Create its page in `website/Pages/` on the template: `<ProjectPage Url=...>` with `<ProjectSection>` panels
+3. Add its route to `Routes` in `tests/website.tests/ProjectPageTemplateTests.cs` (a test fails until you do)
+4. Convert any documents to PDF into `website/wwwroot/docs/`
+
+### Tests
+Two suites, both from the repository root (the .NET 10 SDK must be on `PATH`):
+```bash
+# Host tests: xUnit + WebApplicationFactory + AngleSharp, the site in memory (routes, content, data, templates)
+dotnet test tests/website.tests
+
+# Browser tests: Playwright in Chrome against the real site on port 5199 (the workshop, fallbacks, interactive islands)
+uv run -q --with pytest --with pytest-playwright pytest tests/browser -q
+```
+See `tests/browser/README.md`. The browser fixture refuses to start if port 5199 is already taken.
 
 ### Testing API Endpoints
 ```bash
@@ -159,11 +179,6 @@ cd website.api && dotnet run
 curl http://localhost:5154/api/projects
 curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
 ```
-
-### Project Categories
-- **Personal**: Independent development projects (Synergy, this website)
-- **Professional**: Internship and work-related projects (Medical Simulation, pNanoLocz)
-- **Academic**: University coursework (25+ individual project pages in `website/Pages/`)
 
 ## Model Context Protocol (MCP) Integration
 

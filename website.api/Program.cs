@@ -40,10 +40,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddSingleton<IMcpService, McpService>();
 builder.Services.AddScoped<IOAuthService, OAuthService>();
-builder.Services.AddHttpClient<GeminiAgentService>();
-builder.Services.AddScoped<GeminiAgentService>();
-builder.Services.AddHttpClient<GroqAgentService>();
-builder.Services.AddScoped<GroqAgentService>();
+builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it
 builder.Services.AddHttpClient<DiscordService>();
 builder.Services.AddSingleton<IDiscordService, DiscordService>();
 builder.Services.AddHttpClient<OllamaService>();
@@ -57,6 +54,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 builder.Services.AddScoped<website.Data.IProjectSource, ApiProjectSource>();
+builder.Services.AddScoped<website.Data.IContactSender, EmailContactSender>();
 builder.Services.AddScoped<website.Data.ProjectService>();
 // Interactive components that inject HttpClient are prerendered here too. They only call it once
 // running in the browser, so the default HttpClient that AddHttpClient registers is enough.

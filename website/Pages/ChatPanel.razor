@@ -1,0 +1,17 @@
+@page "/chat-panel"
+@layout BareLayout
+
+@* The AI assistant on its own, loaded into the chat panel's frame on demand (see mkChat in site.js) *@
+<PageTitle>AI assistant</PageTitle>
+<HeadContent>
+    <meta name="robots" content="noindex" />
+</HeadContent>
+
+<div class="relative h-[100svh] overflow-hidden bg-ink">
+    @* Shown until AiTerminal renders beside it (hidden by .chat-loading:not(:only-child) in app.css) *@
+    <div class="chat-loading absolute inset-0 flex items-center justify-center text-sm text-slate-400">
+        <i class="fas fa-spinner fa-spin mr-2" aria-hidden="true"></i>Starting assistant...
+    </div>
+    @* Interactive in the browser; not prerendered because it lives in localStorage *@
+    <AiTerminal @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
+</div>

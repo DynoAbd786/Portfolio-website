@@ -7,61 +7,12 @@
     <div class="chat-header">
         <div class="header-info">
             <div class="avatar-circle">
-                @if (selectedProvider == "groq")
-                {
-                    <i class="fas fa-bolt"></i>
-                }
-                else
-                {
-                    <i class="fas fa-robot"></i>
-                }
+                <i class="fas fa-robot"></i>
             </div>
             <div class="header-text">
                 <h3>AI Assistant</h3>
                 <div class="model-selector">
-                    <select @onchange="OnProviderChanged" class="provider-select">
-                        <option value="gemini" selected="@(selectedProvider == "gemini")">Gemini</option>
-                        <option value="groq" selected="@(selectedProvider == "groq")">Groq</option>
-                        <option value="ollama" selected="@(selectedProvider == "ollama")">Ollama (Local)</option>
-                    </select>
-                    <span class="divider">/</span>
-                    <select @bind="selectedModel" class="model-select">
-                        @if (selectedProvider == "gemini")
-                        {
-                            <option value="gemini-3-flash">Gemini 3 Flash</option>
-                        }
-                        else if (selectedProvider == "ollama")
-                        {
-                            if (isLoadingModels)
-                            {
-                                <option>Loading models...</option>
-                            }
-                            else if (ollamaModels.Any())
-                            {
-                                foreach (var model in ollamaModels)
-                                {
-                                    <option value="@model">@model</option>
-                                }
-                            }
-                            else
-                            {
-                                <option disabled>No models found</option>
-                            }
-                        }
-                        else
-                        {
-                            <option value="llama-3.3-70b-versatile">Llama 3.3 70B</option>
-                            <option value="llama-3.1-8b-instant">Llama 3.1 8B</option>
-                            <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout 17B</option>
-                            <option value="meta-llama/llama-4-maverick-17b-128e-instruct">Llama 4 Maverick 17B</option>
-                            <option value="qwen/qwen3-32b">Qwen 3 32B</option>
-                            <option value="openai/gpt-oss-120b">GPT-OSS 120B</option>
-                            <option value="openai/gpt-oss-20b">GPT-OSS 20B</option>
-                            <option value="moonshotai/kimi-k2-instruct">Kimi K2 Instruct</option>
-                            <option value="groq/compound">Groq Compound</option>
-                            <option value="allam-2-7b">Allam 2 7B</option>
-                        }
-                    </select>
+                    <span class="model-name">DeepSeek Flash</span>
                 </div>
             </div>
             <button class="info-btn" @onclick="() => historySidebarOpen = !historySidebarOpen" title="Chat History" style="margin-left: auto; margin-right: 8px;">
@@ -97,7 +48,7 @@
                             <div class="item-icon"><i class="fas fa-comment-alt"></i></div>
                             <div class="item-info">
                                 <div class="item-title">@session.Title</div>
-                                <div class="item-meta">@session.LastUpdated.ToString("MMM dd, HH:mm") • @session.Provider</div>
+                                <div class="item-meta">@session.LastUpdated.ToString("MMM dd, HH:mm")</div>
                             </div>
                             <button class="delete-session-btn" @onclick:stopPropagation="true" @onclick="() => DeleteSession(session.Id)">
                                 <i class="fas fa-trash-alt"></i>
@@ -119,86 +70,21 @@
         {
             <div class="info-panel">
                 <h4>About this Assistant</h4>
-                <p>This AI is powered by advanced LLMs (Gemini, Llama, Qwen) to help you explore my portfolio.</p>
+                <p>This assistant runs on DeepSeek Flash and answers questions about my work.</p>
                 
                 <h5>Capabilities:</h5>
                 <ul>
                     <li>Search projects by skill or detailed query (RAG).</li>
                     <li>Answer questions about my experience & skills.</li>
-                    <li>Connect you to local models running on my home PC (Ollama).</li>
                 </ul>
 
                 <h5>Limitations:</h5>
                 <ul>
                     <li><strong>Context Limit:</strong> Standard token limits apply.</li>
                     <li><strong>Accuracy:</strong> May occasionally hallucinate details. Verify important info.</li>
-                    <li><strong>Rate Limits:</strong> Public API tiers are used for cloud models.</li>
                 </ul>
                 
                 <button class="close-info-btn" @onclick="ToggleInfo">Got it</button>
-            </div>
-        }
-        else if (isWaitingForApproval)
-        {
-            <div class="access-success">
-                <div class="loading-spinner"></div>
-                <h3>Waiting for Approval...</h3>
-                <p>Muhammad has been notified. Please wait while he reviews your request.</p>
-                <p class="status-note"><i class="fas fa-sync fa-spin"></i> Checking status...</p>
-                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; isWaitingForApproval = false; accessRequestSent = false; showAccessForm = false; StopPolling(); StateHasChanged(); }'>
-                    Cancel & Return to Gemini
-                </button>
-            </div>
-        }
-        else if (accessRequestSent)
-        {
-            <div class="access-success">
-                <div class="success-icon"><i class="fas fa-paper-plane"></i></div>
-                <h3>Request Submitted!</h3>
-                <p>Muhammad has been notified via Discord. You can keep chatting with the <strong>Gemini Assistant</strong> while you wait.</p>
-                <button class="back-btn" @onclick='() => { selectedProvider = "gemini"; accessRequestSent = false; StateHasChanged(); }'>
-                    <i class="fas fa-comment"></i> Continue Chatting
-                </button>
-            </div>
-        }
-        else if (showAccessForm)
-        {
-            <div class="access-form">
-                <h3><i class="fas fa-server"></i> Request Ollama Access</h3>
-                <p class="form-desc">This service runs locally on Muhammad's PC. Please request access to use it.</p>
-                
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" @bind="accessRequest.Name" placeholder="Your Name" />
-                </div>
-                
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" @bind="accessRequest.Email" placeholder="your@email.com" />
-                </div>
-
-                <div class="form-group">
-                    <label>Reason (Optional)</label>
-                    <textarea @bind="accessRequest.Reason" placeholder="Why do you need local access?"></textarea>
-                </div>
-
-                @if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-circle"></i> @errorMessage
-                    </div>
-                }
-
-                <button class="submit-btn" @disabled="isSendingRequest" @onclick="SubmitAccessRequest">
-                    @if (isSendingRequest)
-                    {
-                        <span><i class="fas fa-spinner fa-spin"></i> Sending...</span>
-                    }
-                    else
-                    {
-                        <span><i class="fas fa-paper-plane"></i> Request Access</span>
-                    }
-                </button>
             </div>
         }
         else
@@ -209,14 +95,7 @@
                 @if (message.Role != "user")
                 {
                     <div class="message-avatar">
-                        @if (selectedProvider == "groq")
-                        {
-                            <i class="fas fa-bolt"></i>
-                        }
-                        else
-                        {
-                            <i class="fas fa-robot"></i>
-                        }
+                        <i class="fas fa-robot"></i>
                     </div>
                 }
                 <div class="message-content">
@@ -243,14 +122,7 @@
         {
             <div class="message-wrapper ai">
                 <div class="message-avatar">
-                    @if (selectedProvider == "groq")
-                    {
-                        <i class="fas fa-bolt"></i>
-                    }
-                    else
-                    {
-                        <i class="fas fa-robot"></i>
-                    }
+                    <i class="fas fa-robot"></i>
                 </div>
                 <div class="message-content typing">
                     <div class="typing-dot"></div>
@@ -272,15 +144,14 @@
             </div>
         }
         
-        <div class="input-area @(selectedProvider == "ollama" && !hasAccess ? "disabled" : "")">
+        <div class="input-area">
             <input @ref="inputElement" 
                    type="text" 
-                   placeholder="@(selectedProvider == "ollama" && !hasAccess ? "Request access to use Ollama..." : "Ask me anything about the portfolio...")" 
+                   placeholder="Ask me anything about the portfolio..." 
                    @bind="currentInput" 
                    @bind:event="oninput" 
-                   @onkeydown="HandleKeyDown"
-                   disabled="@(selectedProvider == "ollama" && !hasAccess)" />
-            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping || (selectedProvider == "ollama" && !hasAccess))">
+                   @onkeydown="HandleKeyDown" />
+            <button class="send-btn" @onclick="SendMessage" disabled="@(string.IsNullOrWhiteSpace(currentInput) || isTyping)">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
@@ -349,29 +220,7 @@
         color: #94a3b8;
     }
 
-    .provider-select, .model-select {
-        background: transparent;
-        border: none;
-        color: #94a3b8;
-        font-size: 0.75rem;
-        cursor: pointer;
-        outline: none;
-        padding: 0;
-        font-family: inherit;
-    }
 
-    .provider-select:hover, .model-select:hover {
-        color: #cbd5e1;
-    }
-
-    .provider-select option, .model-select option {
-        background: #1e293b;
-        color: #f8fafc;
-    }
-
-    .divider {
-        color: #64748b;
-    }
 
     /* Body */
     .chat-body {
@@ -890,11 +739,6 @@
         .UseAdvancedExtensions()
         .Build();
     
-    // Model Selection State
-    private string selectedProvider = "gemini";
-    private string selectedModel = "gemini-3-flash";
-    private List<string> ollamaModels = new();
-    private bool isLoadingModels = false;
     
     // Multi-session History
     private List<ChatSession> sessions = new();
@@ -909,28 +753,10 @@
             // Try to restore session and history
             try 
             {
-                var savedProvider = await JS.InvokeAsync<string>("localStorage.getItem", "aiProvider");
-                if (!string.IsNullOrEmpty(savedProvider)) selectedProvider = savedProvider;
-
-                var savedModel = await JS.InvokeAsync<string>("localStorage.getItem", "aiModel");
-                if (!string.IsNullOrEmpty(savedModel)) selectedModel = savedModel;
-
                 var savedHistory = await JS.InvokeAsync<string>("localStorage.getItem", "aiChatHistory");
                 if (!string.IsNullOrEmpty(savedHistory))
                 {
                     history = JsonSerializer.Deserialize<List<MessageItem>>(savedHistory) ?? new();
-                }
-
-                var savedId = await JS.InvokeAsync<string>("localStorage.getItem", "ollamaAccessRequestId");
-                if (!string.IsNullOrEmpty(savedId))
-                {
-                    currentRequestId = savedId;
-                    await CheckStatus(true);
-                }
-
-                if (selectedProvider == "ollama")
-                {
-                    await FetchOllamaModelsAsync();
                 }
 
                 // Load Sessions
@@ -949,8 +775,6 @@
                         currentSessionId = activeSession.Id;
                         currentSessionTitle = activeSession.Title;
                         history = activeSession.Messages;
-                        selectedProvider = activeSession.Provider;
-                        selectedModel = activeSession.Model;
                     }
                 }
             }
@@ -983,8 +807,6 @@
 
             currentSession.Title = currentSessionTitle;
             currentSession.Messages = history;
-            currentSession.Provider = selectedProvider;
-            currentSession.Model = selectedModel;
             currentSession.LastUpdated = DateTime.Now;
 
             // Limit to last 50 sessions for performance
@@ -992,10 +814,7 @@
 
             await JS.InvokeVoidAsync("localStorage.setItem", "aiSessions", JsonSerializer.Serialize(sessions));
             await JS.InvokeVoidAsync("localStorage.setItem", "currentSessionId", currentSessionId);
-            
-            // Legacy fallbacks for compatibility
-            await JS.InvokeVoidAsync("localStorage.setItem", "aiProvider", selectedProvider);
-            await JS.InvokeVoidAsync("localStorage.setItem", "aiModel", selectedModel);
+
         }
         catch (Exception ex) { Console.WriteLine("Save state error: " + ex.Message); }
     }
@@ -1008,15 +827,12 @@
         currentSessionId = session.Id;
         currentSessionTitle = session.Title;
         history = session.Messages;
-        selectedProvider = session.Provider;
-        selectedModel = session.Model;
         
         historySidebarOpen = false;
         StateHasChanged();
         await ScrollToBottom();
         await SaveStateAsync();
-        
-        if (selectedProvider == "ollama") await FetchOllamaModelsAsync();
+
     }
 
     private async Task DeleteSession(string sessionId)
@@ -1045,212 +861,6 @@
     }
 
     // Access Request State
-    private bool showAccessForm = false;
-    private bool accessRequestSent = false;
-    private bool isWaitingForApproval = false;
-    private bool hasAccess = false; // Persistent flag for the session
-    private string? currentRequestId = null;
-    private AccessRequestModel accessRequest = new();
-    private bool isSendingRequest = false;
-    private string? errorMessage = null;
-    private System.Threading.Timer? statusTimer;
-
-    private class AccessRequestModel
-    {
-        public string Name { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string Reason { get; set; } = "";
-    }
-
-    private async Task OnProviderChanged(ChangeEventArgs e)
-    {
-        selectedProvider = e.Value?.ToString() ?? "gemini";
-        errorMessage = null;
-        
-        if (selectedProvider == "ollama")
-        {
-            if (hasAccess)
-            {
-                showAccessForm = false;
-                accessRequestSent = false;
-                isWaitingForApproval = false;
-            }
-            else if (isWaitingForApproval)
-            {
-                showAccessForm = false;
-                accessRequestSent = true;
-                // isWaitingForApproval remains true
-            }
-            else
-            {
-                showAccessForm = true;
-                accessRequestSent = false;
-                isWaitingForApproval = false;
-            }
-            
-            // Fetch models dynamically
-            await FetchOllamaModelsAsync();
-        }
-        else if (selectedProvider == "groq")
-        {
-            showAccessForm = false;
-            accessRequestSent = false;
-            isWaitingForApproval = false;
-            selectedModel = "llama-3.3-70b-versatile";
-            StopPolling();
-        }
-        else
-        {
-            showAccessForm = false;
-            accessRequestSent = false;
-            isWaitingForApproval = false;
-            selectedModel = "gemini-3-flash";
-            StopPolling();
-        }
-        await SaveStateAsync();
-        StateHasChanged();
-    }
-
-    private async Task FetchOllamaModelsAsync()
-    {
-        isLoadingModels = true;
-        StateHasChanged();
-        try 
-        {
-            var response = await Http.GetFromJsonAsync<JsonElement>("api/chat/models?provider=ollama");
-            if (response.TryGetProperty("models", out var modelsElement) && modelsElement.ValueKind == JsonValueKind.Array)
-            {
-                var models = modelsElement.EnumerateArray()
-                    .Select(m => m.GetString())
-                    .Where(s => !string.IsNullOrEmpty(s))
-                    .ToList()!;
-                
-                if (models.Any())
-                {
-                    ollamaModels = models;
-                    // Preserve selected model if it exists in the list, otherwise take first
-                    if (!ollamaModels.Contains(selectedModel))
-                    {
-                        selectedModel = ollamaModels.First();
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to load models: {ex.Message}");
-        }
-        finally
-        {
-            isLoadingModels = false;
-            StateHasChanged();
-        }
-    }
-
-    private async Task SubmitAccessRequest()
-    {
-        if (string.IsNullOrWhiteSpace(accessRequest.Name) || string.IsNullOrWhiteSpace(accessRequest.Email)) return;
-
-        errorMessage = null;
-        isSendingRequest = true;
-        StateHasChanged();
-
-        try
-        {
-            var response = await Http.PostAsJsonAsync("api/chat/request-access", accessRequest);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<JsonElement>();
-                if (result.TryGetProperty("requestId", out var requestIdElement))
-                {
-                    currentRequestId = requestIdElement.GetString();
-                    accessRequestSent = true;
-                    showAccessForm = false;
-                    isWaitingForApproval = true;
-                    StartPolling();
-                }
-                else 
-                {
-                    errorMessage = "Server returned success but no Request ID.";
-                }
-            }
-            else
-            {
-                errorMessage = $"Request failed. Status: {response.StatusCode}";
-                Console.WriteLine("Failed to send request");
-            }
-        }
-        catch (Exception ex)
-        {
-            errorMessage = $"Connection Error: {ex.Message}";
-            Console.WriteLine(ex);
-        }
-        finally
-        {
-            isSendingRequest = false;
-            StateHasChanged();
-        }
-    }
-
-    private void StartPolling()
-    {
-        if (statusTimer != null) return;
-        statusTimer = new System.Threading.Timer(async _ => await CheckStatus(false), null, 0, 3000);
-    }
-
-    private void StopPolling()
-    {
-        statusTimer?.Dispose();
-        statusTimer = null;
-    }
-
-    private async Task CheckStatus(bool silent = false)
-    {
-        if (string.IsNullOrEmpty(currentRequestId)) return;
-
-        try
-        {
-            var response = await Http.GetFromJsonAsync<JsonElement>($"api/chat/status/{currentRequestId}");
-            if (response.TryGetProperty("status", out var statusElement))
-            {
-                var status = statusElement.GetString();
-                if (status == "Ready")
-                {
-                    await InvokeAsync(async () =>
-                    {
-                        StopPolling();
-                        isWaitingForApproval = false;
-                        accessRequestSent = false;
-                        showAccessForm = false; 
-                        hasAccess = true;
-                        
-                        // Persist to localStorage
-                        try { await JS.InvokeVoidAsync("localStorage.setItem", "ollamaAccessRequestId", currentRequestId); } catch {}
-
-                        if (!silent)
-                        {
-                            history.Add(new MessageItem { Role = "model", Content = "🎉 Access Restored! You are connected to the local Ollama instance. Your session will remain active for 30 minutes of inactivity." });
-                        }
-                        StateHasChanged();
-                    });
-                }
-                else if (status == "Pending" || status == "Approved")
-                {
-                    if (silent) StartPolling();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Polling error: {ex.Message}");
-        }
-    }
-
-    public void Dispose()
-    {
-        StopPolling();
-    }
-
     private async Task ScrollToBottom()
     {
         try
@@ -1299,18 +909,12 @@
             var payload = new 
             { 
                 message = userMsg, 
-                history = chatHistory,
-                provider = selectedProvider,
-                model = selectedModel
+                history = chatHistory
             };
 
             using var httpRequest = new HttpRequestMessage(HttpMethod.Post, "api/chat");
             httpRequest.Content = JsonContent.Create(payload);
-            
-            if (selectedProvider == "ollama" && !string.IsNullOrEmpty(currentRequestId))
-            {
-                httpRequest.Headers.Add("X-Access-RequestId", currentRequestId);
-            }
+
 
             var response = await Http.SendAsync(httpRequest);
             
@@ -1329,14 +933,6 @@
                 }
 
                 await SaveStateAsync();
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized && selectedProvider == "ollama")
-            {
-                hasAccess = false;
-                showAccessForm = true;
-                errorMessage = "Your session has expired. Please request access again.";
-                history.Add(new MessageItem { Role = "model", Content = "🔒 **Session Expired.** Please re-request access to continue using Ollama." });
-                try { await JS.InvokeVoidAsync("localStorage.removeItem", "ollamaAccessRequestId"); } catch {}
             }
             else
             {

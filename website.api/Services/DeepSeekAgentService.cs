@@ -6,38 +6,42 @@ using website.api.Models;
 
 namespace website.api.Services;
 
-public class GroqAgentService
+// The portfolio assistant: one model, DeepSeek Flash, through DeepSeek's OpenAI-compatible API
+public class DeepSeekAgentService
 {
     private readonly HttpClient _httpClient;
     private readonly IMcpService _mcpService;
     private readonly IProjectService _projectService;
     private readonly string _apiKey;
-    private readonly ILogger<GroqAgentService> _logger;
+    private readonly ILogger<DeepSeekAgentService> _logger;
     
-    private const string BaseUrl = "https://api.groq.com/openai/v1/chat/completions";
+    private const string BaseUrl = "https://api.deepseek.com/chat/completions";
+    public const string Model = "deepseek-flash";
 
-    public GroqAgentService(
+    public DeepSeekAgentService(
         HttpClient httpClient, 
         IMcpService mcpService, 
         IProjectService projectService,
         IConfiguration config,
-        ILogger<GroqAgentService> logger)
+        ILogger<DeepSeekAgentService> logger)
     {
         _httpClient = httpClient;
         _mcpService = mcpService;
         _projectService = projectService;
-        _apiKey = config["Groq:ApiKey"] ?? ""; // Allow empty, check at runtime
+        _apiKey = config["DeepSeek:ApiKey"] ?? ""; // checked per request, so the site runs without it
         _logger = logger;
     }
 
-    public async Task<string> ChatAsync(string userMessage, List<MessageHistoryItem> history, string model = "llama-3.3-70b-versatile")
+    private const string Unavailable = "The assistant isn't available right now. You can email Muhammad at Abdua786@outlook.com and he'll get back to you.";
+
+    public async Task<string> ChatAsync(string userMessage, List<MessageHistoryItem> history)
     {
         if (string.IsNullOrEmpty(_apiKey))
         {
-            return "⚠️ **Configuration Missing**: The Groq API Key is not set in the server configuration. Please ask Muhammad to add it to the `.env` file.";
+            return Unavailable;
         }
 
-        _logger.LogInformation("Starting chat with Groq ({Model}). User message: {Message}", model, userMessage);
+        _logger.LogInformation("Starting chat with {Model}", Model);
 
         // 1. Prepare Tools (OpenAI Format)
         var tools = new object[]
@@ -115,7 +119,7 @@ public class GroqAgentService
         {
             var requestBody = new
             {
-                model = model,
+                model = Model,
                 messages = messages,
                 tools = tools,
                 tool_choice = "auto"
@@ -131,19 +135,10 @@ public class GroqAgentService
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Groq API Error: {StatusCode} - {Error}", response.StatusCode, error);
-                
-                if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-                {
-                    return "🚫 **Groq Rate Limit Reached**: Please switch back to Gemini or try another model!";
-                }
-                
-                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                {
-                     return $"⚠️ **Model Not Found**: The model `{model}` might not be available or the API key is invalid. Please check your settings.";
-                }
-
-                return $"I encountered an error with the Groq brain ({response.StatusCode}). Check logs for details.";
+                _logger.LogError("DeepSeek API error: {StatusCode} - {Error}", response.StatusCode, error);
+                return response.StatusCode == System.Net.HttpStatusCode.TooManyRequests
+                    ? "The assistant is busy right now. Please try again in a minute."
+                    : Unavailable;
             }
 
             var resultModel = await response.Content.ReadFromJsonAsync<OpenAiChatResponse>();
@@ -162,7 +157,7 @@ public class GroqAgentService
 
                 foreach (var toolCall in message.ToolCalls)
                 {
-                    _logger.LogInformation("Groq requested tool: {ToolName}", toolCall.Function.Name);
+                    _logger.LogInformation("DeepSeek requested tool: {ToolName}", toolCall.Function.Name);
 
                     // Execute via MCP Service
                     var mcpRequest = new McpRequest
@@ -205,7 +200,7 @@ public class GroqAgentService
     }
 }
 
-// Helper Models for OpenAI/Groq API
+// OpenAI-format response models (DeepSeek's API uses the same shape)
 public class OpenAiChatResponse
 {
     [JsonPropertyName("choices")]
