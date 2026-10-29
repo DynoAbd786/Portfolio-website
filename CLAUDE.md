@@ -11,12 +11,11 @@ Full-stack personal portfolio website built as a .NET 10 Blazor Web App: pages a
 ### Solution Structure
 - **`website.api/`** - The host: ASP.NET Core app that renders pages (`Components/App.razor`, `Components/Routes.razor`), serves static assets and the `/api/*` controllers
 - **`website/`** - Blazor WebAssembly client project (referenced by the host): all pages (`Pages/`), layout and shared components (`Shared/`), static assets (`wwwroot/`)
-- **`McpServer/`** - Standalone Model Context Protocol server (not actively used)
 - **Solution file**: `website.sln` manages all projects
 
 ### Render Modes
 - **Static SSR (default)**: every page renders to plain HTML on the server; no WebAssembly needed to see content
-- **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): only `ImageGallery` (medical simulation and machine learning pages), `BridgeStatus` (home lab page, polls the bridge status) and `AiTerminal`. The .NET runtime (about 3 MB) loads only on pages with one of these, so keep pages static where possible (a test lists the pages allowed to start it)
+- **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): only `ImageGallery` (medical simulation and machine learning pages) and `AiTerminal`. The .NET runtime (about 3 MB) loads only on pages with one of these, so keep pages static where possible (a test lists the pages allowed to start it)
 - Interactive components are also prerendered on the server, so don't call `HttpClient` or JS from `OnInitialized` in them; do it in `OnAfterRender(firstRender)` or event handlers
 - The layout is static: the mobile menu and the chat panel open/close via `wwwroot/js/site.js`. The assistant (`AiTerminal`, `prerender: false` because it reads localStorage) lives on its own page, `/chat-panel` (`BareLayout`, noindex), which `mkChat` loads into an iframe the first time the panel opens; the panel is `data-permanent`, so the frame and conversation survive enhanced navigation. The panel's header (`MainLayout`) is the assistant's only header: its past-chats and new-chat buttons reach into the frame through `mkChat.command` → `mkChatFrame` (site.js) → `AiTerminal.Command`
 - `ContactForm` is a static SSR form (`EditForm` with `FormName`, `Enhance`): it posts to the server, which emails through `website.Data.IContactSender` (`website.api/Services/EmailContactSender.cs`)
@@ -68,21 +67,16 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
   - `GET /api/projects/categories/{category}` - Projects by category
 - **`ContactController`**: `/api/contact` - Email functionality via Resend
   - `POST /api/contact` - Send contact form email
-- **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). Its system prompt (`AssistantContext`) is built from `HomeContent` (experience, products, stack, open to work) and every project, so it knows what the homepage shows; replies render through `ChatMarkdown`, which opens site links in the main window, not the chat frame. The local-Ollama access endpoints (`request-access`, `status`, `callback`, `models`) remain but the chat no longer offers them
-- **`McpController`**: `/api/mcp` - Model Context Protocol JSON-RPC 2.0 server
-  - `POST /api/mcp` - Main MCP endpoint for AI agents (Claude Desktop)
-  - `GET /api/mcp` - Initialize endpoint
-  - `GET|POST /api/mcp/sse`, `POST /api/mcp/message` - SSE transport
-  - `GET /api/mcp/status/bridge` - Local bridge status (used by the HomeLab page)
+- **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). Its system prompt (`AssistantContext`) is built from `HomeContent` (experience, products, stack, open to work) and every project, so it knows what the homepage shows; replies render through `ChatMarkdown`, which opens site links in the main window, not the chat frame.
+- **MCP server**: `/api/mcp`, not a controller: the official C# SDK (`ModelContextProtocol.AspNetCore`, `app.MapMcp`), see "Model Context Protocol" below
 
 ### Services (Dependency Injection)
 Registered in `website.api/Program.cs`:
 - **`IProjectService`**: Project data (single source of truth)
 - **`IEmailService`**: Email sending via Resend (`EmailService`, a typed `HttpClient`; key `Resend__ApiKey`, sender `Resend:FromEmail`, which must be on a domain verified in Resend). A send counts only when Resend returns an email id; otherwise it logs Resend's reply and the form shows an error
-- **`IMcpService`**: JSON-RPC 2.0 protocol handler for MCP requests
-- **`IOAuthService`**: OAuth 2.0 authentication for MCP clients
+- **`PortfolioTools`**: what an agent can do (search projects, send a contact message); the MCP tools and the assistant both call it
 - **`website.Data.IProjectSource` / `website.Data.ProjectService`**: project data for server-rendered pages
-- Typed `HttpClient`s for the DeepSeek/Discord/Ollama services. `AddHttpClient` also registers the default transient `HttpClient` that prerendered interactive components resolve — don't register a scoped `HttpClient` (the singleton `DiscordService` would capture it)
+- Typed `HttpClient`s for `EmailService` and `DeepSeekAgentService`. `AddHttpClient` also registers the default transient `HttpClient` that prerendered interactive components resolve — don't register a scoped `HttpClient` (a singleton would capture it)
 
 ### Middleware Pipeline
 Order matters (`website.api/Program.cs`):
@@ -92,8 +86,7 @@ Order matters (`website.api/Program.cs`):
 4. **`UseRouting`** - explicit, so it runs after the HEAD rewrite
 5. **Swagger** - Development only
 6. **CORS** - AllowMcpClients policy globally
-7. **Request Logging** - custom middleware
-8. **Authentication** → **MCP OAuth** → **Authorization**
+7. **Authorization**
 9. **Antiforgery** - required by Razor component endpoints
 10. **`MapStaticAssets`** - fingerprinted assets cached as immutable; others (e.g. PDFs) revalidate via ETag
 11. **`/health`** (health checks), **Controllers**, then **`MapRazorComponents<App>`** with the WebAssembly render mode and the `website` assembly
@@ -101,7 +94,6 @@ Order matters (`website.api/Program.cs`):
 ### Key API Features
 - **CORS Policies**: MCP clients may call from any origin
 - **Environment Variables**: DotNetEnv loads `website.api/.env` for local development
-- **OAuth 2.0**: Custom implementation for MCP client authentication
 
 ## Frontend Architecture
 
@@ -133,7 +125,7 @@ Dark ink background, one cyan accent, Inter and JetBrains Mono. Colour tokens (`
 3. Each project has a `ProjectCategory` (Personal, Professional, Academic), one or more `ProjectField`s (AI & ML, computer vision & graphics, scientific & biomedical, cloud & distributed, systems & infrastructure, product & business; labels and URL slugs in `website/Data/ProjectFields.cs`) and a one-sentence `Result` shown under its title
 
 ### Project Page Template
-Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project · Year 2">` wrapping `<ProjectSection Title="..." Subtitle="..." Icon="fas fa-...">` panels. `ProjectPage` renders the breadcrumb, title, result and chips from the project data, plus the next-project link, so a page only writes its sections. Inside sections use the shared classes (`chip`, `surface`, `text-slate-*`, `border-line`, `text-cy`), not rainbow colours; `StyleTests` fails on any old palette colour inside `main` (a short list of colours that carry meaning, such as form errors and status lights, is allowed). Interactive bits are their own components (`ImageGallery`, `BridgeStatus`), never a page-level render mode.
+Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project · Year 2">` wrapping `<ProjectSection Title="..." Subtitle="..." Icon="fas fa-...">` panels. `ProjectPage` renders the breadcrumb, title, result and chips from the project data, plus the next-project link, so a page only writes its sections. Inside sections use the shared classes (`chip`, `surface`, `text-slate-*`, `border-line`, `text-cy`), not rainbow colours; `StyleTests` fails on any old palette colour inside `main` (a short list of colours that carry meaning, such as form errors and success messages, is allowed). Interactive bits are their own components (`ImageGallery`), never a page-level render mode.
 
 ## Document Management System
 
@@ -148,7 +140,6 @@ Every project page is `<ProjectPage Url="/projects/..." Kicker="Academic Project
 Create `.env` file in `website.api/` for local development:
 ```
 Resend__ApiKey=re_...   # a sending-only key is enough
-# Add OAuth tokens if using MCP features
 ```
 
 ### Project Data Management
@@ -185,39 +176,21 @@ curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
 
 ## Model Context Protocol (MCP) Integration
 
-This portfolio implements a custom MCP server that allows AI agents (like Claude Desktop) to interact with the portfolio:
+AI agents (Claude Code, Cursor, VS Code, the MCP Inspector…) can use the portfolio over MCP. The public page about it is `/ai-integration`.
 
-### MCP Architecture
-- **Protocol**: JSON-RPC 2.0 over HTTP POST
-- **Endpoint**: `/api/mcp` (see `website.api/Controllers/McpController.cs`)
-- **Service**: `McpService` handles protocol implementation (`website.api/Services/McpService.cs`)
-- **Authentication**: Custom OAuth 2.0 middleware (`website.api/Middleware/McpOAuthMiddleware.cs`)
+### Architecture
+- **SDK**: the official C# SDK, `ModelContextProtocol.AspNetCore` 2.3.0, registered in `Program.cs` (`AddMcpServer().WithHttpTransport().WithTools<PortfolioMcpTools>().WithResources<PortfolioMcpResources>()`) and mapped with `app.MapMcp("/api/mcp")`
+- **Transport**: Streamable HTTP, stateless (the SDK's default from the 2026-07-28 spec): no sessions, any instance can answer any request. No legacy SSE, no sign-in
+- **Tools and resources**: `website.api/Mcp/PortfolioMcp.cs`. The work is in `website.api/Services/PortfolioTools.cs`, which `DeepSeekAgentService` also calls, so the site's assistant and outside agents behave the same
+- **Tools**: `search_projects` (read-only, idempotent, closed world; structured output with each project's page) and `submit_contact` (not read-only, not destructive, open world; needs name, a valid email, subject and message, and at most `ContactLimiter.PerVisitorPerHour` per visitor an hour, 30 in all)
+- **Resources**: `portfolio://profile` (from `HomeContent`, like the assistant's prompt), `contact`, `about`, `ai-integration`, `projects/all`, and the template `portfolio://projects/{id}` named after each page (`hireforge`); an unknown project is `ResourceNotFound`
+- **Tests**: `tests/website.tests/McpTests.cs` drives it with the official MCP client (email faked)
 
-### MCP Behaviour
-- `submit_contact` sends only a complete message (name, valid email, subject, message) and at most `ContactLimiter.PerVisitorPerHour` per visitor an hour (30 an hour in all); the site's assistant calls the same tool, so the limit covers it too
-- `ping` is answered; notifications get `202` with no body
-- Project resources are named after their pages (`portfolio://projects/hireforge`); `portfolio://profile` is built from `HomeContent`, like the assistant's prompt
-- Tests: `tests/website.tests/McpTests.cs` (email faked)
-
-### MCP Capabilities
-1. **Resources**: Access to profile, projects, contact info, about and AI integration
-2. **Tools**:
-   - `submit_contact` - Send contact form messages
-   - `search_projects` - Search projects by category, technology, or keyword
-
-### MCP Protocol Flow
-1. Client sends `initialize` request → Server responds with capabilities
-2. Client sends `notifications/initialized` → Handshake complete
-3. Client can call `tools/list` → Discover available tools
-4. Client can call `tools/call` → Execute tools with parameters
-5. Client can call `resources/list` → List available resources
-6. Client can call `resources/read` → Read specific resources
-
-### Adding New MCP Tools
-To add a new tool:
-1. Add tool definition to `HandleToolsList()` in `McpService.cs:368`
-2. Add tool handler to switch statement in `HandleToolCall()` at line 461
-3. Implement handler method following pattern of `HandleSubmitContact()` or `HandleSearchProjects()`
+### Adding a tool or resource
+1. Put the logic in `PortfolioTools` if the assistant should have it too
+2. Add a method to `PortfolioMcpTools` with `[McpServerTool(...)]` (name, title and the `ReadOnly`/`Destructive`/`Idempotent`/`OpenWorld` hints) and a `[Description]`, or to `PortfolioMcpResources` with `[McpServerResource(UriTemplate = ...)]`
+3. For the assistant, add the tool to DeepSeek's tool list and `RunToolAsync` in `DeepSeekAgentService`
+4. Cover it in `McpTests` through the client, and update `/ai-integration`
 
 ## Important Note
 

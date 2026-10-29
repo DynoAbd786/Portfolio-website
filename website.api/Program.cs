@@ -1,24 +1,13 @@
+using website.api.Mcp;
 using website.api.Services;
-using website.api.Middleware;
-using Microsoft.AspNetCore.HostFiltering;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using DotNetEnv;
 
-// Load .env file for local development
-// Load .env file for local development
+// Local development keeps its keys in .env (Render sets them as environment variables)
 if (File.Exists(".env"))
 {
-    Console.WriteLine("Loading .env file...");
     Env.Load();
-    var token = Env.GetString("DISCORD_BOT_TOKEN");
-    var channel = Env.GetString("DISCORD_CHANNEL_ID");
-    Console.WriteLine($"Loaded .env file. Token starts with: {(token?.Length > 5 ? token.Substring(0, 5) : "null")}, Channel: {channel}");
-}
-else
-{
-    Console.WriteLine("WARNING: .env file not found!");
 }
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,14 +29,21 @@ builder.Services.AddHttpClient<IEmailService, EmailService>(); // typed client, 
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ContactLimiter>();
-builder.Services.AddSingleton<IMcpService, McpService>();
-builder.Services.AddScoped<IOAuthService, OAuthService>();
+builder.Services.AddScoped<PortfolioTools>(); // what the MCP server and the assistant can do
 builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it
-builder.Services.AddHttpClient<DiscordService>();
-builder.Services.AddSingleton<IDiscordService, DiscordService>();
-builder.Services.AddHttpClient<OllamaService>();
-builder.Services.AddScoped<OllamaService>();
-builder.Services.AddSingleton<IAccessStateService, AccessStateService>();
+
+// The MCP server at /api/mcp: the official C# SDK, Streamable HTTP, stateless (the SDK's default
+// from the 2026-07-28 spec). Tools and resources are in Mcp/PortfolioMcp.cs.
+builder.Services.AddMcpServer(options =>
+{
+    options.ServerInfo = new() { Name = "mkkai", Title = "Muhammad Kashif-Khan's portfolio", Version = "2.0.0", WebsiteUrl = "https://mkkai.dev" };
+    options.ServerInstructions = "Information about Muhammad Kashif-Khan, a software engineer, from his portfolio at mkkai.dev. " +
+        "Use search_projects and the portfolio:// resources to answer questions about his work. " +
+        "submit_contact emails him: ask the person for their name, email, a subject and the message first.";
+})
+    .WithHttpTransport()
+    .WithTools<PortfolioMcpTools>()
+    .WithResources<PortfolioMcpResources>();
 
 // Pages render on the server (static SSR); a few components run in the browser via WebAssembly
 // Render's health check (dashboard setting) polls /health
@@ -61,34 +57,9 @@ builder.Services.AddScoped<website.Data.ProjectService>();
 // Interactive components that inject HttpClient are prerendered here too. They only call it once
 // running in the browser, so the default HttpClient that AddHttpClient registers is enough.
 
-// Configure JWT Bearer authentication for OAuth
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        // JWT configuration will be handled by our custom OAuth service
-        options.Events = new JwtBearerEvents
-        {
-            OnChallenge = context =>
-            {
-                // Skip default JWT challenge - we handle OAuth challenges in middleware
-                context.HandleResponse();
-                return Task.CompletedTask;
-            }
-        };
-    });
-
-// Configure CORS for Blazor WebAssembly
+// MCP clients may call from any origin (browser-based agents and inspectors)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowBlazorWasm", policy =>
-    {
-        policy.WithOrigins("http://localhost:5195", "https://localhost:7112", "http://100.88.183.40:5195")
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials();
-    });
-
-    // CORS policy for MCP clients
     options.AddPolicy("AllowMcpClients", policy =>
     {
         policy.AllowAnyOrigin()
@@ -164,30 +135,16 @@ if (app.Environment.IsDevelopment())
 // Skip HTTPS redirection - Render handles SSL termination at proxy level
 // app.UseHttpsRedirection();
 
-// Apply MCP CORS policy globally since this is a dedicated MCP server
 app.UseCors("AllowMcpClients");
 
-// Add comprehensive request logging for MCP debugging
-app.UseRequestLogging(); // Custom request logging middleware
-
-// Add additional headers for AI bot accessibility
+// The API may be crawled and used by AI agents (CORS headers come from the policy above)
 app.Use(async (context, next) =>
 {
-    // Add headers to help AI bots and ensure API accessibility
     if (context.Request.Path.StartsWithSegments("/api"))
-    {
         context.Response.Headers.Append("X-Robots-Tag", "all");
-        context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        context.Response.Headers.Append("Access-Control-Allow-Headers", "*");
-        context.Response.Headers.Append("Access-Control-Max-Age", "86400");
-    }
     await next();
 });
 
-// Use authentication and our custom MCP OAuth middleware
-app.UseAuthentication();
-app.UseMcpOAuth(); // Custom OAuth middleware for MCP
 app.UseAuthorization();
 app.UseAntiforgery();
 
@@ -195,6 +152,14 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 
 app.MapHealthChecks("/health");
+app.MapMcp("/api/mcp");
+// Stateless, so there's no standalone SSE stream to open: the spec says to answer GET with 405 (the
+// SDK leaves it unmapped, which would be a 404, and clients such as the MCP Inspector disconnect)
+app.MapGet("/api/mcp", (HttpContext context) =>
+{
+    context.Response.Headers.Allow = "POST, DELETE";
+    return Results.StatusCode(StatusCodes.Status405MethodNotAllowed);
+});
 app.MapControllers();
 // Synergy's page moved from its old working title; keep old links (CV, search results) working
 app.MapGet("/projects/workflow-graph-platform", () => Results.Redirect("/projects/synergy", permanent: true));

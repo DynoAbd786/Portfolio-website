@@ -308,7 +308,6 @@
   },
   "/projects/home-lab": {
     "Headings": [
-      "System Status",
       "Network Architecture",
       "GPU desktop",
       "Raspberry Pi",

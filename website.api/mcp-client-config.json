@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "muhammad-portfolio": {
-      "command": "dotnet",
-      "args": ["run", "--project", "C:\\Users\\Abdua\\Programs\\Personal\\Portfolio-website\\McpServer\\McpServer.csproj"],
-      "description": "Muhammad Kashif-Khan's Portfolio MCP Server"
-    }
-  }
-}

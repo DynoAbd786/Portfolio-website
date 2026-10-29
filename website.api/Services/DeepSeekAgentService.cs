@@ -10,7 +10,7 @@ namespace website.api.Services;
 public class DeepSeekAgentService
 {
     private readonly HttpClient _httpClient;
-    private readonly IMcpService _mcpService;
+    private readonly PortfolioTools _tools;
     private readonly IProjectService _projectService;
     private readonly string _apiKey;
     private readonly ILogger<DeepSeekAgentService> _logger;
@@ -20,13 +20,13 @@ public class DeepSeekAgentService
 
     public DeepSeekAgentService(
         HttpClient httpClient, 
-        IMcpService mcpService, 
+        PortfolioTools tools,
         IProjectService projectService,
         IConfiguration config,
         ILogger<DeepSeekAgentService> logger)
     {
         _httpClient = httpClient;
-        _mcpService = mcpService;
+        _tools = tools;
         _projectService = projectService;
         _apiKey = config["DeepSeek:ApiKey"] ?? ""; // checked per request, so the site runs without it
         _logger = logger;
@@ -149,27 +149,10 @@ public class DeepSeekAgentService
                 {
                     _logger.LogInformation("DeepSeek requested tool: {ToolName}", toolCall.Function.Name);
 
-                    // Execute via MCP Service
-                    var mcpRequest = new McpRequest
-                    {
-                        Method = "tools/call",
-                        Id = Guid.NewGuid().ToString(),
-                        Params = new Dictionary<string, object>
-                        {
-                            ["name"] = toolCall.Function.Name,
-                            ["arguments"] = JsonSerializer.Deserialize<Dictionary<string, object>>(toolCall.Function.Arguments) 
-                                            ?? new Dictionary<string, object>()
-                        }
-                    };
-
-                    var mcpResponse = await _mcpService.HandleRequestAsync(mcpRequest);
-                    var toolResult = mcpResponse.Result;
-
-                    // Add tool response
                     messages.Add(new {
                         role = "tool",
                         tool_call_id = toolCall.Id,
-                        content = JsonSerializer.Serialize(toolResult)
+                        content = await RunToolAsync(toolCall.Function.Name, toolCall.Function.Arguments)
                     });
                 }
 
@@ -187,6 +170,26 @@ public class DeepSeekAgentService
         }
 
         return "I'm not sure how to respond to that.";
+    }
+
+    // The same tools as the MCP server (PortfolioTools), so the chat and outside agents agree
+    private async Task<string> RunToolAsync(string name, string? argumentsJson)
+    {
+        Dictionary<string, JsonElement> args;
+        try { args = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(argumentsJson ?? "{}") ?? new(); }
+        catch (JsonException) { return "The tool arguments weren't valid JSON."; }
+        string? Arg(string key) => args.TryGetValue(key, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+
+        switch (name)
+        {
+            case "search_projects":
+                var found = await _tools.SearchAsync(Arg("keyword"), Arg("category"), Arg("technology"));
+                return found.Projects.Count == 0 ? "No projects match that." : JsonSerializer.Serialize(found);
+            case "submit_contact":
+                return (await _tools.SubmitContactAsync(Arg("name"), Arg("email"), Arg("subject"), Arg("message"), Arg("company"), Arg("role"))).Message;
+            default:
+                return $"There's no tool called {name}.";
+        }
     }
 }
 

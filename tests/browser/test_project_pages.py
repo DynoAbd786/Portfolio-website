@@ -17,12 +17,6 @@ def test_gallery_caption_renders_its_markup(page, site_url):
     assert "<span" not in page.inner_text("main")
 
 
-def test_homelab_status_renders(page, site_url):
-    page.goto(site_url + "/projects/home-lab", wait_until="load")
-    page.wait_for_selector(".bridge-status", timeout=10000)
-    page.wait_for_function("/ONLINE|OFFLINE/.test(document.querySelector('.bridge-status').innerText)", timeout=10000)
-
-
 # Pages that still scroll sideways on a phone until their batch moves them onto the template
 NOT_YET_MIGRATED_OVERFLOW = set()
 

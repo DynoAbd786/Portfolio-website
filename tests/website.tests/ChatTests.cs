@@ -95,4 +95,39 @@ public class ChatTests : IClassFixture<SiteFactory>
         Assert.Contains("never a bare address", prompt);
         Assert.Contains("the link is the words that name it", prompt);
     }
+
+    // DeepSeek asks for a tool, the site runs it and sends the result back, then DeepSeek answers
+    private sealed class ToolCallingDeepSeek : HttpMessageHandler
+    {
+        public List<string> Bodies { get; } = new();
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
+        {
+            Bodies.Add(await request.Content!.ReadAsStringAsync(ct));
+            var reply = Bodies.Count == 1
+                ? """{"choices":[{"message":{"role":"assistant","content":null,"tool_calls":[{"id":"call_1","type":"function","function":{"name":"search_projects","arguments":"{\"keyword\":\"HireForge\"}"}}]}}]}"""
+                : """{"choices":[{"message":{"role":"assistant","content":"It's an AI-run assessment tool."}}]}""";
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(reply, Encoding.UTF8, "application/json") };
+        }
+    }
+
+    [Fact]
+    public async Task Assistant_runs_the_project_search_tool_and_answers_with_it()
+    {
+        var api = new ToolCallingDeepSeek();
+        var client = _factory.WithWebHostBuilder(b =>
+        {
+            b.ConfigureAppConfiguration((_, c) => c.AddInMemoryCollection(new Dictionary<string, string?> { ["DeepSeek:ApiKey"] = "k" }));
+            b.ConfigureTestServices(s => s.AddHttpClient<DeepSeekAgentService>().ConfigurePrimaryHttpMessageHandler(() => api));
+        }).CreateClient();
+        Assert.Equal("It's an AI-run assessment tool.", await Ask(client, new { message = "What is HireForge?", history = Array.Empty<object>() }));
+        Assert.Equal(2, api.Bodies.Count);
+        var toolMessage = JsonDocument.Parse(api.Bodies[1]).RootElement.GetProperty("messages").EnumerateArray()
+            .Single(m => m.GetProperty("role").GetString() == "tool");
+        Assert.Equal("call_1", toolMessage.GetProperty("tool_call_id").GetString());
+        Assert.Contains("HireForge: AI-Run Coding Assessments", toolMessage.GetProperty("content").GetString());
+        // the tools DeepSeek is offered
+        var offered = JsonDocument.Parse(api.Bodies[0]).RootElement.GetProperty("tools").EnumerateArray()
+            .Select(t => t.GetProperty("function").GetProperty("name").GetString()).ToList();
+        Assert.Equal(new[] { "search_projects", "submit_contact" }, offered);
+    }
 }
