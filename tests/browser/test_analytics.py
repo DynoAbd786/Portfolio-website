@@ -20,7 +20,9 @@ def wait_event(page, name, timeout=5000):
 def test_cv_downloads_say_where_they_came_from(page, site_url):
     page.add_init_script(RECORD)
     page.goto(site_url + "/projects", wait_until="load")
-    page.click("header a[aria-label='Download CV']")
+    # the header link is only an icon (Font Awesome, from a CDN): dispatch the click so the test doesn't
+    # depend on the icon font arriving
+    page.locator("header a[aria-label='Download CV']").first.dispatch_event("click")
     page.click("footer a[href*='Muhammad-Kashif-Khan-CV.pdf']")
     assert [e["from"] for e in events(page, "cv-download")] == ["header", "footer"]
 
