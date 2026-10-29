@@ -33,7 +33,7 @@
                             <h4 class="font-bold text-white mb-2">Technical Implementation</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
                                 <li>• Euler's method, written by me</li>
-                                <li>• 7 numerical solvers compared</li>
+                                <li>• Several numerical solvers compared</li>
                                 <li>• Timing benchmarks</li>
                                 <li>• Statistical error analysis</li>
                             </ul>
@@ -219,7 +219,7 @@
                                 <li><strong>Multiple Runs:</strong> 5 iterations per measurement</li>
                                 <li><strong>Statistical Analysis:</strong> Averaged timings</li>
                                 <li><strong>Gradient Analysis:</strong> Checking Big-O complexity</li>
-                                <li><strong>Scaling Studies:</strong> 8 different time step sizes</li>
+                                <li><strong>Scaling Studies:</strong> a range of time step sizes</li>
                             </ul>
                         </div>
 
@@ -242,7 +242,7 @@
                             <div>
                                 <h4 class="font-bold text-white mb-3">Time Step Analysis</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• <strong>Range:</strong> dt from T/100 to T/1600 (8 values)</li>
+                                    <li>• <strong>Range:</strong> a sequence of shrinking time steps</li>
                                     <li>• <strong>Test Case A:</strong> T = 2.5π (validation)</li>
                                     <li>• <strong>Test Case B:</strong> T = 30 (realistic case)</li>
                                     <li>• <strong>Convergence:</strong> Order checked from the gradients</li>
@@ -269,8 +269,8 @@
                             <h3 class="text-xl font-bold text-white mb-4">Key Research Results</h3>
                             <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
-                                    <li><strong>Runge-Kutta (RK4):</strong> Best accuracy at dt=800 with ~10⁻¹⁰ error</li>
-                                    <li><strong>SSPRK3:</strong> Good stability, ~10⁻⁹ error at dt=6400</li>
+                                    <li><strong>Runge-Kutta (RK4):</strong> The most accurate of the methods</li>
+                                    <li><strong>SSPRK3:</strong> Stable, and close behind RK4</li>
                                     <li><strong>Euler Method:</strong> The baseline; its peaks grow over time in Test B</li>
                                     <li><strong>Order Verification:</strong> Confirmed 1st, 3rd and 4th order convergence</li>
                                     <li><strong>Stability Analysis:</strong> Steady peak heights matter most in long simulations</li>

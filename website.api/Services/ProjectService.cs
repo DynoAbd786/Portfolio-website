@@ -141,13 +141,13 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Flow Diverter Deployment & Medical Simulation Platform",
-                    Description = "Biomedical simulation platform for predicting stent deployment in patient-specific vascular geometries. Built with Python, VMTK, and GPU-accelerated visualization to aid surgical planning. Extends clinical research capabilities with realistic physics modeling and seamless data export.",
+                    Description = "A biomedical simulation tool, built in a summer internship, for predicting how flow-diverter stents deploy in patient-specific blood vessels. Built with Python, VMTK and GPU-accelerated visualisation. Vessel analysis, stent models and expansion forces work; the full deployment, with collision against the vessel wall, was left unfinished.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Medical+Sim",
                     ProjectUrl = "/projects/medical-simulation",
                     Tags = new[] { "Python 3.10", "VMTK", "PyVista", "PyQt6", "Medical Imaging", "GPU Computing", "Biomedical Engineering", "Docker" },
                     Category = ProjectCategory.Professional,
                     Fields = new[] { ProjectField.ScientificBiomedical, ProjectField.VisionGraphics },
-                    Result = "Built a GPU-accelerated simulation of flow-diverter stents opening inside blood vessels, with collision and force models.",
+                    Result = "Built a GPU-accelerated tool for simulating flow-diverter stents in blood vessels, with stent models and joint-level expansion forces.",
                     IsFeatured = true
                 },
                 new Project
