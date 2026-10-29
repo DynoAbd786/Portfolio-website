@@ -6,7 +6,7 @@ const kbd = (k, label) => { const s = el('span', 'ws-hint-k'); s.append(el('kbd'
 export function createUI({ root, section, data, onOpen, onClose }) {
   const order = data.map((d) => d.key), byKey = Object.fromEntries(data.map((d) => [d.key, d]));
   const heroCopy = section.querySelector('.hero-copy');
-  const wide = matchMedia('(min-width: 900px)');
+  const wide = matchMedia('(min-width: 900px) and (min-height: 500px)'); // the side-by-side layout (css/app.css)
   const state = { focusKey: null, explored: new Set() };
   const disposers = [];
   const on = (target, type, fn, opts) => { target.addEventListener(type, fn, opts); disposers.push(() => target.removeEventListener(type, fn, opts)); };
@@ -21,7 +21,7 @@ export function createUI({ root, section, data, onOpen, onClose }) {
   const hint = el('div', 'ws-hint'); hint.setAttribute('aria-hidden', 'true');
   const found = el('b', null, '0');
   const foundWrap = el('span', 'ws-hint-found'); foundWrap.append('explored ', found, `/${order.length}`);
-  hint.append(kbd('move', 'aim the lamp'), kbd('hover', 'inspect'), kbd('click', 'zoom in'), el('span', 'ws-hint-tap', 'tap an object'), foundWrap);
+  hint.append(kbd('move', 'aim the lamp'), kbd('hover', 'inspect'), kbd('click', 'zoom in'), el('span', 'ws-hint-tap', 'tap the room to explore'), foundWrap);
   root.append(hint);
 
   // ---------------------------------------------------------------- keyboard / screen-reader path into every object
@@ -94,6 +94,12 @@ export function createUI({ root, section, data, onOpen, onClose }) {
   return {
     state, openCard, closeCard,
     get cardRect() { return state.focusKey && wide.matches ? card.getBoundingClientRect() : null; },
+    // while a card is open beside the room: the middle of the space right of it, as a fraction of the stage width
+    frameX() {
+      if (!state.focusKey || !wide.matches) return null;
+      const r = root.getBoundingClientRect(), right = card.offsetLeft + card.offsetWidth;
+      return (right + r.width) / 2 / r.width;
+    },
     // show the tag for a hotspot (null hides it)
     setTag(k, cta) {
       if (k) { tagName.textContent = byKey[k].name; tagSub.textContent = byKey[k].sub; tagCta.textContent = cta ?? ''; tagCta.hidden = !cta; tagW = 0; }

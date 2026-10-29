@@ -12,7 +12,7 @@ const SPOTS = {
   hireforge: (r) => ({ g: r.monB.g, anchor: () => wp(r.monB.screen, 0, .75, 0), focus: { t: () => wp(r.monB.screen, -.05, .02, 0), az: -.08, polar: 1.5, r: 4.3 } }),
   thesis: (r) => ({ g: r.rig, anchor: () => wp(r.rig, 0, 2.55, 0), focus: { t: () => wp(r.rig, -.1, 1.6, 0), az: .5, polar: 1.28, r: 4.4 } }),
   whiteboard: (r) => ({ g: r.wb, anchor: () => wp(r.wb, 0, 2.2, 0), focus: { t: () => wp(r.wb, -.15, 1.38, 0), az: .36, polar: 1.42, r: 4.5 } }),
-  stent: (r) => ({ g: r.stent, lift: .06, anchor: () => wp(r.stent, 0, .42, 0), focus: { t: () => wp(r.stent, 0, .2, 0), az: .3, polar: 1.2, r: 2.1 } }),
+  stent: (r) => ({ g: r.stent, lift: .06, anchor: () => wp(r.stent, 0, .42, 0), focus: { t: () => wp(r.stent, 0, .2, 0), az: -.12, polar: 1.18, r: 1.9 } }),
   afm: (r) => ({ g: r.afm, lift: .06, anchor: () => wp(r.afm, 0, 1.5, 0), focus: { t: () => wp(r.afm, 0, 1.0, 0), az: .35, polar: 1.25, r: 2.8 } }),
   azure: (r) => ({ g: r.azure, anchor: () => wp(r.azure, 0, .5, 0), focus: { t: () => wp(r.azure, 0, -.15, 0), az: .95, polar: 1.3, r: 3.6 } }),
   homelab: (r) => ({ g: r.rack, anchor: () => wp(r.rack, 0, 2.45, 0), focus: { t: () => wp(r.rack, .3, 1.25, 0), az: 1.15, polar: 1.33, r: 5.6 } }),

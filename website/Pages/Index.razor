@@ -4,23 +4,35 @@
 
 <PageTitle>Muhammad Kashif-Khan · Software Engineer</PageTitle>
 
+@* The name build's font and triangulator (js/intro), fetched early so the build can start at once *@
+<HeadContent>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin-800-normal.woff2" />
+    <link rel="preload" as="script" href="/lib/delaunator/delaunator.min.js" />
+</HeadContent>
+
 @* data-permanent: enhanced navigation back to this page leaves the running scene (and the
    overlay it adds) alone instead of merging the server's HTML over it *@
 <div id="hero" class="grid-bg" data-permanent>
-    <section class="relative mx-auto grid max-w-7xl items-center gap-8 px-4 pb-12 pt-4 sm:gap-10 sm:pb-14 sm:pt-10 sm:px-6 lg:px-8 min-[900px]:min-h-[calc(100svh-4rem)] min-[900px]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]" aria-label="Introduction">
+    @* Desktop: the room fills the hero behind the text, centred in the space right of it (--frame-x,
+       set by site.js). Phones: name, room, then the rest of the text (css/app.css). *@
+    <section class="hero-section mx-auto max-w-7xl px-4 pb-12 pt-4 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8" aria-label="Introduction">
         <div class="hero-copy">
-            <p class="mono-label mb-6 text-[13.5px]">// software engineer · ai systems</p>
-            <h1 class="mb-6 text-5xl font-extrabold leading-[.93] tracking-[-.045em] text-white sm:text-6xl xl:text-7xl">
-                <span class="block">Muhammad</span>
-                <span class="block bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text pb-1 text-transparent">Kashif-Khan</span>
-            </h1>
+            <div class="hero-head">
+                <p class="hero-kicker mono-label mb-6 text-[13.5px]">// software engineer · ai systems</p>
+                <h1 class="mb-6 text-5xl font-extrabold leading-[.93] tracking-[-.045em] text-white sm:text-6xl xl:text-7xl">
+                    <span class="block">Muhammad</span>
+                    <span class="block bg-gradient-to-r from-slate-100 to-slate-400 bg-clip-text pb-1 text-transparent">Kashif-Khan</span>
+                </h1>
+            </div>
+            <div class="hero-body">
             <p class="mb-8 max-w-xl text-lg leading-relaxed text-slate-400">
                 I take on problems I've never seen and ship working software for them: biomedical simulation, scientific tools, computer vision, cloud and AI.
                 MEng Computer Science &amp; AI, University of Leeds, <strong class="font-semibold text-slate-100">First-Class Honours</strong>.
             </p>
-            <div class="mb-8 flex flex-wrap gap-3">
-                <a href="#work" class="btn-primary">See my work <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i></a>
+            <div class="hero-buttons mb-8 flex flex-wrap gap-3">
+                <a href="#work" class="btn-ghost">See my work <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i></a>
                 <a href="/docs/Muhammad-Kashif-Khan-CV.pdf?v=2026-07" target="_blank" class="btn-ghost">Download CV <i class="fas fa-download text-sm" aria-hidden="true"></i></a>
+                <a href="#contact" class="btn-primary btn-shine">Get in touch</a>
             </div>
             @if (HomeContent.OpenToWork)
             {
@@ -32,6 +44,7 @@
                     Open to graduate software &amp; AI roles
                 </p>
             }
+            </div>
         </div>
 
         <div id="workshop" class="workshop" data-state="still">
@@ -72,7 +85,14 @@
             }
         </ul>
     </section>
+    @* The name build (js/intro) draws here while the scene loads; hidden unless the intro runs *@
+    <canvas class="hero-namefx" aria-hidden="true"></canvas>
+    <p class="hero-loading font-mono text-xs tracking-wider text-slate-400" aria-hidden="true"><span></span>building the workshop</p>
+    <p class="hero-scroll font-mono text-[11px] tracking-[.12em] text-slate-400" aria-hidden="true">scroll<span></span></p>
 </div>
+
+@* The rest of the page slides up over the hero on desktop *@
+<div class="hero-cover border-t border-line bg-ink">
 
 <section id="proof" class="border-y border-line bg-ink-2/60" aria-label="Highlights">
     <dl class="mx-auto grid max-w-7xl grid-cols-2 gap-px px-4 sm:px-6 lg:grid-cols-4 lg:px-8">
@@ -169,6 +189,8 @@
 
 <div class="border-t border-line">
     <ContactForm />
+</div>
+
 </div>
 
 @code {

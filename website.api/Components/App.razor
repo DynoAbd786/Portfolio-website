@@ -34,6 +34,45 @@
     <base href="/" />
     @* Lets .reveal sections start hidden and fade in (site.js); without JS they just show *@
     <script>if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal-ready');</script>
+    @* The homepage's intro (js/intro): .intro-pending hides the hero until the name build lands. It plays
+       on a full load of / that is the tab's first or a reload, with no #hash and no reduced motion; a
+       reload of / starts at the top (even with a #hash) so the intro plays from there. Other pages keep
+       the browser's usual reload behaviour. Tests skip it with ?debug= or sessionStorage mk-intro-off. *@
+    <script>
+        (function () {
+            var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+            var reload = !!nav && nav.type === 'reload' && location.pathname === '/';
+            if (reload) {
+                history.scrollRestoration = 'manual';
+                if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+                document.addEventListener('DOMContentLoaded', function () { scrollTo(0, 0); });
+                addEventListener('load', function () { scrollTo(0, 0); });
+                // the browser restores a reload's scroll after load, so stay manual until the visitor does something
+                var auto = function () { history.scrollRestoration = 'auto'; ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (t) { removeEventListener(t, auto, true); }); };
+                ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(function (t) { addEventListener(t, auto, true); });
+            }
+            try {
+                if (location.pathname === '/' && !location.hash && !new URLSearchParams(location.search).get('debug')
+                    && !matchMedia('(prefers-reduced-motion: reduce)').matches && sessionStorage.getItem('mk-intro-off') !== '1'
+                    && (reload || sessionStorage.getItem('mk-intro-seen') !== '1')) {
+                    sessionStorage.setItem('mk-intro-seen', '1');
+                    var html = document.documentElement;
+                    html.classList.add('intro-pending');
+                    // the last resort, if the intro's scripts never arrive: 14.5 s after the page is
+                    // first visible (js/intro gives up at 10 s, plus a build already playing), show it
+                    var watch = function () {
+                        setTimeout(function () {
+                            if (!html.classList.contains('intro-pending')) return;
+                            if (window.mkIntro) mkIntro.finish();
+                            html.classList.remove('intro-pending', 'intro-flying', 'intro-settling');
+                        }, 14500);
+                    };
+                    if (!document.hidden) watch();
+                    else document.addEventListener('visibilitychange', function show() { if (!document.hidden) { document.removeEventListener('visibilitychange', show); watch(); } });
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="@Assets["favicon.svg"]" />
     <link rel="stylesheet" href="@Assets["css/app.css"]" />
     <ImportMap ImportMapDefinition="ImportMapWithThree" />

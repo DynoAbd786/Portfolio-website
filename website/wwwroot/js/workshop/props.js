@@ -8,19 +8,62 @@ import { mergeStatic } from './room.js';
 export function buildProps(world, kit) {
   const { M, B, rbox, cyl, at, blob, mat, glow } = kit;
 
-  // ---------------------------------------------------------------- stent: a flow diverter inside a vessel with an aneurysm (desk, left end)
-  const stent = new THREE.Group(); stent.position.set(-2.15, 1.77, -2.72); stent.rotation.y = .55; world.add(stent);
+  // ---------------------------------------------------------------- stent: a flow diverter inside a vessel with an aneurysm (desk, right
+  // of the keyboard, clear of the lamp's glare). A glassy vessel wall over a column of blood, a fine braided stent across the
+  // aneurysm's neck, darker still blood in the sac (the diverter slows the flow into it), and cells flowing past.
+  const stent = new THREE.Group(); stent.position.set(1.28, 1.77, -2.95); stent.rotation.y = -.15; world.add(stent);
+  let cells = null, cellU = null;
+  const vesselCurve = new THREE.CatmullRomCurve3([new V3(-.29, .2, 0), new V3(-.13, .215, .012), new V3(.05, .19, -.01), new V3(.29, .205, 0)]);
   {
-    stent.add(blob(.62, .34, .004, true));
-    stent.add(at(rbox(.52, .035, .2, .015, mat.dark), 0, .018, 0));
-    for (const x of [-.19, .19]) stent.add(at(cyl(.011, .011, .17, mat.metal, 8), x, .12, 0));
-    const curve = new THREE.CatmullRomCurve3([new V3(-.27, .2, 0), new V3(-.12, .215, .01), new V3(.04, .19, -.01), new V3(.27, .205, 0)]);
-    const vesselMat = M('#d9534f', { transparent: true, opacity: .5, roughness: .3, depthWrite: false, side: THREE.DoubleSide });
-    const vessel = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, .045, 14, false), vesselMat); vessel.renderOrder = 2; stent.add(vessel);
-    const sac = at(new THREE.Mesh(new THREE.SphereGeometry(.055, 16, 12), vesselMat), -.03, .262, 0); sac.renderOrder = 2; stent.add(sac);
-    const lattice = new THREE.Mesh(new THREE.TubeGeometry(curve, 26, .037, 9, false), B(C.cyan, 1.2, { wireframe: true }));
-    stent.add(lattice);
+    stent.add(blob(.68, .36, .004, true));
+    stent.add(at(rbox(.58, .035, .22, .015, mat.dark), 0, .018, 0));
+    for (const x of [-.21, .21]) stent.add(at(cyl(.011, .011, .17, mat.metal, 8), x, .12, 0));
+    const curve = vesselCurve, R = .045;
+    // the blood inside, then the wall over it
+    const blood = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, R * .62, 16, false), M('#8e1b28', { roughness: .45, emissive: '#3a0610', emissiveIntensity: .6, transparent: true, opacity: .45, depthWrite: false }));
+    blood.renderOrder = 1; stent.add(blood);
+    const wallMat = M('#d9545f', { transparent: true, opacity: .3, roughness: .2, metalness: 0, depthWrite: false, side: THREE.DoubleSide, ...kit.E(.5) });
+    const wall = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, R, 24, false), wallMat); wall.renderOrder = 2; stent.add(wall);
+    // the aneurysm: a sac bulging from the outer bend, its neck sunk into the wall, still dark blood inside
+    const neck = curve.getPointAt(.43);
+    const sac = new THREE.Mesh(new THREE.SphereGeometry(.06, 28, 20), wallMat); sac.scale.set(1.15, .78, 1.05);
+    sac.position.set(neck.x, neck.y + R * .3 + .03, neck.z); sac.renderOrder = 2; stent.add(sac);
+    const still = new THREE.Mesh(new THREE.SphereGeometry(.045, 20, 14), M('#5a0d18', { roughness: .6, transparent: true, opacity: .7, depthWrite: false }));
+    still.scale.set(1.1, .72, 1); still.renderOrder = 1; stent.add(at(still, neck.x, neck.y + R * .3 + .032, neck.z));
+    // the flow diverter: 16 wires braided in opposite helices, a fine metal mesh across the neck
+    const frames = curve.computeFrenetFrames(200, false), wires = [], WIRES = 8, TURNS = 5, rS = R * .93;
+    for (let i = 0; i < WIRES * 2; i++) {
+      const dir = i < WIRES ? 1 : -1, ph = (i % WIRES) / WIRES * Math.PI * 2, pts = [];
+      for (let k = 0; k <= 200; k++) {
+        const u = .12 + k / 200 * .76, f = Math.round(u * 200), th = ph + dir * TURNS * Math.PI * 2 * (u - .12);
+        pts.push(curve.getPointAt(u).addScaledVector(frames.normals[f], Math.cos(th) * rS).addScaledVector(frames.binormals[f], Math.sin(th) * rS));
+      }
+      wires.push(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 200, .0013, 4, false));
+    }
+    const braid = new THREE.Mesh(mergeGeometries(wires), M('#9fb4c2', { roughness: .38, metalness: .9, ...kit.E(.45) }));
+    wires.forEach((g) => g.dispose());
+    stent.add(braid);
+    // blood cells flowing through (animate moves them along the vessel)
+    const N = 26;
+    cells = new THREE.InstancedMesh(new THREE.SphereGeometry(.0085, 8, 6).scale(1, .45, 1), M('#d23a46', { roughness: .4, emissive: '#5a0c16', emissiveIntensity: .8 }), N);
+    cellU = Array.from({ length: N }, (_, i) => [i / N, Math.random() * Math.PI * 2, .35 + Math.random() * .45, Math.random() * 6]);
+    cells.userData.noRay = true; cells.renderOrder = 1; stent.add(cells);
   }
+  const cellM = new THREE.Matrix4(), cellQ = new THREE.Quaternion(), cellP = new V3(), cellT = new V3(), cellS = new V3(1, 1, 1), cellUp = new V3(0, 1, 0);
+  const cellFrames = vesselCurve.computeFrenetFrames(100, false);
+  function placeCells(T) {
+    for (let i = 0; i < cellU.length; i++) {
+      const [u0, a, rr, spin] = cellU[i], u = (u0 + T * .07) % 1, f = Math.round(u * 100);
+      cellP.copy(vesselCurve.getPointAt(u))
+        .addScaledVector(cellFrames.normals[f], Math.cos(a + T * .4) * rr * .026)
+        .addScaledVector(cellFrames.binormals[f], Math.sin(a + T * .4) * rr * .026);
+      vesselCurve.getTangentAt(u, cellT);
+      cellQ.setFromUnitVectors(cellUp, cellT).multiply(new THREE.Quaternion().setFromAxisAngle(cellUp, spin + T));
+      cells.setMatrixAt(i, cellM.compose(cellP, cellQ, cellS));
+    }
+    cells.instanceMatrix.needsUpdate = true;
+  }
+  placeCells(0);
 
   // ---------------------------------------------------------------- microscope on a lab cart (beside the bookcase)
   const afm = new THREE.Group(); afm.position.set(3.32, 0, -2.62); afm.rotation.y = -.55; world.add(afm);
@@ -81,6 +124,7 @@ export function buildProps(world, kit) {
   // gentle pulse of the cloud (static when motion is reduced)
   function animate(T, reduced) {
     if (reduced) return;
+    placeCells(T);
     const k = Math.sin(T * 1.6);
     azure.userData.cloud.scale.setScalar(1 + k * .03);
     azure.userData.cloud.rotation.y = T * .15;

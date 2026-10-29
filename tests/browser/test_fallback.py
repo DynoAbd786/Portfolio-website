@@ -1,6 +1,8 @@
 """When the 3D workshop can't run, the homepage shows its still image with link pins."""
 import pytest
 
+from conftest import SKIP_INTRO
+
 
 def _errors(page):
     errors = []
@@ -13,6 +15,7 @@ def _errors(page):
 def no_webgl_page(browser_type, site_url):
     browser = browser_type.launch(channel="chrome", args=["--disable-gpu", "--disable-webgl", "--disable-webgl2"])
     page = browser.new_page(viewport={"width": 1440, "height": 900})
+    page.add_init_script(SKIP_INTRO)
     yield page
     browser.close()
 
@@ -67,10 +70,18 @@ def test_pins_sit_on_their_objects(page, site_url):
     page.goto(site_url + "/?debug=workshop", wait_until="load")
     page.wait_for_selector("#workshop[data-state=live]", timeout=30000)
     page.wait_for_timeout(3500)
-    live = {p["key"]: p for p in page.evaluate("document.getElementById('workshop').__workshop.pins()")}
-    data = {d["key"]: d for d in page.evaluate("JSON.parse(document.getElementById('workshop-data').textContent)")}
-    for key, p in live.items():
-        assert abs(data[key]["pinX"] - p["x"]) < 4 and abs(data[key]["pinY"] - p["y"]) < 4, (key, data[key]["pinX"], data[key]["pinY"], p)
+    # live pins are % of the stage, the still's are % of the picture centred in it: compare on the page
+    pairs = page.evaluate("""() => {
+        const root = document.getElementById('workshop'), stage = root.getBoundingClientRect();
+        const still = root.querySelector('.workshop-still').getBoundingClientRect();
+        const data = Object.fromEntries(JSON.parse(document.getElementById('workshop-data').textContent).map(d => [d.key, d]));
+        return root.__workshop.pins().map(p => ({ key: p.key,
+            live: [stage.left + p.x / 100 * stage.width, stage.top + p.y / 100 * stage.height],
+            still: [still.left + data[p.key].pinX / 100 * still.width, still.top + data[p.key].pinY / 100 * still.height],
+            tol: .04 * still.width }));
+    }""")
+    for p in pairs:
+        assert abs(p["live"][0] - p["still"][0]) < p["tol"] and abs(p["live"][1] - p["still"][1]) < p["tol"], p
 
 
 def test_phone_still_lists_links_instead_of_pins(browser, site_url):

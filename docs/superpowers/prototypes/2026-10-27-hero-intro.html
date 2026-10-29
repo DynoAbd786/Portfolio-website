@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero intro prototype v8</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0a0f1c; --line:#1e2a44; --cy:#22d3ee; --slate:#94a3b8; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--ink); color:#e2e8f0; font-family:Inter, system-ui, sans-serif; }
+  .mono { font-family:'JetBrains Mono', monospace; }
+  header { position:fixed; inset:0 0 auto 0; height:64px; z-index:50; display:flex; align-items:center; justify-content:space-between;
+           padding:0 32px; background:rgba(10,15,28,.55); backdrop-filter:blur(8px); border-bottom:1px solid rgba(30,42,68,.6); }
+  header .logo { display:flex; gap:10px; align-items:center; font-weight:600; font-size:15px; opacity:0; transition:opacity .6s; }
+  body.ready header .logo { opacity:1; }
+  header .logo b { display:grid; place-items:center; width:28px; height:28px; border:1px solid var(--line); border-radius:6px; color:var(--cy); font-size:11px; }
+  header nav { display:flex; gap:28px; font-size:14px; color:#cbd5e1; align-items:center; }
+  header nav .ai { border:1px solid rgba(34,211,238,.5); color:var(--cy); padding:6px 12px; border-radius:6px; }
+
+  #hero { position:sticky; top:0; height:100svh; overflow:hidden; background:
+          linear-gradient(rgba(34,211,238,.05) 1px, transparent 1px) 0 0/56px 56px,
+          linear-gradient(90deg, rgba(34,211,238,.05) 1px, transparent 1px) 0 0/56px 56px, var(--ink); }
+
+  /* the room: a 16:10 stage so the hotspots stay on their objects */
+  #stage { position:absolute; top:64px; height:calc(100% - 64px); aspect-ratio:16/10; right:-3%; }
+  #inner { position:absolute; inset:0; transform-origin:0 0; transition:transform 1.1s cubic-bezier(.65,0,.25,1); }
+  #room { display:block; width:100%; height:100%;
+          -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 12%); mask-image:linear-gradient(90deg, transparent 0%, #000 12%);
+          opacity:0; transform:scale(1.12); transition:opacity 1.4s ease, transform 2.2s cubic-bezier(.2,.7,.2,1); }
+  body.ready #room { opacity:1; transform:scale(1); }
+  body.exploring #room { -webkit-mask-image:none; mask-image:none; }
+  #veil { position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity 1.4s;
+          background:linear-gradient(90deg, rgba(10,15,28,.6) 0%, transparent 35%), linear-gradient(0deg, rgba(10,15,28,.8) 0%, transparent 25%); }
+  body.ready #veil { opacity:1; }
+
+  #pins { position:absolute; inset:0; opacity:0; transition:opacity .5s; pointer-events:none; }
+  body.ready #pins { opacity:1; pointer-events:auto; }
+  .pin { position:absolute; width:56px; height:56px; margin:-28px 0 0 -28px; border-radius:50%; cursor:pointer; }
+  .pin::after { content:''; position:absolute; left:50%; top:50%; width:8px; height:8px; margin:-4px; border-radius:50%;
+                background:var(--cy); box-shadow:0 0 0 4px rgba(34,211,238,.18); animation:pin 2.4s infinite; }
+  .pin.seen::after { background:#a78bfa; box-shadow:0 0 0 4px rgba(167,139,250,.18); animation:none; }
+  @keyframes pin { 50% { box-shadow:0 0 0 9px rgba(34,211,238,.05); } }
+  .pin span { position:absolute; left:50%; bottom:42px; transform:translateX(-50%); white-space:nowrap; pointer-events:none;
+              background:rgba(10,15,28,.9); border:1px solid var(--line); border-radius:6px; padding:5px 9px; font:500 12px 'JetBrains Mono';
+              color:#e2e8f0; opacity:0; transition:opacity .2s; }
+  .pin span small { color:var(--slate); margin-left:6px; }
+  .pin:hover span { opacity:1; }
+  body.exploring .pin span { display:none; }
+  body.exploring .pin.active::after { background:#fff; }
+
+  /* the name build runs on a full-screen canvas, then flies to the heading */
+  #namefx { position:absolute; left:0; top:0; z-index:40; pointer-events:none; transform-origin:0 0; }
+  #loading { position:absolute; left:50%; bottom:18%; transform:translateX(-50%); z-index:41; font-size:12px; color:var(--slate); letter-spacing:.08em; transition:opacity .4s; }
+  body.ready #loading { opacity:0; }
+  #loading i { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--cy); margin-right:8px; animation:pulse 1s infinite alternate; }
+  @keyframes pulse { from { opacity:.25 } to { opacity:1 } }
+
+  /* left panel: your intro, or an object's card while exploring */
+  #slot { position:absolute; left:48px; top:108px; width:560px; z-index:5; transition:transform .7s cubic-bezier(.65,0,.25,1), opacity .5s; }
+  body.exploring #slot { transform:translateX(-120%); opacity:0; pointer-events:none; }
+  #slot h1 { display:inline-block; margin:0; font-size:56px; line-height:1; letter-spacing:-2px; font-weight:800; visibility:hidden; }
+  body.landed #slot h1 { visibility:visible; }
+  .rest, .kicker { opacity:0; transform:translateY(10px); transition:opacity .7s .9s, transform .7s .9s; }
+  body.ready .rest, body.ready .kicker { opacity:1; transform:none; }
+  .kicker { color:var(--cy); font-size:13px; margin:0 0 14px; }
+  .blurb { color:#cbd5e1; font-size:17px; line-height:1.6; margin:18px 0 22px; max-width:460px; }
+  .btns { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { padding:11px 18px; border-radius:8px; font-weight:600; font-size:14px; border:1px solid var(--line); background:rgba(10,15,28,.6); color:#f1f5f9; cursor:pointer; white-space:nowrap; }
+  .btn.p { background:var(--cy); color:#05202a; border-color:var(--cy); box-shadow:0 0 24px rgba(34,211,238,.35); }
+
+  /* the main button: a light that keeps tracing its outline */
+  @property --a { syntax:'<angle>'; inherits:false; initial-value:0deg; }
+  .shine { position:relative; isolation:isolate; }
+  .shine::before { content:''; position:absolute; inset:-3px; border-radius:11px; padding:2px; z-index:-1;
+                   background:conic-gradient(from var(--a), transparent 0deg 230deg, rgba(255,255,255,.15) 270deg, #fff 330deg, transparent 360deg);
+                   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+                   animation:trace 3s linear infinite; }
+  .shine::after { content:''; position:absolute; inset:-3px; border-radius:11px; z-index:-2; filter:blur(10px); opacity:.55;
+                  background:conic-gradient(from var(--a), transparent 0deg 280deg, #a5f3fc 330deg, transparent 360deg); animation:trace 3s linear infinite; }
+  @keyframes trace { to { --a:360deg; } }
+
+  .open { margin-top:18px; font-size:12px; color:var(--slate); } .open i { display:inline-block; width:7px; height:7px; border-radius:50%; background:#34d399; margin-right:8px; }
+  #hint { position:absolute; right:40px; bottom:76px; font-size:12px; color:var(--slate); opacity:0; transition:opacity .8s 1.4s; }
+  body.ready #hint { opacity:1; }
+  #hint kbd { border:1px solid var(--line); border-radius:4px; padding:1px 5px; margin-right:4px; color:#cbd5e1; }
+  #cue { position:absolute; left:50%; bottom:28px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px;
+         font-size:11px; color:var(--slate); letter-spacing:.12em; opacity:0; transition:opacity .8s 1.6s; }
+  body.ready #cue { opacity:1; }
+  #cue span { width:1px; height:28px; background:linear-gradient(var(--cy), transparent); animation:cue 1.6s infinite; }
+  @keyframes cue { 0% { transform:scaleY(0); transform-origin:top } 50% { transform:scaleY(1); transform-origin:top } 51% { transform-origin:bottom } 100% { transform:scaleY(0); transform-origin:bottom } }
+
+  #card { position:absolute; left:48px; top:112px; width:440px; z-index:6; padding:26px 26px 22px; border-radius:14px;
+          background:rgba(10,15,28,.85); border:1px solid var(--line); backdrop-filter:blur(10px);
+          transform:translateX(-120%); opacity:0; transition:transform .7s cubic-bezier(.65,0,.25,1) .15s, opacity .5s .15s; }
+  body.exploring #card { transform:none; opacity:1; }
+  #card .close { position:absolute; right:14px; top:12px; border:0; background:none; color:var(--slate); font-size:22px; cursor:pointer; }
+  #card .kick { color:var(--cy); font:500 12px 'JetBrains Mono'; }
+  #card h3 { margin:10px 0 10px; font-size:30px; letter-spacing:-1px; }
+  #card p { color:#cbd5e1; line-height:1.6; margin:0 0 14px; }
+  #card ul { margin:0 0 18px; padding:0; list-style:none; color:var(--slate); font-size:14px; line-height:1.5; }
+  #card li { padding-left:16px; position:relative; margin-bottom:6px; } #card li::before { content:'›'; position:absolute; left:0; color:var(--cy); }
+  #card .row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  #card .back { font:500 12px 'JetBrains Mono'; color:var(--slate); cursor:pointer; }
+  #tap { display:none; }
+
+  main { position:relative; z-index:5; background:var(--ink); border-top:1px solid var(--line); box-shadow:0 -30px 60px rgba(0,0,0,.5); }
+  .wrap { max-width:1280px; margin:0 auto; padding:72px 32px; }
+  .proof { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .proof div { background:var(--ink); padding:22px; } .proof b { display:block; font-size:24px; color:#f1f5f9; } .proof small { color:var(--slate); }
+  h2 { font-size:34px; letter-spacing:-1px; margin:64px 0 8px; } .sub { color:var(--slate); margin:0 0 28px; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .c { border:1px solid var(--line); border-radius:12px; padding:22px; background:rgba(255,255,255,.02); min-height:150px; }
+  .c .mono { color:var(--cy); font-size:11px; } .c h3 { margin:10px 0 8px; font-size:18px; } .c p { color:var(--slate); font-size:14px; margin:0; }
+
+  #controls { position:fixed; right:16px; bottom:16px; z-index:60; display:flex; gap:8px; }
+  #controls button { font:500 12px 'JetBrains Mono'; background:#fff; color:#111; border:0; border-radius:6px; padding:8px 12px; cursor:pointer; box-shadow:0 4px 18px rgba(0,0,0,.4); }
+  #note { position:fixed; left:16px; bottom:16px; z-index:60; max-width:360px; font-size:12px; line-height:1.5; background:rgba(255,255,255,.95); color:#111; padding:10px 12px; border-radius:8px; }
+  .embedded #controls, .embedded #note { display:none; }
+  #phone { position:fixed; inset:0; z-index:100; background:rgba(3,6,12,.86); display:none; place-items:center; }
+  #phone.on { display:grid; }
+  #phone .frame { width:390px; height:844px; border-radius:44px; border:10px solid #1f2937; overflow:hidden; background:#000; transform-origin:center; box-shadow:0 30px 80px rgba(0,0,0,.6); }
+  #phone iframe { width:100%; height:100%; border:0; }
+  #phone .x { position:absolute; right:24px; top:20px; font:500 13px 'JetBrains Mono'; background:#fff; color:#111; border:0; border-radius:6px; padding:8px 12px; cursor:pointer; }
+
+  /* phones: name, then the room edge to edge, then the rest */
+  @media (max-width:640px) {
+    header { padding:0 16px; } header nav span:not(.ai) { display:none; }
+    #hero { position:relative; height:auto; min-height:100svh; overflow:visible; display:flex; flex-direction:column; padding:84px 16px 32px; }
+    #slot { display:contents; }
+    .top { order:1; } .rest { order:3; }
+    #slot h1 { font-size:42px; letter-spacing:-1.5px; }
+    .kicker { margin-bottom:10px; font-size:12px; }
+    #stage { order:2; position:relative; top:auto; right:auto; height:auto; width:calc(100% + 32px); margin:18px -16px 0; aspect-ratio:4/3; overflow:hidden; }
+    #inner { left:-10%; right:-10%; }
+    #room { -webkit-mask-image:none; mask-image:none; }
+    #veil, #hint, #cue { display:none; }
+    #tap { display:block; position:absolute; left:16px; bottom:12px; font:500 11px 'JetBrains Mono'; color:#cbd5e1; background:rgba(10,15,28,.75);
+           border:1px solid var(--line); border-radius:6px; padding:5px 8px; opacity:0; transition:opacity .6s 1.2s; }
+    body.ready #tap { opacity:1; }
+    .blurb { font-size:16px; margin:18px 0 18px; }
+    .btns .btn { flex:1 1 auto; text-align:center; }
+    #card { position:fixed; left:0; right:0; top:auto; bottom:0; width:auto; max-height:44svh; overflow:auto; border-radius:16px 16px 0 0;
+            padding:16px 16px 20px; z-index:45; transform:translateY(110%); opacity:1; transition:transform .5s cubic-bezier(.65,0,.25,1);
+            box-shadow:0 -12px 40px rgba(0,0,0,.5); }
+    body.exploring #card { transform:none; }
+    #card .kick { font-size:11px; } #card h3 { font-size:20px; margin:6px 0 6px; }
+    #card p { font-size:14px; line-height:1.5; margin-bottom:10px; } #card ul { font-size:13px; margin-bottom:12px; } #card li { margin-bottom:3px; }
+    #card .btn { padding:9px 14px; font-size:13px; }
+    #loading { white-space:nowrap; bottom:22%; }
+    #note { display:none; }
+    #controls button:not(:first-child) { display:none; }
+    #controls button { padding:6px 9px; font-size:11px; opacity:.85; }
+    body.exploring #controls { display:none; }
+    .proof, .cards { grid-template-columns:1fr !important; }
+    .wrap { padding:48px 16px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><b>mk</b>kashif-khan</div>
+  <nav><span>Work</span><span>About</span><span>Contact</span><span class="ai">Ask AI</span></nav>
+</header>
+
+<section id="hero">
+  <div id="stage"><div id="inner"><img id="room" src="../../../website/wwwroot/images/workshop/still@2x.webp" alt=""><div id="pins"></div></div><div id="tap">tap the room to explore · <span class="count">0</span>/11</div></div>
+  <div id="veil"></div>
+
+  <div id="slot">
+    <div class="top">
+      <p class="kicker mono">// software engineer · ai systems</p>
+      <h1>Muhammad<br>Kashif-Khan</h1>
+    </div>
+    <div class="rest">
+      <p class="blurb">I take on problems I've never seen and ship working software for them: biomedical simulation, scientific tools, computer vision, cloud and AI. First-Class MEng, Leeds.</p>
+      <div class="btns"><span class="btn">See my work →</span><span class="btn">Download CV ↓</span><span class="btn p shine">Get in touch</span></div>
+      <p class="open mono"><i></i>Open to graduate software &amp; AI roles</p>
+    </div>
+  </div>
+
+  <div id="card">
+    <button class="close" aria-label="Close">×</button>
+    <div class="kick"></div><h3></h3><p></p><ul></ul>
+    <div class="row"><span class="btn p cta"></span><span class="back">esc · back to intro</span></div>
+  </div>
+
+  <div id="hint" class="mono"><kbd>hover</kbd>inspect &nbsp; <kbd>click</kbd>zoom in &nbsp; explored <span class="count" style="color:var(--cy)">0</span>/11</div>
+  <div id="cue" class="mono">SCROLL<span></span></div>
+  <canvas id="namefx"></canvas>
+  <div id="loading" class="mono"><i></i>building the workshop</div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div class="proof">
+      <div><b>First-Class</b><small>MEng CS &amp; AI, Leeds</small></div>
+      <div><b>50% faster</b><small>pNanoLocz vs the MATLAB original</small></div>
+      <div><b>Stent simulation</b><small>2025 internship</small></div>
+      <div><b>1.56 cm</b><small>camera error, 3D from one video</small></div>
+    </div>
+    <h2>Selected work</h2>
+    <p class="sub">Each one was new to me when I started.</p>
+    <div class="cards">
+      <div class="c"><span class="mono">biomedical</span><h3>Flow diverter deployment</h3><p>GPU-accelerated stent simulation tool.</p></div>
+      <div class="c"><span class="mono">scientific software</span><h3>pNanoLocz</h3><p>About 50% faster than the MATLAB original.</p></div>
+      <div class="c"><span class="mono">computer vision</span><h3>3D from a single video</h3><p>1.56 cm camera error on Replica.</p></div>
+    </div>
+    <h2>What I'm building</h2><p class="sub">Synergy and HireForge…</p>
+    <h2>Experience</h2><p class="sub">…and the contact form, as today.</p>
+    <div style="height:400px"></div>
+  </div>
+</main>
+
+<div id="note">Prototype. The room is a picture here; the real one is the live 3D scene. Replay to watch the name build, click the dots, scroll. Open it on your phone for the phone layout.</div>
+<div id="controls">
+  <button onclick="play(3300)">Replay (fast load)</button>
+  <button onclick="play(7000)">Replay (slow load)</button>
+</div>
+
+<script>
+  if (self !== top) document.documentElement.classList.add('embedded');
+  // the prototype always starts at the top; the real site skips the intro instead when it opens part way down
+  // a refresh always starts at the top
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  scrollTo(0, 0);
+  // no scrolling until the intro has finished (or 4.5 s at most, so a slow room can't trap anyone)
+  let locked = false, lockCap = 0;
+  const stop = e => { if (locked) e.preventDefault(); };
+  addEventListener('wheel', stop, { passive: false });
+  addEventListener('touchmove', stop, { passive: false });
+  addEventListener('keydown', e => { if (locked && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'End', 'Home'].includes(e.key)) e.preventDefault(); });
+  function lock(on) {
+    locked = on; document.documentElement.style.overflow = on ? 'hidden' : '';
+    clearTimeout(lockCap); if (on) lockCap = setTimeout(() => lock(false), 4500);
+  }
+  const $ = s => document.querySelector(s);
+  const isPhone = () => matchMedia('(max-width: 640px)').matches;
+  const room = $('#room'), inner = $('#inner'), stage = $('#stage'), pins = $('#pins'), card = $('#card'), cv = $('#namefx'), ctx = cv.getContext('2d');
+  const lib = import('https://cdn.jsdelivr.net/npm/d3-delaunay@6.0.4/+esm');
+  const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v, ease = k => 1 - Math.pow(1 - k, 3);
+  let raf = 0, timers = [], run = 0;
+
+  // the name is "reconstructed": a point cloud settles into the letters, a scan line wires it into a mesh,
+  // the mesh fills with lit facets, then polishes into solid text. The mesh covers the whole word and is cut
+  // to the exact letter shapes, so edges stay crisp and nothing has gaps.
+  async function play(readyAt) {
+    const me = ++run;
+    timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(raf);
+    scrollTo(0, 0); lock(true); document.body.className = ''; closeCard(); room.removeAttribute('style');
+    cv.style.transition = 'none'; cv.style.transform = ''; cv.style.opacity = 1;
+    const [{ Delaunay }] = await Promise.all([lib, document.fonts.load('800 100px Inter')]);
+    if (me !== run) return;
+    const t0 = performance.now();
+
+    const W = innerWidth, H = innerHeight, dpr = devicePixelRatio || 1, phoneSize = isPhone();
+    cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    const fs = Math.round(Math.min(170, W * (phoneSize ? 0.15 : 0.085)));
+    const font = `800 ${fs}px Inter`, spacing = `${-0.036 * fs}px`;
+    const m = document.createElement('canvas'); m.width = W; m.height = H;
+    const mc = m.getContext('2d', { willReadFrequently: true });
+    mc.font = font; mc.letterSpacing = spacing; mc.textAlign = 'center'; mc.fillStyle = '#fff';
+    const met = mc.measureText('Kashif-Khan'), asc = met.actualBoundingBoxAscent, desc = met.actualBoundingBoxDescent, w2 = met.width;
+    const boxH = fs + asc + desc, top = H * 0.45 - boxH / 2, b1 = top + asc, b2 = b1 + fs, cx = W / 2;
+    const drawName = c => { c.font = font; c.letterSpacing = spacing; c.textAlign = 'center'; c.fillText('Muhammad', cx, b1); c.fillText('Kashif-Khan', cx, b2); };
+    drawName(mc);
+    const A = mc.getImageData(0, 0, W, H).data;
+    const inside = (x, y) => { x |= 0; y |= 0; return x >= 0 && y >= 0 && x < W && y < H && A[(y * W + x) * 4 + 3] > 127; };
+    const bx0 = cx - w2 / 2 - 6, bx1 = cx + w2 / 2 + 6, by0 = top - 6, by1 = b2 + desc + 6;
+
+    // vertices: one jittered point per grid cell (inside and just outside the letters), plus evenly spaced points on the outlines
+    const rnd = Math.random, cell = fs / (phoneSize ? 8 : 10), ecell = fs / (phoneSize ? 16 : 22);
+    const pts = [], shown = [];
+    for (let y = by0 - cell; y < by1 + cell; y += cell) for (let x = bx0 - cell; x < bx1 + cell; x += cell) {
+      const px = x + (0.15 + rnd() * 0.7) * cell, py = y + (0.15 + rnd() * 0.7) * cell;
+      pts.push([px, py]); shown.push(inside(px, py));
+    }
+    const taken = new Set(), edge0 = [];
+    for (let y = by0 | 0; y < by1; y++) for (let x = bx0 | 0; x < bx1; x++) {
+      if (!inside(x, y) || (inside(x + 1, y) && inside(x - 1, y) && inside(x, y + 1) && inside(x, y - 1))) continue;
+      const key = ((x / ecell) | 0) + ',' + ((y / ecell) | 0);
+      if (taken.has(key)) continue;
+      taken.add(key); pts.push([x, y]); shown.push(true); edge0.push([x, y]);
+    }
+    // each vertex gets a height, so neighbouring facets share corners and light consistently
+    const z = pts.map(() => rnd() * cell * 1.6);
+    const L = [-0.45, -0.6, 0.66], Ln = Math.hypot(...L); L[0] /= Ln; L[1] /= Ln; L[2] /= Ln;
+    const d = Delaunay.from(pts), T = d.triangles, tris = [];
+    for (let i = 0; i < T.length; i += 3) {
+      const a = T[i], b = T[i + 1], c = T[i + 2];
+      const gx = (pts[a][0] + pts[b][0] + pts[c][0]) / 3, gy = (pts[a][1] + pts[b][1] + pts[c][1]) / 3;
+      if (gx < bx0 - cell || gx > bx1 + cell || gy < by0 - cell || gy > by1 + cell) continue;
+      const ux = pts[b][0] - pts[a][0], uy = pts[b][1] - pts[a][1], uz = z[b] - z[a];
+      const vx = pts[c][0] - pts[a][0], vy = pts[c][1] - pts[a][1], vz = z[c] - z[a];
+      let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+      if (nz < 0) { nx = -nx; ny = -ny; nz = -nz; }
+      const nl = Math.hypot(nx, ny, nz) || 1, lit = Math.max(0, (nx * L[0] + ny * L[1] + nz * L[2]) / nl);
+      const k = 0.22 + 0.78 * lit;
+      // dark facets lean cyan, lit ones go to near white
+      const r = 40 + k * 208, g = 100 + k * 152, bl = 135 + k * 120;
+      tris.push({ a, b, c, p: (gx - bx0) / (bx1 - bx0), fill: `rgb(${r | 0},${g | 0},${bl | 0})` });
+    }
+    const from = pts.map(() => { const r = (0.25 + rnd() * 0.75) * Math.max(W, H) * 0.55, a = rnd() * Math.PI * 2; return [cx + Math.cos(a) * r, H * 0.45 + Math.sin(a) * r * 0.6, rnd() * 0.45]; });
+    const cur = pts.map(p => [p[0], p[1]]);
+
+    // the mesh is drawn on its own layer, then cut to the letters
+    const layer = document.createElement('canvas'); layer.width = W * dpr; layer.height = H * dpr;
+    const lc = layer.getContext('2d');
+    // both lines in one mask: cutting line by line would leave only their overlap
+    // the outline is slightly imperfect, like a scanned surface: the letters' edges drift by a pixel or two
+    // (strips nudged by smooth noise) and carry a few tiny chips
+    const mk = () => { const c = document.createElement('canvas'); c.width = W * dpr; c.height = H * dpr; return c; };
+    const txt = mk(), tx = txt.getContext('2d'); tx.setTransform(dpr, 0, 0, dpr, 0, 0); tx.fillStyle = '#fff'; drawName(tx);
+    const amp = Math.max(0.9, fs * 0.011) * dpr, sw = Math.max(1, Math.round(2 * dpr)), seed = rnd() * 100;
+    const noise = (u, k) => Math.sin(u * 0.09 + seed * k) * 0.6 + Math.sin(u * 0.031 + seed * 2 * k) * 0.4 + Math.sin(u * 0.27 + seed * 3 * k) * 0.18;
+    const mid = mk(), md = mid.getContext('2d');
+    for (let x = 0; x < mid.width; x += sw) md.drawImage(txt, x, 0, sw, mid.height, x, amp * noise(x / dpr, 1), sw, mid.height);
+    const cut = mk(), cc = cut.getContext('2d');
+    for (let y = 0; y < cut.height; y += sw) cc.drawImage(mid, 0, y, cut.width, sw, amp * noise(y / dpr, 2), y, cut.width, sw);
+    cc.globalCompositeOperation = 'destination-out'; cc.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (let i = 0; i < (phoneSize ? 5 : 9) && edge0.length; i++) {
+      const e = edge0[(rnd() * edge0.length) | 0], r = fs * (0.018 + rnd() * 0.02), a0 = rnd() * Math.PI * 2;
+      cc.beginPath(); cc.moveTo(e[0] + Math.cos(a0) * r, e[1] + Math.sin(a0) * r);
+      cc.lineTo(e[0] + Math.cos(a0 + 2.1) * r, e[1] + Math.sin(a0 + 2.1) * r); cc.lineTo(e[0] + Math.cos(a0 + 4.2) * r * 0.6, e[1] + Math.sin(a0 + 4.2) * r * 0.6); cc.fill();
+    }
+    cc.globalCompositeOperation = 'source-over';
+    const SCAN0 = 1.05, SCAN = 0.9, FILL0 = 1.75, FILL = 0.6, POLISH = 2.75;
+
+    function frame(now) {
+      if (me !== run) return;
+      const t = (now - t0) / 1000;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+      for (let n = 0; n < pts.length; n++) {
+        const k = ease(clamp((t - from[n][2]) / 1.0));
+        cur[n][0] = from[n][0] + (pts[n][0] - from[n][0]) * k; cur[n][1] = from[n][1] + (pts[n][1] - from[n][1]) * k;
+      }
+      const polish = clamp((t - POLISH) / 0.35);
+      if (t > SCAN0 && polish < 1) {
+        lc.setTransform(dpr, 0, 0, dpr, 0, 0); lc.globalCompositeOperation = 'source-over'; lc.clearRect(0, 0, W, H);
+        for (const q of tris) {
+          const fa = clamp((t - (FILL0 + q.p * FILL)) / 0.28);
+          if (!fa) continue;
+          lc.globalAlpha = fa; lc.fillStyle = q.fill; lc.strokeStyle = q.fill; lc.lineWidth = 0.6;
+          lc.beginPath(); lc.moveTo(cur[q.a][0], cur[q.a][1]); lc.lineTo(cur[q.b][0], cur[q.b][1]); lc.lineTo(cur[q.c][0], cur[q.c][1]); lc.closePath();
+          lc.fill(); lc.stroke();
+        }
+        lc.lineWidth = 0.8; lc.strokeStyle = '#22d3ee';
+        for (const q of tris) {
+          const ea = clamp((t - (SCAN0 + q.p * SCAN)) / 0.15) * (1 - clamp((t - (FILL0 + q.p * FILL + 0.15)) / 0.4) * 0.75);
+          if (!ea) continue;
+          lc.globalAlpha = ea * 0.9;
+          lc.beginPath(); lc.moveTo(cur[q.a][0], cur[q.a][1]); lc.lineTo(cur[q.b][0], cur[q.b][1]); lc.lineTo(cur[q.c][0], cur[q.c][1]); lc.closePath(); lc.stroke();
+        }
+        lc.globalAlpha = 1; lc.globalCompositeOperation = 'destination-in'; lc.setTransform(1, 0, 0, 1, 0, 0); lc.drawImage(cut, 0, 0);
+        lc.globalCompositeOperation = 'source-over';
+        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1 - polish; ctx.drawImage(layer, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      // the point cloud, fading once the mesh is wired
+      const pa = 1 - clamp((t - (SCAN0 + 0.3)) / 0.8);
+      if (pa) { ctx.fillStyle = '#67e8f9'; ctx.globalAlpha = pa * 0.9; for (let n = 0; n < cur.length; n++) if (shown[n]) ctx.fillRect(cur[n][0] - 1, cur[n][1] - 1, 2, 2); }
+      ctx.globalAlpha = 1;
+      // scan line
+      if (t > SCAN0 - 0.05 && t < SCAN0 + SCAN + 0.1) {
+        const sx = bx0 + clamp((t - SCAN0) / SCAN) * (bx1 - bx0), g = ctx.createLinearGradient(sx - 50, 0, sx + 2, 0);
+        g.addColorStop(0, 'rgba(34,211,238,0)'); g.addColorStop(1, 'rgba(34,211,238,.35)');
+        ctx.fillStyle = g; ctx.fillRect(sx - 50, by0 - 30, 52, by1 - by0 + 60);
+        ctx.fillStyle = '#cffafe'; ctx.shadowColor = '#22d3ee'; ctx.shadowBlur = 14; ctx.fillRect(sx, by0 - 30, 2, by1 - by0 + 60); ctx.shadowBlur = 0;
+      }
+      if (polish) { ctx.globalAlpha = polish; ctx.fillStyle = '#f1f5f9'; drawName(ctx); ctx.globalAlpha = 1; }
+      if (t < POLISH + 0.45) raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+
+    // the name only moves once it has finished building and the room is ready
+    timers.push(setTimeout(() => {
+      // measured against the hero, which the layer now sits in
+      const hr = $('#hero').getBoundingClientRect(), h = $('#slot h1').getBoundingClientRect(), s = h.width / w2;
+      const tx = h.left - hr.left - (cx - w2 / 2) * s, ty = h.top - hr.top + h.height / 2 - ((top + b2 + desc) / 2) * s;
+      cv.style.transition = 'transform 1.1s cubic-bezier(.7,0,.2,1), opacity .35s';
+      cv.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+      document.body.classList.add('ready');
+      timers.push(setTimeout(() => { document.body.classList.add('landed'); cv.style.opacity = 0; lock(false); }, 1120));
+    }, Math.max(readyAt, 3300)));
+  }
+
+  // hotspots: positions and text from HomeContent.Workshop
+  const SPOTS = [
+    ['synergy', 45.67, 25.55, 'Synergy', 'code intelligence platform', 'something I\'m building · developer tools', 'Turns a codebase into a graph you can query, for developers and for AI coding agents. It runs on your own machine.', ['Parses 8 languages with tree-sitter into one graph', 'Shows what changed between versions, biggest impact first', 'An MCP server with 21 tools for coding agents'], 'Read about Synergy →'],
+    ['hireforge', 58.64, 27.87, 'HireForge', 'AI-run coding assessments', 'something I\'m building · AI systems', 'Coding assessments run end to end by AI agents.', ['One agent builds a codebase with a single planted bug', 'The candidate works through a realistic task on it', 'A separate agent reviews the work and writes the scorecard'], 'More on what I\'m building →'],
+    ['thesis', 28.43, 64.43, 'MEng project', '3D reconstruction', 'master\'s group project · computer vision', 'My master\'s group project: a pipeline that turns one ordinary video into a 3D mesh at real-world scale. I led the team of five.', ['Dense depth from Depth Anything V3, point tracks from CoTracker3', 'Bundle adjustment makes the two agree, then TSDF fusion builds the mesh', '1.56 cm camera error on the Replica benchmark'], 'Read the case study →'],
+    ['stent', 38.35, 34.4, 'Stent simulation', 'internship · 2025', 'research internship · biomedical', 'A physics simulation of flow-diverter stents opening inside blood vessels, built during my 2025 internship.', ['GPU-accelerated 3D visualisation with PyVista, VTK and VMTK', 'Models the forces on each wire joint as the stent opens'], 'Read the case study →'],
+    ['afm', 72.92, 54.43, 'pNanoLocz', 'internship · 2024', 'research internship · scientific software', 'Software for analysing atomic force microscope data. We rebuilt it from MATLAB in Python and made it about 50% faster.', ['A PyQt6 desktop app built around plugins', 'Parallel processing for the heavy steps', 'I led the development team and mentored a junior intern'], 'Read the case study →'],
+    ['homelab', 25.19, 55.38, 'Home lab', 'local LLMs · agents', 'infrastructure', 'I run local LLMs and coding agents on my own hardware.', ['Llama.cpp and containerised services on Ubuntu and a Raspberry Pi', 'Reachable from anywhere over Tailscale', 'Tuned for long inference runs on an RTX 5090'], 'Read the case study →'],
+    ['azure', 24.55, 37.82, 'Azure inventory', 'serverless · cloud', 'cloud · distributed systems', 'An inventory system on Azure\'s serverless services that reacts to stock changes as they happen.', ['Azure Functions and Cosmos DB change feeds', 'Automatic stock alerts', 'Benchmarked for cold starts and concurrency'], 'Read the case study →'],
+    ['whiteboard', 62.06, 74.81, 'Internships', '2024 · 2025', 'experience', 'Two summer research internships at the University of Leeds.', ['2025: stent deployment simulation', '2024: pNanoLocz, about 50% faster than the MATLAB original', 'Team lead and mentor on pNanoLocz'], 'See my experience →'],
+    ['certificate', 14.55, 44.26, 'Education', 'MEng CS & AI · Leeds', 'education', 'MEng Computer Science with Artificial Intelligence at the University of Leeds, 2022–2026, First-Class Honours.', ['Final-year modules at 80–88%', 'Led the master\'s group project', 'Core executive team of the Leeds AI Society'], 'More about me →'],
+    ['bookcase', 74.38, 41.34, 'All projects', 'projects & coursework', 'the bookcase', 'The rest of my coursework and side projects.', ['Robot navigation with ROS2, SLAM and YOLOv8', 'A real-time OpenGL renderer in C++', 'GPU blood-flow simulation and an xv6 kernel'], 'Browse all projects →'],
+    ['robot', 65.22, 36.72, 'Assistant', 'ask me about my work', 'this website · AI', 'This site has an AI assistant that answers questions about my work.', ['What does Synergy do?', 'What did you build as an intern?'], 'Open the chat →'],
+  ];
+  const seen = new Set();
+  for (const s of SPOTS) {
+    const p = document.createElement('div');
+    p.className = 'pin'; p.style.left = s[1] + '%'; p.style.top = s[2] + '%';
+    p.innerHTML = `<span>${s[3]}<small>${s[4]}</small></span>`;
+    p.addEventListener('click', e => { e.stopPropagation(); openCard(s, p); });
+    pins.appendChild(p);
+  }
+  function openCard(s, p) {
+    pins.querySelectorAll('.pin').forEach(x => x.classList.toggle('active', x === p));
+    seen.add(s[0]); p.classList.add('seen'); document.querySelectorAll('.count').forEach(c => c.textContent = seen.size);
+    card.querySelector('.kick').textContent = s[5]; card.querySelector('h3').textContent = s[3]; card.querySelector('p').textContent = s[6];
+    card.querySelector('ul').innerHTML = s[7].map(t => `<li>${t}</li>`).join(''); card.querySelector('.cta').textContent = s[8];
+    card.querySelector('.back').textContent = isPhone() ? 'close' : 'esc · back to intro';
+    inner.style.transform = '';
+    const base = inner.getBoundingClientRect(), z = isPhone() ? 1.8 : 1.7;
+    const lx = s[1] / 100 * base.width, ly = s[2] / 100 * base.height;
+    let tx, ty;
+    if (isPhone()) {
+      // bring the room up under the header first, so the sheet below never hides it
+      scrollTo({ top: scrollY + stage.getBoundingClientRect().top - 64, behavior: 'smooth' });
+      const st = stage.getBoundingClientRect(); tx = st.left + st.width / 2; ty = st.top + st.height / 2;
+    }
+    else { const left = 48 + 440 + 40; tx = left + (innerWidth - left) / 2; ty = 64 + (innerHeight - 64) / 2; }
+    inner.style.transform = `translate(${tx - base.left - lx * z}px, ${ty - base.top - ly * z}px) scale(${z})`;
+    document.body.classList.add('exploring');
+  }
+  function closeCard() { document.body.classList.remove('exploring'); inner.style.transform = ''; pins.querySelectorAll('.pin').forEach(x => x.classList.remove('active')); }
+  card.querySelector('.close').onclick = closeCard; card.querySelector('.back').onclick = closeCard;
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
+  $('#hero').addEventListener('click', e => { if (document.body.classList.contains('exploring') && !card.contains(e.target)) closeCard(); });
+
+  // scrolling dims the room and pulls it back (desktop; phones scroll normally)
+  addEventListener('scroll', () => {
+    if (isPhone() || !document.body.classList.contains('ready')) return;
+    const k = Math.min(1, scrollY / innerHeight);
+    room.style.transition = 'none'; room.style.opacity = 1 - k * .65; room.style.transform = `scale(${1 - k * .06})`;
+  }, { passive: true });
+
+  function phone(on) {
+    const f = $('#phone'), fr = f.querySelector('iframe');
+    f.classList.toggle('on', on);
+    fr.src = on ? location.pathname + '?embed=' + Date.now() : 'about:blank';
+    f.querySelector('.frame').style.transform = `scale(${Math.min(1, (innerHeight - 40) / 864)})`;
+  }
+
+  play(3300);
+</script>
+</body>
+</html>
