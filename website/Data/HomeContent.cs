@@ -59,7 +59,7 @@ namespace website.Data
             new ExperienceItem("2022 – 2026", "MEng Computer Science with AI", "University of Leeds",
                 "First-Class Honours. I led my master's group project, a pipeline that reconstructs 3D scenes from a single video."),
             new ExperienceItem("Jun – Aug 2025", "Summer internship: stent deployment simulation", "University of Leeds",
-                "Built a GPU-accelerated simulation of flow-diverter stents opening inside blood vessels, with collision and force models."),
+                "Built a GPU-accelerated tool for simulating flow-diverter stents in blood vessels, with stent models and joint-level expansion forces."),
             new ExperienceItem("Jun – Aug 2024", "Summer internship: pNanoLocz", "University of Leeds",
                 "Rebuilt a MATLAB microscopy analysis tool in Python, about 50% faster than the original. I led the team and mentored a junior intern."),
             new ExperienceItem("At university", "Core Executive Leadership Team", "Leeds Artificial Intelligence Society",
@@ -107,7 +107,7 @@ namespace website.Data
                 new[]
                 {
                     "GPU-accelerated 3D visualisation with PyVista, VTK and VMTK",
-                    "Models how the wire's joints move, collide and take force as the stent deploys",
+                    "Models the forces on each wire joint as the stent opens",
                 },
                 new[] { "Python", "VMTK", "PyVista", "GPU" },
                 "/projects/medical-simulation", "Read the case study →", "link", 38.35, 34.4),
