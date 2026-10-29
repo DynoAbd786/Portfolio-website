@@ -10,10 +10,12 @@ public class ContactController : ControllerBase
 {
     private readonly IEmailService _emailService;
     private readonly ILogger<ContactController> _logger;
+    private readonly Analytics _analytics;
 
-    public ContactController(IEmailService emailService, ILogger<ContactController> logger)
+    public ContactController(IEmailService emailService, Analytics analytics, ILogger<ContactController> logger)
     {
         _emailService = emailService;
+        _analytics = analytics;
         _logger = logger;
     }
 
@@ -28,6 +30,10 @@ public class ContactController : ControllerBase
             }
 
             var success = await _emailService.SendContactEmailAsync(contactRequest);
+            _analytics.Track("contact", new Dictionary<string, string?>
+            {
+                ["via"] = "api", ["result"] = success ? "sent" : "failed", ["subject"] = contactRequest.Subject, ["company"] = contactRequest.Company,
+            }, "/api/contact");
 
             if (success)
             {

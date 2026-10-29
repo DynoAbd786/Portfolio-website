@@ -24,7 +24,7 @@ const FLIGHT_MS = 1100;
  *                    main thread), so the build starts after it, or after 1.5 s at most
  * @param sceneEntered () => Promise: the room's own entrance has played out; scrolling waits for it
  *                    (3.5 s at most after the name lands)
- * @returns { done: Promise (resolves once landed), finish(): lands at once }
+ * @returns { done: Promise (resolves once landed), finish(reason): lands at once }
  */
 export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFrame = () => {}, sceneLoaded = Promise.resolve(), sceneEntered = () => Promise.resolve() }) {
   const html = document.documentElement;
@@ -39,12 +39,12 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
   on(window, 'wheel', stop, { passive: false });
   on(window, 'touchmove', stop, { passive: false });
   on(window, 'keydown', (e) => {
-    if (e.key === 'Tab') { finish(); return; } // a keyboard user moving on: don't let focus scroll under the build
+    if (e.key === 'Tab') { finish('tab'); return; } // a keyboard user moving on: don't let focus scroll under the build
     if (SCROLL_KEYS.has(e.key) && !e.target.closest?.('input, textarea, select, [contenteditable]')) e.preventDefault();
   });
   on(window, 'scroll', () => { if (scrollY) scrollTo(0, 0); }); // a dragged scrollbar
   // a deliberate click (the header's links, Ask AI, the CV) wins: land first, then let it go where it points
-  on(document, 'click', (e) => { if (e.target.closest?.('a, button')) finish(); }, true);
+  on(document, 'click', (e) => { if (e.target.closest?.('a, button')) finish('click'); }, true);
 
   function stopBuild() { timers.forEach(clearTimeout); cancelAnimationFrame(raf); }
   function release() { stopBuild(); offs.forEach((off) => off()); offs.length = 0; }
@@ -62,9 +62,11 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
 
   // Scrolling stays locked until the name is in its place and the room has settled (.intro-settling in
   // between). finish() snaps straight to the end.
-  function land(fly) {
+  function land(fly, reason) {
     if (ended) { flying?.(); return; }
     ended = true;
+    // analytics (site.js): watched to the end, or skipped and why, and how long after the page opened
+    window.mkTrack?.('intro', fly ? { how: 'watched', ms: Math.round(performance.now()) } : { how: 'skipped', reason, ms: Math.round(performance.now()) });
     stopBuild();
     startScene();
     if (!fly || !h1) {
@@ -108,7 +110,7 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
     }, FLIGHT_MS + 20);
   }
 
-  function finish() { land(null); }
+  function finish(reason = 'skipped') { land(null, reason); }
 
   // ---------------------------------------------------------------- the build
   (async () => {
@@ -121,7 +123,7 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
     if (ended) return;
     let building = false;
     const limit = new Promise((resolve) => timers.push(setTimeout(() => {
-      if (!building) finish(); // still downloading: skip the build
+      if (!building) finish('slow-download'); // still downloading: skip the build
       resolve();
     }, Math.max(0, from + LIMIT_MS - performance.now()))));
     let build;
@@ -145,7 +147,7 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
       if (loading) { loading.style.top = Math.round(Math.max(h * .74, build.textBox.top + build.textBox.height + 28)) + 'px'; loading.style.bottom = 'auto'; }
     } catch (e) {
       console.warn('[intro]', e && e.message);
-      finish();
+      finish('failed');
       return;
     }
     const t0 = performance.now();
@@ -154,7 +156,7 @@ export function runIntro({ hero, deps, loadBuild, settled, startScene, firstFram
       const step = (now) => {
         if (ended) return resolve();
         const t = (now - t0) / 1000;
-        try { build.draw(Math.min(t, build.duration)); } catch (e) { console.warn('[intro]', e && e.message); finish(); return resolve(); }
+        try { build.draw(Math.min(t, build.duration)); } catch (e) { console.warn('[intro]', e && e.message); finish('failed'); return resolve(); }
         if (t >= build.duration) resolve(); else raf = requestAnimationFrame(step);
       };
       raf = requestAnimationFrame(step);

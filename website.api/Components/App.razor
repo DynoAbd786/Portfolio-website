@@ -1,4 +1,6 @@
 @inject NavigationManager Navigation
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Environment
+@inject IConfiguration Configuration
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +98,13 @@
     @* Last stylesheet, as the old CDN script injected it: utilities win over app.css,
        Font Awesome, KaTeX and highlight.js rules *@
     <link rel="stylesheet" href="@Assets["css/tailwind.css"]" />
+    @* Umami, cookieless analytics: on the live site only (never local runs or tests), and not in the
+       chat panel's frame, which would count as a second page view. It follows enhanced navigation
+       itself (it wraps pushState); in-page glides (#work) aren't page views. Events: mkTrack in site.js *@
+    @if (UmamiWebsiteId is { } umami)
+    {
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="@umami" data-domains="mkkai.dev,www.mkkai.dev" data-exclude-hash="true"></script>
+    }
     <ResourcePreloader />
     <HeadOutlet />
 </head>
@@ -133,6 +142,10 @@
 @code {
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
+
+    private string? UmamiWebsiteId =>
+        Environment.EnvironmentName == "Production" && new Uri(Navigation.Uri).AbsolutePath != "/chat-panel"
+        && Configuration["Umami:WebsiteId"] is { Length: > 0 } id ? id : null;
 
     // Each page is its own canonical URL; the query string never is
     private string CanonicalUrl => "https://mkkai.dev" + new Uri(Navigation.Uri).AbsolutePath;

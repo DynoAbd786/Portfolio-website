@@ -8,18 +8,21 @@ public class EmailContactSender : IContactSender
 {
     private readonly IEmailService _email;
     private readonly ILogger<EmailContactSender> _logger;
+    private readonly Analytics _analytics;
 
-    public EmailContactSender(IEmailService email, ILogger<EmailContactSender> logger)
+    public EmailContactSender(IEmailService email, Analytics analytics, ILogger<EmailContactSender> logger)
     {
         _email = email;
+        _analytics = analytics;
         _logger = logger;
     }
 
     public async Task<bool> SendAsync(ContactMessage m)
     {
+        bool sent;
         try
         {
-            return await _email.SendContactEmailAsync(new ContactRequest
+            sent = await _email.SendContactEmailAsync(new ContactRequest
             {
                 Name = m.Name, Email = m.Email, Company = m.Company, Role = m.Role, Subject = m.Subject, Message = m.Message,
             });
@@ -27,7 +30,12 @@ public class EmailContactSender : IContactSender
         catch (Exception ex)
         {
             _logger.LogError(ex, "Contact form email from {Email} failed", m.Email);
-            return false;
+            sent = false;
         }
+        _analytics.Track("contact", new Dictionary<string, string?>
+        {
+            ["via"] = "form", ["result"] = sent ? "sent" : "failed", ["subject"] = m.Subject, ["company"] = m.Company, ["role"] = m.Role,
+        }, "/#contact");
+        return sent;
     }
 }

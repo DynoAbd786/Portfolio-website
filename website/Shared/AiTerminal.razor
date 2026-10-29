@@ -424,6 +424,8 @@
         bool isFirstMessage = !history.Any(m => m.Role == "user");
 
         history.Add(new MessageItem { Role = "user", Content = userMsg });
+        // analytics: the question itself (the footer says questions are recorded), via the page around the frame
+        _ = JS.InvokeVoidAsync("mkChatFrame.track", "ask-ai-question", new { question = userMsg.Length > 200 ? userMsg[..200] : userMsg }).AsTask();
         await SaveStateAsync();
         isTyping = true;
         StateHasChanged();

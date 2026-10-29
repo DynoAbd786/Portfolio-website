@@ -11,12 +11,61 @@ function toggleMobileMenu() {
     menuIcon.classList.toggle('fa-times', opening);
 }
 
+// Analytics: Umami counts visits by itself (its script is in App.razor, on the live site only, and it
+// follows enhanced navigation); mkTrack sends what people do. It does nothing when Umami isn't there.
+window.mkTrack = function (name, data) {
+    try { window.umami?.track(name, data); } catch { }
+};
+
+// The clicks worth knowing about, from one listener: the CV, other PDFs, email, other sites, projects
+document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href'), page = location.pathname;
+    if (href.includes('Muhammad-Kashif-Khan-CV.pdf')) {
+        mkTrack('cv-download', { from: a.closest('header') ? 'header' : a.closest('footer') ? 'footer' : a.closest('#hero') ? 'hero' : page });
+    } else if (/\.pdf($|\?)/.test(href)) {
+        mkTrack('pdf-download', { file: href.split('/').pop().split('?')[0], page });
+    } else if (href.startsWith('mailto:')) {
+        mkTrack('email-click', { page });
+    } else if (a.host && a.host !== location.host) {
+        mkTrack('outbound', { to: a.hostname.replace(/^www\./, ''), href: a.href.slice(0, 200), page });
+    } else if (a.pathname.startsWith('/projects/') && a.pathname !== page) {
+        const data = { project: a.pathname.split('/')[2], from: page };
+        // on the homepage, which part they came from (the room, selected work, what I'm building…)
+        if (page === '/') data.section = a.closest('#hero') ? 'room' : a.closest('section[id]')?.id;
+        mkTrack('project-open', data);
+    }
+}, true);
+
+// How far down the homepage people get: each section once per visit to the page
+function mkSections() {
+    mkSections.io?.disconnect();
+    if (location.pathname !== '/' || !('IntersectionObserver' in window)) return;
+    const seen = new Set();
+    mkSections.io = new IntersectionObserver((entries) => entries.forEach((entry) => {
+        const id = entry.target.id;
+        if (entry.isIntersecting && !seen.has(id)) { seen.add(id); mkTrack('home-section', { section: id }); }
+    }), { threshold: 0.25 });
+    ['work', 'building', 'experience', 'contact'].forEach((id) => {
+        const section = document.getElementById(id);
+        if (section) mkSections.io.observe(section);
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    mkSections();
+    if (window.Blazor) window.Blazor.addEventListener('enhancedload', mkSections);
+});
+
 // Inside the chat frame (/chat-panel): the assistant registers here, so the panel's header outside
-// the frame can drive it
+// the frame can drive it, and its events go out through the page around it
 window.mkChatFrame = {
     target: null,
     register: function (dotnet) { this.target = dotnet; },
-    run: function (name) { this.target?.invokeMethodAsync('Command', name); }
+    run: function (name) { this.target?.invokeMethodAsync('Command', name); },
+    track: function (name, data) {
+        try { window.parent?.mkTrack?.(name, { ...data, page: window.parent.location.pathname }); } catch { }
+    }
 };
 
 // The chat side panel opens and closes without waiting for WebAssembly;
@@ -28,7 +77,7 @@ window.mkChat = {
         if (!panel || !backdrop) return;
 
         const opening = panel.classList.contains('translate-x-full');
-        if (opening) this._load(panel);
+        if (opening) { this._load(panel); mkTrack('ask-ai-open', { page: location.pathname }); }
         panel.classList.toggle('translate-x-full', !opening);
         panel.classList.toggle('translate-x-0', opening);
         backdrop.classList.toggle('hidden', !opening);
@@ -216,6 +265,7 @@ window.mkWorkshop = {
             } catch (e) {
                 // no WebGL, a failed download or a bug: the still image and its links stay
                 root.dataset.state = 'failed';
+                mkTrack('scene-fallback', { reason: 'failed' });
                 console.warn('[workshop]', e && e.message);
                 this.settled();
                 this._load();
@@ -234,6 +284,7 @@ window.mkWorkshop = {
         this.active = false;
         this.disposes++;
         root.dataset.state = 'still';
+        mkTrack('scene-fallback', { reason: 'slow' });
         try { sessionStorage.setItem('mk-workshop-slow', '1'); } catch { }
         this.settled();
     },
@@ -334,7 +385,7 @@ window.mkIntro = {
                 sceneLoaded: mkWorkshop.loaded(),
                 sceneEntered: () => mkWorkshop.entrance(),
             });
-            if (this._endEarly) this._control.finish();
+            if (this._endEarly) this._control.finish('early');
             await this._control.done;
         } catch (e) {
             dropEarly();
@@ -348,7 +399,7 @@ window.mkIntro = {
 
     // lands at once (leaving the page mid-intro, for one)
     finish() {
-        if (this._control) this._control.finish();
+        if (this._control) this._control.finish('left');
         else if (this.running) { this._endEarly = true; this._dropEarly?.(); }
     }
 };
