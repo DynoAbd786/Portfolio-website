@@ -92,5 +92,6 @@ public class ChatTests : IClassFixture<SiteFactory>
         foreach (var item in HomeContent.Stack.SelectMany(g => g.Items)) Assert.Contains(item, prompt);
         Assert.Contains("/projects/hireforge", prompt);
         Assert.Contains("/#contact", prompt);
+        Assert.Contains("never a bare address", prompt);
     }
 }
