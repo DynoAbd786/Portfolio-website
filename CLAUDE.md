@@ -161,7 +161,7 @@ curl "http://localhost:5154/api/projects/by-url?url=/projects/data-mining"
 ```
 
 ### Project Categories
-- **Personal**: Independent development projects (TaskFlow, Portfolio)
+- **Personal**: Independent development projects (Synergy, this website)
 - **Professional**: Internship and work-related projects (Medical Simulation, pNanoLocz)
 - **Academic**: University coursework (25+ individual project pages in `website/Pages/`)
 

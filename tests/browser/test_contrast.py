@@ -2,7 +2,16 @@
 import pytest
 
 # Pages checked so far; each redesign PR adds its own
-ROUTES = ["/"]
+ROUTES = ["/"] + [
+    "/projects/machine-learning", "/projects/medical-simulation", "/projects/3d-reconstruction",
+    "/projects/pnanolocz", "/projects/distributed-systems", "/projects/home-lab",
+    "/projects/synergy", "/projects/formula-student-ai", "/projects/data-mining",
+    "/projects/numerical-computation", "/projects/mental-health-app", "/projects/terratracker",
+    "/projects/business-plan", "/vascular-blood-flow", "/projects/ai-decision-trees",
+    "/projects/ai-search-algorithms", "/projects/parallel-computing", "/projects/autonomous-robotics",
+    "/projects/opengl-renderer", "/projects/xv6-operating-system", "/projects/quantum-dots",
+    "/projects/c-programming", "/projects/graphics-fundamentals", "/projects/portfolio",
+]
 
 CHECK = """() => {
   const lum = (r, g, b) => { const f = (c) => { c /= 255; return c <= .03928 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; }; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };

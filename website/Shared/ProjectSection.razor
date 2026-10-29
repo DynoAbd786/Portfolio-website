@@ -1,0 +1,24 @@
+@* One panel of a project page's write-up *@
+<section class="project-section surface reveal p-6 sm:p-8">
+    <div class="mb-6 flex items-start gap-4">
+        @if (!string.IsNullOrEmpty(Icon))
+        {
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-cy/10 text-cy"><i class="@Icon" aria-hidden="true"></i></span>
+        }
+        <div>
+            <h2 class="text-2xl font-bold text-white">@Title</h2>
+            @if (!string.IsNullOrEmpty(Subtitle))
+            {
+                <p class="mt-1 text-slate-400">@Subtitle</p>
+            }
+        </div>
+    </div>
+    @ChildContent
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

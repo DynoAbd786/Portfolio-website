@@ -1,0 +1,603 @@
+{
+  "/projects/3d-reconstruction": {
+    "Headings": [
+      "Project Overview",
+      "Project Context",
+      "Development Timeline",
+      "The Technical Challenge",
+      "Fundamental Trade-Off in 3D Reconstruction",
+      "Feed-Forward Networks (T1)",
+      "Optimization Models (T2)",
+      "Novel Fusion Strategy",
+      "The \"Best of Both Worlds\" Approach",
+      "Research Phase (Semester 1)",
+      "Deployment Phase (Semester 2)",
+      "Industrial Applications",
+      "VR/AR Simulation",
+      "Live Room Tracking",
+      "Medical Imaging",
+      "Technical Infrastructure & Stack",
+      "Core Technologies",
+      "Computing Resources",
+      "Research Components",
+      "Project Management & Agile Methodology",
+      "Agile Sprint Methodology",
+      "Kanban Board Management",
+      "Gantt Chart Timeline Planning",
+      "First Phase: Background Research",
+      "Team Collaboration Tools",
+      "Team Leadership & Coordination",
+      "Success Criteria & Goals",
+      "Research Objectives (Semester 1)",
+      "Deployment Goals (Semester 2)",
+      "Computer Vision Research"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/ai-decision-trees": {
+    "Headings": [
+      "Course Information",
+      "Course Details",
+      "Assignment Structure",
+      "Machine Learning Implementation",
+      "Core Technologies",
+      "Fraud Detection Application",
+      "Programming Tasks & Implementation",
+      "Data Processing Tasks",
+      "Model Development Tasks",
+      "Model Optimization & Performance Evaluation",
+      "Pruning Techniques",
+      "Cross-Validation",
+      "Performance Metrics",
+      "Technical Implementation & Results",
+      "Implementation Highlights",
+      "Fraud Detection Results",
+      "Project Documentation",
+      "Takeaways"
+    ],
+    "Pdfs": [
+      "/docs/ai-decision-trees-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/ai-search-algorithms": {
+    "Headings": [
+      "Course Information",
+      "Course Details",
+      "Assignment Structure",
+      "Search Algorithm Implementation",
+      "Core Algorithms",
+      "Problem Domains",
+      "Performance Analysis & Custom Heuristics",
+      "Complexity Analysis",
+      "Heuristic Development",
+      "Empirical Testing",
+      "Technical Implementation & Results",
+      "Implementation Highlights",
+      "Research Outcomes",
+      "Project Documentation",
+      "Takeaways"
+    ],
+    "Pdfs": [
+      "/docs/ai-search-algorithms-brief.pdf",
+      "/docs/ai-search-algorithms-submission.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/autonomous-robotics": {
+    "Headings": [
+      "Project Overview",
+      "Autonomous Navigation",
+      "Computer Vision",
+      "Live Simulation Demo",
+      "System Architecture",
+      "Intelligent Exploration Strategy",
+      "Performance Metrics",
+      "Project Structure"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/business-plan": {
+    "Headings": [
+      "NHS Crisis & Market Opportunity",
+      "Critical Healthcare Challenge",
+      "Project Synapse Solution",
+      "\"Advanced AI Interfacing System for Healthcare Documentation\"",
+      "Smart Listening",
+      "Auto Documentation",
+      "System Integration",
+      "Market Research & Business Intelligence",
+      "Target Market Analysis",
+      "Industry Research Sources",
+      "Competitive Analysis & Market Gap",
+      "Blue Ocean Strategy Analysis",
+      "Create (New Value)",
+      "Raise (Above Industry)",
+      "Reduce (Industry Norms)",
+      "Eliminate (Industry Standards)",
+      "Entrepreneur Profile & Implementation",
+      "Founder Qualifications",
+      "Technical Implementation",
+      "Business Model & Financial Viability",
+      "Business Plan & Takeaways",
+      "Business Documentation",
+      "Academic Achievement",
+      "Download Complete Business Plan",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [
+      "/docs/project-synapse-business-plan.pdf",
+      "/docs/business-assignment-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/c-programming": {
+    "Headings": [
+      "Project Overview",
+      "Two-Part Coursework System",
+      "Custom File Format Architecture",
+      "EBF Format",
+      "EBU Format",
+      "EBC Format",
+      "EBC Compression Algorithm Example",
+      "Advanced Compression Algorithms",
+      "Block-Based Lossy Compression",
+      "Random Block Algorithms",
+      "Data Structure Design",
+      "Systems Programming",
+      "Memory Management",
+      "Modular Architecture",
+      "Engineering Practices",
+      "Build System",
+      "Technical Achievements",
+      "Complexity Indicators",
+      "Skills Demonstrated",
+      "Takeaways",
+      "Source Code",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/data-mining": {
+    "Headings": [
+      "Course Information",
+      "Course Details",
+      "Research Framework",
+      "Research Hypothesis",
+      "Primary Hypothesis",
+      "Technical Architecture",
+      "CRISP-DM Research Methodology",
+      "Business Understanding",
+      "Data Preparation",
+      "Modelling & Evaluation",
+      "Pilot Study Implementation",
+      "Rheumatoid Arthritis Case Study",
+      "Technical Implementation",
+      "Project Documentation",
+      "Takeaways"
+    ],
+    "Pdfs": [
+      "/docs/medical-ai-research-proposal.pdf",
+      "/docs/data-mining-assignment-brief.pdf",
+      "/docs/research-proposal-gantt-chart.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/distributed-systems": {
+    "Headings": [
+      "Course Information & Project Scope",
+      "Course Details",
+      "Learning Outcomes",
+      "Project Walkthrough",
+      "Serverless Architecture & Azure Functions",
+      "Azure Functions Workflow",
+      "ERP Inventory Management",
+      "Cloud Integration & Technical Implementation",
+      "Azure Services",
+      "External Integration",
+      "Development Tools",
+      "Performance Analysis & Scalability Testing",
+      "Performance Metrics",
+      "Scalability Investigation",
+      "Features",
+      "Event-Driven Architecture",
+      "Robust Error Handling",
+      "Project Documentation",
+      "Takeaways"
+    ],
+    "Pdfs": [
+      "/docs/distributed-systems-coursework-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/formula-student-ai": {
+    "Headings": [
+      "Formula Student AI: The Competition",
+      "Competition Challenges",
+      "Leeds University FS-AI Team",
+      "My Role: Simulation & Autonomous Systems Exploration",
+      "Strategic Position",
+      "Primary Responsibility: Simulation",
+      "Broader Involvement Strategy",
+      "2024 Context: Building on Lessons Learned",
+      "Technical Infrastructure",
+      "Simulation Environment",
+      "Hardware Platform",
+      "Development Tools & Workflow",
+      "Autonomous Systems Components",
+      "Perception",
+      "Planning & Control",
+      "Localization",
+      "Project Timeline & Development Approach",
+      "Timeline Structure",
+      "Development Philosophy",
+      "Progressive Contribution Strategy",
+      "Why Formula Student AI",
+      "Motivation",
+      "Learning Objectives",
+      "Key Aspects",
+      "Technology Stack",
+      "What I Took From It"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/graphics-fundamentals": {
+    "Headings": [
+      "Project Overview",
+      "Core Algorithms",
+      "Testing & Perf",
+      "Implementation Highlights",
+      "Key Features",
+      "Technical Specs",
+      "Source Code Repository"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/home-lab": {
+    "Headings": [
+      "System Status",
+      "Network Architecture",
+      "GPU desktop",
+      "Raspberry Pi",
+      "Local Inference",
+      "Collaborative Research Workspace",
+      "Granular Access Control",
+      "Automated Onboarding"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/machine-learning": {
+    "Headings": [
+      "Course Information & Assignment Structure",
+      "Course Details",
+      "Assignment Structure",
+      "Advanced Linear Regression with Custom Basis Functions",
+      "Question 1: Trajectory Analysis",
+      "Basis Function Comparison",
+      "Principal Component Analysis & 3D Medical Data",
+      "Question 2a: 3D Visualization",
+      "Question 2b: Custom PCA Implementation",
+      "Scikit-learn Validation & Implementation Comparison",
+      "Question 2c: Scikit-learn Integration",
+      "Technical Highlights",
+      "Technical Implementation",
+      "Core Libraries",
+      "Mathematical Concepts",
+      "Data Science Skills",
+      "Takeaways",
+      "Project Documentation"
+    ],
+    "Pdfs": [
+      "/docs/machine-learning-coursework-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/medical-simulation": {
+    "Headings": [
+      "Project Overview & Scope",
+      "Research Applications",
+      "Technical Architecture",
+      "Physics Engine",
+      "Visualization Pipeline",
+      "Medical Imaging",
+      "User Interface",
+      "Device Repository",
+      "Simulation Process Gallery",
+      "1/5 1. Initial Vessel Processing",
+      "8-Week Development Progress",
+      "Internship Timeline",
+      "✅ Completed Milestones",
+      "🚀 Future Development",
+      "Skills Demonstrated",
+      "Impact",
+      "Technology Stack"
+    ],
+    "Pdfs": [],
+    "Images": [
+      "images/medical-simulation/vessel-with-io.png"
+    ]
+  },
+  "/projects/mental-health-app": {
+    "Headings": [
+      "Business Context & Requirements",
+      "COMP2912 Software Engineering Principles",
+      "Stakeholder Analysis & Requirements Engineering",
+      "Primary Users",
+      "Institutional Stakeholders",
+      "Regulatory & Ethics",
+      "Use Case Analysis & Value Propositions",
+      "AI Architecture",
+      "ChatGPT-4 Turbo Integration",
+      "Smart Interventions",
+      "System Architecture & Implementation",
+      "Software Engineering",
+      "Methodology",
+      "UML & Design",
+      "Engineering Practices",
+      "Ethics & Legal Compliance Framework",
+      "Design Brief & Takeaways",
+      "Documentation",
+      "Academic Achievement",
+      "Download Complete Design Brief",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [
+      "/docs/mental-health-app-design-brief.pdf",
+      "/docs/software-engineering-principles-assessment-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/numerical-computation": {
+    "Headings": [
+      "Mathematical Foundation",
+      "COMP/XJCO2421 Numerical Computation Coursework",
+      "Predator-Prey Mathematical System",
+      "Lotka-Volterra Equations with Forcing",
+      "Test Case A - Validation",
+      "Test Case B - Realistic",
+      "Numerical Methods Arsenal",
+      "Custom Implementation",
+      "Third-Order Methods",
+      "Fourth-Order Methods",
+      "Implementation Architecture",
+      "Error & Performance Analysis",
+      "Error Analysis",
+      "Performance Benchmarking",
+      "Advanced Features",
+      "Research Methodology",
+      "Research Findings",
+      "Key Research Results",
+      "Technical Depth",
+      "Takeaways & Industry Relevance",
+      "Source Code & Documentation",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/opengl-renderer": {
+    "Headings": [
+      "Project Overview",
+      "Graphics Pipeline",
+      "Lighting & Materials",
+      "Advanced Rendering Features",
+      "Performance & Optimization",
+      "Tech Implementation",
+      "Specs & Collaboration",
+      "Source Code Repository"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/parallel-computing": {
+    "Headings": [
+      "Project Overview",
+      "OpenMP: Shared Memory",
+      "MPI: Distributed Systems",
+      "OpenCL: GPU Acceleration",
+      "Technical Insights",
+      "Stats & Achievements"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/pnanolocz": {
+    "Headings": [
+      "Project Overview & Scope",
+      "Scientific Applications",
+      "Technical Architecture",
+      "Modular Architecture",
+      "Multi-Format File Reader",
+      "Data Management",
+      "GUI Foundation",
+      "AFM Format Support",
+      "Live Demonstration",
+      "Development Achievements",
+      "Foundation Established",
+      "✅ Completed Components",
+      "🎯 Migration Scope",
+      "Skills Demonstrated",
+      "Learning & Growth",
+      "Technology Stack",
+      "Source Code & Documentation"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/portfolio": {
+    "Headings": [
+      "How it's built",
+      "The 3D workshop",
+      "AI assistant and MCP server",
+      "Testing and deployment",
+      "Source Code & Documentation"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/quantum-dots": {
+    "Headings": [
+      "Academic Context",
+      "CAPE 1700 - Topics in Nanotechnology",
+      "Quantum Dot Technology",
+      "Fundamental Physics",
+      "Manufacturing Process",
+      "Critical Properties for Quantum Computing",
+      "Application: Photonic Quantum Computing",
+      "The Idea",
+      "Hong-Ou-Mandel Effect",
+      "Competitive Advantages",
+      "Three-Phase Investment Strategy",
+      "Development Phase",
+      "Market Entry",
+      "Commercial Scale",
+      "Investment Requirements & Projections",
+      "Takeaways",
+      "Research Depth",
+      "Strategic Vision",
+      "Full Research Report",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [
+      "/docs/quantum-dot-investment-report.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/synergy": {
+    "Headings": [
+      "What it does",
+      "Using it with AI coding agents",
+      "How it works",
+      "Where it's at",
+      "Next",
+      "Built with",
+      "Project Status & Context",
+      "Current Stage: Active Personal Research",
+      "The Problem",
+      "Current Tool Limitations",
+      "AI Assistant Challenges",
+      "Critical Impact",
+      "The Solution: Hybrid C#/.NET + Python Architecture",
+      "Deep Analysis (Python Microservice)",
+      "Architectural Intelligence (C# ASP.NET Core)",
+      "Core Innovation: The \"Architectural Linter\"",
+      "System Architecture: Hybrid Microservices",
+      "Frontend: Blazor WebAssembly (C#)",
+      "Application Layer: ASP.NET Core API (C#)",
+      "Analysis Layer: Python Microservice",
+      "Data Layer: Neo4j + Redis",
+      "Architecture Benefits",
+      "Primary Use Case: Open-Source Package Analysis",
+      "For Human Developers",
+      "For AI Systems (via MCP)",
+      "Package-Centric Workflow",
+      "Implementation Phases",
+      "Phase 1: The \"Market-Ready\" Prototype",
+      "Phase 2: Individual Research Tracks",
+      "Validation Framework",
+      "Condition A: Baseline",
+      "Condition B: Full Codebase",
+      "Condition C: MCP Tool (Our System)",
+      "Key Validation Metrics",
+      "Novel Contributions",
+      "Hybrid Architecture",
+      "The \"Architectural Linter\"",
+      "MCP-First Design",
+      "Context-Aware Graphs",
+      "Future Research Directions",
+      "Hierarchical LLM Architecture (Potential Pivot)",
+      "Big Data: Large-Scale Analysis",
+      "Cross-Language Generalization",
+      "Cybersecurity Threat Modeling",
+      "Key Insights",
+      "Technology Stack",
+      "Independent Research Initiative"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/projects/terratracker": {
+    "Headings": [
+      "Project Overview & Academic Context",
+      "COMP2913 Software Engineering Project",
+      "Core Features & Functionality",
+      "Route Tracking",
+      "Social Sharing",
+      "Analytics",
+      "Technical Stack & Architecture",
+      "Backend Stack",
+      "Frontend Stack",
+      "DevOps & Deployment",
+      "Agile Development Process",
+      "Sprint Planning",
+      "Collaboration Tools",
+      "Quality Assurance",
+      "Team Collaboration Highlights",
+      "Skills Demonstrated",
+      "Takeaways",
+      "Project Resources & Documentation",
+      "Access Project Repository & Documentation",
+      "Technologies & Tools"
+    ],
+    "Pdfs": [
+      "/docs/terratracker-team-project-brief.pdf"
+    ],
+    "Images": []
+  },
+  "/projects/xv6-operating-system": {
+    "Headings": [
+      "Project Architecture",
+      "COMP2211 Operating Systems Coursework",
+      "Advanced Shell Implementation",
+      "Pipeline Processing",
+      "I/O Redirection",
+      "Sequential Commands",
+      "Shell Architecture & Parsing",
+      "System Calls & Kernel Programming",
+      "Custom System Calls",
+      "User Programs Developed",
+      "Advanced Memory Management",
+      "Technical Highlights",
+      "Process Management",
+      "Code Architecture",
+      "Development Practices",
+      "Development Environment",
+      "Academic Achievement",
+      "Complexity Indicators",
+      "Skills Demonstrated",
+      "COMP2211",
+      "Source Code & Documentation",
+      "Key Insights",
+      "Technologies & Concepts"
+    ],
+    "Pdfs": [],
+    "Images": []
+  },
+  "/vascular-blood-flow": {
+    "Headings": [
+      "Project Overview",
+      "Technical Architecture",
+      "LBM Core",
+      "Physiological Model",
+      "Implementation Highlights",
+      "Key Results",
+      "Clinical Pathway",
+      "Project Resources"
+    ],
+    "Pdfs": [
+      "/docs/dissertation-report.pdf"
+    ],
+    "Images": []
+  }
+}

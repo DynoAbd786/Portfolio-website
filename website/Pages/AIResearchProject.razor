@@ -1,357 +1,63 @@
 @page "/projects/portfolio"
 @using website.Data
 
-<PageTitle>Personal Portfolio & C# Learning Journey</PageTitle>
+<ProjectPage Url="/projects/portfolio" Kicker="Personal Project">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-300">
+                    This is the site you're on. It started as a Blazor WebAssembly app on .NET 8, and I've rebuilt it as I learned.
+                    It's now server-rendered on .NET 10, with a 3D homepage, an AI assistant and an MCP server.
+                </p>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">Portfolio Journey</span>
-            </div>
-        </nav>
+                <ProjectSection Title="How it's built" Icon="fas fa-layer-group">
+                    <ul class="space-y-3 leading-relaxed text-slate-300">
+                        <li>• ASP.NET Core and Blazor on .NET 10. Every page is rendered on the server as plain HTML, so it loads quickly and reads fine without JavaScript.</li>
+                        <li>• Only the parts that need it run in the browser with WebAssembly: the contact form, the image gallery, the home lab status and the AI chat.</li>
+                        <li>• All the project data lives in one place and feeds the pages, the public API and the MCP server.</li>
+                        <li>• Styled with Tailwind CSS.</li>
+                    </ul>
+                </ProjectSection>
 
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Personal Projects
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">C# Portfolio & Learning Journey</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">Modern .NET Development with Full-Stack Architecture</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                A comprehensive C# learning project built as a full-stack web application, showcasing advanced .NET concepts, language features, and professional development practices
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">C# Learning</span>
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">.NET 8</span>
-                <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Blazor WebAssembly</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">ASP.NET Core</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Full-Stack</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Claude Code</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-purple-900 via-blue-900 to-cyan-900 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">⚙️</div>
-            <p class="text-white/75 text-lg">C# Development Learning Journey</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-                
-                <!-- Learning Objective -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-graduation-cap text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Learning Objective</h2>
-                    </div>
-                    <p class="text-gray-300 text-lg leading-relaxed">
-                        This portfolio serves as my comprehensive C# learning journey, built as a full-stack web application to explore advanced .NET concepts and language features. Through implementing Blazor WebAssembly frontend and ASP.NET Core Web API backend, I've gained hands-on experience with async/await patterns, dependency injection, component architecture, API design, and professional email integration. The project demonstrates practical C# development skills while creating a production-ready application that showcases both learning progress and professional development capabilities.
+                <ProjectSection Title="The 3D workshop" Icon="fas fa-cube">
+                    <p class="leading-relaxed text-slate-300">
+                        The homepage is a small 3D room built with three.js, with an object for each project. Click one and the camera moves in and a card about it opens.
+                        The scene adjusts its quality to hold a steady frame rate. On a device that can't keep up, or without WebGL or JavaScript, it shows a still image of the room with the same links.
                     </p>
-                </div>
+                </ProjectSection>
 
-                <!-- Technology Deep Dive -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-code text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">C# & .NET Technologies Explored</h2>
-                    </div>
-                    <p class="text-gray-300 mb-6">Hands-on learning with enterprise-grade Microsoft technologies:</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <div class="flex items-center mb-4">
-                                <div class="bg-purple-500 rounded-full w-3 h-3 mr-3"></div>
-                                <h3 class="text-xl font-bold text-purple-400">Blazor WebAssembly</h3>
-                            </div>
-                            <p class="text-gray-400 text-sm">Client-side C# web development with WebAssembly for high-performance SPAs without JavaScript frameworks.</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <div class="flex items-center mb-4">
-                                <div class="bg-blue-500 rounded-full w-3 h-3 mr-3"></div>
-                                <h3 class="text-xl font-bold text-blue-400">.NET 8</h3>
-                            </div>
-                            <p class="text-gray-400 text-sm">Latest .NET platform with improved performance, new language features, and modern development patterns.</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <div class="flex items-center mb-4">
-                                <div class="bg-green-500 rounded-full w-3 h-3 mr-3"></div>
-                                <h3 class="text-xl font-bold text-green-400">Component Architecture</h3>
-                            </div>
-                            <p class="text-gray-400 text-sm">Razor components, parameter binding, lifecycle methods, and reusable UI patterns.</p>
-                        </div>
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <div class="flex items-center mb-4">
-                                <div class="bg-cyan-500 rounded-full w-3 h-3 mr-3"></div>
-                                <h3 class="text-xl font-bold text-cyan-400">Dependency Injection</h3>
-                            </div>
-                            <p class="text-gray-400 text-sm">Built-in DI container, service registration, and modern .NET architectural patterns.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MCP & AI Architecture -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-network-wired text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">AI & MCP Architecture</h2>
-                    </div>
-                    
-                    <p class="text-gray-300 text-lg leading-relaxed mb-8">
-                        This website goes beyond a static portfolio; it is a fully interactive <strong>Model Context Protocol (MCP) Server</strong> and <strong>AI-Agentic Platform</strong>. It demonstrates the future of web development where sites are both human-readable and machine-readable.
+                <ProjectSection Title="AI assistant and MCP server" Icon="fas fa-robot">
+                    <p class="mb-4 leading-relaxed text-slate-300">
+                        The chat panel answers questions about my work, using hosted models (Gemini and Groq) or a local model on my home lab.
                     </p>
+                    <p class="leading-relaxed text-slate-300">
+                        The site also runs an MCP server, so AI agents like Claude can search my projects and send me a message directly. More on that on the
+                        <a href="/ai-integration" class="text-cy hover:underline">AI Integration</a> page.
+                    </p>
+                </ProjectSection>
 
-                    <div class="space-y-8">
-                        <!-- 1. Custom MCP Server -->
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <h3 class="text-xl font-bold text-white mb-3">1. Custom MCP Server</h3>
-                            <p class="text-gray-400 mb-4">
-                                The ASP.NET Core backend implements the open Model Context Protocol standard (JSON-RPC 2.0).
-                            </p>
-                            <ul class="space-y-2 text-gray-300">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
-                                    <span><strong>Machine Readable:</strong> AI agents (like LM Studio) can connect to this site to "read" my skills, experience, and projects as structured data resources.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
-                                    <span><strong>Tool Exposure:</strong> Exposes executable tools like <code>search_projects(query)</code> and <code>submit_contact(message)</code> directly to connected LLMs.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
-                                    <span><strong>Remote MCP (SSE):</strong> Fully optimized for Server-Sent Events, allowing seamless connection from local AI clients without complex networking.</span>
-                                </li>
-                            </ul>
-                        </div>
+                <ProjectSection Title="Testing and deployment" Icon="fas fa-vial">
+                    <p class="leading-relaxed text-slate-300">
+                        Nearly 200 server-side tests (xUnit) and 75 browser tests (Playwright in Chrome) cover every page, the 3D scene and its fallbacks, phone layouts and text contrast.
+                        The site runs on Render from a Docker image.
+                    </p>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        <span class="chip">.NET 10</span>
+                        <span class="chip">Blazor</span>
+                        <span class="chip">three.js</span>
+                        <span class="chip">Tailwind CSS</span>
+                        <span class="chip">xUnit</span>
+                        <span class="chip">Playwright</span>
+                        <span class="chip">Docker</span>
+                        <span class="chip">MCP</span>
+                    </div>
+                </ProjectSection>
 
-                        <!-- 2. Interactive AI Assistant (RAG) -->
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <h3 class="text-xl font-bold text-white mb-3">2. Interactive AI Assistant</h3>
-                            <p class="text-gray-400 mb-4">
-                                A built-in AI chat interface (available in the navbar) that allows visitors to ask natural language questions about my background.
-                            </p>
-                            <ul class="space-y-2 text-gray-300">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
-                                    <span><strong>Context-Aware (RAG):</strong> The assistant is injected with my full portfolio data as context, allowing it to answer questions about my specific projects and skills accurately.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
-                                    <span><strong>Gemini 3 Flash Integration:</strong> Powered by Google's efficient Gemini 3 Flash model for fast, high-quality reasoning.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-purple-400 mt-1 mr-3"></i>
-                                    <span><strong>Full-Screen Mode:</strong> A responsive, immersive chat experience that adapts from a side-panel to a full-screen workspace.</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- 3. Local LLM Bridge -->
-                        <div class="bg-gray-800 rounded-lg p-6 border border-gray-600">
-                            <h3 class="text-xl font-bold text-white mb-3">3. Hosted Local LLMs</h3>
-                            <p class="text-gray-400 mb-4">
-                                Values privacy and sovereign compute? The site connects directly to my own on-premise hardware.
-                            </p>
-                            <ul class="space-y-2 text-gray-300">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i>
-                                    <span><strong>Server-Side Inference:</strong> The website communicates with an Ollama instance running on my personal server, allowing you to chat with models like Llama 3 or Mistral running entirely on my infrastructure.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i>
-                                    <span><strong>No External Clouds:</strong> When using the "Ollama" provider, your chat data never leaves my server, ensuring complete privacy from big tech AI providers.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Learning Areas -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-book-open text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">Key Learning Areas</h2>
-                    </div>
-                    <p class="text-gray-300 mb-6">Practical C# and web development concepts mastered through this project:</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">C# Language Features:</strong>
-                                <span class="text-gray-400"> Records, nullable types, async/await, LINQ</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">Web Development:</strong>
-                                <span class="text-gray-400"> SPA architecture, responsive design, CSS frameworks</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">Project Structure:</strong>
-                                <span class="text-gray-400"> .NET project organization, namespaces, file structure</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">Development Tools:</strong>
-                                <span class="text-gray-400"> .NET CLI, hot reload, debugging, deployment</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">Modern Patterns:</strong>
-                                <span class="text-gray-400"> Service patterns, data binding, event handling</span>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-500 rounded-full w-2 h-2 mt-2 mr-3 flex-shrink-0"></div>
-                            <div>
-                                <strong class="text-white">AI-Assisted Development:</strong>
-                                <span class="text-gray-400"> Learning with Claude Code guidance and mentorship</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Portfolio Purpose & Professional Impact Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Portfolio Purpose -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-briefcase text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-blue-400">Portfolio Purpose</h2>
-                        </div>
-                        <p class="text-gray-300 mb-4">This site serves multiple audiences:</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300"><strong>Recruiters & Employers:</strong> Professional project showcase</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300"><strong>Fellow Developers:</strong> Learning journey documentation</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300"><strong>General Visitors:</strong> Technical skills demonstration</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300"><strong>Personal Growth:</strong> Progress tracking and reflection</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Professional Value -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-star text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Professional Value</h2>
-                        </div>
-                        <p class="text-gray-300 mb-4">Skills and qualities demonstrated:</p>
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Rapid learning and technology adoption</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Modern development workflow proficiency</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">AI-augmented productivity mindset</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Full-stack web development capability</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-yellow-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Self-directed learning and documentation</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Technical Implementation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
-                    <div class="flex items-center justify-center mb-6">
-                        <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                            <i class="fas fa-cogs text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-gray-300">Technical Implementation</h2>
-                    </div>
-                    <p class="text-gray-400 mb-6">Built with modern Microsoft technologies and development practices</p>
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Blazor WebAssembly</span>
-                        <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">.NET 8</span>
-                        <span class="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm">C#</span>
-                        <span class="bg-cyan-600 text-white px-4 py-2 rounded-full text-sm">Tailwind CSS</span>
-                        <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Responsive Design</span>
-                        <span class="bg-gray-600 text-white px-4 py-2 rounded-full text-sm">Font Awesome</span>
-                        <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Vanilla Tilt.js</span>
-                        <span class="bg-gray-800 text-white px-4 py-2 rounded-full text-sm">GitHub Deployment</span>
-                        <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">Claude Code AI</span>
-                        <span class="bg-amber-600 text-white px-4 py-2 rounded-full text-sm">MCP Integration</span>
-                        <span class="bg-orange-600 text-white px-4 py-2 rounded-full text-sm">JSON-RPC</span>
-                    </div>
-                </div>
-
-                <!-- Project Documentation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-cyan-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-code-branch text-white text-xl"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-2xl font-bold text-white">Source Code & Documentation</h2>
-                            <p class="text-gray-400">Blazor WebAssembly implementation details</p>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-1 gap-4">
-                        <a href="https://github.com/DynoAbd786/Portfolio-website" target="_blank"
-                           class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-4 rounded-lg flex items-center justify-center transition-colors group">
-                            <i class="fab fa-github mr-3 text-xl"></i>
-                            <div>
-                                <div class="font-bold">GitHub Repository</div>
-                                <div class="text-sm opacity-90">Complete .NET 8 Blazor WebAssembly source</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+                <ProjectSection Title="Source Code & Documentation" Icon="fas fa-code-branch">
+                    <a href="https://github.com/DynoAbd786/Portfolio-website" target="_blank" rel="noopener"
+                       class="flex items-center justify-center rounded-lg border border-line bg-white/[.03] px-6 py-4 text-slate-100 transition-colors hover:border-cy/60">
+                        <i class="fab fa-github mr-3 text-xl" aria-hidden="true"></i>
+                        <span>
+                            <span class="block font-bold">GitHub repository</span>
+                            <span class="block text-sm text-slate-400">The full source for this site</span>
+                        </span>
+                    </a>
+                </ProjectSection>
+</ProjectPage>

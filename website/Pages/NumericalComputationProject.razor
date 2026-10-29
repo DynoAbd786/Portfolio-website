@@ -1,119 +1,68 @@
 @page "/projects/numerical-computation"
 @using website.Data
 
-<PageTitle>Numerical Methods for Predator-Prey Systems - Numerical Computation</PageTitle>
 
-<section class="py-20">
-    <div class="container mx-auto px-4">
-        <!-- Breadcrumb Navigation -->
-        <nav class="mb-8">
-            <div class="flex items-center space-x-2 text-gray-400">
-                <a href="/" class="hover:text-cyan-400 transition-colors">Home</a>
-                <span>/</span>
-                <a href="/projects" class="hover:text-cyan-400 transition-colors">Projects</a>
-                <span>/</span>
-                <span class="text-white">Numerical Computation</span>
-            </div>
-        </nav>
-
-        <!-- Header Section -->
-        <div class="text-center mb-16">
-            <div class="inline-block bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                Academic Project - Year 2
-            </div>
-            <h1 class="text-6xl font-bold text-white mb-4">Numerical Computation</h1>
-            <h2 class="text-2xl text-gray-400 mb-6">Differential Equation Solvers & Predator-Prey Analysis</h2>
-            <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                Advanced numerical analysis coursework implementing multiple differential equation solvers for predator-prey ecological models with comprehensive error analysis and performance benchmarking
-            </p>
-            <div class="flex flex-wrap justify-center gap-3 mt-8">
-                <span class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">Python</span>
-                <span class="bg-red-600 text-white px-4 py-2 rounded-full text-sm">NumPy</span>
-                <span class="bg-green-600 text-white px-4 py-2 rounded-full text-sm">Numerical Analysis</span>
-                <span class="bg-yellow-600 text-white px-4 py-2 rounded-full text-sm">Differential Equations</span>
-                <span class="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">Scientific Computing</span>
-            </div>
-        </div>
-
-        <!-- Hero Visual -->
-        <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg p-12 mb-16 text-center border border-gray-700">
-            <div class="text-8xl mb-4">📊</div>
-            <p class="text-gray-400 text-lg">8 Numerical Methods • Predator-Prey Modeling • Comprehensive Error Analysis</p>
-        </div>
-
-        <div class="max-w-6xl mx-auto">
-            <!-- Main Content Sections -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-
+<ProjectPage Url="/projects/numerical-computation" Kicker="Academic Project · Year 2">
+                <p class="max-w-3xl text-lg leading-relaxed text-slate-400">
+                    Numerical analysis coursework where I implemented and compared differential equation solvers on a predator-prey model, then measured their error and running time.
+                </p>
                 <!-- Project Overview & Mathematical Foundation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-purple-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-calculator text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-purple-400">Mathematical Foundation</h2>
-                    </div>
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-500/25 mb-6">
+                <ProjectSection Title="Mathematical Foundation" Icon="fas fa-calculator">
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line mb-6">
                         <div class="flex items-center mb-4">
-                            <div class="bg-purple-500 rounded-full w-2 h-2 mr-3"></div>
-                            <h3 class="text-xl font-bold text-purple-400">COMP/XJCO2421 Numerical Computation Coursework</h3>
+                            <div class="bg-cy rounded-full w-2 h-2 mr-3"></div>
+                            <h3 class="text-xl font-bold text-slate-100">COMP/XJCO2421 Numerical Computation Coursework</h3>
                         </div>
                         <p class="text-gray-300 leading-relaxed">
-                            Advanced numerical analysis project implementing and comparing multiple differential equation solvers for predator-prey ecological systems.
-                            Built to evaluate computational accuracy, efficiency, and stability of numerical methods for solving Lotka-Volterra equations
-                            with external forcing functions representing migration patterns.
+                            I implemented several differential equation solvers and compared them on a predator-prey system.
+                            The model is the Lotka-Volterra equations, with external forcing functions that stand in for migration.
+                            For each method I measured accuracy, speed and stability.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Problem Domain</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
-                                <li>• Predator-prey ecosystem modeling</li>
+                                <li>• Modeling a predator-prey ecosystem</li>
                                 <li>• Lotka-Volterra differential equations</li>
-                                <li>• External migration forcing functions</li>
-                                <li>• Two mathematical test scenarios</li>
+                                <li>• Forcing functions for migration in and out</li>
+                                <li>• Two test scenarios</li>
                             </ul>
                         </div>
-                        <div class="bg-gray-800 rounded-lg p-4">
+                        <div class="bg-white/[.02] rounded-lg p-4">
                             <h4 class="font-bold text-white mb-2">Technical Implementation</h4>
                             <ul class="text-gray-400 text-sm space-y-1">
-                                <li>• Custom Euler method implementation</li>
-                                <li>• 7 comparative numerical solvers</li>
-                                <li>• Performance benchmarking suite</li>
-                                <li>• Statistical error analysis framework</li>
+                                <li>• Euler's method, written by me</li>
+                                <li>• 7 numerical solvers compared</li>
+                                <li>• Timing benchmarks</li>
+                                <li>• Statistical error analysis</li>
                             </ul>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Differential Equation System -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fas fa-function text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Predator-Prey Mathematical System</h2>
-                    </div>
+                <ProjectSection Title="Predator-Prey Mathematical System" Icon="fas fa-function">
 
                     <!-- Mathematical Equations -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25 mb-8">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Lotka-Volterra Equations with Forcing</h3>
-                        <div class="bg-gray-900 rounded-lg p-6 font-mono text-lg">
-                            <div class="text-green-400 mb-4">// Differential equation system</div>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25 mb-8">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Lotka-Volterra Equations with Forcing</h3>
+                        <div class="bg-ink rounded-lg p-6 font-mono text-lg">
+                            <div class="text-cy mb-4">// Differential equation system</div>
                             <div class="text-gray-300 space-y-2">
-                                <div><span class="text-cyan-400">dx/dt</span> = αx - βxy + <span class="text-yellow-400">f(t)</span>  <span class="text-purple-400">// Prey dynamics</span></div>
-                                <div><span class="text-cyan-400">dy/dt</span> = δxy - γy + <span class="text-yellow-400">g(t)</span>  <span class="text-purple-400">// Predator dynamics</span></div>
+                                <div><span class="text-cy">dx/dt</span> = αx - βxy + <span class="text-cy">f(t)</span>  <span class="text-cy">// Prey dynamics</span></div>
+                                <div><span class="text-cy">dy/dt</span> = δxy - γy + <span class="text-cy">g(t)</span>  <span class="text-cy">// Predator dynamics</span></div>
                                 <br/>
-                                <div class="text-green-400">// Where: α,β,γ,δ = population parameters</div>
-                                <div class="text-green-400">//        f(t),g(t) = external migration functions</div>
+                                <div class="text-cy">// Where: α,β,γ,δ = population parameters</div>
+                                <div class="text-cy">//        f(t),g(t) = external migration functions</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Test Cases -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-check-circle mr-3"></i>Test Case A - Validation
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -125,14 +74,14 @@
                                 </div>
                                 <div>
                                     <strong class="text-white">Forcing Functions:</strong>
-                                    <code class="block bg-gray-900 p-2 mt-1 rounded text-green-400 text-xs">
+                                    <code class="block bg-ink p-2 mt-1 rounded text-cy text-xs">
                                         f(t) = -sin(t) - cos²(t) - cos(t)<br/>
                                         g(t) = sin(t) + cos²(t) - cos(t)
                                     </code>
                                 </div>
                                 <div>
                                     <strong class="text-white">True Solution:</strong>
-                                    <code class="block bg-gray-900 p-2 mt-1 rounded text-cyan-400 text-xs">
+                                    <code class="block bg-ink p-2 mt-1 rounded text-cy text-xs">
                                         x(t) = 1 + cos(t)<br/>
                                         y(t) = 1 - cos(t)
                                     </code>
@@ -140,8 +89,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center">
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4 flex items-center">
                                 <i class="fas fa-cogs mr-3"></i>Test Case B - Realistic
                             </h3>
                             <div class="space-y-3 text-gray-300 text-sm">
@@ -157,76 +106,70 @@
                                 <div>
                                     <strong class="text-white">Expected Behavior:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• Periodic oscillating populations</li>
-                                        <li>• Consistent peak heights over time</li>
-                                        <li>• Stable long-term dynamics</li>
-                                        <li>• No analytical solution available</li>
+                                        <li>• Populations oscillate periodically</li>
+                                        <li>• Peaks stay the same height over time</li>
+                                        <li>• Stable over long runs</li>
+                                        <li>• No analytical solution to compare against</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Numerical Methods Implementation -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-green-400 to-green-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-code text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-green-400">Numerical Methods Arsenal</h2>
-                    </div>
+                <ProjectSection Title="Numerical Methods Arsenal" Icon="fas fa-code">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Custom Implementation</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Custom Implementation</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Euler Method:</strong> O(h) first-order accuracy</div>
-                                <div><strong>Implementation:</strong> Built from scratch following solver patterns</div>
-                                <div><strong>Purpose:</strong> Baseline comparison method</div>
+                                <div><strong>Implementation:</strong> Written from scratch to match the provided solvers</div>
+                                <div><strong>Purpose:</strong> Baseline to compare the others against</div>
                                 <div>
                                     <strong>Features:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
                                         <li>• Butcher tableau structure</li>
-                                        <li>• Identical timing framework</li>
-                                        <li>• Type-safe implementation</li>
-                                        <li>• Memory-efficient processing</li>
+                                        <li>• Timed the same way as the other solvers</li>
+                                        <li>• Type-safe</li>
+                                        <li>• Light on memory</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-red-600/25">
-                            <h3 class="text-xl font-bold text-red-400 mb-4">Third-Order Methods</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Third-Order Methods</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
-                                <div><strong>SSPRK3:</strong> Strong Stability Preserving</div>
+                                <div><strong>SSPRK3:</strong> Strong stability preserving</div>
                                 <div><strong>Van der Houwen:</strong> Optimized coefficients</div>
                                 <div><strong>Accuracy:</strong> O(h³) convergence rate</div>
                                 <div>
                                     <strong>Applications:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• Stability-critical simulations</li>
-                                        <li>• Medium-precision requirements</li>
-                                        <li>• Balanced performance/accuracy</li>
-                                        <li>• Oscillatory system preservation</li>
+                                        <li>• Simulations where stability matters most</li>
+                                        <li>• Medium precision</li>
+                                        <li>• A balance of speed and accuracy</li>
+                                        <li>• Keeping oscillations intact</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Fourth-Order Methods</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Fourth-Order Methods</h3>
                             <div class="space-y-3 text-gray-300 text-sm">
                                 <div><strong>Runge-Kutta:</strong> Classical RK4</div>
                                 <div><strong>3/8-rule:</strong> Alternative RK4 variant</div>
-                                <div><strong>Ralston-4:</strong> Optimized stability</div>
+                                <div><strong>Ralston-4:</strong> Tuned for stability</div>
                                 <div>
                                     <strong>Performance:</strong>
                                     <ul class="mt-2 space-y-1 text-gray-400">
-                                        <li>• O(h⁴) high-order accuracy</li>
-                                        <li>• Superior error characteristics</li>
-                                        <li>• Industry-standard reliability</li>
-                                        <li>• Computational cost vs accuracy</li>
+                                        <li>• O(h⁴) accuracy</li>
+                                        <li>• Lowest errors of the group</li>
+                                        <li>• The standard choice in practice</li>
+                                        <li>• More work per step in exchange for accuracy</li>
                                     </ul>
                                 </div>
                             </div>
@@ -234,251 +177,211 @@
                     </div>
 
                     <!-- Implementation Architecture -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Implementation Architecture</h3>
-                        <div class="bg-gray-900 rounded-lg p-4 font-mono text-sm">
-                            <div class="text-green-400 mb-2"># Custom Euler method following solver.py patterns</div>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Implementation Architecture</h3>
+                        <div class="bg-ink rounded-lg p-4 font-mono text-sm">
+                            <div class="text-cy mb-2"># Custom Euler method following solver.py patterns</div>
                             <div class="text-gray-300 mb-4">
-                                <span class="text-cyan-400">def</span> <span class="text-green-400">Eulers_Method</span>(rhs, y0, t0, dt, T):<br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400"># Butcher tableau for Euler (1st order)</span><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;matrix = np.array([[<span class="text-cyan-400">0.0</span>]])<br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;weights = np.array([<span class="text-cyan-400">1</span>])<br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;nodes = np.array([<span class="text-cyan-400">0.0</span>])<br/><br/>
+                                <span class="text-cy">def</span> <span class="text-cy">Eulers_Method</span>(rhs, y0, t0, dt, T):<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy"># Butcher tableau for Euler (1st order)</span><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;matrix = np.array([[<span class="text-cy">0.0</span>]])<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;weights = np.array([<span class="text-cy">1</span>])<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;nodes = np.array([<span class="text-cy">0.0</span>])<br/><br/>
 
-                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400"># Time integration loop</span><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-400">for</span> step <span class="text-blue-400">in</span> <span class="text-green-400">range</span>(timesteps):<br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k[i] = rhs(t_out[-<span class="text-cyan-400">1</span>], y_out[-<span class="text-cyan-400">1</span>])<br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_new = y_out[-<span class="text-cyan-400">1</span>] + dt * k[<span class="text-cyan-400">0</span>]
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy"># Time integration loop</span><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-cy">for</span> step <span class="text-cy">in</span> <span class="text-cy">range</span>(timesteps):<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k[i] = rhs(t_out[-<span class="text-cy">1</span>], y_out[-<span class="text-cy">1</span>])<br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_new = y_out[-<span class="text-cy">1</span>] + dt * k[<span class="text-cy">0</span>]
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Advanced Analysis & Performance -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-chart-line text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-indigo-400">Comprehensive Error & Performance Analysis</h2>
-                    </div>
+                <ProjectSection Title="Error & Performance Analysis" Icon="fas fa-chart-line">
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-gray-800 rounded-lg p-6 border border-green-600/25">
-                            <h3 class="text-xl font-bold text-green-400 mb-4">Error Analysis</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Error Analysis</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Absolute Error:</strong> |computed - true| calculations</li>
-                                <li><strong>Average Error:</strong> Mean deviation over time domain</li>
-                                <li><strong>Maximum Error:</strong> Peak deviation identification</li>
-                                <li><strong>Euclidean Norm:</strong> L2 norm error measurement</li>
-                                <li><strong>Convergence Study:</strong> Order verification analysis</li>
+                                <li><strong>Absolute Error:</strong> |computed - true|</li>
+                                <li><strong>Average Error:</strong> Mean deviation across the time range</li>
+                                <li><strong>Maximum Error:</strong> The largest deviation</li>
+                                <li><strong>Euclidean Norm:</strong> Error measured with the L2 norm</li>
+                                <li><strong>Convergence Study:</strong> Checking each method's order</li>
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-blue-600/25">
-                            <h3 class="text-xl font-bold text-blue-400 mb-4">Performance Benchmarking</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Performance Benchmarking</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>CPU Core Isolation:</strong> Single-core execution for stability</li>
+                                <li><strong>CPU Core Isolation:</strong> Pinned to one core for consistent timings</li>
                                 <li><strong>Multiple Runs:</strong> 5 iterations per measurement</li>
-                                <li><strong>Statistical Analysis:</strong> Average timing calculations</li>
-                                <li><strong>Gradient Analysis:</strong> Big-O complexity verification</li>
+                                <li><strong>Statistical Analysis:</strong> Averaged timings</li>
+                                <li><strong>Gradient Analysis:</strong> Checking Big-O complexity</li>
                                 <li><strong>Scaling Studies:</strong> 8 different time step sizes</li>
                             </ul>
                         </div>
 
-                        <div class="bg-gray-800 rounded-lg p-6 border border-yellow-600/25">
-                            <h3 class="text-xl font-bold text-yellow-400 mb-4">Advanced Features</h3>
+                        <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                            <h3 class="text-xl font-bold text-slate-100 mb-4">Advanced Features</h3>
                             <ul class="space-y-2 text-gray-300 text-sm">
-                                <li><strong>Peak Detection:</strong> Oscillation stability analysis</li>
-                                <li><strong>Data Visualization:</strong> Professional matplotlib graphs</li>
-                                <li><strong>Stability Assessment:</strong> Long-term behavior evaluation</li>
-                                <li><strong>Method Comparison:</strong> Systematic performance ranking</li>
-                                <li><strong>Business Recommendations:</strong> Practical solver selection</li>
+                                <li><strong>Peak Detection:</strong> Checks whether oscillations stay stable</li>
+                                <li><strong>Data Visualization:</strong> Graphs in matplotlib</li>
+                                <li><strong>Stability Assessment:</strong> Behavior over long runs</li>
+                                <li><strong>Method Comparison:</strong> Ranked the methods on performance</li>
+                                <li><strong>Business Recommendations:</strong> Which solver to use when</li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Research Methodology -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-cyan-600/25">
-                        <h3 class="text-xl font-bold text-cyan-400 mb-4">Research Methodology</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-cyan-600/25">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Research Methodology</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <h4 class="font-bold text-white mb-3">Time Step Analysis</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
                                     <li>• <strong>Range:</strong> dt from T/100 to T/1600 (8 values)</li>
                                     <li>• <strong>Test Case A:</strong> T = 2.5π (validation)</li>
-                                    <li>• <strong>Test Case B:</strong> T = 30 (realistic simulation)</li>
-                                    <li>• <strong>Convergence:</strong> Order verification through gradients</li>
+                                    <li>• <strong>Test Case B:</strong> T = 30 (realistic case)</li>
+                                    <li>• <strong>Convergence:</strong> Order checked from the gradients</li>
                                 </ul>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-3">Statistical Framework</h4>
                                 <ul class="text-gray-400 text-sm space-y-1">
-                                    <li>• <strong>Error = C × h^p:</strong> Theoretical order validation</li>
-                                    <li>• <strong>log(error) vs log(h):</strong> Gradient-based analysis</li>
-                                    <li>• <strong>Multiplicative Factors:</strong> Relative performance</li>
-                                    <li>• <strong>Stability Thresholds:</strong> Breakdown identification</li>
+                                    <li>• <strong>Error = C × h^p:</strong> Checks against the theoretical order</li>
+                                    <li>• <strong>log(error) vs log(h):</strong> The slope gives the order</li>
+                                    <li>• <strong>Multiplicative Factors:</strong> How much faster or slower each method is</li>
+                                    <li>• <strong>Stability Thresholds:</strong> Where each method breaks down</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- Results & Technical Achievements -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full p-3 mr-4">
-                            <i class="fas fa-trophy text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-yellow-400">Research Findings & Technical Excellence</h2>
-                    </div>
+                <ProjectSection Title="Research Findings" Icon="fas fa-trophy">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Key Research Results</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
                                     <li><strong>Runge-Kutta (RK4):</strong> Best accuracy at dt=800 with ~10⁻¹⁰ error</li>
                                     <li><strong>SSPRK3:</strong> Good stability, ~10⁻⁹ error at dt=6400</li>
-                                    <li><strong>Euler Method:</strong> Baseline performance, increasing peaks in Test B</li>
-                                    <li><strong>Order Verification:</strong> Confirmed 1st, 3rd, 4th order convergence</li>
-                                    <li><strong>Stability Analysis:</strong> Peak consistency crucial for long simulations</li>
-                                    <li><strong>Performance Scaling:</strong> Time ∝ Order × timesteps relationship</li>
+                                    <li><strong>Euler Method:</strong> The baseline; its peaks grow over time in Test B</li>
+                                    <li><strong>Order Verification:</strong> Confirmed 1st, 3rd and 4th order convergence</li>
+                                    <li><strong>Stability Analysis:</strong> Steady peak heights matter most in long simulations</li>
+                                    <li><strong>Performance Scaling:</strong> Time ∝ Order × timesteps</li>
                                 </ul>
                             </div>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Technical Sophistication</h3>
-                            <div class="bg-gray-800 rounded-lg p-4">
+                            <h3 class="text-xl font-bold text-white mb-4">Technical Depth</h3>
+                            <div class="bg-white/[.02] rounded-lg p-4">
                                 <ul class="text-gray-300 text-sm space-y-2">
-                                    <li><strong>Mathematical Rigor:</strong> Multiple test scenarios with analytical validation</li>
-                                    <li><strong>Software Engineering:</strong> Object-oriented design with data encapsulation</li>
-                                    <li><strong>Performance Optimization:</strong> CPU affinity and statistical averaging</li>
-                                    <li><strong>Scientific Visualization:</strong> Professional multi-panel plotting</li>
-                                    <li><strong>Error Theory Application:</strong> Convergence rate mathematical analysis</li>
-                                    <li><strong>Business Context:</strong> Practical recommendations for industry use</li>
+                                    <li><strong>Mathematical Rigor:</strong> Two test scenarios, one checked against an exact solution</li>
+                                    <li><strong>Software Engineering:</strong> Object-oriented design with encapsulated data</li>
+                                    <li><strong>Performance Optimization:</strong> CPU affinity and averaged runs</li>
+                                    <li><strong>Scientific Visualization:</strong> Multi-panel plots</li>
+                                    <li><strong>Error Theory Application:</strong> Working out convergence rates</li>
+                                    <li><strong>Business Context:</strong> Recommendations on which solver to use in practice</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
                     <!-- Academic Excellence Context -->
-                    <div class="bg-gray-800 rounded-lg p-6 border border-purple-600/25">
-                        <h3 class="text-xl font-bold text-purple-400 mb-4">Academic Excellence & Industry Relevance</h3>
+                    <div class="bg-white/[.02] rounded-lg p-6 border border-line">
+                        <h3 class="text-xl font-bold text-slate-100 mb-4">Takeaways & Industry Relevance</h3>
                         <p class="text-gray-300 text-sm mb-3">
-                            This numerical computation project demonstrates exceptional mathematical programming sophistication for undergraduate coursework,
-                            implementing concepts typically found in graduate-level computational science programs:
+                            The project draws on three areas:
                         </p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h4 class="font-bold text-white mb-1">Mathematical Depth</h4>
-                                <p class="text-gray-400 text-sm">Advanced differential equation theory, convergence analysis, and numerical stability assessment.</p>
+                                <p class="text-gray-400 text-sm">Differential equation theory, convergence analysis and numerical stability.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Scientific Computing</h4>
-                                <p class="text-gray-400 text-sm">Professional-grade implementation with performance optimization and error quantification.</p>
+                                <p class="text-gray-400 text-sm">Careful implementations, with timings and measured errors for each.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white mb-1">Research Methodology</h4>
-                                <p class="text-gray-400 text-sm">Systematic comparison study with statistical analysis and business recommendations.</p>
+                                <p class="text-gray-400 text-sm">A structured comparison with statistics and practical recommendations.</p>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ProjectSection>
 
                 <!-- GitHub Repository Links -->
-                <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 text-center">
-                    <div class="flex items-center justify-center mb-6">
-                        <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full p-3 mr-4">
-                            <i class="fab fa-github text-white text-xl"></i>
-                        </div>
-                        <h2 class="text-3xl font-bold text-cyan-400">Source Code & Documentation</h2>
-                    </div>
+                <ProjectSection Title="Source Code & Documentation" Icon="fab fa-github">
                     <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
-                        Explore the complete numerical methods implementation with comprehensive analysis, professional documentation, and research findings.
+                        The repository has all the solver code, the analysis and the written report.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                         <a href="https://github.com/DynoAbd786/numerical-computation-coursework"
                            target="_blank"
-                           class="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border border-gray-600 hover:border-cyan-500/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center">
+                           class="hover:from-gray-600 hover:to-gray-700 border border-line hover:border-cy/50 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center bg-white/[.02]">
                             <i class="fab fa-github mr-3 text-xl"></i>
                             <div class="text-left">
                                 <div class="text-lg">Numerical Computation Analysis</div>
-                                <div class="text-sm text-gray-400">Complete Implementation with Research Report & Analysis</div>
+                                <div class="text-sm text-gray-400">Code, report and analysis</div>
                             </div>
                         </a>
                     </div>
                     <p class="text-gray-400 text-sm mt-4">
-                        Features Jupyter notebook, solver implementations, comprehensive analysis, and professional documentation
+                        Includes a Jupyter notebook, the solver implementations, the analysis and documentation
                     </p>
-                </div>
+                </ProjectSection>
 
                 <!-- Key Insights & Technologies Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Key Insights -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full p-3 mr-4">
-                                <i class="fas fa-lightbulb text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-yellow-400">Key Insights</h2>
-                        </div>
+                    <ProjectSection Title="Key Insights" Icon="fas fa-lightbulb">
                         <ul class="space-y-3">
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Advanced numerical methods understanding for predator-prey systems</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
+                                <span class="text-gray-300">How different numerical methods behave on a predator-prey system</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Comprehensive error analysis and convergence theory application</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Measuring error and applying convergence theory</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Performance optimization through CPU isolation and statistical analysis</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Getting reliable timings with CPU isolation and repeated runs</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Mathematical rigor in differential equation solver implementation</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Implementing differential equation solvers carefully and correctly</span>
                             </li>
                             <li class="flex items-start">
-                                <span class="text-cyan-400 mr-3 mt-1">•</span>
-                                <span class="text-gray-300">Business-oriented analysis with practical solver recommendations</span>
+                                <span class="text-cy mr-3 mt-1">•</span>
+                                <span class="text-gray-300">Turning the results into practical advice on which solver to pick</span>
                             </li>
                         </ul>
-                    </div>
+                </ProjectSection>
 
                     <!-- Technologies -->
-                    <div class="bg-gray-900 rounded-lg p-8 border border-gray-700 hover:border-cyan-500/50 transition-all duration-300">
-                        <div class="flex items-center mb-6">
-                            <div class="bg-gradient-to-r from-gray-600 to-gray-700 rounded-full p-3 mr-4">
-                                <i class="fas fa-code text-white text-xl"></i>
-                            </div>
-                            <h2 class="text-2xl font-bold text-gray-300">Technologies & Concepts</h2>
-                        </div>
+                    <ProjectSection Title="Technologies & Concepts" Icon="fas fa-code">
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">Python</span>
-                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">NumPy</span>
-                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">Matplotlib</span>
-                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">SciPy</span>
-                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">Numerical Analysis</span>
-                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">Differential Equations</span>
-                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">Error Analysis</span>
-                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">Performance Benchmarking</span>
-                            <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm">Statistical Analysis</span>
-                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">Scientific Computing</span>
-                            <span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm">Mathematical Modeling</span>
-                            <span class="bg-rose-600 text-white px-3 py-1 rounded-full text-sm">Jupyter Notebooks</span>
+                            <span class="chip">Python</span>
+                            <span class="chip">NumPy</span>
+                            <span class="chip">Matplotlib</span>
+                            <span class="chip">SciPy</span>
+                            <span class="chip">Numerical Analysis</span>
+                            <span class="chip">Differential Equations</span>
+                            <span class="chip">Error Analysis</span>
+                            <span class="chip">Performance Benchmarking</span>
+                            <span class="chip">Statistical Analysis</span>
+                            <span class="chip">Scientific Computing</span>
+                            <span class="chip">Mathematical Modeling</span>
+                            <span class="chip">Jupyter Notebooks</span>
                         </div>
-                    </div>
+                </ProjectSection>
                 </div>
-            </div>
-        </div>
-
-        <!-- Back Button -->
-        <div class="text-center mt-16">
-            <a href="/projects" class="bg-cyan-500 hover:bg-cyan-400 text-gray-900 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
-                <i class="fas fa-arrow-left mr-2"></i>Back to Projects
-            </a>
-        </div>
-    </div>
-</section>
+            
+</ProjectPage>

@@ -60,7 +60,7 @@ Use the HTTP transport to connect to: `https://mcp.mkkai.dev`
 ## Example Interactions
 
 **User**: "What are Muhammad's Python projects?"
-**AI**: *Queries search_projects tool* → Returns TaskFlow and pNanoLocz projects
+**AI**: *Queries search_projects tool* → Returns Synergy and pNanoLocz
 
 **User**: "Send him a message about a senior developer role"
 **AI**: *Uses submit_contact tool* → Submits contact form automatically

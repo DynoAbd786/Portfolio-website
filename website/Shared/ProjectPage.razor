@@ -1,0 +1,75 @@
+@using website.Data
+@inject ProjectService ProjectSvc
+
+@* Shared frame for every project page: header from the project data, the page's own sections,
+   then links to the next project and back to all work *@
+@if (project is not null)
+{
+    <PageTitle>@project.Title</PageTitle>
+
+    <article class="mx-auto max-w-6xl px-4 pb-8 pt-10 sm:px-6 lg:px-8">
+        <nav aria-label="Breadcrumb" class="mb-10 font-mono text-xs text-slate-400">
+            <a href="/" class="hover:text-cy">home</a>
+            <span class="mx-1.5">/</span>
+            <a href="/projects" class="hover:text-cy">work</a>
+            <span class="mx-1.5">/</span>
+            <span class="text-slate-300">@project.Title</span>
+        </nav>
+
+        <header class="mb-12">
+            @if (!string.IsNullOrEmpty(Kicker))
+            {
+                <p class="mono-label mb-3">// @Kicker</p>
+            }
+            <h1 class="mb-5 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">@project.Title</h1>
+            <p class="mb-6 max-w-3xl text-lg leading-relaxed text-slate-300">@project.Result</p>
+            <div class="flex flex-wrap gap-2">
+                @foreach (var field in project.Fields)
+                {
+                    <span class="chip border-cy/40 text-cy">@ProjectFields.Label(field)</span>
+                }
+                @if (project.IsInDevelopment)
+                {
+                    <span class="chip border-lamp/40 text-lamp">in development</span>
+                }
+                @foreach (var tag in project.Tags)
+                {
+                    <span class="chip">@tag</span>
+                }
+            </div>
+            @if (Links is not null)
+            {
+                <div class="mt-6 flex flex-wrap gap-3">@Links</div>
+            }
+        </header>
+
+        <div class="space-y-8">
+            @ChildContent
+        </div>
+
+        <footer class="mt-16 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <a href="/projects" class="text-slate-400 transition-colors hover:text-slate-100">← Back to work</a>
+            <a href="@next!.ProjectUrl" class="next-project group text-right">
+                <span class="mono-label block">next project →</span>
+                <span class="font-semibold text-slate-100 group-hover:text-cy">@next.Title</span>
+            </a>
+        </footer>
+    </article>
+}
+
+@code {
+    [Parameter, EditorRequired] public string Url { get; set; } = "";
+    [Parameter] public string? Kicker { get; set; }
+    [Parameter] public RenderFragment? Links { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private Project? project;
+    private Project? next;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var projects = await ProjectSvc.GetProjectsAsync();
+        project = projects.FirstOrDefault(p => p.ProjectUrl == Url);
+        next = project is null ? null : ProjectService.GetNextProject(projects, Url);
+    }
+}

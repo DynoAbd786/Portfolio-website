@@ -198,6 +198,8 @@ app.MapHealthChecks("/health");
 app.MapControllers();
 // Synergy's page moved from its old working title; keep old links (CV, search results) working
 app.MapGet("/projects/workflow-graph-platform", () => Results.Redirect("/projects/synergy", permanent: true));
+// TaskFlow was an experiment and has been taken down; old links land on all projects
+app.MapGet("/projects/taskflow", () => Results.Redirect("/projects", permanent: true));
 
 app.MapRazorComponents<website.api.Components.App>()
     .AddInteractiveWebAssemblyRenderMode()

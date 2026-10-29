@@ -16,23 +16,11 @@ namespace website.api.Services
             {
                 new Project
                 {
-                    Title = "TaskFlow - Distributed Task Processing System",
-                    Description = "A robust distributed task processing system designed to benchmark AI agent capabilities. Built with Python, Redis, and FastAPI to handle high-concurrency workloads. Demonstrates enterprise architectural patterns including priority queues, auto-scaling workers, and real-time WebSocket monitoring.",
-                    ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=TaskFlow",
-                    ProjectUrl = "/projects/taskflow",
-                    Tags = new[] { "Python", "Redis", "PostgreSQL", "FastAPI", "Distributed Systems", "Claude Code Pro", "Gemini CLI", "AI Research" },
-                    Category = ProjectCategory.Personal,
-                    Fields = new[] { ProjectField.CloudDistributed, ProjectField.SystemsInfrastructure },
-                    Result = "Built a distributed task queue with priority scheduling, auto-scaling workers and live WebSocket monitoring.",
-                    IsFeatured = true
-                },
-                new Project
-                {
-                    Title = "Personal Portfolio & C# Learning Journey",
-                    Description = "A modern, responsive portfolio website showcasing full-stack development skills. Built with Blazor WebAssembly (.NET 8) and Tailwind CSS for high-performance client-side rendering. Features 3D interactive elements and a component-based architecture, developed to demonstrate rapid AI-assisted engineering.",
+                    Title = "This Website (mkkai.dev)",
+                    Description = "My portfolio, built in .NET 10 with Blazor. Pages are rendered on the server, the homepage has an interactive 3D workshop made with three.js, and there is an AI assistant plus an MCP server that AI agents can query. Tested with xUnit and Playwright and deployed on Render.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Portfolio",
                     ProjectUrl = "/projects/portfolio",
-                    Tags = new[] { "Blazor WebAssembly", ".NET 8", "C#", "Tailwind CSS", "Learning Journey", "Claude Code" },
+                    Tags = new[] { ".NET 10", "Blazor", "C#", "three.js", "Tailwind CSS", "MCP" },
                     Category = ProjectCategory.Personal,
                     Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.AiMl },
                     Result = "Built this site in .NET 10, with an AI assistant and an MCP server that AI agents can query.",
@@ -49,7 +37,7 @@ namespace website.api.Services
                     Fields = new[] { ProjectField.AiMl, ProjectField.SystemsInfrastructure },
                     Result = "Joined a team building an autonomous race car, working with ROS2, SLAM and path planning.",
                     IsFeatured = false,
-                    IsInDevelopment = true
+                    IsInDevelopment = false
                 },
                 new Project
                 {
@@ -63,12 +51,12 @@ namespace website.api.Services
                     Fields = new[] { ProjectField.VisionGraphics, ProjectField.AiMl },
                     Result = "Built a 3D/4D reconstruction pipeline that combines point tracking with dense depth, accurate to the centimetre.",
                     IsFeatured = true,
-                    IsInDevelopment = true
+                    IsInDevelopment = false
                 },
                 new Project
                 {
                     Title = "Synergy: Code Intelligence Platform",
-                    Description = "A local-first code intelligence platform that parses codebases in 8 languages into a typed, queryable graph, with revision history, structural diffs and blast-radius ranking. An MCP server exposes 17 tools so AI agents can work from the architecture. Python backend, React and TypeScript explorer.",
+                    Description = "Builds a graph of a codebase in any of 8 languages and lets you query it from a web dashboard or an AI coding agent. It keeps snapshots over time, shows what changed between them, and gives agents 21 MCP tools to ask about the code directly. Python backend, React and TypeScript dashboard.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Synergy",
                     ProjectUrl = "/projects/synergy",
                     Tags = new[] { "Python", "React", "TypeScript", "SQLite", "tree-sitter", "MCP" },
@@ -309,10 +297,10 @@ namespace website.api.Services
                 new Project
                 {
                     Title = "Home Lab & Remote Infrastructure",
-                    Description = "A self-hosted home lab ecosystem powered by Tailscale and Linux. Features a high-performance PC for local LLM inference (Ollama), connected via a secure mesh network to Android devices running Termux as lightweight servers. Automates Wake-on-LAN via n8n workflows for on-demand remote access.",
+                    Description = "A desktop with an RTX 5090 running local LLMs (llama.cpp and Hermes) and coding agents, and an always-on Raspberry Pi, linked to my laptop and phone over Tailscale. Friends can use the GPU for research through a shared, access-controlled workspace.",
                     ImageUrl = "https://placehold.co/600x400/1a1a1a/ffffff?text=Home+Lab",
                     ProjectUrl = "/projects/home-lab",
-                    Tags = new[] { "Tailscale", "Linux", "Self-Hosting", "n8n", "Termux", "Ollama", "Wake-on-LAN", "Networking", "Home Automation" },
+                    Tags = new[] { "Tailscale", "Linux", "llama.cpp", "Docker", "Raspberry Pi", "Self-Hosting" },
                     Category = ProjectCategory.Personal,
                     Fields = new[] { ProjectField.SystemsInfrastructure, ProjectField.AiMl },
                     Result = "Set up local LLMs and coding agents on a home GPU server, reachable anywhere over an encrypted Tailscale mesh.",
