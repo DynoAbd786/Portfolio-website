@@ -106,6 +106,7 @@ Order matters (`website.api/Program.cs`):
 ## Frontend Architecture
 
 ### Look
+Moving between pages crossfades the content (a view transition around Blazor's enhanced navigation: `mkPageFade` in `site.js`, styles at the end of `app.css`); the header (`.site-header`) and chat panel are their own layers and stay still. Not for form posts or with reduced motion.
 Dark ink background, one cyan accent, Inter and JetBrains Mono. Colour tokens (`ink`, `ink-2`, `line`, `cy`, `lamp`) live in `website/tailwind.config.js`; shared classes (`mono-label`, `btn-primary`, `btn-ghost`, `chip`, `surface`, `grid-bg`, `reveal`) in `website/Styles/tailwind.css`. Use these rather than raw colours. `.reveal` fades content in on scroll, but only once the head script has added `reveal-ready` (so content stays visible without JavaScript).
 
 ### Homepage

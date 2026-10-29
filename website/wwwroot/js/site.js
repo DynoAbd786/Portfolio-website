@@ -349,3 +349,29 @@ document.addEventListener('DOMContentLoaded', () => {
     addEventListener('scroll', () => mkHeroCover(), { passive: true });
     if (window.Blazor) window.Blazor.addEventListener('enhancedload', () => { mkIntro.finish(); mkHeroFrame(); mkHeroCover(); mkWorkshop.sync(); });
 });
+
+// Moving between pages: Blazor's enhanced navigation fetches the next page and patches it in, so a
+// view transition around that crossfades the content (app.css; the header and chat panel stay put).
+// Not for a form's post (the contact form), not with reduced motion; browsers without view
+// transitions just change page as before.
+const mkPageFade = {
+    release: null,
+    posting: false,
+    start() {
+        const posting = this.posting; this.posting = false;
+        if (posting || !document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        this.end();
+        const ready = new Promise((resolve) => { this.release = resolve; });
+        setTimeout(() => this.end(), 2500); // a slow page never keeps the old one frozen for long
+        document.startViewTransition(() => ready);
+    },
+    end() { if (this.release) { this.release(); this.release = null; } },
+};
+
+// a post's navigation starts right after its submit event; the flag is used up by then
+document.addEventListener('submit', () => { mkPageFade.posting = true; setTimeout(() => { mkPageFade.posting = false; }, 1000); }, true);
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.Blazor) return;
+    window.Blazor.addEventListener('enhancednavigationstart', () => mkPageFade.start());
+    window.Blazor.addEventListener('enhancedload', () => mkPageFade.end());
+});
