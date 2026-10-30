@@ -48,7 +48,7 @@ public class HomePageTests : IClassFixture<SiteFactory>
         var groups = doc.QuerySelectorAll("#stack dl > div");
         Assert.Equal(new[] { "// languages", "// ai & vision", "// web & cloud", "// systems & hpc" },
             groups.Select(g => g.QuerySelector("dt")!.TextContent.Trim()));
-        Assert.Contains("Python", groups[0].QuerySelectorAll("li.chip").Select(li => li.TextContent));
+        Assert.Contains("Python", groups[0].QuerySelectorAll("li").Select(li => li.TextContent));
     }
 
     [Fact]
