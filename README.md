@@ -67,6 +67,10 @@ Render builds the `Dockerfile` and deploys every push to `main`; its health chec
 
 I use AI coding agents (Claude Code) heavily, and I treat what they write like a colleague's pull request: I read it, test it, and don't ship what I can't explain. The test suites above are a large part of how.
 
+## Licence
+
+The code is under the [MIT licence](LICENSE). My CV, reports, coursework write-ups and images aren't: they're mine, so please ask before reusing them.
+
 ## Contact
 
 **Muhammad Kashif-Khan**: [mkkai.dev](https://mkkai.dev/#contact) · [LinkedIn](https://linkedin.com/in/dynoabd786) · [GitHub](https://github.com/DynoAbd786)
