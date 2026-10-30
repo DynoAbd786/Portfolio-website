@@ -298,7 +298,7 @@ window.mkWorkshop = {
 // The name build's dependencies (js/intro): Delaunator, a classic script that sets window.Delaunator,
 // and the self-hosted Inter 800. Rejects if either fails to load.
 window.mkIntroDeps = function () {
-    return this._introDeps ??= Promise.all([
+    return this._introDeps = this._introDeps || Promise.all([
         window.Delaunator ? null : new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.src = '/lib/delaunator/delaunator.min.js';

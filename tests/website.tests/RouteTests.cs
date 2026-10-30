@@ -106,6 +106,17 @@ public class RouteTests : IClassFixture<SiteFactory>
         Assert.Equal("Healthy", await health.Content.ReadAsStringAsync());
     }
 
+    [Theory]
+    [InlineData("/cv", "/?utm_source=cv")]
+    [InlineData("/in", "/?utm_source=linkedin")]
+    public async Task Short_links_go_to_the_homepage_tagged_with_where_they_came_from(string path, string target)
+    {
+        var client = _factory.CreateClient(new Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var response = await client.GetAsync(path);
+        Assert.Equal(HttpStatusCode.Found, response.StatusCode);
+        Assert.Equal(target, response.Headers.Location!.ToString());
+    }
+
     [Fact]
     public async Task Cv_pdf_is_served()
     {

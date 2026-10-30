@@ -454,3 +454,20 @@ def test_skipping_the_intro_is_counted_with_why(quiet, site_url):
     wait_landed(page)
     intro = [d for n, d in page.evaluate("window.__events") if n == "intro"]
     assert len(intro) == 1 and intro[0]["how"] == "skipped" and intro[0]["reason"] in ("tab", "early")
+
+
+def _preloads(page):
+    return page.evaluate("[...document.querySelectorAll('link[rel=preload]')].map(l => l.getAttribute('href'))")
+
+
+def test_the_intros_font_and_script_load_early_when_it_plays(page, site_url):
+    page.goto(site_url + "/", wait_until="commit")
+    page.wait_for_selector("link[rel=preload]", state="attached")
+    assert set(_preloads(page)) >= {"/fonts/inter-latin-800-normal.woff2", "/lib/delaunator/delaunator.min.js"}
+
+
+def test_the_intros_font_and_script_are_not_fetched_when_it_wont_play(page, site_url):
+    page.add_init_script("sessionStorage.setItem('mk-intro-off', '1')")
+    page.goto(site_url + "/", wait_until="load")
+    assert not {"/fonts/inter-latin-800-normal.woff2", "/lib/delaunator/delaunator.min.js"} & set(_preloads(page))
+

@@ -60,6 +60,15 @@
                     sessionStorage.setItem('mk-intro-seen', '1');
                     var html = document.documentElement;
                     html.classList.add('intro-pending');
+                    // the name build's font and triangulator, fetched early so the build can start at once
+                    [['font', '/fonts/inter-latin-800-normal.woff2'], ['script', '/lib/delaunator/delaunator.min.js']].forEach(function (dep) {
+                        var link = document.createElement('link');
+                        link.rel = 'preload';
+                        link.as = dep[0];
+                        link.href = dep[1];
+                        if (dep[0] === 'font') { link.type = 'font/woff2'; link.crossOrigin = ''; }
+                        document.head.appendChild(link);
+                    });
                     // the last resort, if the intro's scripts never arrive: 14.5 s after the page is
                     // first visible (js/intro gives up at 10 s, plus a build already playing), show it
                     var watch = function () {
