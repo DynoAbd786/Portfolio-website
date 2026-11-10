@@ -128,6 +128,24 @@ public class McpTests : IClassFixture<SiteFactory>
         Assert.Equal(ContactLimiter.PerVisitorPerHour, email.Sent.Count);
     }
 
+    // On Render, Cloudflare is in front: the visitor's address arrives in CF-Connecting-IP, and the
+    // connection itself comes from Cloudflare's edge server, shared by many visitors
+    [Fact]
+    public async Task Submit_contact_tells_visitors_apart_by_cloudflares_header()
+    {
+        var (http, email) = Site();
+        http.DefaultRequestHeaders.Add("CF-Connecting-IP", "203.0.113.7");
+        await using (var first = await Connect(http))
+            for (var i = 0; i < ContactLimiter.PerVisitorPerHour; i++)
+                Assert.NotEqual(true, (await first.CallToolAsync("submit_contact", Contact())).IsError);
+
+        http.DefaultRequestHeaders.Remove("CF-Connecting-IP");
+        http.DefaultRequestHeaders.Add("CF-Connecting-IP", "198.51.100.4");
+        await using var second = await Connect(http);
+        Assert.NotEqual(true, (await second.CallToolAsync("submit_contact", Contact())).IsError);
+        Assert.Equal(ContactLimiter.PerVisitorPerHour + 1, email.Sent.Count);
+    }
+
     [Fact]
     public async Task Each_project_is_a_resource_named_after_its_page()
     {

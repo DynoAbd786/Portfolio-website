@@ -63,7 +63,7 @@
 
                         <div>
                             <label for="name" class="mb-2 block text-sm font-semibold text-slate-200">Full Name *</label>
-                            <InputText @bind-Value="Model!.Name" id="name"
+                            <InputText @bind-Value="Model!.Name" id="name" maxlength="100"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your full name" />
                             <ValidationMessage For="@(() => Model!.Name)" class="text-red-400 text-sm mt-1" />
@@ -71,7 +71,7 @@
 
                         <div>
                             <label for="email" class="mb-2 block text-sm font-semibold text-slate-200">Email Address *</label>
-                            <InputText @bind-Value="Model!.Email" id="email" type="email"
+                            <InputText @bind-Value="Model!.Email" id="email" type="email" maxlength="254"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="your.email@example.com" />
                             <ValidationMessage For="@(() => Model!.Email)" class="text-red-400 text-sm mt-1" />
@@ -79,36 +79,43 @@
 
                         <div>
                             <label for="company" class="mb-2 block text-sm font-semibold text-slate-200">Company/Organization</label>
-                            <InputText @bind-Value="Model!.Company" id="company"
+                            <InputText @bind-Value="Model!.Company" id="company" maxlength="100"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="Your company or organization" />
+                            <ValidationMessage For="@(() => Model!.Company)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
                             <label for="role" class="mb-2 block text-sm font-semibold text-slate-200">Your Role/Position</label>
-                            <InputText @bind-Value="Model!.Role" id="role"
+                            <InputText @bind-Value="Model!.Role" id="role" maxlength="100"
                                       class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25"
                                       placeholder="e.g., Software Engineer, Recruiter, CTO" />
+                            <ValidationMessage For="@(() => Model!.Role)" class="text-red-400 text-sm mt-1" />
                         </div>
+
+                        @* Bots fill in every box. People never see this one, so a message with it filled in is dropped *@
+                        <div class="form-trap" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <InputText @bind-Value="Model!.Website" id="website" tabindex="-1" autocomplete="off" />
+                        </div>
+                        <InputText type="hidden" @bind-Value="Model!.Stamp" id="stamp" />
 
                         <div>
                             <label for="subject" class="mb-2 block text-sm font-semibold text-slate-200">Subject *</label>
                             <InputSelect @bind-Value="Model!.Subject" id="subject"
                                         class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25">
                                 <option value="">Select a subject</option>
-                                <option value="Job Opportunity">Job Opportunity</option>
-                                <option value="Freelance Project">Freelance Project</option>
-                                <option value="Collaboration">Collaboration</option>
-                                <option value="Consulting">Consulting</option>
-                                <option value="General Inquiry">General Inquiry</option>
-                                <option value="Other">Other</option>
+                                @foreach (var subject in Subjects)
+                                {
+                                    <option value="@subject">@subject</option>
+                                }
                             </InputSelect>
                             <ValidationMessage For="@(() => Model!.Subject)" class="text-red-400 text-sm mt-1" />
                         </div>
 
                         <div>
                             <label for="message" class="mb-2 block text-sm font-semibold text-slate-200">Message *</label>
-                            <InputTextArea @bind-Value="Model!.Message" id="message" rows="5"
+                            <InputTextArea @bind-Value="Model!.Message" id="message" rows="5" maxlength="5000"
                                           class="w-full rounded-lg border border-line bg-ink px-4 py-3 text-slate-100 placeholder-slate-500 transition-colors focus:border-cy focus:outline-none focus:ring-2 focus:ring-cy/25 resize-none"
                                           placeholder="Tell me about your project, opportunity, or how I can help..." />
                             <ValidationMessage For="@(() => Model!.Message)" class="text-red-400 text-sm mt-1" />
@@ -148,43 +155,65 @@
     private string submitMessage = "";
     private bool submitSuccess = false;
 
-    protected override void OnInitialized() => Model ??= new();
+    public static readonly string[] Subjects = { "Job Opportunity", "Freelance Project", "Collaboration", "Consulting", "General Inquiry", "Other" };
+
+    // A fresh form carries the time it was shown, so the server can spot one sent back within seconds
+    private ContactFormModel NewForm() => new() { Stamp = Sender.StampForm() };
+
+    protected override void OnInitialized() => Model ??= NewForm();
 
     private async Task HandleSubmit()
     {
         var m = Model!;
-        submitSuccess = await Sender.SendAsync(new ContactMessage(m.Name, m.Email, m.Company, m.Role, m.Subject, m.Message));
-        if (submitSuccess)
+        var result = await Sender.SendAsync(new ContactMessage(m.Name, m.Email, m.Company, m.Role, m.Subject, m.Message), new FormCheck(m.Website, m.Stamp));
+        // a message dropped as a bot gets the same answer as a sent one, so the bot learns nothing
+        submitSuccess = result is ContactResult.Sent or ContactResult.Dropped;
+        submitMessage = result switch
         {
-            submitMessage = "Thank you! Your message has been sent. I'll get back to you soon.";
-            Model = new();
-        }
-        else
-        {
-            submitMessage = "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.";
-        }
+            ContactResult.Sent or ContactResult.Dropped => "Thank you! Your message has been sent. I'll get back to you soon.",
+            ContactResult.Limited => "You've already sent a few messages this hour, so this one didn't go. Please try again later or email me directly at Abdua786@outlook.com.",
+            _ => "Sorry, there was an error sending your message. Please try again or email me directly at Abdua786@outlook.com.",
+        };
+        if (submitSuccess) Model = NewForm();
     }
 
     public class ContactFormModel
     {
         [Required(ErrorMessage = "Name is required")]
+        [StringLength(100, ErrorMessage = "Name is too long")]
         public string Name { get; set; } = "";
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        [StringLength(254, ErrorMessage = "Email is too long")]
         public string Email { get; set; } = "";
 
+        [StringLength(100, ErrorMessage = "Company is too long")]
         public string? Company { get; set; }
+
+        [StringLength(100, ErrorMessage = "Role is too long")]
         public string? Role { get; set; }
 
         [Required(ErrorMessage = "Please select a subject")]
+        [OneOfTheSubjects(ErrorMessage = "Please select a subject")]
         public string Subject { get; set; } = "";
 
         [Required(ErrorMessage = "Message is required")]
         [MinLength(10, ErrorMessage = "Message must be at least 10 characters")]
+        [StringLength(5000, ErrorMessage = "Message is too long")]
         public string Message { get; set; } = "";
+
+        // The bot checks: the trap field people never see, and when the form was shown
+        public string? Website { get; set; }
+        public string? Stamp { get; set; }
 
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must agree to be contacted")]
         public bool AgreeToContact { get; set; }
+    }
+
+    // Only the subjects in the list; an empty one is left to [Required]
+    private sealed class OneOfTheSubjectsAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object? value) => value is not string s || s.Length == 0 || Subjects.Contains(s);
     }
 }

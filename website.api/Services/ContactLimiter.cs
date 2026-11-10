@@ -1,8 +1,8 @@
 namespace website.api.Services;
 
-// How often contact messages may go out through MCP (AI agents and the site's assistant both use it):
-// a few per visitor an hour, and a ceiling for everyone together, so the public endpoint can't flood
-// the inbox. The web contact form posts on its own path.
+// How often contact messages may go out, whichever way they come (the homepage form, MCP, the site's
+// assistant): a few per visitor an hour (Visitor.Ip), and a ceiling for everyone together, so nobody
+// can flood the inbox.
 public class ContactLimiter
 {
     public const int PerVisitorPerHour = 5;

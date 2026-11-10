@@ -79,7 +79,7 @@ public class PortfolioTools
         if (!LooksLikeAnEmail(email!))
             return (false, "bad-email", "That email address doesn't look right. Ask for it again.");
 
-        var visitor = _http.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        var visitor = Visitor.Ip(_http.HttpContext);
         if (!_limiter.TryTake(visitor))
         {
             _logger.LogWarning("Contact limit reached for {Visitor}", visitor);

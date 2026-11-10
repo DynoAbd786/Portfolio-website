@@ -1,6 +1,7 @@
 using website.api.Mcp;
 using website.api.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Diagnostics;
 using DotNetEnv;
 
@@ -29,6 +30,8 @@ builder.Services.AddHttpClient<IEmailService, EmailService>(); // typed client, 
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ContactLimiter>();
+builder.Services.TryAddSingleton(TimeProvider.System);
+builder.Services.AddSingleton<FormStamp>(); // when the contact form was shown, to spot bots
 builder.Services.AddHttpClient<Analytics>(); // Umami events only the server sees (typed client)
 builder.Services.AddScoped<PortfolioTools>(); // what the MCP server and the assistant can do
 builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it

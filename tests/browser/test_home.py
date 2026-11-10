@@ -29,6 +29,17 @@ def test_chat_styles_do_not_leak_into_contact_form(page, site_url):
     assert page.eval_on_selector("#name", "el => getComputedStyle(el).borderTopWidth") == "1px"
 
 
+def test_contact_trap_field_is_out_of_sight_and_out_of_the_tab_order(page, site_url):
+    # bots fill in every box; people must never see or reach this one (ContactForm.razor)
+    page.goto(site_url + "/#contact", wait_until="load")
+    box = page.locator("#website").bounding_box()
+    assert box["x"] + box["width"] <= 0, box
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    page.focus("#role")
+    page.keyboard.press("Tab")
+    assert page.evaluate("document.activeElement.id") == "subject"
+
+
 def _top(page, selector):
     return page.evaluate("s => document.querySelector(s).getBoundingClientRect().top + scrollY", selector)
 

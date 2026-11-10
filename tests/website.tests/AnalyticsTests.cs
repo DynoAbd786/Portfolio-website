@@ -51,9 +51,10 @@ public class AnalyticsTests : IClassFixture<SiteFactory>
         public Task<bool> SendContactEmailAsync(ContactRequest request) => Task.FromResult(true);
     }
 
-    private (HttpClient Http, FakeUmami Umami) Site()
+    private (HttpClient Http, FakeUmami Umami, TestClock Clock) Site()
     {
         var umami = new FakeUmami();
+        var clock = new TestClock();
         var http = _factory.WithWebHostBuilder(b =>
         {
             b.ConfigureAppConfiguration((_, c) => c.AddInMemoryCollection(new Dictionary<string, string?> { ["Umami:Enabled"] = "true" }));
@@ -61,9 +62,10 @@ public class AnalyticsTests : IClassFixture<SiteFactory>
             {
                 s.AddHttpClient<Analytics>().ConfigurePrimaryHttpMessageHandler(() => umami);
                 s.AddSingleton<IEmailService>(new FakeEmail());
+                s.AddSingleton<TimeProvider>(clock);
             });
         }).CreateClient();
-        return (http, umami);
+        return (http, umami, clock);
     }
 
     [Fact]
@@ -92,7 +94,7 @@ public class AnalyticsTests : IClassFixture<SiteFactory>
     [Fact]
     public async Task Mcp_tool_calls_and_resource_reads_are_counted_with_the_client()
     {
-        var (http, umami) = Site();
+        var (http, umami, _) = Site();
         await using var mcp = await McpClient.CreateAsync(new HttpClientTransport(new HttpClientTransportOptions
         {
             Endpoint = new Uri(http.BaseAddress!, "/api/mcp"),
@@ -114,19 +116,32 @@ public class AnalyticsTests : IClassFixture<SiteFactory>
     [Fact]
     public async Task Contact_messages_are_counted_with_how_they_came_and_what_about()
     {
-        var (http, umami) = Site();
-        await http.PostAsJsonAsync("/api/contact", new { name = "Ada", email = "ada@example.com", subject = "Job Opportunity", message = "Hi" });
+        var (http, umami, clock) = Site();
+        await ContactForm.PostAsync(http, ContactForm.Valid(), clock);
         var contact = await umami.WaitFor("contact");
-        Assert.Equal("api", contact.GetProperty("data").GetProperty("via").GetString());
+        Assert.Equal("form", contact.GetProperty("data").GetProperty("via").GetString());
         Assert.Equal("sent", contact.GetProperty("data").GetProperty("result").GetString());
         Assert.Equal("Job Opportunity", contact.GetProperty("data").GetProperty("subject").GetString());
+    }
+
+    // so you can see how often bots try, and how they gave themselves away
+    [Fact]
+    public async Task Messages_dropped_as_bots_are_counted_with_why()
+    {
+        var (http, umami, clock) = Site();
+        var fields = ContactForm.Valid();
+        fields["website"] = "https://example.com";
+        await ContactForm.PostAsync(http, fields, clock);
+        var contact = await umami.WaitFor("contact");
+        Assert.Equal("dropped", contact.GetProperty("data").GetProperty("result").GetString());
+        Assert.Equal("trap", contact.GetProperty("data").GetProperty("reason").GetString());
     }
 
     [Fact]
     public async Task Server_events_send_a_browser_user_agent_so_umami_keeps_them()
     {
-        var (http, umami) = Site();
-        await http.PostAsJsonAsync("/api/contact", new { name = "Ada", email = "ada@example.com", subject = "Hello", message = "Hi" });
+        var (http, umami, clock) = Site();
+        await ContactForm.PostAsync(http, ContactForm.Valid(), clock);
         await umami.WaitFor("contact");
         var (request, _) = umami.Sent[0];
         Assert.Equal("https://gateway.umami.is/api/send", request.RequestUri!.ToString());
@@ -142,7 +157,7 @@ public class AnalyticsTests : IClassFixture<SiteFactory>
             s.AddHttpClient<Analytics>().ConfigurePrimaryHttpMessageHandler(() => umami);
             s.AddSingleton<IEmailService>(new FakeEmail());
         })).CreateClient();
-        await http.PostAsJsonAsync("/api/contact", new { name = "Ada", email = "ada@example.com", subject = "Hello", message = "Hi" });
+        await ContactForm.PostAsync(http, ContactForm.Valid());
         await Task.Delay(300);
         Assert.Empty(umami.Sent);
     }
