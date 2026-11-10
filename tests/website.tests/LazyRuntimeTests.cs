@@ -1,5 +1,4 @@
 using System.Net;
-using AngleSharp.Html.Dom;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using website.Data;
@@ -37,29 +36,21 @@ public class LazyRuntimeTests : IClassFixture<SiteFactory>
     private sealed class FakeSender : IContactSender
     {
         public List<ContactMessage> Sent { get; } = new();
-        public Task<bool> SendAsync(ContactMessage message) { Sent.Add(message); return Task.FromResult(true); }
+        public string StampForm() => "stamp";
+        public Task<ContactResult> SendAsync(ContactMessage message, FormCheck check) { Sent.Add(message); return Task.FromResult(ContactResult.Sent); }
     }
 
     private async Task<(HttpResponseMessage, FakeSender)> PostContact(Dictionary<string, string> fields)
     {
         var sender = new FakeSender();
         var client = _factory.WithWebHostBuilder(b => b.ConfigureTestServices(s => s.AddSingleton<IContactSender>(sender))).CreateClient();
-        var page = await Html.ParseAsync(await client.GetStringAsync("/"));
-        var form = (IHtmlFormElement)page.QuerySelector("#contact form")!;
-        var data = form.QuerySelectorAll("input[type=hidden]").Cast<IHtmlInputElement>().ToDictionary(i => i.Name!, i => i.Value);
-        foreach (var (k, v) in fields) data[form.QuerySelector($"#{k}")!.GetAttribute("name")!] = v;
-        var response = await client.PostAsync(form.GetAttribute("action") is { Length: > 0 } a ? a : "/", new FormUrlEncodedContent(data));
-        return (response, sender);
+        return (await ContactForm.PostAsync(client, fields), sender);
     }
 
     [Fact]
     public async Task Contact_form_sends_without_javascript()
     {
-        var (response, sender) = await PostContact(new()
-        {
-            ["name"] = "Ada Lovelace", ["email"] = "ada@example.com", ["subject"] = "Job Opportunity",
-            ["message"] = "We'd like to talk about a graduate role.", ["agree"] = "true",
-        });
+        var (response, sender) = await PostContact(ContactForm.Valid());
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var sent = Assert.Single(sender.Sent);
         Assert.Equal("ada@example.com", sent.Email);

@@ -18,7 +18,7 @@ Full-stack personal portfolio website built as a .NET 10 Blazor Web App: pages a
 - **Interactive WebAssembly** (`@rendermode InteractiveWebAssembly`): only `ImageGallery` (medical simulation and machine learning pages) and `AiTerminal`. The .NET runtime (about 3 MB) loads only on pages with one of these, so keep pages static where possible (a test lists the pages allowed to start it)
 - Interactive components are also prerendered on the server, so don't call `HttpClient` or JS from `OnInitialized` in them; do it in `OnAfterRender(firstRender)` or event handlers
 - The layout is static: the mobile menu and the chat panel open/close via `wwwroot/js/site.js`. The assistant (`AiTerminal`, `prerender: false` because it reads localStorage) lives on its own page, `/chat-panel` (`BareLayout`, noindex), which `mkChat` loads into an iframe the first time the panel opens; the panel is `data-permanent`, so the frame and conversation survive enhanced navigation. The panel's header (`MainLayout`) is the assistant's only header: its past-chats and new-chat buttons reach into the frame through `mkChat.command` → `mkChatFrame` (site.js) → `AiTerminal.Command`
-- `ContactForm` is a static SSR form (`EditForm` with `FormName`, `Enhance`): it posts to the server, which emails through `website.Data.IContactSender` (`website.api/Services/EmailContactSender.cs`)
+- `ContactForm` is a static SSR form (`EditForm` with `FormName`, `Enhance`): it posts to the server, which emails through `website.Data.IContactSender` (`website.api/Services/EmailContactSender.cs`). It's the only public way to email besides MCP (there is no `/api/contact`), so it keeps bots out without bothering people: a trap field people never see (`.form-trap`, off screen, `tabindex=-1`; bots fill in every box), a signed stamp of when the form was shown (`FormStamp`, Data Protection; sent back within 3 s means a bot), the hourly limits it shares with MCP and the assistant (`ContactLimiter`), and size limits on every field with the subject from the list. A message dropped as a bot gets the normal "Thank you" (so the bot learns nothing), a warning in the log and a `contact` event with `result=dropped` and the reason
 
 ### Client-Server Communication
 - One origin in development and production: the site and API both run on `website.api`
@@ -65,8 +65,6 @@ Render: the live service (`Portfolio-website`, Frankfurt, free plan) was created
   - `GET /api/projects` - All projects
   - `GET /api/projects/by-url?url={url}` - Project by URL
   - `GET /api/projects/categories/{category}` - Projects by category
-- **`ContactController`**: `/api/contact` - Email functionality via Resend
-  - `POST /api/contact` - Send contact form email
 - **`ChatController`**: `/api/chat` - AI assistant, always DeepSeek Flash (`DeepSeekAgentService`, key `DeepSeek__ApiKey`; without it the assistant says it is unavailable). Its system prompt (`AssistantContext`) is built from `HomeContent` (experience, products, stack, open to work) and every project, so it knows what the homepage shows; replies render through `ChatMarkdown`, which opens site links in the main window, not the chat frame.
 - **MCP server**: `/api/mcp`, not a controller: the official C# SDK (`ModelContextProtocol.AspNetCore`, `app.MapMcp`), see "Model Context Protocol" below
 
@@ -80,7 +78,7 @@ Registered in `website.api/Program.cs`:
 
 ### Middleware Pipeline
 Order matters (`website.api/Program.cs`):
-1. **Forwarded Headers** - proxy/CDN (Render, Cloudflare)
+1. **Forwarded Headers** - proxy/CDN (Render, Cloudflare). On Render the address this yields is Cloudflare's edge server, shared by many visitors; for a visitor's own address use `Visitor.Ip` (Cloudflare's `CF-Connecting-IP`), as the contact limits do
 2. **HEAD as GET** - HEAD requests run as GET with the body dropped (pages and API GETs only match GET). Before status code pages, whose re-execute does its own routing
 3. **Status code pages** - unknown page URLs re-execute `/not-found`; disabled for `/api/*` so API 404s keep their own bodies. Must stay early so the re-executed request passes through auth and antiforgery
 4. **`UseRouting`** - explicit, so it runs after the HEAD rewrite
@@ -191,7 +189,7 @@ AI agents (Claude Code, Cursor, VS Code, the MCP Inspector…) can use the portf
 - **SDK**: the official C# SDK, `ModelContextProtocol.AspNetCore` 2.3.0, registered in `Program.cs` (`AddMcpServer().WithHttpTransport().WithTools<PortfolioMcpTools>().WithResources<PortfolioMcpResources>()`) and mapped with `app.MapMcp("/api/mcp")`
 - **Transport**: Streamable HTTP, stateless (the SDK's default from the 2026-07-28 spec): no sessions, any instance can answer any request. No legacy SSE, no sign-in
 - **Tools and resources**: `website.api/Mcp/PortfolioMcp.cs`. The work is in `website.api/Services/PortfolioTools.cs`, which `DeepSeekAgentService` also calls, so the site's assistant and outside agents behave the same
-- **Tools**: `search_projects` (read-only, idempotent, closed world; structured output with each project's page) and `submit_contact` (not read-only, not destructive, open world; needs name, a valid email, subject and message, and at most `ContactLimiter.PerVisitorPerHour` per visitor an hour, 30 in all)
+- **Tools**: `search_projects` (read-only, idempotent, closed world; structured output with each project's page) and `submit_contact` (not read-only, not destructive, open world; needs name, a valid email, subject and message, and at most `ContactLimiter.PerVisitorPerHour` per visitor an hour, 30 in all, counted together with the contact form)
 - **Resources**: `portfolio://profile` (from `HomeContent`, like the assistant's prompt), `contact`, `about`, `ai-integration`, `projects/all`, and the template `portfolio://projects/{id}` named after each page (`hireforge`); an unknown project is `ResourceNotFound`
 - **Tests**: `tests/website.tests/McpTests.cs` drives it with the official MCP client (email faked)
 
