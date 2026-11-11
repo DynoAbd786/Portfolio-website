@@ -103,6 +103,19 @@ public class McpTests : IClassFixture<SiteFactory>
         await using var mcp = await Connect(http);
         Assert.True((await mcp.CallToolAsync("submit_contact", Contact("not-an-email"))).IsError);
         Assert.True((await mcp.CallToolAsync("submit_contact", Contact("ada@nope"))).IsError); // no real domain
+        Assert.True((await mcp.CallToolAsync("submit_contact", Contact("ada@gmail.c"))).IsError);
+        Assert.Empty(email.Sent);
+    }
+
+    // the same check as the form: a domain with no mail server (only .invalid ones in memory) is a typo
+    [Fact]
+    public async Task Submit_contact_rejects_an_address_whose_domain_has_no_mail_server()
+    {
+        var (http, email) = Site();
+        await using var mcp = await Connect(http);
+        var result = await mcp.CallToolAsync("submit_contact", Contact("ada@gmial.invalid"));
+        Assert.True(result.IsError);
+        Assert.Contains("gmial.invalid", Text(result));
         Assert.Empty(email.Sent);
     }
 

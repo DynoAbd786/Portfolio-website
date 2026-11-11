@@ -32,6 +32,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ContactLimiter>();
 builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<FormStamp>(); // when the contact form was shown, to spot bots
+// whether an email address's domain has a mail server (catches typos), from the system's DNS
+builder.Services.AddSingleton<DnsClient.ILookupClient>(_ => new DnsClient.LookupClient(
+    new DnsClient.LookupClientOptions { Timeout = TimeSpan.FromSeconds(2), Retries = 1 }));
+builder.Services.AddSingleton<IMailDomains, MailDomains>();
 builder.Services.AddHttpClient<Analytics>(); // Umami events only the server sees (typed client)
 builder.Services.AddScoped<PortfolioTools>(); // what the MCP server and the assistant can do
 builder.Services.AddHttpClient<DeepSeekAgentService>(); // typed client: no AddScoped, which would replace it

@@ -11,6 +11,7 @@ namespace website.Data
         Sent,
         Dropped, // looked like a bot: nothing is sent, but the form says it was, so a bot learns nothing
         Limited, // too many messages from this visitor, or from everyone, in the last hour
+        Undeliverable, // the address's domain has no mail server, so it's almost certainly a typo
         Failed,
     }
 

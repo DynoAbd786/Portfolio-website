@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 using website.api.Models;
 
 namespace website.api.Services;
@@ -25,23 +24,21 @@ public class PortfolioTools
     private readonly IProjectService _projects;
     private readonly IEmailService _email;
     private readonly ContactLimiter _limiter;
+    private readonly IMailDomains _domains;
     private readonly IHttpContextAccessor _http;
     private readonly ILogger<PortfolioTools> _logger;
     private readonly Analytics _analytics;
 
-    public PortfolioTools(IProjectService projects, IEmailService email, ContactLimiter limiter, IHttpContextAccessor http, Analytics analytics, ILogger<PortfolioTools> logger)
+    public PortfolioTools(IProjectService projects, IEmailService email, ContactLimiter limiter, IMailDomains domains, IHttpContextAccessor http, Analytics analytics, ILogger<PortfolioTools> logger)
     {
         _analytics = analytics;
         _projects = projects;
         _email = email;
         _limiter = limiter;
+        _domains = domains;
         _http = http;
         _logger = logger;
     }
-
-    // name@domain.tld: EmailAddressAttribute only checks for an @, so "ada@nope" got through to the sender
-    private static readonly Regex Email = new(@"^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$", RegexOptions.Compiled);
-    private static bool LooksLikeAnEmail(string email) => Email.IsMatch(email.Trim());
 
     public static ProjectSummary Summary(Project p) => new(
         p.Title, "https://mkkai.dev" + p.ProjectUrl, p.Category.ToString(), p.Result, p.Description, p.Tags, p.IsInDevelopment);
@@ -76,8 +73,12 @@ public class PortfolioTools
             .Where(f => string.IsNullOrWhiteSpace(f.Item2)).Select(f => f.Item1).ToList();
         if (missing.Count > 0)
             return (false, "missing", $"Missing: {string.Join(", ", missing)}. Ask for these, then try again.");
-        if (!LooksLikeAnEmail(email!))
+        if (!website.Data.Emails.LooksRight(email))
             return (false, "bad-email", "That email address doesn't look right. Ask for it again.");
+        // the same check as the form: a domain with no mail server means a typo, and the reply would bounce
+        var domain = website.Data.Emails.Domain(email!);
+        if (!await _domains.AcceptsMailAsync(domain))
+            return (false, "undeliverable", $"Emails to {domain} can't be delivered, so the address is probably mistyped. Ask for it again.");
 
         var visitor = Visitor.Ip(_http.HttpContext);
         if (!_limiter.TryTake(visitor))

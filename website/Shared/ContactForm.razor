@@ -162,10 +162,18 @@
 
     protected override void OnInitialized() => Model ??= NewForm();
 
-    private async Task HandleSubmit()
+    private async Task HandleSubmit(EditContext form)
     {
         var m = Model!;
-        var result = await Sender.SendAsync(new ContactMessage(m.Name, m.Email, m.Company, m.Role, m.Subject, m.Message), new FormCheck(m.Website, m.Stamp));
+        var result = await Sender.SendAsync(new ContactMessage(m.Name, m.Email.Trim(), m.Company, m.Role, m.Subject, m.Message), new FormCheck(m.Website, m.Stamp));
+        if (result == ContactResult.Undeliverable)
+        {
+            // shown under the email box, like the other field errors, so the person can fix the typo
+            new ValidationMessageStore(form).Add(form.Field(nameof(ContactFormModel.Email)),
+                $"Emails to {Emails.Domain(m.Email)} can't be delivered. Please check your address for a typo.");
+            form.NotifyValidationStateChanged();
+            return;
+        }
         // a message dropped as a bot gets the same answer as a sent one, so the bot learns nothing
         submitSuccess = result is ContactResult.Sent or ContactResult.Dropped;
         submitMessage = result switch
@@ -184,7 +192,7 @@
         public string Name { get; set; } = "";
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address")]
+        [LooksLikeAnEmail(ErrorMessage = "Please enter a valid email address")]
         [StringLength(254, ErrorMessage = "Email is too long")]
         public string Email { get; set; } = "";
 
@@ -215,5 +223,11 @@
     private sealed class OneOfTheSubjectsAttribute : ValidationAttribute
     {
         public override bool IsValid(object? value) => value is not string s || s.Length == 0 || Subjects.Contains(s);
+    }
+
+    // name@domain.tld (Emails.LooksRight); an empty one is left to [Required]
+    private sealed class LooksLikeAnEmailAttribute : ValidationAttribute
+    {
+        public override bool IsValid(object? value) => value is not string s || s.Length == 0 || Emails.LooksRight(s);
     }
 }
